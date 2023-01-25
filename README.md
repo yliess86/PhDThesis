@@ -1,4 +1,4 @@
-# PhD Thesis
+# PhD Thesis ![progress](https://progress-bar.dev/5?title=14/251 Pages)
 
 This repository contains the source code and the compiled versions of my Ph.D. Thesis.
 
@@ -22,6 +22,7 @@ This repository contains the source code and the compiled versions of my Ph.D. T
         - Update apt and install: `sudo apt update && sudo apt install pandoc-citeproc`
     - Install xelatex libs: `sudo apt install texlive-full`
     - Install entr: `sudo apt install entr`
+    - Install exiftool: `sudo apt install exiftool`
 
 - Launch a **Dev Session**:
     - Launch in terminal: `make dev`
@@ -31,5 +32,5 @@ This repository contains the source code and the compiled versions of my Ph.D. T
 ## License
 
 ```
-AI-Assisted Creative Expression: a Case for Automatic Lineart Colorization © 2023 by Yliess Hati is licensed under CC BY 4.0 
+AI-Assisted Creative Expression: a Case for Automatic Lineart Colorization © 2023 by Yliess Hati is licensed under CC BY 4.0
 ```

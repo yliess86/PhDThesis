@@ -1,18 +1,26 @@
 FILENAME     = thesis
 
-OPTIONS      = --standalone
+OPTIONS      = -s
 OPTIONS     += -F /usr/bin/pandoc-crossref
 OPTIONS     += --citeproc
+OPTIONS     += --toc
 
 PANDOC       = /usr/bin/pandoc
-PANDOC_PDF   = ${PANDOC} ${FILENAME}.md -o ${FILENAME}.pdf ${OPTIONS}
-PANDOC_HTML  = ${PANDOC} ${FILENAME}.md -o ${FILENAME}.html ${OPTIONS}
+PANDOC_PDF   = ${PANDOC} ${OPTIONS} ${FILENAME}.md -o ${FILENAME}.pdf
+PANDOC_HTML  = ${PANDOC} ${OPTIONS} ${FILENAME}.md -o ${FILENAME}.html
+
+PAGE_TOTAL   = 251
+PAGE_COUNT  := $(shell exiftool -T -PageCount -s3 -ext pdf thesis.pdf)
+PAGE_PROG   := $(shell python3 -c "print(int(${PAGE_COUNT} / ${PAGE_TOTAL} * 100))")
 
 all: build
 
 dev:
 	echo ${FILENAME}.md | entr -r ${PANDOC_HTML}
 
-build:
+progress:
+	sed -i -r 's|(https:\/\/progress-bar\.dev\/([0-9]{0,})\?title=([0-9]{0,})\/([0-9]{0,}) Pages)|https:\/\/progress-bar.dev\/${PAGE_PROG}\?title=${PAGE_COUNT}\/${PAGE_TOTAL} Pages|g' README.md
+
+build: progress
 	${PANDOC_PDF}
 	${PANDOC_HTML}
