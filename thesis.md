@@ -3,7 +3,7 @@ documentclass: book
 lang: en-US
 papersize: a4
 
-toc-title: Table of Contents
+toc-title: Contents
 toc-depth: 3
 
 list-tables: true
@@ -56,6 +56,18 @@ keywords: [keyword]
 >     - StencilTorch: Human-Machine Collaboration, Human-in-the-Loop
 >     - StableTorch: Variance and Iterative Exploration
 > - A reflexion on Current Generative AI Ethical and Societal Impact in our Society
+
+### Concerns
+
+> - Raise awareness about
+>   - Deepfakes
+>   - Model Fabulations
+>   - Ownership & Copyright Ambiguities
+>   - Biases & Discrimination
+> - About this work
+>   - Images used only for Educational and Research Purposes
+>   - Only describe receipes for repoducibility
+>   - Dataset and Weights are not Distributed (Only Code)
 
 ### Structure
 
