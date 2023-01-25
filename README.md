@@ -1,4 +1,7 @@
-# PhD Thesis ![progress](https://progress-bar.dev/5?title=14/251 Pages)
+<p align="center">
+    <h1>PhD Thesis</h1>
+    <img src="https://progress-bar.dev/5?title=14/251 Pages" />
+</p>
 
 This repository contains the source code and the compiled versions of my Ph.D. Thesis.
 
