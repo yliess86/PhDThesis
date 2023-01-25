@@ -1,6 +1,7 @@
 FILENAME     = thesis
 
 OPTIONS      = -s
+OPTIONS     += -F pandoc-acro
 OPTIONS     += -F /usr/bin/pandoc-crossref
 OPTIONS     += --citeproc
 OPTIONS     += --toc

@@ -27,6 +27,14 @@ date: \today
 rights: © 2023 by Yliess Hati is licensed under CC BY 4.0
 bibliography: [bibliography.bib]
 keywords: [keyword]
+
+acronyms:
+    ai:
+        short: AI
+        long: Artificial Intelligence
+    ann:
+        short: ANN
+        long: Artificial Neural Network
 ---
 
 \newpage{}
@@ -36,32 +44,15 @@ keywords: [keyword]
 
 ## Introduction
 
+Humans possess the ability to perceive and understand the world allowing us to accomplish a wide range of complex tasks through the combination of visual recognition, scene understanding, and communication. The ability to quickly and accurately extract information from a single image is a testament to the complexity and sophistication of the human brain and is often taken for granted. One of the +ai field's ultimate goals is to empower computers with such human-like abilities, one of them being creativity, being able to produce something original and worthwhile. 
+
+Computational creativity is the field at the intersection of +ai, cognitive psychology, philosophy, and art, which aims at understanding, simulating, replicating, or in some cases enhancing human creativity. One definition of computational creativity is the ability to produce something that is novel and useful, demands that we reject common beliefs, results from intense motivation and persistence, or comes from clarifying a vague problem. Top-down approaches to this definition use a mix of explicit formulations of recipes and randomness such as procedural generation. On the opposite, bottom-up approaches use [+ann]{.plural} to learn patterns and heuristics from large datasets to enable non-linear generation.
+
+> - Deep Learning Breakthroughs
+> - Rise of Generative Neural Networks 
+
 ### Motivations
 
-> - Machine Creativity (Computational Creativity)
->   - Intersection of:
->       - Artificial Intelligence
->       - Cognitive Psycology
->       - Philosophy
->       - Art
->   - Goal is to Model, Simulate or Replicate Creativity using a Computer to achieve:
->       - Human-level Creativity
->       - Better understand Human Creativity
->       - Build Tools to Enhance Human Creativity
->   - Creativity Definition (Computational)
->       - Top-Down approach (Explicit Formulation + Randomness):
->           - The answer is novel and useful
->           - The answer demands that we reject ideas we had previously accepted 
->           - The answer result from intense motivation and persistence 
->           - The answer comes from clarifying a problem that was originally vague
->       - Bottom-Up approach (Artificial Neural Nets):
->           - Learn heuristics from huge corpus
->           - Non-linear pattern exctraction
->
-> - Deep Learning Breakthroughs
-> 
-> - Rise of Generative Neural Networks
-> 
 > - A case for Lineart Colorization
 
 ### Problem Statement
@@ -91,14 +82,14 @@ keywords: [keyword]
 >   - Only describe recipes for reproducibility
 >   - Dataset and Weights are not Distributed (Only Code)
 
-### Structure
+### Outline
 
 > - Plain Language Expanded TOC
 
 \newpage{}
 
 ## Background
-### History of Artifical Intelligence
+### History of Artificial Intelligence
 ### Neural Networks
 ### Autoencoders
 ### Variational Autoencoders

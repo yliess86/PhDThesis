@@ -23,6 +23,9 @@ This repository contains the source code and the compiled versions of my Ph.D. T
         - Give execution rights: `sudo chmod a+x pandoc-crossref pandoc-crossref.1`
     - Install the [Pandoc-CiteProc executable](https://github.com/jgm/pandoc-citeproc/releases):
         - Update apt and install: `sudo apt update && sudo apt install pandoc-citeproc`
+    - Install the [Pandoc-Acronym module](https://github.com/kprussing/pandoc-acro.git):
+        - Git clone: `git clone https://github.com/kprussing/pandoc-acro.git`
+        - Install python module: `python3 setup.py install`
     - Install xelatex libs: `sudo apt install texlive-full`
     - Install entr: `sudo apt install entr`
     - Install exiftool: `sudo apt install exiftool`
