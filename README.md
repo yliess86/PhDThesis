@@ -9,7 +9,7 @@ This repository contains the source code and the compiled versions of my Ph.D. T
 - [Bibliography](/bibliography.bib)
 - [Figures](/figures)
 - [PDF File](/thesis.pdf)
-- [HTML File](/thesis.html)
+- [HTML File](/docs/index.html)
 - [License](/LICENSE)
 
 ## Quickstart
