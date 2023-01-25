@@ -7,7 +7,7 @@ OPTIONS     += --toc
 
 PANDOC       = /usr/bin/pandoc
 PANDOC_PDF   = ${PANDOC} ${OPTIONS} ${FILENAME}.md -o ${FILENAME}.pdf
-PANDOC_HTML  = ${PANDOC} ${OPTIONS} ${FILENAME}.md -o ${FILENAME}.html
+PANDOC_HTML  = ${PANDOC} ${OPTIONS} ${FILENAME}.md -o index.html
 
 PAGE_TOTAL   = 251
 PAGE_COUNT  := $(shell exiftool -T -PageCount -s3 -ext pdf thesis.pdf)
