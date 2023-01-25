@@ -38,9 +38,31 @@ keywords: [keyword]
 
 ### Motivations
 
-> - Machine Creativity
+> - Machine Creativity (Computational Creativity)
+>   - Intersection of:
+>       - Artificial Intelligence
+>       - Cognitive Psycology
+>       - Philosophy
+>       - Art
+>   - Goal is to Model, Simulate or Replicate Creativity using a Computer to achieve:
+>       - Human-level Creativity
+>       - Better understand Human Creativity
+>       - Build Tools to Enhance Human Creativity
+>   - Creativity Definition (Computational)
+>       - Top-Down approach (Explicit Formulation + Randomness):
+>           - The answer is novel and useful
+>           - The answer demands that we reject ideas we had previously accepted 
+>           - The answer result from intense motivation and persistence 
+>           - The answer comes from clarifying a problem that was originally vague
+>       - Bottom-Up approach (Artificial Neural Nets):
+>           - Learn heuristics from huge corpus
+>           - Non-linear pattern exctraction
+>
 > - Deep Learning Breakthroughs
+> 
 > - Rise of Generative Neural Networks
+> 
+> - A case for Lineart Colorization
 
 ### Problem Statement
 
