@@ -50,7 +50,7 @@ keywords: [keyword]
 
 ### Contributions
 
-> - Reciepe for curating datasets for the task of automatic colorization
+> - Recipe for curating datasets for the task of automatic colorization
 > - 3 Models exploring different aspect of the topic:
 >     - PaintsTorch: High Quality, User-Guided, Fast Realtime Feedback
 >     - StencilTorch: Human-Machine Collaboration, Human-in-the-Loop
@@ -66,7 +66,7 @@ keywords: [keyword]
 >   - Biases & Discrimination
 > - About this work
 >   - Images used only for Educational and Research Purposes
->   - Only describe receipes for repoducibility
+>   - Only describe recipes for reproducibility
 >   - Dataset and Weights are not Distributed (Only Code)
 
 ### Structure
@@ -76,7 +76,7 @@ keywords: [keyword]
 \newpage{}
 
 ## Background
-### History of Artiifical Intelligence
+### History of Artifical Intelligence
 ### Neural Networks
 ### Autoencoders
 ### Variational Autoencoders
