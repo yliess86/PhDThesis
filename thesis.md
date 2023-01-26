@@ -8,7 +8,7 @@ toc-depth: 3
 
 list-tables: true
 list-figures: true
-link-citation: true
+link-citations: true
 linkReferences: true
 nameInLink: true
 colorlinks: true
@@ -20,21 +20,53 @@ tblPrefix: [Tbl, Tbls]
 lstPrefix: [Lst, Lsts]
 secPrefix: [Sec, Secs]
 
+bibliography: [bibliography.bib]
+csl: acm-sig-proceedings-long-author-list.csl
+
 title: |
     AI-Assisted Creative Expression: a Case for Automatic Lineart Colorization
 author: Yliess Hati
 date: \today
 rights: © 2023 by Yliess Hati is licensed under CC BY 4.0
-bibliography: [bibliography.bib]
 keywords: [keyword]
 
 acronyms:
     ai:
         short: AI
         long: Artificial Intelligence
+    nn:
+        short: NN
+        long: Neural Network
     ann:
         short: ANN
         long: Artificial Neural Network
+    dl:
+        short: DL
+        long: Deep Learning
+    gpu:
+        short: GPU
+        long: Graphical Processing Unit
+    tpu:
+        short: TPU
+        long: Tensor Processing Unit
+    npu:
+        short: NPU
+        long: Neural Processing Unit
+    gd:
+        short: GD
+        long: Gradient Descent
+    vae:
+        short: VAE
+        long: Variational Autoencoder
+    gan:
+        short: GAN
+        long: Generative Adversarial Network
+    ddm:
+        short: DDM
+        long: Denoising Diffusion Model
+    llm:
+        short: LLM
+        long: Large Language Model
 ---
 
 \newpage{}
@@ -46,10 +78,13 @@ acronyms:
 
 Humans possess the ability to perceive and understand the world allowing us to accomplish a wide range of complex tasks through the combination of visual recognition, scene understanding, and communication. The ability to quickly and accurately extract information from a single image is a testament to the complexity and sophistication of the human brain and is often taken for granted. One of the +ai field's ultimate goals is to empower computers with such human-like abilities, one of them being creativity, being able to produce something original and worthwhile [@mumford_2012]. 
 
-Computational creativity is the field at the intersection of +ai, cognitive psychology, philosophy, and art, which aims at understanding, simulating, replicating, or in some cases enhancing human creativity. One definition of computational creativity is the ability to produce something that is novel and useful, demands that we reject common beliefs, results from intense motivation and persistence, or comes from clarifying a vague problem. Top-down approaches to this definition use a mix of explicit formulations of recipes and randomness such as procedural generation. On the opposite, bottom-up approaches use [+ann]{.plural} to learn patterns and heuristics from large datasets to enable non-linear generation.
+Computational creativity is the field at the intersection of +ai, cognitive psychology, philosophy, and art, which aims at understanding, simulating, replicating, or in some cases enhancing human creativity. One definition of computational creativity [@newell_1959] is the ability to produce something that is novel and useful, demands that we reject common beliefs, results from intense motivation and persistence, or comes from clarifying a vague problem. Top-down approaches to this definition use a mix of explicit formulations of recipes and randomness such as procedural generation. On the opposite, bottom-up approaches use [+ann]{.plural} to learn patterns and heuristics from large datasets to enable non-linear generation.
 
-> - Deep Learning Breakthroughs
-> - Rise of Generative Neural Networks 
+We, as a species, are currently witnessing the beginning of a new era where the gap between machines and humans is starting to blur. Current breakthroughs in the field of +ai, more specifically in +dl, are giving computers the ability to perceive and understand our world, but also to interact with our environment using natural interactions such as speech and natural language. [+ann]{.plural}, once mocked by the +ai community [@lecun_2019], are now trainable using +gd [@rumelhart_1986] thanks to the massive availability of data and the processing power of modern hardware accelerators such as [+gpu]{.plural}, [+tpu]{.plural}, and [+npu]{.plural}.
+
+[+nn]{.plural}, those trainable general function approximators, gave rise to the field of generative [+nn]{.plurals}. Specialized +dl architectures such as [+vae]{.plural} [@kingma_2013], [+gan]{.plural} [@goodfellow_2014], [+ddm]{.plural} [@ho_2020], and [+llm]{.plural} [@vaswani_2017; @brown_2020] are used to generate artifacts such as text, audio, images, and videos of unprecedented quality and complexity.
+
+This thesis aims at exploring how one could train and use generative +nn to create +ai-powered tools capable of enhancing human creative expression.
 
 ### Motivations
 

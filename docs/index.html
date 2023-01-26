@@ -190,6 +190,46 @@
   
   
   
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
   <![endif]-->
@@ -293,25 +333,53 @@ of the human brain and is often taken for granted. One of the Artificial
 Intelligence (AI) field’s ultimate goals is to empower computers with
 such human-like abilities, one of them being creativity, being able to
 produce something original and worthwhile <span class="citation"
-data-cites="mumford_2012">(Mumford, Medeiros, and Partlow
-2012)</span>.</p>
+data-cites="mumford_2012">[<a href="#ref-mumford_2012"
+role="doc-biblioref">6</a>]</span>.</p>
 <p>Computational creativity is the field at the intersection of AI,
 cognitive psychology, philosophy, and art, which aims at understanding,
 simulating, replicating, or in some cases enhancing human creativity.
-One definition of computational creativity is the ability to produce
-something that is novel and useful, demands that we reject common
-beliefs, results from intense motivation and persistence, or comes from
-clarifying a vague problem. Top-down approaches to this definition use a
-mix of explicit formulations of recipes and randomness such as
-procedural generation. On the opposite, bottom-up approaches use
-Artificial Neural Networks (ANN) to learn patterns and heuristics from
-large datasets to enable non-linear generation.</p>
-<blockquote>
-<ul>
-<li>Deep Learning Breakthroughs</li>
-<li>Rise of Generative Neural Networks</li>
-</ul>
-</blockquote>
+One definition of computational creativity <span class="citation"
+data-cites="newell_1959">[<a href="#ref-newell_1959"
+role="doc-biblioref">7</a>]</span> is the ability to produce something
+that is novel and useful, demands that we reject common beliefs, results
+from intense motivation and persistence, or comes from clarifying a
+vague problem. Top-down approaches to this definition use a mix of
+explicit formulations of recipes and randomness such as procedural
+generation. On the opposite, bottom-up approaches use Artificial Neural
+Networks (ANN) to learn patterns and heuristics from large datasets to
+enable non-linear generation.</p>
+<p>We, as a species, are currently witnessing the beginning of a new era
+where the gap between machines and humans is starting to blur. Current
+breakthroughs in the field of AI, more specifically in Deep Learning
+(DL), are giving computers the ability to perceive and understand our
+world, but also to interact with our environment using natural
+interactions such as speech and natural language. ANNs, once mocked by
+the AI community <span class="citation" data-cites="lecun_2019">[<a
+href="#ref-lecun_2019" role="doc-biblioref">5</a>]</span>, are now
+trainable using Gradient Descent (GD) <span class="citation"
+data-cites="rumelhart_1986">[<a href="#ref-rumelhart_1986"
+role="doc-biblioref">8</a>]</span> thanks to the massive availability of
+data and the processing power of modern hardware accelerators such as
+Graphical Processing Units (GPU), Tensor Processing Units (TPU), and
+Neural Processing Units (NPU).</p>
+<p>Neural Networks (NN), those trainable general function approximators,
+gave rise to the field of generative NN. Specialized DL architectures
+such as Variational Autoencoders (VAE) <span class="citation"
+data-cites="kingma_2013">[<a href="#ref-kingma_2013"
+role="doc-biblioref">4</a>]</span>, Generative Adversarial Networks
+(GAN) <span class="citation" data-cites="goodfellow_2014">[<a
+href="#ref-goodfellow_2014" role="doc-biblioref">2</a>]</span>,
+Denoising Diffusion Models (DDM) <span class="citation"
+data-cites="ho_2020">[<a href="#ref-ho_2020"
+role="doc-biblioref">3</a>]</span>, and Large Language Models (LLM)
+<span class="citation" data-cites="vaswani_2017 brown_2020">[<a
+href="#ref-brown_2020" role="doc-biblioref">1</a>, <a
+href="#ref-vaswani_2017" role="doc-biblioref">9</a>]</span> are used to
+generate artifacts such as text, audio, images, and videos of
+unprecedented quality and complexity.</p>
+<p>This thesis aims at exploring how one could train and use generative
+NN to create AI-powered tools capable of enhancing human creative
+expression.</p>
 <h3 id="motivations">Motivations</h3>
 <blockquote>
 <ul>
@@ -412,13 +480,69 @@ Explicit Name)</h2>
 <h2 id="conclusion">Conclusion</h2>
 
 <h2 class="unnumbered" id="references">References</h2>
-<div id="refs" class="references csl-bib-body hanging-indent"
-role="list">
+<div id="refs" class="references csl-bib-body" role="list">
+<div id="ref-brown_2020" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[1] </div><div
+class="csl-right-inline">Brown, T., Mann, B., Ryder, N., Subbiah, M.,
+Kaplan, J.D., Dhariwal, P., Neelakantan, A., Shyam, P., Sastry, G.,
+Askell, A., et al. 2020. Language models are few-shot learners.
+<em>Advances in neural information processing systems</em>. 33, (2020),
+1877–1901.</div>
+</div>
+<div id="ref-goodfellow_2014" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[2] </div><div
+class="csl-right-inline">Goodfellow, I., Pouget-Abadie, J., Mirza, M.,
+Xu, B., Warde-Farley, D., Ozair, S., Courville, A. and Bengio, Y. 2014.
+<a
+href="https://proceedings.neurips.cc/paper/2014/file/5ca3e9b122f61f8f06494c97b1afccf3-Paper.pdf">Generative
+adversarial nets</a>. <em>Advances in neural information processing
+systems</em> (2014).</div>
+</div>
+<div id="ref-ho_2020" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline">Ho,
+J., Jain, A. and Abbeel, P. 2020. Denoising diffusion probabilistic
+models. <em>Advances in Neural Information Processing Systems</em>. 33,
+(2020), 6840–6851.</div>
+</div>
+<div id="ref-kingma_2013" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[4] </div><div
+class="csl-right-inline">Kingma, D.P. and Welling, M. 2013.
+Auto-encoding variational bayes. <em>arXiv preprint
+arXiv:1312.6114</em>. (2013).</div>
+</div>
+<div id="ref-lecun_2019" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[5] </div><div class="csl-right-inline">Le
+Cun, Y. 2019. <em><a
+href="https://www.odilejacob.fr/catalogue/sciences-humaines/questions-de-societe/quand-la-machine-apprend_9782738149312.php">Quand
+la machine apprend: La r<span>é</span>volution des neurones artificiels
+et de l’apprentissage profond</a></em>. Odile Jacob.</div>
+</div>
 <div id="ref-mumford_2012" class="csl-entry" role="listitem">
-Mumford, Michael, Kelsey Medeiros, and Paul Partlow. 2012.
-<span>“Creative Thinking: Processes, Strategies, and Knowledge.”</span>
-<em>The Journal of Creative Behavior</em> 46 (March). <a
-href="https://doi.org/10.1002/jocb.003">https://doi.org/10.1002/jocb.003</a>.
+<div class="csl-left-margin">[6] </div><div
+class="csl-right-inline">Mumford, M., Medeiros, K. and Partlow, P. 2012.
+Creative thinking: Processes, strategies, and knowledge. <em>The Journal
+of Creative Behavior</em>. 46, (Mar. 2012). DOI:https://doi.org/<a
+href="https://doi.org/10.1002/jocb.003">10.1002/jocb.003</a>.</div>
+</div>
+<div id="ref-newell_1959" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[7] </div><div
+class="csl-right-inline">Newell, A., Shaw, J.C. and Simon, H.A. 1959.
+<em><a href="https://doi.org/10.1037/13117-003">The processes of
+creative thinking</a></em>. RAND Corporation.</div>
+</div>
+<div id="ref-rumelhart_1986" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[8] </div><div
+class="csl-right-inline">Rumelhart, D.E., Hinton, G.E. and Williams,
+R.J. 1986. Learning representations by back-propagating errors.
+<em>Nature</em>. 323, 6088 (Oct. 1986), 533–536. DOI:https://doi.org/<a
+href="https://doi.org/10.1038/323533a0">10.1038/323533a0</a>.</div>
+</div>
+<div id="ref-vaswani_2017" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[9] </div><div
+class="csl-right-inline">Vaswani, A., Shazeer, N., Parmar, N.,
+Uszkoreit, J., Jones, L., Gomez, A.N., Kaiser, Ł. and Polosukhin, I.
+2017. Attention is all you need. <em>Advances in neural information
+processing systems</em>. 30, (2017).</div>
 </div>
 </div>
 </body>
