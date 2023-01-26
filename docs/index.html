@@ -349,13 +349,13 @@ Intelligence (AI) field’s ultimate goals is to empower computers with
 such human-like abilities, one of them being creativity, being able to
 produce something original and worthwhile <span class="citation"
 data-cites="mumford_2012">[<a href="#ref-mumford_2012"
-role="doc-biblioref">9</a>]</span>.</p>
+role="doc-biblioref">10</a>]</span>.</p>
 <p>Computational creativity is the field at the intersection of AI,
 cognitive psychology, philosophy, and art, which aims at understanding,
 simulating, replicating, or in some cases enhancing human creativity.
 One definition of computational creativity <span class="citation"
 data-cites="newell_1959">[<a href="#ref-newell_1959"
-role="doc-biblioref">10</a>]</span> is the ability to produce something
+role="doc-biblioref">11</a>]</span> is the ability to produce something
 that is novel and useful, demands that we reject common beliefs, results
 from intense motivation and persistence, or comes from clarifying a
 vague problem. Top-down approaches to this definition use a mix of
@@ -370,10 +370,10 @@ breakthroughs in the field of AI, more specifically in Deep Learning
 world, but also to interact with our environment using natural
 interactions such as speech and natural language. ANNs, once mocked by
 the AI community <span class="citation" data-cites="lecun_2019">[<a
-href="#ref-lecun_2019" role="doc-biblioref">8</a>]</span>, are now
+href="#ref-lecun_2019" role="doc-biblioref">9</a>]</span>, are now
 trainable using Gradient Descent (GD) <span class="citation"
 data-cites="rumelhart_1986">[<a href="#ref-rumelhart_1986"
-role="doc-biblioref">11</a>]</span> thanks to the massive availability
+role="doc-biblioref">14</a>]</span> thanks to the massive availability
 of data and the processing power of modern hardware accelerators such as
 Graphical Processing Units (GPU), Tensor Processing Units (TPU), and
 Neural Processing Units (NPU).</p>
@@ -381,15 +381,15 @@ Neural Processing Units (NPU).</p>
 gave rise to the field of generative NN. Specialized DL architectures
 such as Variational Autoencoders (VAE) <span class="citation"
 data-cites="kingma_2013">[<a href="#ref-kingma_2013"
-role="doc-biblioref">7</a>]</span>, Generative Adversarial Networks
+role="doc-biblioref">8</a>]</span>, Generative Adversarial Networks
 (GAN) <span class="citation" data-cites="goodfellow_2014">[<a
-href="#ref-goodfellow_2014" role="doc-biblioref">3</a>]</span>,
+href="#ref-goodfellow_2014" role="doc-biblioref">4</a>]</span>,
 Denoising Diffusion Models (DDM) <span class="citation"
 data-cites="ho_2020">[<a href="#ref-ho_2020"
-role="doc-biblioref">5</a>]</span>, and Large Language Models (LLM)
+role="doc-biblioref">6</a>]</span>, and Large Language Models (LLM)
 <span class="citation" data-cites="vaswani_2017 brown_2020">[<a
 href="#ref-brown_2020" role="doc-biblioref">1</a>, <a
-href="#ref-vaswani_2017" role="doc-biblioref">12</a>]</span> are used to
+href="#ref-vaswani_2017" role="doc-biblioref">15</a>]</span> are used to
 generate artifacts such as text, audio, images, and videos of
 unprecedented quality and complexity.</p>
 <p>This thesis aims at exploring how one could train and use generative
@@ -398,20 +398,39 @@ expression. The task of automatic lineart colorization act as the
 example case used to illustrate this process throughout the entire
 thesis.</p>
 <h3 id="motivations">Motivations</h3>
+<p>Lineart colorization is an essential aspect of the work of artists,
+illustrators, and animators. The task of manually coloring lineart can
+be time-consuming, repetitive, and exhausting, particularly in the
+animation industry, where every frame of an animated product must be
+colored and shaded. This process is typically done using image editing
+software such as Photoshop <span class="citation"
+data-cites="photoshop">[<a href="#ref-photoshop"
+role="doc-biblioref">13</a>]</span>, Clip Studio PAINT <span
+class="citation" data-cites="clipstudiopaint">[<a
+href="#ref-clipstudiopaint" role="doc-biblioref">2</a>]</span>, and
+PaintMan <span class="citation" data-cites="paintman">[<a
+href="#ref-paintman" role="doc-biblioref">12</a>]</span>. Automating the
+colorization process can greatly improve the workflow of these creative
+professionals and has the potential to lower the barrier for newcomers
+and amateurs. Such a system was integrated into Clip Studio PAINT <span
+class="citation" data-cites="clipstudiopaint">[<a
+href="#ref-clipstudiopaint" role="doc-biblioref">2</a>]</span>,
+demonstrating the growing significance of automatic colorization in the
+field.</p>
 <p>The most common digital illustration process can be broken down into
 four distinct stages: sketching, inking, coloring, and post-processing.
 As demonstrated by the work of Kandinsky <span class="citation"
 data-cites="kandinsky_1977">[<a href="#ref-kandinsky_1977"
-role="doc-biblioref">6</a>]</span>, the colorization process can greatly
+role="doc-biblioref">7</a>]</span>, the colorization process can greatly
 impact the overall meaning of a piece of art through the introduction of
 various color schemes, shading, and textures. These elements of the
 coloring process present significant challenges for the Computer Vision
 (CV) task of automatic lineart colorization, particularly in comparison
 to its grayscale counterpart <span class="citation"
 data-cites="furusawa_2O17 hensman_2017 zhang_richard_2017">[<a
-href="#ref-furusawa_2O17" role="doc-biblioref">2</a>, <a
-href="#ref-hensman_2017" role="doc-biblioref">4</a>, <a
-href="#ref-zhang_richard_2017" role="doc-biblioref">13</a>]</span>.
+href="#ref-furusawa_2O17" role="doc-biblioref">3</a>, <a
+href="#ref-hensman_2017" role="doc-biblioref">5</a>, <a
+href="#ref-zhang_richard_2017" role="doc-biblioref">16</a>]</span>.
 Without the added semantic information provided by textures and shadows,
 inferring materials and 3D shapes from black and white linearts only is
 difficult. They can only be deduced from silhouettes.</p>
@@ -524,8 +543,14 @@ Askell, A., et al. 2020. Language models are few-shot learners.
 <em>Advances in neural information processing systems</em>. 33, (2020),
 1877–1901.</div>
 </div>
-<div id="ref-furusawa_2O17" class="csl-entry" role="listitem">
+<div id="ref-clipstudiopaint" class="csl-entry" role="listitem">
 <div class="csl-left-margin">[2] </div><div
+class="csl-right-inline">Clip studio PAINT: <a
+href="https://www.clipstudio.net/"><em>https://www.clipstudio.net/</em></a>.
+Accessed: 2023-01-26.</div>
+</div>
+<div id="ref-furusawa_2O17" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[3] </div><div
 class="csl-right-inline">Furusawa, C., Hiroshiba, K., Ogaki, K. and
 Odagiri, Y. 2017. <a
 href="https://doi.org/10.1145/3145749.3149430">Comicolorization:
@@ -533,7 +558,7 @@ Semi-automatic manga colorization</a>. <em>SIGGRAPH asia 2017 technical
 briefs</em> (New York, NY, USA, 2017).</div>
 </div>
 <div id="ref-goodfellow_2014" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[3] </div><div
+<div class="csl-left-margin">[4] </div><div
 class="csl-right-inline">Goodfellow, I., Pouget-Abadie, J., Mirza, M.,
 Xu, B., Warde-Farley, D., Ozair, S., Courville, A. and Bengio, Y. 2014.
 <a
@@ -542,7 +567,7 @@ adversarial nets</a>. <em>Advances in neural information processing
 systems</em> (2014).</div>
 </div>
 <div id="ref-hensman_2017" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[4] </div><div
+<div class="csl-left-margin">[5] </div><div
 class="csl-right-inline">Hensman, P. and Aizawa, K. 2017. <a
 href="https://doi.org/10.1109/ICDAR.2017.295">cGAN-based manga
 colorization using a single training image</a>. <em>2017 14th IAPR
@@ -550,58 +575,70 @@ international conference on document analysis and recognition
 (ICDAR)</em> (Los Alamitos, CA, USA, Nov. 2017), 72–77.</div>
 </div>
 <div id="ref-ho_2020" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[5] </div><div class="csl-right-inline">Ho,
+<div class="csl-left-margin">[6] </div><div class="csl-right-inline">Ho,
 J., Jain, A. and Abbeel, P. 2020. Denoising diffusion probabilistic
 models. <em>Advances in Neural Information Processing Systems</em>. 33,
 (2020), 6840–6851.</div>
 </div>
 <div id="ref-kandinsky_1977" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[6] </div><div
+<div class="csl-left-margin">[7] </div><div
 class="csl-right-inline">Kandinsky, W. and Sadleir, M. 1977.
 <em>Concerning the spiritual in art</em>. Dover Publications.</div>
 </div>
 <div id="ref-kingma_2013" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[7] </div><div
+<div class="csl-left-margin">[8] </div><div
 class="csl-right-inline">Kingma, D.P. and Welling, M. 2013.
 Auto-encoding variational bayes. <em>arXiv preprint
 arXiv:1312.6114</em>. (2013).</div>
 </div>
 <div id="ref-lecun_2019" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[8] </div><div class="csl-right-inline">Le
+<div class="csl-left-margin">[9] </div><div class="csl-right-inline">Le
 Cun, Y. 2019. <em><a
 href="https://www.odilejacob.fr/catalogue/sciences-humaines/questions-de-societe/quand-la-machine-apprend_9782738149312.php">Quand
 la machine apprend: La r<span>é</span>volution des neurones artificiels
 et de l’apprentissage profond</a></em>. Odile Jacob.</div>
 </div>
 <div id="ref-mumford_2012" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[9] </div><div
+<div class="csl-left-margin">[10] </div><div
 class="csl-right-inline">Mumford, M., Medeiros, K. and Partlow, P. 2012.
 Creative thinking: Processes, strategies, and knowledge. <em>The Journal
 of Creative Behavior</em>. 46, (Mar. 2012). DOI:https://doi.org/<a
 href="https://doi.org/10.1002/jocb.003">10.1002/jocb.003</a>.</div>
 </div>
 <div id="ref-newell_1959" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[10] </div><div
+<div class="csl-left-margin">[11] </div><div
 class="csl-right-inline">Newell, A., Shaw, J.C. and Simon, H.A. 1959.
 <em><a href="https://doi.org/10.1037/13117-003">The processes of
 creative thinking</a></em>. RAND Corporation.</div>
 </div>
+<div id="ref-paintman" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[12] </div><div
+class="csl-right-inline">Paintman: <a
+href="http://www.retasstudio.net/products/paintman/"><em>http://www.retasstudio.net/products/paintman/</em></a>.
+Accessed: 2023-01-26.</div>
+</div>
+<div id="ref-photoshop" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[13] </div><div
+class="csl-right-inline">Photoshop: <a
+href="https://www.adobe.com/products/photoshop.html"><em>https://www.adobe.com/products/photoshop.html</em></a>.
+Accessed: 2023-01-26.</div>
+</div>
 <div id="ref-rumelhart_1986" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[11] </div><div
+<div class="csl-left-margin">[14] </div><div
 class="csl-right-inline">Rumelhart, D.E., Hinton, G.E. and Williams,
 R.J. 1986. Learning representations by back-propagating errors.
 <em>Nature</em>. 323, 6088 (Oct. 1986), 533–536. DOI:https://doi.org/<a
 href="https://doi.org/10.1038/323533a0">10.1038/323533a0</a>.</div>
 </div>
 <div id="ref-vaswani_2017" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[12] </div><div
+<div class="csl-left-margin">[15] </div><div
 class="csl-right-inline">Vaswani, A., Shazeer, N., Parmar, N.,
 Uszkoreit, J., Jones, L., Gomez, A.N., Kaiser, Ł. and Polosukhin, I.
 2017. Attention is all you need. <em>Advances in neural information
 processing systems</em>. 30, (2017).</div>
 </div>
 <div id="ref-zhang_richard_2017" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[13] </div><div
+<div class="csl-left-margin">[16] </div><div
 class="csl-right-inline">Zhang, R., Zhu, J.-Y., Isola, P., Geng, X.,
 Lin, A.S., Yu, T. and Efros, A.A. 2017. Real-time user-guided image
 colorization with learned deep priors. <em>ACM Trans. Graph.</em> 36, 4
