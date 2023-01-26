@@ -1,6 +1,6 @@
 <p align="center">
     <h1>PhD Thesis</h1>
-    <img alt="progress" src="https://progress-bar.dev/6?title=16/251 Pages" />
+    <img alt="progress" src="https://progress-bar.dev/7?title=18/251 Pages" />
 </p>
 
 This repository contains the source code and the compiled versions of my Ph.D. Thesis.

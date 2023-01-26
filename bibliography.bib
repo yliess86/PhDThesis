@@ -31,7 +31,6 @@
     abstract={We describe a new learning procedure, back-propagation, for networks of neurone-like units. The procedure repeatedly adjusts the weights of the connections in the network so as to minimize a measure of the difference between the actual output vector of the net and the desired output vector. As a result of the weight adjustments, internal `hidden' units which are not part of the input or output come to represent important features of the task domain, and the regularities in the task are captured by the interactions of these units. The ability to create useful new features distinguishes back-propagation from earlier, simpler methods such as the perceptron-convergence procedure1.},
     issn={1476-4687},
     doi={10.1038/323533a0},
-    url={https://doi.org/10.1038/323533a0}
 }
 
 @book{lecun_2019,
@@ -89,24 +88,24 @@
 }
 
 @online{photoshop,
-  author = {Adobe},
-  title = {Photoshop},
-  url = {https://www.adobe.com/products/photoshop.html},
-  urldate = {2023-01-26}
+    author = {Adobe},
+    title = {Photoshop},
+    url = {https://www.adobe.com/products/photoshop.html},
+    urldate = {2023-01-26}
 }
 
 @online{clipstudiopaint,
-  author = {Celsys, Inc.},
-  title = {Clip Studio PAINT},
-  url = {https://www.clipstudio.net/},
-  urldate = {2023-01-26}
+    author = {Celsys, Inc.},
+    title = {Clip Studio PAINT},
+    url = {https://www.clipstudio.net/},
+    urldate = {2023-01-26}
 }
 
 @online{paintman,
-  author = {RETAS STUDIO},
-  title = {Paintman},
-  url = {http://www.retasstudio.net/products/paintman/},
-  urldate = {2023-01-26}
+    author = {RETAS STUDIO},
+    title = {Paintman},
+    url = {http://www.retasstudio.net/products/paintman/},
+    urldate = {2023-01-26}
 }
 
 @book{kandinsky_1977,
@@ -128,7 +127,6 @@
     isbn={9781450354066},
     publisher={Association for Computing Machinery},
     address={New York, NY, USA},
-    url={https://doi.org/10.1145/3145749.3149430},
     doi={10.1145/3145749.3149430},
     abstract={We developed Comicolorization, a semi-automatic colorization system for manga images. Given a monochrome manga and reference images as inputs, our system generates a plausible color version of the manga. This is the first work to address the colorization of an entire manga title (a set of manga pages). Our method colorizes a whole page (not a single panel) semi-automatically, with the same color for the same character across multiple panels. To colorize the target character by the color from the reference image, we extract a color feature from the reference and feed it to the colorization network to help the colorization. Our approach employs adversarial loss to encourage the effect of the color features. Optionally, our tool allows users to revise the colorization result interactively. By feeding the color features to our deep colorization network, we accomplish colorization of the entire manga using the desired colors for each panel.},
     booktitle={SIGGRAPH Asia 2017 Technical Briefs},
@@ -149,7 +147,6 @@
     pages={72-77},
     keywords={image color analysis;image segmentation;training;colored noise;image edge detection;quantization (signal);image resolution},
     doi={10.1109/ICDAR.2017.295},
-    url={https://doi.ieeecomputersociety.org/10.1109/ICDAR.2017.295},
     publisher={IEEE Computer Society},
     address={Los Alamitos, CA, USA},
     month={nov}
@@ -165,7 +162,6 @@
     volume={36},
     number={4},
     issn={0730-0301},
-    url={https://doi.org/10.1145/3072959.3073703},
     doi={10.1145/3072959.3073703},
     abstract={We propose a deep learning approach for user-guided image colorization. The system directly maps a grayscale image, along with sparse, local user "hints" to an output colorization with a Convolutional Neural Network (CNN). Rather than using hand-defined rules, the network propagates user edits by fusing low-level cues along with high-level semantic information, learned from large-scale data. We train on a million images, with simulated user inputs. To guide the user towards efficient input selection, the system recommends likely colors based on the input image and current user inputs. The colorization is performed in a single feed-forward pass, enabling real-time use. Even with randomly simulated user inputs, we show that the proposed system helps novice users quickly create realistic colorizations, and offers large improvements in colorization quality with just a minute of use. In addition, we demonstrate that the framework can incorporate other user "hints" to the desired colorization, showing an application to color histogram transfer.},
     journal={ACM Trans. Graph.},
@@ -173,4 +169,110 @@
     articleno={119},
     numpages={11},
     keywords={edit propagation, vision for graphics, deep learning, colorization, interactive colorization}
+}
+
+@article{frans_2017,
+    author={Kevin Frans},
+    title={Outline Colorization through Tandem Adversarial Networks},
+    journal={CoRR},
+    volume={abs/1704.08834},
+    year={2017},
+    url={http://arxiv.org/abs/1704.08834},
+    archivePrefix={arXiv},
+    eprint={1704.08834},
+    timestamp={Mon, 13 Aug 2018 16:46:51 +0200},
+    biburl={https://dblp.org/rec/journals/corr/Frans17.bib},
+    bibsource={dblp computer science bibliography, https://dblp.org}
+}
+
+@article{liu_2017,
+    title={Auto-painter: Cartoon image generation from sketch by using conditional Wasserstein generative adversarial networks},
+    journal={Neurocomputing},
+    volume={311},
+    pages={78-87},
+    year={2018},
+    issn={0925-2312},
+    doi={10.1016/j.neucom.2018.05.045},
+    author={Yifan Liu and Zengchang Qin and Tao Wan and Zhenbo Luo},
+    keywords={Auto-painter, GAN, Wasserstein distance, WGAN, Deep learning, Neural networks},
+    abstract={Recently, realistic image generation using deep neural networks has become a hot topic in machine learning and computer vision. Such an image can be generated at pixel level by learning from a large collection of images. Learning to generate colorful cartoon images from black-and-white sketches is not only an interesting research problem, but also a useful application in digital entertainment. In this paper, we investigate the sketch-to-image synthesis problem by using conditional generative adversarial networks (cGAN). We propose a model called auto-painter which can automatically generate compatible colors given a sketch. Wasserstein distance is used in training cGAN to overcome model collapse and enable the model converged much better. The new model is not only capable of painting hand-draw sketch with compatible colors, but also allowing users to indicate preferred colors. Experimental results on different sketch datasets show that the auto-painter performs better than other existing image-to-image methods.}
+}
+
+@inproceedings{sangkloy_2016,
+    author={Patsorn Sangkloy and Jingwan Lu and Chen Fang and Fisher Yu and James Hays},
+    title={Scribbler: Controlling Deep Image Synthesis with Sketch and Color},
+    booktitle={2017 {IEEE} Conference on Computer Vision and Pattern Recognition, {CVPR} 2017, Honolulu, HI, USA, July 21-26, 2017},
+    pages={6836--6845},
+    publisher={{IEEE} Computer Society},
+    year={2017},
+    doi={10.1109/CVPR.2017.723},
+    timestamp={Sat, 19 Oct 2019 20:23:54 +0200},
+    biburl={https://dblp.org/rec/conf/cvpr/SangkloyLFYH17.bib},
+    bibsource={dblp computer science bibliography, https://dblp.org}
+}
+
+@online{paintschainer_2017,
+    author={Pixiv},
+    title={Pelica Paint},
+    url={https://petalica-paint.pixiv.dev/index_en.html},
+    year={2017},
+    urldate = {2023-01-26}
+}
+
+@inproceedings{ci_2018,
+    author={Ci, Yuanzheng and Ma, Xinzhu and Wang, Zhihui and Li, Haojie and Luo, Zhongxuan},
+    title={User-Guided Deep Anime Line Art Colorization with Conditional Adversarial Networks},
+    year={2018},
+    isbn={9781450356657},
+    publisher={Association for Computing Machinery},
+    address={New York, NY, USA},
+    doi={10.1145/3240508.3240661},
+    abstract={Scribble colors based line art colorization is a challenging computer vision problem since neither greyscale values nor semantic information is presented in line arts, and the lack of authentic illustration-line art training pairs also increases difficulty of model generalization. Recently, several Generative Adversarial Nets (GANs) based methods have achieved great success. They can generate colorized illustrations conditioned on given line art and color hints. However, these methods fail to capture the authentic illustration distributions and are hence perceptually unsatisfying in the sense that they often lack accurate shading. To address these challenges, we propose a novel deep conditional adversarial architecture for scribble based anime line art colorization. Specifically, we integrate the conditional framework with WGAN-GP criteria as well as the perceptual loss to enable us to robustly train a deep network that makes the synthesized images more natural and real. We also introduce a local features network that is independent of synthetic data. With GANs conditioned on features from such network, we notably increase the generalization capability over "in the wild" line arts. Furthermore, we collect two datasets that provide high-quality colorful illustrations and authentic line arts for training and benchmarking. With the proposed model trained on our illustration dataset, we demonstrate that images synthesized by the presented approach are considerably more realistic and precise than alternative approaches.},
+    booktitle={Proceedings of the 26th ACM International Conference on Multimedia},
+    pages={1536–1544},
+    numpages={9},
+    keywords={gans, interactive colorization, edit propagation},
+    location={Seoul, Republic of Korea},
+    series={MM '18}
+}
+
+@inproceedings{zhang_ji_2017,
+    author={L. {Zhang} and Y. {Ji} and X. {Lin} and C. {Liu}},
+    booktitle={2017 4th IAPR Asian Conference on Pattern Recognition (ACPR)},
+    title={Style Transfer for Anime Sketches with Enhanced Residual U-net and Auxiliary Classifier GAN},
+    year={2017},
+    volume={},
+    number={},
+    pages={506-511},
+    doi={10.1109/ACPR.2017.61}
+}
+
+@inproceedings{kim_2019,
+    author={H. {Kim} and H. Y. {Jhoo} and E. {Park} and S. {Yoo}},
+    booktitle={2019 IEEE/CVF International Conference on Computer Vision (ICCV)},   
+    title={Tag2Pix: Line Art Colorization Using Text Tag With SECat and Changing Loss},   
+    year={2019},
+    volume={},
+    number={},
+    pages={9055-9064},
+    doi={10.1109/ICCV.2019.00915}
+}
+
+@inproceedings{saito_2015,
+    author={Saito, Masaki and Matsui, Yusuke},
+    title={Illustration2Vec: A Semantic Vector Representation of Illustrations},
+    booktitle={SIGGRAPH Asia 2015 Technical Briefs},
+    series={SA '15},
+    year={2015},
+    isbn={978-1-4503-3930-8},
+    location={Kobe, Japan},
+    pages={5:1--5:4},
+    articleno={5},
+    numpages={4},
+    url={http://doi.acm.org/10.1145/2820903.2820907},
+    doi={10.1145/2820903.2820907},
+    acmid={2820907},
+    publisher={ACM},
+    address={New York, NY, USA},
+    keywords={CNNs, illustration, search, visual similarity},
 }
