@@ -30,6 +30,8 @@ date: \today
 rights: © 2023 by Yliess Hati is licensed under CC BY 4.0
 keywords: [keyword]
 
+
+
 acronyms:
     ai:
         short: AI
@@ -43,6 +45,9 @@ acronyms:
     dl:
         short: DL
         long: Deep Learning
+    cv:
+        short: CV
+        long: Computer Vision
     gpu:
         short: GPU
         long: Graphical Processing Unit
@@ -84,11 +89,11 @@ We, as a species, are currently witnessing the beginning of a new era where the 
 
 [+nn]{.plural}, those trainable general function approximators, gave rise to the field of generative [+nn]{.plurals}. Specialized +dl architectures such as [+vae]{.plural} [@kingma_2013], [+gan]{.plural} [@goodfellow_2014], [+ddm]{.plural} [@ho_2020], and [+llm]{.plural} [@vaswani_2017; @brown_2020] are used to generate artifacts such as text, audio, images, and videos of unprecedented quality and complexity.
 
-This thesis aims at exploring how one could train and use generative +nn to create +ai-powered tools capable of enhancing human creative expression.
+This thesis aims at exploring how one could train and use generative +nn to create +ai-powered tools capable of enhancing human creative expression. The task of automatic lineart colorization act as the example case used to illustrate this process throughout the entire thesis. 
 
 ### Motivations
 
-> - A case for Lineart Colorization
+The most common digital illustration process can be broken down into four distinct stages: sketching, inking, coloring, and post-processing. As demonstrated by the work of Kandinsky [@kandinsky_1977], the colorization process can greatly impact the overall meaning of a piece of art through the introduction of various color schemes, shading, and textures. These elements of the coloring process present significant challenges for the +cv task of automatic lineart colorization, particularly in comparison to its grayscale counterpart [@furusawa_2O17; @hensman_2017; @zhang_richard_2017]. Without the added semantic information provided by textures and shadows, inferring materials and 3D shapes from only black and white linearts is difficult. They can only be deduced from silhouettes.
 
 ### Problem Statement
 

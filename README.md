@@ -8,7 +8,8 @@ This repository contains the source code and the compiled versions of my Ph.D. T
 - [Markdown Source File](/thesis.md)
 - [Bibliography](/bibliography.bib)
 - [Figures](/figures)
-- [PDF File](/thesis.pdf)
+- [PDF File](/docs/thesis.pdf)
+- [PDF Booklet File](/docs/thesis-book.pdf)
 - [HTML File](/docs/index.html)
 - [License](/LICENSE)
 

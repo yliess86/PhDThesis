@@ -51,15 +51,15 @@
 }
 
 @inproceedings{goodfellow_2014,
-    author = {Goodfellow, Ian and Pouget-Abadie, Jean and Mirza, Mehdi and Xu, Bing and Warde-Farley, David and Ozair, Sherjil and Courville, Aaron and Bengio, Yoshua},
-    booktitle = {Advances in Neural Information Processing Systems},
-    editor = {Z. Ghahramani and M. Welling and C. Cortes and N. Lawrence and K.Q. Weinberger},
-    pages = {},
-    publisher = {Curran Associates, Inc.},
-    title = {Generative Adversarial Nets},
-    url = {https://proceedings.neurips.cc/paper/2014/file/5ca3e9b122f61f8f06494c97b1afccf3-Paper.pdf},
-    volume = {27},
-    year = {2014}
+    author={Goodfellow, Ian and Pouget-Abadie, Jean and Mirza, Mehdi and Xu, Bing and Warde-Farley, David and Ozair, Sherjil and Courville, Aaron and Bengio, Yoshua},
+    booktitle={Advances in Neural Information Processing Systems},
+    editor={Z. Ghahramani and M. Welling and C. Cortes and N. Lawrence and K.Q. Weinberger},
+    pages={},
+    publisher={Curran Associates, Inc.},
+    title={Generative Adversarial Nets},
+    url={https://proceedings.neurips.cc/paper/2014/file/5ca3e9b122f61f8f06494c97b1afccf3-Paper.pdf},
+    volume={27},
+    year={2014}
 }
 
 @article{ho_2020,
@@ -86,4 +86,70 @@
     volume={33},
     pages={1877--1901},
     year={2020}
+}
+
+@book{kandinsky_1977,
+    address={New York},
+    title={Concerning the spiritual in art},
+    isbn={978-0-486-23411-3},
+    abstract={A pioneering work in the movement to free art from its traditional bonds to material reality, this book is one of the most important documents in the history of modern art. Written by the famous nonobjective painter Wassily Kandinsky (1866-1944), it explains Kandinsky's own theory of painting and crystallizes the ideas that were influencing many other modern artists of the period. Along with his own ground-breaking paintings, this book had a tremendous impact on the development of modern art. The first part issues a call for a spiritual revolution in painting that will let artists express their own inner lives in abstract, non-material terms. Just as musicians do not depend upon the material world for their music, so artists should not have to depend upon the material world for their art. In the second part, Kandinsky discusses the psychology of colors, the language of form and color, and the responsibilities of the artist. An Introduction by the translator offers additional explanation of Kandinsky's art and theories.--From publisher description.},
+    language={Translation of Über das Geistige in der Kunst},
+    publisher={Dover Publications},
+    author={Kandinsky, Wassily and Sadleir, Michael},
+    year={1977},
+    note={OCLC: 3042682},
+}
+
+@inproceedings{furusawa_2O17,
+    author={Furusawa, Chie and Hiroshiba, Kazuyuki and Ogaki, Keisuke and Odagiri, Yuri},
+    title={Comicolorization: Semi-Automatic Manga Colorization},
+    year={2017},
+    isbn={9781450354066},
+    publisher={Association for Computing Machinery},
+    address={New York, NY, USA},
+    url={https://doi.org/10.1145/3145749.3149430},
+    doi={10.1145/3145749.3149430},
+    abstract={We developed Comicolorization, a semi-automatic colorization system for manga images. Given a monochrome manga and reference images as inputs, our system generates a plausible color version of the manga. This is the first work to address the colorization of an entire manga title (a set of manga pages). Our method colorizes a whole page (not a single panel) semi-automatically, with the same color for the same character across multiple panels. To colorize the target character by the color from the reference image, we extract a color feature from the reference and feed it to the colorization network to help the colorization. Our approach employs adversarial loss to encourage the effect of the color features. Optionally, our tool allows users to revise the colorization result interactively. By feeding the color features to our deep colorization network, we accomplish colorization of the entire manga using the desired colors for each panel.},
+    booktitle={SIGGRAPH Asia 2017 Technical Briefs},
+    articleno={12},
+    numpages={4},
+    keywords={colorization, deep learning, manga},
+    location={Bangkok, Thailand},
+    series={SA '17}
+}
+
+@inproceedings{hensman_2017,
+    author={P. Hensman and K. Aizawa},
+    booktitle={2017 14th IAPR International Conference on Document Analysis and Recognition (ICDAR)},
+    title={cGAN-Based Manga Colorization Using a Single Training Image},
+    year={2017},
+    volume={3},
+    issn={2379-2140},
+    pages={72-77},
+    keywords={image color analysis;image segmentation;training;colored noise;image edge detection;quantization (signal);image resolution},
+    doi={10.1109/ICDAR.2017.295},
+    url={https://doi.ieeecomputersociety.org/10.1109/ICDAR.2017.295},
+    publisher={IEEE Computer Society},
+    address={Los Alamitos, CA, USA},
+    month={nov}
+}
+
+@article{zhang_richard_2017,
+    author={Zhang, Richard and Zhu, Jun-Yan and Isola, Phillip and Geng, Xinyang and Lin, Angela S. and Yu, Tianhe and Efros, Alexei A.},
+    title={Real-Time User-Guided Image Colorization with Learned Deep Priors},
+    year={2017},
+    issue_date={July 2017},
+    publisher={Association for Computing Machinery},
+    address={New York, NY, USA},
+    volume={36},
+    number={4},
+    issn={0730-0301},
+    url={https://doi.org/10.1145/3072959.3073703},
+    doi={10.1145/3072959.3073703},
+    abstract={We propose a deep learning approach for user-guided image colorization. The system directly maps a grayscale image, along with sparse, local user "hints" to an output colorization with a Convolutional Neural Network (CNN). Rather than using hand-defined rules, the network propagates user edits by fusing low-level cues along with high-level semantic information, learned from large-scale data. We train on a million images, with simulated user inputs. To guide the user towards efficient input selection, the system recommends likely colors based on the input image and current user inputs. The colorization is performed in a single feed-forward pass, enabling real-time use. Even with randomly simulated user inputs, we show that the proposed system helps novice users quickly create realistic colorizations, and offers large improvements in colorization quality with just a minute of use. In addition, we demonstrate that the framework can incorporate other user "hints" to the desired colorization, showing an application to color histogram transfer.},
+    journal={ACM Trans. Graph.},
+    month=jul,
+    articleno={119},
+    numpages={11},
+    keywords={edit propagation, vision for graphics, deep learning, colorization, interactive colorization}
 }
