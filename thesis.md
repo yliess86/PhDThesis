@@ -93,7 +93,7 @@ This thesis aims at exploring how one could train and use generative +nn to crea
 
 ### Motivations
 
-The most common digital illustration process can be broken down into four distinct stages: sketching, inking, coloring, and post-processing. As demonstrated by the work of Kandinsky [@kandinsky_1977], the colorization process can greatly impact the overall meaning of a piece of art through the introduction of various color schemes, shading, and textures. These elements of the coloring process present significant challenges for the +cv task of automatic lineart colorization, particularly in comparison to its grayscale counterpart [@furusawa_2O17; @hensman_2017; @zhang_richard_2017]. Without the added semantic information provided by textures and shadows, inferring materials and 3D shapes from only black and white linearts is difficult. They can only be deduced from silhouettes.
+The most common digital illustration process can be broken down into four distinct stages: sketching, inking, coloring, and post-processing. As demonstrated by the work of Kandinsky [@kandinsky_1977], the colorization process can greatly impact the overall meaning of a piece of art through the introduction of various color schemes, shading, and textures. These elements of the coloring process present significant challenges for the +cv task of automatic lineart colorization, particularly in comparison to its grayscale counterpart [@furusawa_2O17; @hensman_2017; @zhang_richard_2017]. Without the added semantic information provided by textures and shadows, inferring materials and 3D shapes from black and white linearts only is difficult. They can only be deduced from silhouettes.
 
 ### Problem Statement
 
@@ -135,6 +135,13 @@ The most common digital illustration process can be broken down into four distin
 ### Variational Autoencoders
 ### Generative Adversarial Networks
 ### Denoising Diffusion Models
+\newpage{}
+
+## Methodology
+### Implementation
+### Objective Evaluation
+### Subjective Evaluation
+### Reproducibility
 \newpage{}
 
 ## Contrib I (Find Catchy Explicit Name)
