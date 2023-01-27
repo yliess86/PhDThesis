@@ -72,6 +72,9 @@ acronyms:
     llm:
         short: LLM
         long: Large Language Model
+    rl:
+        short: RL
+        long: Reinforcement Learning
 ---
 
 \newpage{}
@@ -112,21 +115,19 @@ Here is a brief enumeration of this thesis's contributions:
 - We present a recipe for curating datasets for the task of automatic lineart colorization [@hati_2019; @hati_2022]
 - We introduce three generative models:
     - PaintsTorch [@hati_2019], a double GAN generator that improved generation quality compared to previous work while allowing realtime interaction with the user.
-    - StencilTorch [@hati_2022], an upgrade upon PaintsTorch, shifting the colorization problem to in-painting allowing for human collaboration to emerge as a natural workflow where the input of a first becomes a potential input for a second.
+    - StencilTorch [@hati_2022], an upgrade upon PaintsTorch, shifting the colorization problem to in-painting allowing for human collaboration to emerge as a natural workflow where the input of a first pass becomes the potential input for a second.
     - StablePaint, an exploration of +ddm for bringing more variety into the generated outputs allowing for variation exploration and conserving the iterative workflow introduced by StencilTorch for the cost of inference speed.
 - We offer an advised reflection on current generative +ai ethical and societal impact on our society.
 
 ### Concerns
 
-> - Raise awareness about
->   - Deepfakes
->   - Model Fabulations
->   - Ownership & Copyright Ambiguities
->   - Biases & Discrimination
-> - About this work
->   - Images used only for Educational and Research Purposes
->   - Only describe recipes for reproducibility
->   - Dataset and Weights are not Distributed (Only Code)
+Recent advances in generative +ai for text, image, audio, and video synthesis are raising important ethical and societal concerns for our society, especially because of its availability and ease of use. Models such as Stable Diffusion [@rombach_2021] and more recently Chat-GPT [@openai_2023] are disturbing our common beliefs and relation with copyright, creativity, the distribution of fake information and so on.
+
+One of the main issues with generative AI is the potential for model fabulation. Generative models can create entirely new, synthetic data that is indistinguishable from real data. This can lead to the dissemination of false information and the manipulation of public opinion. Additionally, there are ambiguities surrounding the ownership and copyright of the generated content, as it is unclear who holds the rights to the generated images and videos. Training data is often obtained via online scrapping and thus copyright ownership is not propagated. This is especially true for commercial applications.
+
+Another important concern is the potential for biases and discrimination. These models are trained on large amounts of data, and if the data is not diverse or representative enough, the model may perpetuate or even amplify existing biases. The Microsoft Tay Twitter bot @wolf_2017] scandal is an outcome of such a phenomenon. This initially innocent chatbot has been easily turned into a racist bot perpetuating hate speech. The task was made easier because of the inherently biased dataset it was trained on.
+
+In this work, we are committed to addressing and raising awareness for these concerns. The illustrations used for training our models and for our experiments are only used for educational and research purposes. We only provide recipes for reproducibility and do not distribute the dataset nor the weights resulting from model training, only the code. We hope this will not ensure that our work is used ethically and responsibly but limit its potential misuse.
 
 ### Outline
 
