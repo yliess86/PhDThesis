@@ -109,7 +109,7 @@ This work focuses on the use of color hints in the form of user strokes as it fi
 
 Here is a brief enumeration of this thesis's contributions:
 
-- We present a recipe for curation datasets for the task of automatic lineart colorization [@hati_2019, @hati_2022]
+- We present a recipe for curation datasets for the task of automatic lineart colorization [@hati_2019; @hati_2022]
 - We introduce three generative models:
     - PaintsTorch [@hati_2019], a double GAN generator that improved generation quality compared to previous work while allowing realtime interaction with the user.
     - StencilTorch [@hati_2022], an upgrade upon PaintsTorch, shifting the colorization problem to in-painting allowing for human collaboration to emerge as a natural workflow where the input of a first becomes a potential input for a second.
