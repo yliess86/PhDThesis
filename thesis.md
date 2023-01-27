@@ -5,7 +5,7 @@ papersize: a4
 
 toc-title: Contents
 toc-depth: 3
-number-sections: true
+numbersections: true
 
 list-tables: true
 list-figures: true
