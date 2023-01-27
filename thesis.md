@@ -138,7 +138,7 @@ In this work, we are committed to addressing and raising awareness for these con
 
 ### Outline
 
-The first part of this thesis (chapters [1](#ch:introduction)-[3](#ch:methodology)) ...
+The first part of this thesis (chapters [1](#ch:introduction)-[3](#ch:methodology)) provides context to the recent advances in generative +ai and introduces the +cv task of user-guided automatic linear colorization, its challenges, and our contributions to the field. It also introduces the methodology used throughout the entire document.
 
 The second part of this thesis (chapters [4](#ch:contrib-1)-[7](#ch:contrib-4)) ...
 
