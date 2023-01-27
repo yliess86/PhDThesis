@@ -5,6 +5,7 @@ OPTIONS     += -F pandoc-acro
 OPTIONS     += -F /usr/bin/pandoc-crossref
 OPTIONS     += --citeproc
 OPTIONS     += --toc
+OPTIONS     += --top-level-division part
 
 PANDOC       = /usr/bin/pandoc
 PANDOC_PDF   = ${PANDOC} ${OPTIONS} ${FILENAME}.md -o docs/${FILENAME}.pdf
