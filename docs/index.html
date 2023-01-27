@@ -466,35 +466,43 @@ role="doc-biblioref">8</a>]</span>. One common pattern in these methods
 is the use of a feature extractor such as Illustration2Vec <span
 class="citation" data-cites="saito_2015">[<a href="#ref-saito_2015"
 role="doc-biblioref">20</a>]</span> allowing to compensate for the lack
-of semantic descriptors by injecting its feature vector into the models.
-This work focuses on the use of color hints in the form of user strokes
-as it fits the natural digital artist workflow and does not involve
-learning and mastering a new skill.</p>
-<p>While previous works offers improving quality compared to classical
-CV techniques, they are still subject to noisy training data, artifacts,
-a lack of variety, and a lack of fidelity in the user intent. In this
-thesis we explore the importance of a clean, qualitative and consistent
-dataset. We investigate how to better capture the user intent via
-natural artistic controls and how to reflect them into the generated
-model artifact while preserving or improving its quality. We also look
-at how the creative process can be transformed into a dynamic iterative
-workflow where the user collaborates with the machine to refine and
-carry out variations of his artwork.</p>
+of semantic descriptors by injecting its feature vector into the
+models.</p>
 <h3 id="contributions">Contributions</h3>
-<blockquote>
+<p>This work focuses on the use of color hints in the form of user
+strokes as it fits the natural digital artist workflow and does not
+involve learning and mastering a new skill. While previous works offers
+improving quality compared to classical CV techniques, they are still
+subject to noisy training data, artifacts, a lack of variety, and a lack
+of fidelity in the user intent. In this thesis we explore the importance
+of a clean, qualitative and consistent dataset. We investigate how to
+better capture the user intent via natural artistic controls and how to
+reflect them into the generated model artifact while preserving or
+improving its quality. We also look at how the creative process can be
+transformed into a dynamic iterative workflow where the user
+collaborates with the machine to refine and carry out variations of his
+artwork.</p>
+<p>Here is a brief enumeration of this thesis’s contributions:</p>
 <ul>
-<li>Recipe for curating datasets for the task of automatic
-colorization</li>
-<li>3 Models exploring different aspect of the topic:
+<li>We present a recipe for curation datasets for the task of automatic
+lineart colorization</li>
+<li>We introduce three generative models:
 <ul>
-<li>PaintsTorch: High Quality, User-Guided, Fast Realtime Feedback</li>
-<li>StencilTorch: Human-Machine Collaboration, Human-in-the-Loop</li>
-<li>StableTorch: Variance and Iterative Exploration</li>
+<li>PaintsTorch, a double GAN generator that improved generation quality
+compared to previous work while allowing realtime interaction with the
+user</li>
+<li>StencilTorch, an upgrade upon PaintsTorch, shifting the colorization
+problem to in-painting allowing for human collaboration to emerge as a
+natural workflow where the input of a first becomes a potential input
+for a second.</li>
+<li>StablePaint, an exploration of DDM for bringing more variety into
+the generated outputs allowing for variation exploration and conserving
+the iterative workflow introduced by StencilTorch for the cost of
+inference speed.</li>
 </ul></li>
-<li>A reflexion on Current Generative AI Ethical and Societal Impact in
-our Society</li>
+<li>We offer an advised reflection on current generative AI ethical and
+societal impact on our society.</li>
 </ul>
-</blockquote>
 <h3 id="concerns">Concerns</h3>
 <blockquote>
 <ul>
