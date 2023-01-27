@@ -252,6 +252,10 @@ Automatic Lineart Colorization</p></h1>
 <h2 id="toc-title">Contents</h2>
 <ul>
 <li><a href="#abstract" id="toc-abstract">Abstract</a></li>
+<li><a href="#aknowledgements"
+id="toc-aknowledgements">Aknowledgements</a></li>
+<li><a href="#context" id="toc-context">Context</a>
+<ul>
 <li><a href="#ch:introduction" id="toc-ch:introduction">Introduction</a>
 <ul>
 <li><a href="#motivations" id="toc-motivations">Motivations</a></li>
@@ -289,8 +293,10 @@ id="toc-subjective-evaluation">Subjective Evaluation</a></li>
 <li><a href="#reproducibility"
 id="toc-reproducibility">Reproducibility</a></li>
 </ul></li>
-<li><a href="#contrib-i-find-catchy-explicit-name"
-id="toc-contrib-i-find-catchy-explicit-name">Contrib I (Find Catchy
+</ul></li>
+<li><a href="#core" id="toc-core">Core</a>
+<ul>
+<li><a href="#ch:contrib-1" id="toc-ch:contrib-1">Contrib I (Find Catchy
 Explicit Name)</a>
 <ul>
 <li><a href="#state-of-the-art" id="toc-state-of-the-art">State of the
@@ -300,9 +306,8 @@ Art</a></li>
 <li><a href="#results" id="toc-results">Results</a></li>
 <li><a href="#summary" id="toc-summary">Summary</a></li>
 </ul></li>
-<li><a href="#contrib-ii-find-catchy-explicit-name"
-id="toc-contrib-ii-find-catchy-explicit-name">Contrib II (Find Catchy
-Explicit Name)</a>
+<li><a href="#ch:contrib-2" id="toc-ch:contrib-2">Contrib II (Find
+Catchy Explicit Name)</a>
 <ul>
 <li><a href="#state-of-the-art-1" id="toc-state-of-the-art-1">State of
 the Art</a></li>
@@ -311,9 +316,8 @@ the Art</a></li>
 <li><a href="#results-1" id="toc-results-1">Results</a></li>
 <li><a href="#summary-1" id="toc-summary-1">Summary</a></li>
 </ul></li>
-<li><a href="#contrib-iii-find-catchy-explicit-name"
-id="toc-contrib-iii-find-catchy-explicit-name">Contrib III (Find Catchy
-Explicit Name)</a>
+<li><a href="#ch:contrib-3" id="toc-ch:contrib-3">Contrib III (Find
+Catchy Explicit Name)</a>
 <ul>
 <li><a href="#state-of-the-art-2" id="toc-state-of-the-art-2">State of
 the Art</a></li>
@@ -322,9 +326,8 @@ the Art</a></li>
 <li><a href="#results-2" id="toc-results-2">Results</a></li>
 <li><a href="#summary-2" id="toc-summary-2">Summary</a></li>
 </ul></li>
-<li><a href="#contrib-iv-find-catchy-explicit-name"
-id="toc-contrib-iv-find-catchy-explicit-name">Contrib IV (Find Catchy
-Explicit Name)</a>
+<li><a href="#ch:contrib-4" id="toc-ch:contrib-4">Contrib IV (Find
+Catchy Explicit Name)</a>
 <ul>
 <li><a href="#state-of-the-art-3" id="toc-state-of-the-art-3">State of
 the Art</a></li>
@@ -333,16 +336,23 @@ the Art</a></li>
 <li><a href="#results-3" id="toc-results-3">Results</a></li>
 <li><a href="#summary-3" id="toc-summary-3">Summary</a></li>
 </ul></li>
-<li><a href="#ethical-and-societal-impact"
-id="toc-ethical-and-societal-impact">Ethical and Societal
+</ul></li>
+<li><a href="#reflexion" id="toc-reflexion">Reflexion</a>
+<ul>
+<li><a href="#ch:ethical-and-societal-impact"
+id="toc-ch:ethical-and-societal-impact">Ethical and Societal
 Impact</a></li>
-<li><a href="#conclusion" id="toc-conclusion">Conclusion</a></li>
+<li><a href="#ch:conclusion" id="toc-ch:conclusion">Conclusion</a></li>
 <li><a href="#references" id="toc-references">References</a></li>
+</ul></li>
 </ul>
 </nav>
-<h1 id="abstract">Abstract</h1>
+<h2 class="unnumbered" id="abstract">Abstract</h2>
 
-<h1 id="ch:introduction">Introduction</h1>
+<h2 class="unnumbered" id="aknowledgements">Aknowledgements</h2>
+
+<h1 id="context">Context</h1>
+<h2 id="ch:introduction">Introduction</h2>
 <p>Humans possess the ability to perceive and understand the world
 allowing us to accomplish a wide range of complex tasks through the
 combination of visual recognition, scene understanding, and
@@ -401,7 +411,7 @@ NN to create AI-powered tools capable of enhancing human creative
 expression. The task of automatic lineart colorization act as the
 example case used to illustrate this process throughout the entire
 thesis.</p>
-<h2 id="motivations">Motivations</h2>
+<h3 id="motivations">Motivations</h3>
 <p>Lineart colorization is an essential aspect of the work of artists,
 illustrators, and animators. The task of manually coloring lineart can
 be time-consuming, repetitive, and exhausting, particularly in the
@@ -439,7 +449,7 @@ href="#ref-zhang_richard_2017" role="doc-biblioref">29</a>]</span>.
 Without the added semantic information provided by textures and shadows,
 inferring materials and 3D shapes from black and white linearts is
 difficult. They can only be deduced from silhouettes.</p>
-<h2 id="problem-statement">Problem Statement</h2>
+<h3 id="problem-statement">Problem Statement</h3>
 <p>One major challenge of automatic lineart colorization is the
 availability of qualitative public datasets. Illustrations do not always
 come with their corresponding lineart. The few dataset available for the
@@ -473,7 +483,7 @@ class="citation" data-cites="saito_2015">[<a href="#ref-saito_2015"
 role="doc-biblioref">24</a>]</span> allowing to compensate for the lack
 of semantic descriptors by injecting its feature vector into the
 models.</p>
-<h2 id="contributions">Contributions</h2>
+<h3 id="contributions">Contributions</h3>
 <p>This work focuses on the use of color hints in the form of user
 strokes as it fits the natural digital artist workflow and does not
 involve learning and mastering a new skill. While previous works offers
@@ -513,7 +523,7 @@ inference speed.</li>
 <li>We offer an advised reflection on current generative AI ethical and
 societal impact on our society.</li>
 </ul>
-<h2 id="concerns">Concerns</h2>
+<h3 id="concerns">Concerns</h3>
 <p>Recent advances in generative AI for text, image, audio, and video
 synthesis are raising important ethical and societal concerns for our
 society, especially because of its availability and ease of use. Models
@@ -550,62 +560,65 @@ We only provide recipes for reproducibility and do not distribute the
 dataset nor the weights resulting from model training, only the code. We
 hope this will not ensure that our work is used ethically and
 responsibly but limit its potential misuse.</p>
-<h2 id="outline">Outline</h2>
-<p>The first part of this thesis (chapter <a
-href="#ch:background">3</a>-<a href="#ch:methodology">4</a>)</p>
-<h1 id="ch:background">Background</h1>
-<h2 id="history-of-artificial-intelligence">History of Artificial
-Intelligence</h2>
-<h2 id="neural-networks">Neural Networks</h2>
-<h2 id="autoencoders">Autoencoders</h2>
-<h2 id="variational-autoencoders">Variational Autoencoders</h2>
-<h2 id="generative-adversarial-networks">Generative Adversarial
-Networks</h2>
-<h2 id="denoising-diffusion-models">Denoising Diffusion Models</h2>
+<h3 id="outline">Outline</h3>
+<p>The first part of this thesis (chapters <a
+href="#ch:introduction">1</a>-<a href="#ch:methodology">3</a>) …</p>
+<p>The second part of this thesis (chapters <a
+href="#ch:contrib-1">4</a>-<a href="#ch:contrib-4">7</a>) …</p>
+<p>The third part of this thesis (chapters <a
+href="#ch:ethdical-and-societal-impact">7</a>-<a
+href="#ch:conclusion">8</a>) …</p>
+<h2 id="ch:background">Background</h2>
+<h3 id="history-of-artificial-intelligence">History of Artificial
+Intelligence</h3>
+<h3 id="neural-networks">Neural Networks</h3>
+<h3 id="autoencoders">Autoencoders</h3>
+<h3 id="variational-autoencoders">Variational Autoencoders</h3>
+<h3 id="generative-adversarial-networks">Generative Adversarial
+Networks</h3>
+<h3 id="denoising-diffusion-models">Denoising Diffusion Models</h3>
 
-<h1 id="ch:methodology">Methodology</h1>
-<h2 id="implementation">Implementation</h2>
-<h2 id="objective-evaluation">Objective Evaluation</h2>
-<h2 id="subjective-evaluation">Subjective Evaluation</h2>
-<h2 id="reproducibility">Reproducibility</h2>
+<h2 id="ch:methodology">Methodology</h2>
+<h3 id="implementation">Implementation</h3>
+<h3 id="objective-evaluation">Objective Evaluation</h3>
+<h3 id="subjective-evaluation">Subjective Evaluation</h3>
+<h3 id="reproducibility">Reproducibility</h3>
 
-<h1 id="contrib-i-find-catchy-explicit-name">Contrib I (Find Catchy
-Explicit Name)</h1>
-<h2 id="state-of-the-art">State of the Art</h2>
-<h2 id="method">Method</h2>
-<h2 id="setup">Setup</h2>
-<h2 id="results">Results</h2>
-<h2 id="summary">Summary</h2>
+<h1 id="core">Core</h1>
+<h2 id="ch:contrib-1">Contrib I (Find Catchy Explicit Name)</h2>
+<h3 id="state-of-the-art">State of the Art</h3>
+<h3 id="method">Method</h3>
+<h3 id="setup">Setup</h3>
+<h3 id="results">Results</h3>
+<h3 id="summary">Summary</h3>
 
-<h1 id="contrib-ii-find-catchy-explicit-name">Contrib II (Find Catchy
-Explicit Name)</h1>
-<h2 id="state-of-the-art-1">State of the Art</h2>
-<h2 id="method-1">Method</h2>
-<h2 id="setup-1">Setup</h2>
-<h2 id="results-1">Results</h2>
-<h2 id="summary-1">Summary</h2>
+<h2 id="ch:contrib-2">Contrib II (Find Catchy Explicit Name)</h2>
+<h3 id="state-of-the-art-1">State of the Art</h3>
+<h3 id="method-1">Method</h3>
+<h3 id="setup-1">Setup</h3>
+<h3 id="results-1">Results</h3>
+<h3 id="summary-1">Summary</h3>
 
-<h1 id="contrib-iii-find-catchy-explicit-name">Contrib III (Find Catchy
-Explicit Name)</h1>
-<h2 id="state-of-the-art-2">State of the Art</h2>
-<h2 id="method-2">Method</h2>
-<h2 id="setup-2">Setup</h2>
-<h2 id="results-2">Results</h2>
-<h2 id="summary-2">Summary</h2>
+<h2 id="ch:contrib-3">Contrib III (Find Catchy Explicit Name)</h2>
+<h3 id="state-of-the-art-2">State of the Art</h3>
+<h3 id="method-2">Method</h3>
+<h3 id="setup-2">Setup</h3>
+<h3 id="results-2">Results</h3>
+<h3 id="summary-2">Summary</h3>
 
-<h1 id="contrib-iv-find-catchy-explicit-name">Contrib IV (Find Catchy
-Explicit Name)</h1>
-<h2 id="state-of-the-art-3">State of the Art</h2>
-<h2 id="method-3">Method</h2>
-<h2 id="setup-3">Setup</h2>
-<h2 id="results-3">Results</h2>
-<h2 id="summary-3">Summary</h2>
+<h2 id="ch:contrib-4">Contrib IV (Find Catchy Explicit Name)</h2>
+<h3 id="state-of-the-art-3">State of the Art</h3>
+<h3 id="method-3">Method</h3>
+<h3 id="setup-3">Setup</h3>
+<h3 id="results-3">Results</h3>
+<h3 id="summary-3">Summary</h3>
 
-<h1 id="ethical-and-societal-impact">Ethical and Societal Impact</h1>
+<h1 id="reflexion">Reflexion</h1>
+<h2 id="ch:ethical-and-societal-impact">Ethical and Societal Impact</h2>
 
-<h1 id="conclusion">Conclusion</h1>
+<h2 id="ch:conclusion">Conclusion</h2>
 
-<h1 class="unnumbered" id="references">References</h1>
+<h2 class="unnumbered" id="references">References</h2>
 <div id="refs" class="references csl-bib-body" role="list">
 <div id="ref-brown_2020" class="csl-entry" role="listitem">
 <div class="csl-left-margin">[1] </div><div
