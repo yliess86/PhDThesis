@@ -5,6 +5,7 @@ papersize: a4
 
 toc-title: Contents
 toc-depth: 3
+number-sections: true
 
 list-tables: true
 list-figures: true
@@ -82,7 +83,7 @@ acronyms:
 ## Abstract
 \newpage{}
 
-## Introduction
+## Introduction {#ch:introduction}
 
 Humans possess the ability to perceive and understand the world allowing us to accomplish a wide range of complex tasks through the combination of visual recognition, scene understanding, and communication. The ability to quickly and accurately extract information from a single image is a testament to the complexity and sophistication of the human brain and is often taken for granted. One of the +ai field's ultimate goals is to empower computers with such human-like abilities, one of them being creativity, being able to produce something original and worthwhile [@mumford_2012]. 
 
@@ -131,11 +132,11 @@ In this work, we are committed to addressing and raising awareness for these con
 
 ### Outline
 
-> - Plain Language Expanded TOC
+The first part of this thesis ch:background
 
 \newpage{}
 
-## Background
+## Background {#ch:background}
 ### History of Artificial Intelligence
 ### Neural Networks
 ### Autoencoders
