@@ -138,11 +138,13 @@ In this work, we are committed to addressing and raising awareness for these con
 
 ### Outline
 
-The first part of this thesis (chapters [1](#ch:introduction)-[3](#ch:methodology)) provides context to the recent advances in generative +ai and introduces the +cv task of user-guided automatic linear colorization, its challenges, and our contributions to the field. It also introduces the methodology used throughout the entire document.
+The first part of this thesis (chapters [1](#ch:introduction)-[3](#ch:methodology)) provides context to the recent advances in generative +ai and introduces the +cv task of user-guided automatic linear colorization, its challenges, and our contributions to the field. It then provides additional background, from +dl first principles to current architectures used in modern generative +nn, and introduces the methodology used throughout the entire document. This part should be accessible to the majority, experts and non-experts, and serve as an introduction to the field.
 
-The second part of this thesis (chapters [4](#ch:contrib-1)-[7](#ch:contrib-4)) ...
+The second part (chapters [4](#ch:contrib-1)-[7](#ch:contrib-4)) presents our contributions, some of which have previously been presented in [@hati_2019; @hati_2022]. It introduces into detail our recipe for sourcing and curation of consistent and qualitative datasets for automatic lineart colorization, PaintsTorch [@hati_2019] our first double generator +gan conditioned on user strokes, StencilTorch [@hati_2022] our in-painting reformulation introducing the use of masks to allow the emergence of iterative workflow and collaboration with the machine, and finally StablePaint, an exploration of the use of +ddm models for variations qualitative exploration.
 
-The third part of this thesis (chapters [7](#ch:ethdical-and-societal-impact)-[8](#ch:conclusion)) ...
+The third and final part (chapters [7](#ch:ethdical-and-societal-impact)-[8](#ch:conclusion)) offers a detailed reflection on this thesis's contributions and more generally about the field of generative +ai ethical and societal impact, identifies the remaining challenges and discusses future work.
+
+The code base for the experiments and contributions are publicly available on GitHub at [https://github.com/yliess86](https://github.com/yliess86)
 
 \newpage{}
 
@@ -197,7 +199,7 @@ The third part of this thesis (chapters [7](#ch:ethdical-and-societal-impact)-[8
 ### Summary
 \newpage{}
 
-# Reflexion
+# Reflection
 \newpage{}
 
 ## Ethical and Societal Impact {#ch:ethical-and-societal-impact}
