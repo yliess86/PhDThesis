@@ -80,10 +80,10 @@ acronyms:
 
 \newpage{}
 
-## Abstract
+# Abstract
 \newpage{}
 
-## Introduction {#ch:introduction}
+# Introduction {#ch:introduction}
 
 Humans possess the ability to perceive and understand the world allowing us to accomplish a wide range of complex tasks through the combination of visual recognition, scene understanding, and communication. The ability to quickly and accurately extract information from a single image is a testament to the complexity and sophistication of the human brain and is often taken for granted. One of the +ai field's ultimate goals is to empower computers with such human-like abilities, one of them being creativity, being able to produce something original and worthwhile [@mumford_2012]. 
 
@@ -95,19 +95,19 @@ We, as a species, are currently witnessing the beginning of a new era where the 
 
 This thesis aims at exploring how one could train and use generative +nn to create +ai-powered tools capable of enhancing human creative expression. The task of automatic lineart colorization act as the example case used to illustrate this process throughout the entire thesis. 
 
-### Motivations
+## Motivations
 
 Lineart colorization is an essential aspect of the work of artists, illustrators, and animators. The task of manually coloring lineart can be time-consuming, repetitive, and exhausting, particularly in the animation industry, where every frame of an animated product must be colored and shaded. This process is typically done using image editing software such as Photoshop [@photoshop], Clip Studio PAINT [@clipstudiopaint], and PaintMan [@paintman]. Automating the colorization process can greatly improve the workflow of these creative professionals and has the potential to lower the barrier for newcomers and amateurs. Such a system was integrated into Clip Studio PAINT [@clipstudiopaint], demonstrating the growing significance of automatic colorization in the field.
 
 The most common digital illustration process can be broken down into four distinct stages: sketching, inking, coloring, and post-processing. As demonstrated by the work of Kandinsky [@kandinsky_1977], the colorization process can greatly impact the overall meaning of a piece of art through the introduction of various color schemes, shading, and textures. These elements of the coloring process present significant challenges for the +cv task of automatic lineart colorization, particularly in comparison to its grayscale counterpart [@furusawa_2O17; @hensman_2017; @zhang_richard_2017]. Without the added semantic information provided by textures and shadows, inferring materials and 3D shapes from black and white linearts is difficult. They can only be deduced from silhouettes.
 
-### Problem Statement
+## Problem Statement
 
 One major challenge of automatic lineart colorization is the availability of qualitative public datasets. Illustrations do not always come with their corresponding lineart. The few dataset available for the task are lacking consistency in the quality of the illustrations, gathering images from different types, mediums and styles. For those reasons, online scrapping and synthetic lineart extraction is the method of choice for many of the contributions in the field [@ci_2018; @zhang_richard_2017].
 
 Previous works in automatic lineart colorization are based on the +gan [@goodfellow_2014] architecture. They can generate unperfect but high-quality illustrations in a quasi realtime setting. They achieve user control and guidance via different means, color hints [@frans_2017; @liu_2017; @sangkloy_2016; @paintschainer_2017; @ci_2018], style transfer [@zhang_ji_2017], tagging [@kim_2019], and more recently natural language [@ho_2020]. One common pattern in these methods is the use of a feature extractor such as Illustration2Vec [@saito_2015] allowing to compensate for the lack of semantic descriptors by injecting its feature vector into the models.
 
-### Contributions
+## Contributions
 
 This work focuses on the use of color hints in the form of user strokes as it fits the natural digital artist workflow and does not involve learning and mastering a new skill. While previous works offers improving quality compared to classical +cv techniques, they are still subject to noisy training data, artifacts, a lack of variety, and a lack of fidelity in the user intent. In this thesis we explore the importance of a clean, qualitative and consistent dataset. We investigate how to better capture the user intent via natural artistic controls and how to reflect them into the generated model artifact while preserving or improving its quality. We also look at how the creative process can be transformed into a dynamic iterative workflow where the user collaborates with the machine to refine and carry out variations of his artwork.
 
@@ -120,7 +120,7 @@ Here is a brief enumeration of this thesis's contributions:
     - StablePaint, an exploration of +ddm for bringing more variety into the generated outputs allowing for variation exploration and conserving the iterative workflow introduced by StencilTorch for the cost of inference speed.
 - We offer an advised reflection on current generative +ai ethical and societal impact on our society.
 
-### Concerns
+## Concerns
 
 Recent advances in generative +ai for text, image, audio, and video synthesis are raising important ethical and societal concerns for our society, especially because of its availability and ease of use. Models such as Stable Diffusion [@rombach_2021] and more recently Chat-GPT [@openai_2023] are disturbing our common beliefs and relation with copyright, creativity, the distribution of fake information and so on.
 
@@ -130,64 +130,64 @@ Another important concern is the potential for biases and discrimination. These 
 
 In this work, we are committed to addressing and raising awareness for these concerns. The illustrations used for training our models and for our experiments are only used for educational and research purposes. We only provide recipes for reproducibility and do not distribute the dataset nor the weights resulting from model training, only the code. We hope this will not ensure that our work is used ethically and responsibly but limit its potential misuse.
 
-### Outline
+## Outline
 
-The first part of this thesis ch:background
+The first part of this thesis (chapter [3](#ch:background)-[4](#ch:methodology))
 
 \newpage{}
 
-## Background {#ch:background}
-### History of Artificial Intelligence
-### Neural Networks
-### Autoencoders
-### Variational Autoencoders
-### Generative Adversarial Networks
-### Denoising Diffusion Models
+# Background {#ch:background}
+## History of Artificial Intelligence
+## Neural Networks
+## Autoencoders
+## Variational Autoencoders
+## Generative Adversarial Networks
+## Denoising Diffusion Models
 \newpage{}
 
-## Methodology
-### Implementation
-### Objective Evaluation
-### Subjective Evaluation
-### Reproducibility
+# Methodology {#ch:methodology}
+## Implementation
+## Objective Evaluation
+## Subjective Evaluation
+## Reproducibility
 \newpage{}
 
-## Contrib I (Find Catchy Explicit Name)
-### State of the Art
-### Method
-### Setup
-### Results
-### Summary
+# Contrib I (Find Catchy Explicit Name)
+## State of the Art
+## Method
+## Setup
+## Results
+## Summary
 \newpage{}
 
-## Contrib II (Find Catchy Explicit Name)
-### State of the Art
-### Method
-### Setup
-### Results
-### Summary
+# Contrib II (Find Catchy Explicit Name)
+## State of the Art
+## Method
+## Setup
+## Results
+## Summary
 \newpage{}
 
-## Contrib III (Find Catchy Explicit Name)
-### State of the Art
-### Method
-### Setup
-### Results
-### Summary
+# Contrib III (Find Catchy Explicit Name)
+## State of the Art
+## Method
+## Setup
+## Results
+## Summary
 \newpage{}
 
-## Contrib IV (Find Catchy Explicit Name)
-### State of the Art
-### Method
-### Setup
-### Results
-### Summary
+# Contrib IV (Find Catchy Explicit Name)
+## State of the Art
+## Method
+## Setup
+## Results
+## Summary
 \newpage{}
 
-## Ethical and Societal Impact
+# Ethical and Societal Impact
 \newpage{}
 
-## Conclusion
+# Conclusion
 \newpage{}
 
-## References
+# References
