@@ -79,6 +79,18 @@ acronyms:
     mlp:
         short: MLP
         long: Multi-Layer Perceptron
+    svm:
+        short: SVM
+        long: Support Vector Machine
+    rnn:
+        short: RNN
+        long: Recurrent Neural Network
+    lstm:
+        short: LSTM
+        long: Long Short-Term Memory
+    cnn:
+        short: CNN
+        long: Convolutional Neural Network
 ---
 
 \newpage{}
@@ -173,9 +185,7 @@ One significant contribution of this period was the Perceptron by Frank Rosenbla
 
 #### The First AI Winter
 
-The Perceptron was an early example of a connectionist approach, which uses a network of artificial neurons to process data. The Perceptron was met with much enthusiasm but was eventually criticized by Marvin L. Minsky and Seymour Papert, who argued that it could not solve the simple XOR problem.
-
-The criticisms, as well as other issues, led to a period of disillusion in the field of +ai, known as the "First AI Winter". It was a time when +ai research lost its momentum and funding was not abundant anymore. This period lasted from the late 1970s to the early 1980s.
+The Perceptron was an early example of a connectionist approach, which uses a network of artificial neurons to process data. The Perceptron was met with much enthusiasm but was eventually criticized by Marvin L. Minsky and Seymour Papert, who argued that it could not solve the simple XOR problem. The criticisms, as well as other issues, led to a period of disillusion in the field of +ai, known as the "First AI Winter". It was a time when +ai research lost its momentum and funding was not abundant anymore. This period lasted from the late 1970s to the early 1980s.
 
 #### Expert Systems and Symbolic AI
 
@@ -187,25 +197,17 @@ Others, enven through they were not much and where often rejected from +ai confe
 
 #### The Second AI Winter
 
-Unfortunetly, this periode was also marked by a lack of progress because of the resource limitations of the time. Those algorithms required to much power and data to work. They were not sufficient to make AI truly successful.
+Unfortunetly, this periode was also marked by a lack of progress because of the resource limitations of the time. Those algorithms required to much power and data to work. They were not sufficient to make AI truly successful. The lack of progress in the eighties led to the "Second AI Winter", which lasted from the mid-eighties to the early 2000s. AI research was largely abandoned during this period. Funding and enthusiasm dwindled.
 
-The lack of progress in the 1980s led to the "Second AI Winter", which lasted from the mid-1990s to the early 2000s. AI research was largely abandoned during this period, and funding and enthusiasm dwindled.
+##### The Indomitable Researchers
 
-##### The Era of Data
-
-The rapid adoption of the internet, the search engines and social networks of the five giants (GAFAM) led to an abundance in data, what we call Big Data. This phenomemon and the processing power of that period driven by the highly specialized and parallel computing architectures, the [+gpu]{.full .plural}, are responsible of the resurgence of the interest for +ai. This allowed researchers to develop more powerful algorithms and model architectures, symbolic and statistical methods, such as the Support Vector Machines (SVMs) from Vapnik.
-
-But the real breakthrough came with the development of [+dl]{.full}, which uses hierarchical deep [+nn]{.full .plural}, with many layers to process and extract non-linear patterns from data. +dl is now the dominant approach in +ai and has achieved remarkable progress in a wide range of applications, from speech and image recognition to natural language processing.
+The second AI winter limited research for +nn. However, some indomitable individuals continued their work. Vladimir Vapnik et al. developed the +svm and Sepp Hochreiter et al. the +lstm for [+rnn]{.plural}. In 1989, Yann LeCun provided the first practical demonstration of backpropagation at Bell Labs with its +cnn named LeNet to read handwritten digits.
 
 #### The Modern Deep Learning Success
 
-<!-- Deep learning has revolutionized the field of AI and has achieved unprecedented successes in a wide range of tasks, from computer vision to natural language processing. The success of deep learning can be attributed to several factors.
+The next significant evolutionary step for [+dl]{.full}, those deep hierarchical +nn, descendant of the connectionist movement, occurred in the early twenty-first century, when computers became faster and GPUs were developed. Data was starting to be abundant thanks to the internet and the rapid rise of search-engines and social networks. Its the era of Big Data. It allowed +nn to compete with +svm. In 2009 Fei-Fei Li and her group launched ImageNet, a dataset assembling billions of labeled images.
 
-First, deep learning architectures are able to learn complex features from large amounts of data. This is due in large part to the use of convolutional neural networks (CNNs), which are able to detect and recognize patterns in images. Furthermore, recurrent neural networks (RNNs) can be used to process sequences of data, such as text or audio.
-
-Second, the use of GPUs has allowed researchers to train deep learning models with large datasets in a fraction of the time that it would take with traditional CPUs. This has enabled researchers to develop more powerful models and has allowed deep learning to be used in real-time applications, such as autonomous driving.
-
-Finally, the development of open-source frameworks, such as TensorFlow and PyTorch, has enabled the development of deep learning models to become more accessible to researchers. This has further accelerated the development of deep learning and has enabled the field to reach new heights of success. -->
+By 2011, the speed of GPUs had increased significantly, making it possible to train +cnn without layer-by-layer pre-training. The rest of the story includes a set of following deep +nn model architectures including, AlexNet, one of the first award winning deep +cnn, ResNet, introducing residual connections, the [+gan]{.full .plural}, a high fidelity and high resolution generative framework, attention mechasims with the rise of the Transformer "Attention is all you Need" architecture present in almost all modern +dl contributions, and more recently the [+ddm]{.full}, the spiritual autoregressive succesor of the +gan.
 
 ### Core Principles {#sec:core}
 #### Perceptron
