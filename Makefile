@@ -21,7 +21,7 @@ PAGE_PROG   := $(shell python3 -c "print(int(${PAGE_COUNT} / ${PAGE_TOTAL} * 100
 all: build
 
 dev:
-	echo ${FILENAME}.md | entr -r ${PANDOC_HTML}
+	echo ${FILENAME}.md | entr -r make build
 
 progress:
 	sed -i -r 's|(https:\/\/progress-bar\.dev\/([0-9]{0,})\?title=([0-9]{0,})\/([0-9]{0,}) Pages)|https:\/\/progress-bar.dev\/${PAGE_PROG}\?title=${PAGE_COUNT}\/${PAGE_TOTAL} Pages|g' README.md

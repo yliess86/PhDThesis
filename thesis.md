@@ -76,6 +76,9 @@ acronyms:
     rl:
         short: RL
         long: Reinforcement Learning
+    mlp:
+        short: MLP
+        long: Multi-Layer Perceptron
 ---
 
 \newpage{}
@@ -144,17 +147,78 @@ The second part (chapters [4](#ch:contrib-1)-[7](#ch:contrib-4)) presents our co
 
 The third and final part (chapters [7](#ch:ethdical-and-societal-impact)-[8](#ch:conclusion)) offers a detailed reflection on this thesis's contributions and more generally about the field of generative +ai ethical and societal impact, identifies the remaining challenges and discusses future work.
 
-The code base for the experiments and contributions are publicly available on GitHub at [https://github.com/yliess86](https://github.com/yliess86)
+The code base for the experiments and contributions is publicly available on GitHub at [https://github.com/yliess86](https://github.com/yliess86).
 
 \newpage{}
 
 ## Background {#ch:background}
-### A Brief History of Artificial Intelligence
-### Neural Networks
-### Autoencoders
-### Variational Autoencoders
-### Generative Adversarial Networks
-### Denoising Diffusion Models
+
+This chapter introduces the reader to the field of [+dl]{.full} from first principles to the current architectures used in modern generative +ai. The first section (section [1](#sec:history)) presents a brief history of the +ai field to ground this technical dissertation into its historical context. The following sections (sections [2](#sec:core)-[4](#sec:attention)) are discussing the first principles of modern +dl from the early Perceptron to more modern frameworks such as [+llm]{.full .plural}.
+
+Additional snippets of code are included to make this chapter more insightful and valuable for newcomers.
+
+### A Brief History of Artificial Intelligence {#sec:history}
+
+The history of the field of +ai is not a simple linear and straightforward story. The field had its success and failures. The term [+ai]{.full} has first been introduced in 1956 by John Mc Carthy and Marvin Lee Minsky at a workshop sponsored by Dartmouth College, gathering about twenty researchers and intellectuals such as the renowned Claude Shanon. The field was supposed to solve all the modern world's problems in a short period.
+
+However, the reality has been far less rosy. Over the years, AI has gone through several “winters”, periods of inactivity and disillusion where funding was cut and research interest dropped. But with the advent of Big Data and the rise of [+dl]{.full}, +ai is once again in the spotlight. The following sections provide a brief overview of the history of AI, from its early days to the current state of the field.
+
+#### The Early Years
+
+The term +ai was first used at the 1956 Dartmouth Workshop, where John McCarthy proposed the idea of creating a machine that could learn from its mistakes and improve its performance over time. This was a revolutionary idea at the time, and the work done at Dartmouth attracted a great deal of attention and funding.
+
+Much of the early research focused on symbolic AI, which uses symbols and logical operations to represent and manipulate data. This approach was based on the early work of Alan Turing and the development of data-driven languages such as the Functional Language LISP from MIT.
+
+One significant contribution of this period was the Perceptron by Frank Rosenblat, a simplified biomedical model of a single neuron. This neuron fires when the weighted sum of its input is above a predefined threshold. The weights are tuned iteratively and manually given supervised data, inputs with corresponding labels, until good enough classification accuracy is met.
+
+#### The First AI Winter
+
+The Perceptron was an early example of a connectionist approach, which uses a network of artificial neurons to process data. The Perceptron was met with much enthusiasm but was eventually criticized by Marvin L. Minsky and Seymour Papert, who argued that it could not solve the simple XOR problem.
+
+The criticisms, as well as other issues, led to a period of disillusion in the field of +ai, known as the "First AI Winter". It was a time when +ai research lost its momentum and funding was not abundant anymore. This period lasted from the late 1970s to the early 1980s.
+
+#### Expert Systems and Symbolic AI
+
+The eighties saw a resurgence of interest in +ai. Expert systems were the new hot +ai topic. It uses hierarchical and specialized ensembles of symbolic reasoning models to solve complex problems. Symbolic +ai continued to prosper as the dominant approach until the mid-nineties.
+
+During this period, +ai was developped as logic-based systems, search-based systems such as depth-first-search or genetic algorithms requiring complex engineering and domain specific knwoledge from experts to work. It was also the time of the first cognitive architectures inspired by advances in the field of neuroscience such as SOAR and ACT-R attempting at simulating the the human cognitive process.
+
+Others, enven through they were not much and where often rejected from +ai conferences at the time, where still working and believed on the connectionnist approach. It was the case for Kunihiko Fukushima responsible for the Neocognitron, and works on Hopfield Networks and the +mlp. Rumbelhart et al. also presented one of the first learning rule for training such complex +nn.
+
+#### The Second AI Winter
+
+Unfortunetly, this periode was also marked by a lack of progress because of the resource limitations of the time. Those algorithms required to much power and data to work. They were not sufficient to make AI truly successful.
+
+The lack of progress in the 1980s led to the "Second AI Winter", which lasted from the mid-1990s to the early 2000s. AI research was largely abandoned during this period, and funding and enthusiasm dwindled.
+
+##### The Era of Data
+
+The rapid adoption of the internet, the search engines and social networks of the five giants (GAFAM) led to an abundance in data, what we call Big Data. This phenomemon and the processing power of that period driven by the highly specialized and parallel computing architectures, the [+gpu]{.full .plural}, are responsible of the resurgence of the interest for +ai. This allowed researchers to develop more powerful algorithms and model architectures, symbolic and statistical methods, such as the Support Vector Machines (SVMs) from Vapnik.
+
+But the real breakthrough came with the development of [+dl]{.full}, which uses hierarchical deep [+nn]{.full .plural}, with many layers to process and extract non-linear patterns from data. +dl is now the dominant approach in +ai and has achieved remarkable progress in a wide range of applications, from speech and image recognition to natural language processing.
+
+#### The Modern Deep Learning Success
+
+<!-- Deep learning has revolutionized the field of AI and has achieved unprecedented successes in a wide range of tasks, from computer vision to natural language processing. The success of deep learning can be attributed to several factors.
+
+First, deep learning architectures are able to learn complex features from large amounts of data. This is due in large part to the use of convolutional neural networks (CNNs), which are able to detect and recognize patterns in images. Furthermore, recurrent neural networks (RNNs) can be used to process sequences of data, such as text or audio.
+
+Second, the use of GPUs has allowed researchers to train deep learning models with large datasets in a fraction of the time that it would take with traditional CPUs. This has enabled researchers to develop more powerful models and has allowed deep learning to be used in real-time applications, such as autonomous driving.
+
+Finally, the development of open-source frameworks, such as TensorFlow and PyTorch, has enabled the development of deep learning models to become more accessible to researchers. This has further accelerated the development of deep learning and has enabled the field to reach new heights of success. -->
+
+### Core Principles {#sec:core}
+#### Perceptron
+#### Multi-Laye Perceptron
+#### Convolutional Neural Network
+### Generative Architectures {#sec:generative}
+#### Autoencoders
+#### Variational Autoencoders
+#### Generative Adversarial Networks
+#### Denoising Diffusion Models
+### Attention is all you Need {#sec:attention}
+#### Multihead Self-Attention
+#### Large Language Models
 \newpage{}
 
 ## Methodology {#ch:methodology}
