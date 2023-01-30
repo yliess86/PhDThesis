@@ -92,6 +92,9 @@ acronyms:
     actr:
         short: ACT-R
         long: Adaptive Control of Thought—Rational
+    rlhf:
+        short: RLHF
+        long: Reinforcement Learning from Human Feedback
 ---
 
 \newpage{}
@@ -217,11 +220,11 @@ By 2011, the speed of [+gpu]{.plural} had increased significantly, making it pos
 
 #### Deep Learning Milestones
 
-- AlphaGo [@silver_2016]
-- AlphStar [@vinyals_2019]
-- AlphaFold [@senior_2020; @jumper_2021]
-- Stable Diffusion [@rombach_2021]
-- Chat-GPT [@openai_2023]
++dl is responsible for many +ai milestones in the past decade. These milestones have been essential in advancing the field and enabling its applications within various sectors. One of the first notable milestones was AlphaGo from DeepMind in 2016 [@silver_2016], where an +ai system was able to beat the Korean world champion Lee Se Dol in the game of Go. AlphaGo is an illustration of the compression and pattern recognition capabilities of deep +nn in combination with efficient search algorithms.
+
+In 2019, AlphStar [@vinyals_2019] from DeepMind also was able to compete and defeat grandmasters in StarCraft the real-time strategy game of Blizzard. This demonstrated the capability of Deep Learning algorithms to achieve beyond human-level performance in real-time and long-term plannification.  In 2020, AlphaFold [@senior_2020] improved the Protein Folding competition by quite a margin, showing that +dl could be used to help solve complex problems that have implications for medical research and drug discovery. In 2021 a follow-up model, AlphaFold 2 [@jumper_2021], was presented as an impressive successor of AlphaFold, showcasing further advances in this field.
+
+In 2021, Stable Diffusion [@rombach_2021] from Stability AI was released. This Latent +ddm conditioned on text prompts allows to generate images of unprecedented quality and met unprecedented public reach. Finally, Chat-GPT [@openai_2023] was released in 2023 as a chatbot based on GPT3 [@brown_2020] and fine-tuned using +rlhf for natural question-answering interaction publicly available as a web demo. However, these last two milestones are also responsible for ethical and societal concerns about copyright, creativity, and more. This highlights both the potential of Deep Learning algorithms but also the need for further research around their implications.
 
 ### Core Principles {#sec:core}
 #### Perceptron
