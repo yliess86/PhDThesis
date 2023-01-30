@@ -31,7 +31,13 @@ progress:
 	sed -i -r 's|(https:\/\/progress-bar\.dev\/([0-9]{0,})\?title=([0-9]{0,})\/([0-9]{0,}) Pages)|https:\/\/progress-bar.dev\/${PAGE_PROG}\?title=${PAGE_COUNT}\/${PAGE_TOTAL} Pages|g' README.md
 	sed -i -r 's|(https:\/\/progress-bar\.dev\/([0-9]{0,})\?title=([0-9]{0,})\/([0-9]{0,}) Words)|https:\/\/progress-bar.dev\/${WORD_PROG}\?title=${WORD_COUNT}\/${WORD_TOTAL} Words|g' README.md
 
-build: progress
+html:
+	cp -r figures docs/
 	${PANDOC_HTML}
+
+pdf:
 	${PANDOC_PDF}
 	${BOOKLET_PDF}
+
+build: progress html pdf
+	echo "Build Done!\n"
