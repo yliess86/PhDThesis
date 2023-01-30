@@ -31,8 +31,6 @@ date: \today
 rights: © 2023 by Yliess Hati is licensed under CC BY 4.0
 keywords: [keyword]
 
-
-
 acronyms:
     ai:
         short: AI
@@ -91,9 +89,15 @@ acronyms:
     cnn:
         short: CNN
         long: Convolutional Neural Network
+    actr:
+        short: ACT-R
+        long: Adaptive Control of Thought—Rational
 ---
 
 \newpage{}
+## List of Abbreviations {-}
+::: {#acronyms}
+:::
 
 ## Abstract {-}
 \newpage{}
@@ -112,7 +116,7 @@ Computational creativity is the field at the intersection of +ai, cognitive psyc
 
 We, as a species, are currently witnessing the beginning of a new era where the gap between machines and humans is starting to blur. Current breakthroughs in the field of +ai, more specifically in +dl, are giving computers the ability to perceive and understand our world, but also to interact with our environment using natural interactions such as speech and natural language. [+ann]{.plural}, once mocked by the +ai community [@lecun_2019], are now trainable using +gd [@rumelhart_1986] thanks to the massive availability of data and the processing power of modern hardware accelerators such as [+gpu]{.plural}, [+tpu]{.plural}, and [+npu]{.plural}.
 
-[+nn]{.plural}, those trainable general function approximators, gave rise to the field of generative [+nn]{.plurals}. Specialized +dl architectures such as [+vae]{.plural} [@kingma_2013], [+gan]{.plural} [@goodfellow_2014], [+ddm]{.plural} [@ho_2020], and [+llm]{.plural} [@vaswani_2017; @brown_2020] are used to generate artifacts such as text, audio, images, and videos of unprecedented quality and complexity.
+[+nn]{.plural}, those trainable general function approximators, gave rise to the field of generative [+nn]{.plural}. Specialized +dl architectures such as [+vae]{.plural} [@kingma_2013], [+gan]{.plural} [@goodfellow_2014], [+ddm]{.plural} [@ho_2020], and [+llm]{.plural} [@vaswani_2017; @brown_2020] are used to generate artifacts such as text, audio, images, and videos of unprecedented quality and complexity.
 
 This dissertation aims at exploring how one could train and use generative +nn to create +ai-powered tools capable of enhancing human creative expression. The task of automatic lineart colorization act as the example case used to illustrate this process throughout the entire thesis. 
 
@@ -165,53 +169,63 @@ The code base for the experiments and contributions is publicly available on Git
 
 ## Background {#ch:background}
 
-This chapter introduces the reader to the field of [+dl]{.full} from first principles to the current architectures used in modern generative +ai. The first section (section [1](#sec:history)) presents a brief history of the +ai field to ground this technical dissertation into its historical context. The following sections (sections [2](#sec:core)-[4](#sec:attention)) are discussing the first principles of modern +dl from the early Perceptron to more modern frameworks such as [+llm]{.full .plural}.
+This chapter introduces the reader to the field of [+dl]{.full} from first principles to the current architectures used in modern generative +ai. The first section (section [1](#sec:history)) presents a brief history of +ai to ground this technical dissertation into its historical context. The following sections (sections [2](#sec:core)-[4](#sec:attention)) are discussing the first principles of modern +dl from the early Perceptron to more modern frameworks such as [+llm]{.full .plural}.
 
 Additional snippets of code are included to make this chapter more insightful and valuable for newcomers.
 
 ### A Brief History of Artificial Intelligence {#sec:history}
 
-The history of the field of +ai is not a simple linear and straightforward story. The field had its success and failures. The term [+ai]{.full} has first been introduced in 1956 by John Mc Carthy and Marvin Lee Minsky at a workshop sponsored by Dartmouth College, gathering about twenty researchers and intellectuals such as the renowned Claude Shanon. The field was supposed to solve all the modern world's problems in a short period.
+![Photography of seven of the Dartmouth workshop participants. From left to right: John McCarthy, Marvin Lee Minsky, Nathaniel Rochester, Claude Elwood Shannon, Ray Solomonoff, Trenchard More, and Oliver Gordon Selfridge. Credit: Margaret Minksy](./figures/boai_dartmouth.png){#fig:dartmouth}
+
+The history of the field of +ai is not a simple linear and straightforward story. The field had its success and failures. The term [+ai]{.full} has first been introduced in 1956 by John Mc Carthy and Marvin Lee Minsky at a workshop sponsored by Dartmouth College [@dartmouth_2006], gathering about twenty researchers and intellectuals such as the renowned Claude Shannon (see @fig:dartmouth). The field's main questions were supposed to be solved in a short period.
 
 However, the reality has been far less rosy. Over the years, AI has gone through several “winters”, periods of inactivity and disillusion where funding was cut and research interest dropped. But with the advent of Big Data and the rise of [+dl]{.full}, +ai is once again in the spotlight. The following sections provide a brief overview of the history of AI, from its early days to the current state of the field.
 
 #### The Early Years
 
-The term +ai was first used at the 1956 Dartmouth Workshop, where John McCarthy proposed the idea of creating a machine that could learn from its mistakes and improve its performance over time. This was a revolutionary idea at the time, and the work done at Dartmouth attracted a great deal of attention and funding.
+The term [+ai]{.full} was first used at the 1956 Dartmouth Workshop [@dartmouth_2006], where John McCarthy proposed the idea of creating a machine that could learn from its mistakes and improve its performance over time. The twenty researchers and intellectuals present worked on topics such as the automatic computer, the use of natural language by machines, neuron nets ([+nn]{.full}), randomness and creativity, and many more. This was a revolutionary idea at the time, and the work done at Dartmouth attracted a great deal of attention and funding.
 
-Much of the early research focused on symbolic AI, which uses symbols and logical operations to represent and manipulate data. This approach was based on the early work of Alan Turing and the development of data-driven languages such as the Functional Language LISP from MIT.
+Much of the early research focused on symbolic +ai, which uses symbols and logical operations to represent and manipulate data. Logic programming, production rules, semantic nets and frames, knowledge-based systems, symbolic mathematics, automatons, automated provers, ontologies and other paradigms were at the core of symbolic +ai [@russell_2016]. This approach was based on the early work of Alan Turing and the development of functional languages such as the LISP by McCarthy and al. at MIT [@mccarthy_1978].
 
-One significant contribution of this period was the Perceptron by Frank Rosenblat, a simplified biomedical model of a single neuron. This neuron fires when the weighted sum of its input is above a predefined threshold. The weights are tuned iteratively and manually given supervised data, inputs with corresponding labels, until good enough classification accuracy is met.
+One significant contribution of this period was the Perceptron by Frank Rosenblatt [@rosenblatt_1958], a simplified biomimical model of a single neuron. This artificial neuron fires when the weighted sum of its input is above a predefined threshold. The weights, scalars attributed to the connection edges of the neuron's inputs, are tuned iteratively and manually given supervised data, inputs with corresponding labels, until good enough classification accuracy is met.
 
 #### The First AI Winter
 
-The Perceptron was an early example of a connectionist approach, which uses a network of artificial neurons to process data. The Perceptron was met with much enthusiasm but was eventually criticized by Marvin L. Minsky and Seymour Papert, who argued that it could not solve the simple XOR problem. The criticisms, as well as other issues, led to a period of disillusion in the field of +ai, known as the "First AI Winter". It was a time when +ai research lost its momentum and funding was not abundant anymore. This period lasted from the late 1970s to the early 1980s.
+The Perceptron was an early example of a connectionist approach, which uses a network of artificial neurons to process data. The Perceptron was met with much enthusiasm but was eventually criticized by Marvin L. Minsky and Seymour Papert [@minsky_1969], who argued that it could not solve a simple XOR problem. The criticisms, as well as other issues, led to a period of disillusion in the field of +ai, known as the "First AI Winter". It was a time when +ai research lost its momentum and funding was not abundant anymore.
 
 #### Expert Systems and Symbolic AI
 
-The eighties saw a resurgence of interest in +ai. Expert systems were the new hot +ai topic. It uses hierarchical and specialized ensembles of symbolic reasoning models to solve complex problems. Symbolic +ai continued to prosper as the dominant approach until the mid-nineties.
+The eighties saw a resurgence of interest in +ai. Expert systems [@jackson_1998] were the new hot +ai topic. They are made of hierarchical and specialized ensembles of symbolic reasoning models and are used to solve complex problems. Symbolic +ai continued to prosper as the dominant approach until the mid-nineties.
 
-During this period, +ai was developped as logic-based systems, search-based systems such as depth-first-search or genetic algorithms requiring complex engineering and domain specific knwoledge from experts to work. It was also the time of the first cognitive architectures inspired by advances in the field of neuroscience such as SOAR and ACT-R attempting at simulating the the human cognitive process.
+During this period, +ai was developed as logic-based systems, search-based systems using depth-first-search, and genetic algorithms, requiring complex engineering and domain-specific knowledge from experts to work. It was also the time of the first cognitive architectures [@lieto_2021] inspired by advances in the field of neuroscience such as SOAR [@larid_2019] and +actr [@john_1992] attempting at simulating the human cognitive process for solving and task automation.
 
-Others, enven through they were not much and where often rejected from +ai conferences at the time, where still working and believed on the connectionnist approach. It was the case for Kunihiko Fukushima responsible for the Neocognitron, and works on Hopfield Networks and the +mlp. Rumbelhart et al. also presented one of the first learning rule for training such complex +nn.
+Although the connectionist approaches were not well received by the community at the time, some individuals are known for significant contributions that later would form the basis for modern +nn architectures. It was the case for Kunihiko Fukushima and his NeoCognitron [@fukushima_1980], or David E. Rumelhart et al. who introduced the most used learning procedure for training [+mlp]{.full .plural}, the backpropagation [@rumelhart_1986].
 
 #### The Second AI Winter
 
-Unfortunetly, this periode was also marked by a lack of progress because of the resource limitations of the time. Those algorithms required to much power and data to work. They were not sufficient to make AI truly successful. The lack of progress in the eighties led to the "Second AI Winter", which lasted from the mid-eighties to the early 2000s. AI research was largely abandoned during this period. Funding and enthusiasm dwindled.
+Unfortunately, this period was also marked by a lack of progress because of the resource limitations of the time. Those algorithms required too much power, data, and investments to work. They were not sufficient to make AI truly successful. The lack of progress in the eighties led to the "Second AI Winter". AI research was largely abandoned during this period. Funding and enthusiasm dwindled.
 
 ##### The Indomitable Researchers
 
-The second AI winter limited research for +nn. However, some indomitable individuals continued their work. Vladimir Vapnik et al. developed the +svm and Sepp Hochreiter et al. the +lstm for [+rnn]{.plural}. In 1989, Yann LeCun provided the first practical demonstration of backpropagation at Bell Labs with its +cnn named LeNet to read handwritten digits.
+The second AI winter limited research for +nn. However, some indomitable individuals continued their work. During this period, Vladimir Vapnik et al. developed the +svm [@cortes_1995], a robust non-probabilistic binary linear classifier. The method has the advantage to generalize well even with small datasets. Sepp Hochreiter et al. introduced the +lstm for [+rnn]{.plural} [@hochreiter_1997], a complex recurrent cell using gates to route the information flow and simulate long and short-term memory buffers. In 1989, Yann LeCun provided the first practical and industrial demonstration of backpropagation at Bell Labs with a +cnn to read handwritten digits [@lecun_1989; @lecun_1998] later used by the American postal services to sort letters.
 
 #### The Modern Deep Learning Success
 
-The next significant evolutionary step for [+dl]{.full}, those deep hierarchical +nn, descendant of the connectionist movement, occurred in the early twenty-first century, when computers became faster and GPUs were developed. Data was starting to be abundant thanks to the internet and the rapid rise of search-engines and social networks. Its the era of Big Data. It allowed +nn to compete with +svm. In 2009 Fei-Fei Li and her group launched ImageNet, a dataset assembling billions of labeled images.
+The next significant evolutionary step for [+dl]{.full}, those deep hierarchical +nn, descendants of the connectionist movement, occurred in the early twenty-first century. Computers were now faster and [+gpu]{.plural} were developed for high compute parallelization. Data was starting to be abundant thanks to the internet and the rapid rise of search engines and social networks. It is the era of Big Data. +nn were competing with +svm. In 2009 Fei-Fei Li and her group launched ImageNet [@deng_2009], a dataset assembling billions of labeled images.
 
-By 2011, the speed of GPUs had increased significantly, making it possible to train +cnn without layer-by-layer pre-training. The rest of the story includes a set of following deep +nn model architectures including, AlexNet, one of the first award winning deep +cnn, ResNet, introducing residual connections, the [+gan]{.full .plural}, a high fidelity and high resolution generative framework, attention mechasims with the rise of the Transformer "Attention is all you Need" architecture present in almost all modern +dl contributions, and more recently the [+ddm]{.full}, the spiritual autoregressive succesor of the +gan.
+By 2011, the speed of [+gpu]{.plural} had increased significantly, making it possible to train [+cnn]{.plural} without layer-by-layer pre-training. The rest of the story includes a succession of deep +nn architectures including, AlexNet [@krizhevsky_2012], one of the first award-winning deep +cnn, ResNet [@he_2016], introducing residual connections, the [+gan]{.full .plural} [@goodfellow_2014], a high fidelity and high-resolution generative framework, attention mechanisms with the rise of the Transformer "Attention is all you Need" architecture [@vaswani_2017] present in almost all modern +dl contributions, and more recently the [+ddm]{.full} [@ho_2020], the spiritual autoregressive successor of the +gan.
+
+#### Deep Learning Milestones
+
+- AlphaGo [@silver_2016]
+- AlphStar [@vinyals_2019]
+- AlphaFold [@senior_2020; @jumper_2021]
+- Stable Diffusion [@rombach_2021]
+- Chat-GPT [@openai_2023]
 
 ### Core Principles {#sec:core}
 #### Perceptron
-#### Multi-Laye Perceptron
+#### Multi-Layer Perceptron
 #### Convolutional Neural Network
 ### Generative Architectures {#sec:generative}
 #### Autoencoders
