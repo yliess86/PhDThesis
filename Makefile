@@ -18,6 +18,10 @@ PAGE_TOTAL   = 251
 PAGE_COUNT  := $(shell exiftool -T -PageCount -s3 -ext pdf docs/${FILENAME}.pdf)
 PAGE_PROG   := $(shell python3 -c "print(int(${PAGE_COUNT} / ${PAGE_TOTAL} * 100))")
 
+WORD_TOTAL   = 80000
+WORD_COUNT  := $(shell pdftotext -layout docs/${FILENAME}.pdf - | tr -d '.' | wc -w)
+WORD_PROG   := $(shell python3 -c "print(int(${WORD_COUNT} / ${WORD_TOTAL} * 100))")
+
 all: build
 
 dev:
@@ -25,6 +29,7 @@ dev:
 
 progress:
 	sed -i -r 's|(https:\/\/progress-bar\.dev\/([0-9]{0,})\?title=([0-9]{0,})\/([0-9]{0,}) Pages)|https:\/\/progress-bar.dev\/${PAGE_PROG}\?title=${PAGE_COUNT}\/${PAGE_TOTAL} Pages|g' README.md
+	sed -i -r 's|(https:\/\/progress-bar\.dev\/([0-9]{0,})\?title=([0-9]{0,})\/([0-9]{0,}) Words)|https:\/\/progress-bar.dev\/${WORD_PROG}\?title=${WORD_COUNT}\/${WORD_TOTAL} Words|g' README.md
 
 build: progress
 	${PANDOC_HTML}
