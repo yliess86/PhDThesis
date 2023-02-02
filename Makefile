@@ -14,11 +14,11 @@ PANDOC_HTML  = ${PANDOC} ${OPTIONS} ${FILENAME}.md -o docs/index.html
 BOOKLET      = pdfbook2
 BOOKLET_PDF  = ${BOOKLET} docs/${FILENAME}.pdf
 
-PAGE_TOTAL   = 251
+PAGE_TOTAL   = 170
 PAGE_COUNT  := $(shell exiftool -T -PageCount -s3 -ext pdf docs/${FILENAME}.pdf)
 PAGE_PROG   := $(shell python3 -c "print(int(${PAGE_COUNT} / ${PAGE_TOTAL} * 100))")
 
-WORD_TOTAL   = 80000
+WORD_TOTAL   = 60000
 WORD_COUNT  := $(shell pdftotext -layout docs/${FILENAME}.pdf - | tr -d '.' | wc -w)
 WORD_PROG   := $(shell python3 -c "print(int(${WORD_COUNT} / ${WORD_TOTAL} * 100))")
 
