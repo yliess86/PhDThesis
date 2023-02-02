@@ -307,7 +307,28 @@ O = (1 / n) * L(f(X), Y).sum() + lam *  R(f)
 
 Classification:
 
+![[+nn]{.full} classification example.](./figures/core_nn_classification.svg){#fig:classification}
+
 - $\mathcal{L} (\hat{y}, y) = \sum_{k=1}^{K} y_k log \hat{y}_k$ cross-entropy
+
+```python {#lst:classification}
+from torch.nn import (Linear, Sequential, Tanh)
+from torch.nn.functional import cross_entropy
+
+# Loss and Regularization
+L = lambda y_, y = cross_entropy(y_ - y, reduce=False)
+R = lambda f: sum(w.pow(2).sum() for w in f.parameters())
+
+# Neural Network model
+f = Sequential(
+    Linear(1, 32), Tanh(),
+    Linear(32, 32), Tanh(),
+    Linear(32, 1),
+)
+
+# Objective function
+O = (1 / n) * L(f(X), Y).sum() + lam *  R(f)
+```
 
 #### Optimization
 
