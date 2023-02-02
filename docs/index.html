@@ -160,7 +160,6 @@
       margin: 0 0.8em 0.2em -1.6em;
       vertical-align: middle;
     }
-    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
     /* CSS for syntax highlighting */
     pre > code.sourceCode { white-space: pre; position: relative; }
     pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
@@ -334,6 +333,9 @@
   
   
   
+  <script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
   <![endif]-->
@@ -973,93 +975,87 @@ role="doc-biblioref">50</a>]</span>.</p>
 <h4 id="supervised-learning">Supervised Learning</h4>
 <p>In Machine Learning (ML), problems are often formulated as
 data-driven learning tasks, where a computer is used to find a mapping
-<span class="math inline"><em>f</em> : <em>X</em> → <em>Y</em></span>
-from input space <span class="math inline"><em>X</em></span> to output
-space <span class="math inline"><em>Y</em></span>. For example, <span
-class="math inline"><em>X</em></span> could represent data about an
-e-mail and <span class="math inline"><em>Y</em></span> the probability
-of this e-mail being spam. In practice, manually defining all the
-characteristics of a function <span
-class="math inline"><em>f</em></span> that would satisfy this task is
-considered unpractical. It would require one to manually describe all
-potential rules defining spam. In ML, the supervised framework offers a
-practical solution consisting of acquiring label data pairs, <span
-class="math inline">(<em>x</em>,<em>y</em>) ∈ <em>X</em> × <em>Y</em></span>
-for the current problem. In our case, this would require gathering a
-dataset of e-mails and asking humans to label those as spam or not.</p>
+<span class="math inline">\(f: X \rightarrow Y\)</span> from input space
+<span class="math inline">\(X\)</span> to output space <span
+class="math inline">\(Y\)</span>. For example, <span
+class="math inline">\(X\)</span> could represent data about an e-mail
+and <span class="math inline">\(Y\)</span> the probability of this
+e-mail being spam. In practice, manually defining all the
+characteristics of a function <span class="math inline">\(f\)</span>
+that would satisfy this task is considered unpractical. It would require
+one to manually describe all potential rules defining spam. In ML, the
+supervised framework offers a practical solution consisting of acquiring
+label data pairs, <span class="math inline">\((x, y) \in X \times
+Y\)</span> for the current problem. In our case, this would require
+gathering a dataset of e-mails and asking humans to label those as spam
+or not.</p>
 <p>Let us consider such a training dataset containing n independent
-pairs <span
-class="math inline">{(<em>x</em><sub>1</sub>,<em>y</em><sub>1</sub>), …, (<em>x</em><sub><em>n</em></sub>,<em>y</em><sub><em>n</em></sub>)}</span>
-sampled from the data distribution <span
-class="math inline"><em>D</em></span>, <span
-class="math inline">(<em>x</em><sub><em>i</em></sub>,<em>y</em><sub><em>i</em></sub>) ∼ <em>D</em></span>.
-In ML, we seek for learning a mapping <span
-class="math inline"><em>f</em> : <em>X</em> → <em>Y</em></span> by
-searching the space of the candidates function class <span
-class="math inline">ℱ</span>. Defining a scalar objective function <span
-class="math inline"><em>L</em>(<em>ŷ</em>,<em>y</em>)</span> measuring
-the distance from true label <span class="math inline"><em>y</em></span>
-and our prediction <span
-class="math inline"><em>f</em>(<em>x</em><sub><em>i</em></sub>) = <em>ŷ</em><sub><em>i</em></sub></span>
-given <span class="math inline"><em>f</em> ∈ ℱ</span>, the ultimate
-objective is to find the function <span
-class="math inline"><em>f</em><sup>*</sup> ∈ <em>F</em></span> that best
-satisfy the following minimization problem (see <a
-href="#eq:f_star_objective">Eq 1</a>):</p>
-<p><span id="eq:f_star_objective"><span class="math display">$$
+pairs <span class="math inline">\(\{(x_1, y_1), \dots, (x_n,
+y_n)\}\)</span> sampled from the data distribution <span
+class="math inline">\(D\)</span>, <span class="math inline">\((x_i, y_i)
+\sim D\)</span>. In ML, we seek for learning a mapping <span
+class="math inline">\(f: X \rightarrow Y\)</span> by searching the space
+of the candidates function class <span
+class="math inline">\(\mathcal{F}\)</span>. Defining a scalar objective
+function <span class="math inline">\(L(\hat{y}, y)\)</span> measuring
+the distance from true label <span class="math inline">\(y\)</span> and
+our prediction <span class="math inline">\(f(x_i) = \hat{y}_i\)</span>
+given <span class="math inline">\(f \in \mathcal{F}\)</span>, the
+ultimate objective is to find the function <span
+class="math inline">\(f^* \in F\)</span> that best satisfy the following
+minimization problem (see <a href="#eq:f_star_objective">Eq 1</a>):</p>
+<p><span id="eq:f_star_objective"><span class="math display">\[
 f^* = arg \; \underset{f \in \mathcal{F}}{min} \; E_{(x, y) \sim D}
 L(\hat{y}, y)
-\qquad{(1)}$$</span></span></p>
-<p>The function <span class="math inline"><em>f</em><sup>*</sup></span>
-must minimize the expected loss <span
-class="math inline"><em>L</em></span> over the entire data distribution
-<span class="math inline"><em>D</em></span>. Once such a function is
-learned one can use it to perform inference and map any element from the
-input space <span class="math inline"><em>X</em></span> to the output
-space <span class="math inline"><em>Y</em></span>.</p>
+\qquad{(1)}\]</span></span></p>
+<p>The function <span class="math inline">\(f^*\)</span> must minimize
+the expected loss <span class="math inline">\(L\)</span> over the entire
+data distribution <span class="math inline">\(D\)</span>. Once such a
+function is learned one can use it to perform inference and map any
+element from the input space <span class="math inline">\(X\)</span> to
+the output space <span class="math inline">\(Y\)</span>.</p>
 <p>However, this minimization problem is intractable as it is impossible
 to represent the entire distribution <span
-class="math inline"><em>D</em></span>. Fortunately, as every pair <span
-class="math inline">(<em>x</em><sub><em>i</em></sub>,<em>y</em><sub><em>i</em></sub>)</span>
-is independently sampled and identically distributed, the objective can
-be approximated by sampling and minimizing the loss over the training
-dataset (see <a href="#eq:f_star_objective_approx">Eq 2</a>):</p>
-<p><span id="eq:f_star_objective_approx"><span class="math display">$$
+class="math inline">\(D\)</span>. Fortunately, as every pair <span
+class="math inline">\((x_i, y_i)\)</span> is independently sampled and
+identically distributed, the objective can be approximated by sampling
+and minimizing the loss over the training dataset (see <a
+href="#eq:f_star_objective_approx">Eq 2</a>):</p>
+<p><span id="eq:f_star_objective_approx"><span class="math display">\[
 f^* \approx arg \; \underset{f \in \mathcal{F}}{min} \; \frac{1}{n}
 \sum_{i=1}^{n} L(\hat{y}_i, y_i)
-\qquad{(2)}$$</span></span></p>
+\qquad{(2)}\]</span></span></p>
 <p>Regularization:</p>
 <ul>
-<li><span class="math inline">$f^* = arg \; \underset{f \in
-\mathcal{F}}{min} E_{(x, y) \sim D} L(f(x), y) + R(f)$</span></li>
-<li><span class="math inline"><em>R</em></span> scalar function encodes
-the complexity, the simpler solution is the better</li>
+<li><span class="math inline">\(f^* = arg \; \underset{f \in
+\mathcal{F}}{min} E_{(x, y) \sim D} L(f(x), y) + R(f)\)</span></li>
+<li><span class="math inline">\(R\)</span> scalar function encodes the
+complexity, the simpler solution is the better</li>
 <li>Allow generalize over validation set, and outside of training
 dist</li>
 </ul>
 <p>Regression:</p>
 <ul>
-<li><span class="math inline">$\frac{1}{n} \sum_{i=1}^{n} (w_2
+<li><span class="math inline">\(\frac{1}{n} \sum_{i=1}^{n} (w_2
 tanh(W_1^T x_i + b_1) + b_2 - y_i)^2 + \lambda (||W_1||_2^2 +
-||w_2||_2^2)$</span></li>
+||w_2||_2^2)\)</span></li>
 </ul>
 <p>Classification:</p>
 <ul>
-<li><span class="math inline">$\mathcal{L} (\hat{y}, y) = \sum_{k=1}^{K}
-y_k log \hat{y}_k$</span> cross-entropy</li>
+<li><span class="math inline">\(\mathcal{L} (\hat{y}, y) =
+\sum_{k=1}^{K} y_k log \hat{y}_k\)</span> cross-entropy</li>
 </ul>
 <h4 id="optimization">Optimization</h4>
 <p>Random:</p>
 <ul>
-<li>Sampling <span class="math inline"><em>θ</em></span> and taking the
-one minimizing <span class="math inline"><em>L</em></span></li>
+<li>Sampling <span class="math inline">\(\theta\)</span> and taking the
+one minimizing <span class="math inline">\(L\)</span></li>
 <li>Breading and Mutation …</li>
 <li>Untractable in practice</li>
 </ul>
 <p>First Order Derivation:</p>
 <ul>
-<li>Restriction to <span class="math inline"><em>f</em></span>
-derivable</li>
+<li>Restriction to <span class="math inline">\(f\)</span> derivable</li>
 <li>Stochastic Gradient Descent</li>
 <li>Weight Update to the Negative of Partial Derivative</li>
 </ul>

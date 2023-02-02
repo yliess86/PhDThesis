@@ -9,7 +9,7 @@ OPTIONS     += --top-level-division part
 
 PANDOC       = /usr/bin/pandoc
 PANDOC_PDF   = ${PANDOC} ${OPTIONS} ${FILENAME}.md -o docs/${FILENAME}.pdf
-PANDOC_HTML  = ${PANDOC} ${OPTIONS} ${FILENAME}.md -o docs/index.html
+PANDOC_HTML  = ${PANDOC} ${OPTIONS} --mathjax ${FILENAME}.md -o docs/index.html
 
 BOOKLET      = pdfbook2
 BOOKLET_PDF  = ${BOOKLET} docs/${FILENAME}.pdf
