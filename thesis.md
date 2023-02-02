@@ -275,11 +275,11 @@ $$ {#eq:f_star_objective_regul}
 
 In the following, we will investigate two examples where supervised learning is first applied to a [+nn]{.full} regression problem, and then a +nn classification problem.
 
-**Regression Problem:** Let us consider the distribution $D$ represented by the $sin$ function in the $[-3 \pi; 3 \pi]$ range (see @fig:regression). We sample $50$ pairs $(x_i, y_i)$ with $X \in [-3 \pi; 3 \pi]$  and $Y \in [-1; 1]$. Our objective is to learn $f_\theta$, a three layers +nn parametrized by its weights $\{w_0, W_1, w_2\} = \theta$. $w_0$ contains $(1 \times 16) + 1$ weights, $W_1$, $(16 \times 16) + 1$ weights, and $w_2$, $(16 \times 1) + 1$ weights. In this case, the function space is limited to the three layers +nn family with $291$ parameters $\mathcal{F}$.
+**Regression Problem:** Let us consider the distribution $D$ represented by the $sin$ function in the $[-3 \pi; 3 \pi]$ range (see @fig:regression). We sample $50$ pairs $(x_i, y_i)$ with $X \in [-3 \pi; 3 \pi]$  and $Y \in [-1; 1]$. Our objective is to learn a regressor $f_\theta$, a three layers +nn parametrized by its weights $\{w_0, W_1, w_2\} = \theta$. $w_0$ contains $(1 \times 16) + 1$ weights, $W_1$, $(16 \times 16) + 1$, and $w_2$, $(16 \times 1) + 1$. In this case, the function space is limited to the three layers +nn family with $291$ parameters $\mathcal{F}$.
 
 ![[+nn]{.full} regression example. The model $f_\theta$ is fit on the training set $(X, Y) \in D$ representing the $sin$ function in the range $[-3 \pi; 3 \pi]$.](./figures/core_nn_regression.svg){#fig:regression}
 
-To achieve this goal using the supervised learning framework, we can optimize the following objective function (see @eq:reg_sin_objective): 
+To achieve this goal using supervised learning, we can optimize the following objective function (see @eq:reg_sin_objective): 
 
 $$
 f^* = arg \; \underset{\theta}{min} \; \frac{1}{n} \sum_{i=1}^{n} (f_\theta(x_i) - y_i)^2 + \lambda ||\theta||_2^2
@@ -305,18 +305,23 @@ f = Sequential(
 O = (1 / n) * L(f(X), Y).sum() + lam *  R(f)
 ```
 
-Classification:
+**Classification Problem:** Let us consider the distribution $D$ representing the 2d positions of two clusters ${0, 1} \in K$ of moons (see @fig:classification). We sample $250$ moon $(x_i, y_i)$ with $X \in [-1; 1]$  and $Y \in [-1; 1]$. Our objective is to learn a classifier $f_\theta$, a three layers +nn parametrized by its weights $\{w_0, W_1, w_2\} = \theta$. $w_0$ contains $(1 \times 32) + 1$ weights, $W_1$, $(32 \times 32) + 1$, and $w_2$, $(32 \times 1) + 1$. In this case, the function space is limited to the three layers +nn family with $1,091$ parameters $\mathcal{F}$.
 
 ![[+nn]{.full} classification example.](./figures/core_nn_classification.svg){#fig:classification}
 
-- $\mathcal{L} (\hat{y}, y) = \sum_{k=1}^{K} y_k log \hat{y}_k$ cross-entropy
+To achieve this goal using supervised learning, we can optimize an objective function similar to the regression problem (see @eq:reg_sin_objective) using the cross-entropy as the loss function (see @eq:cross_entropy), measuring the classification discordance.
+
+$$
+\mathcal{L} (\hat{y}, y) = \sum_{k=1}^{K} y_k \; log \; \hat{y}_k
+$$ {#eq:cross_entropy}
+
+A python code snippet for the objective function and the model is provided below (see @lst:classification):
 
 ```python {#lst:classification}
 from torch.nn import (Linear, Sequential, Tanh)
 from torch.nn.functional import cross_entropy
 
-# Loss and Regularization
-L = lambda y_, y = cross_entropy(y_ - y, reduce=False)
+# Regularization
 R = lambda f: sum(w.pow(2).sum() for w in f.parameters())
 
 # Neural Network model
@@ -327,7 +332,7 @@ f = Sequential(
 )
 
 # Objective function
-O = (1 / n) * L(f(X), Y).sum() + lam *  R(f)
+O = (1 / n) * cross_entropy(f(X), Y, reduction="sum") + lam *  R(f)
 ```
 
 #### Optimization
