@@ -98,6 +98,9 @@ acronyms:
     rlhf:
         short: RLHF
         long: Reinforcement Learning from Human Feedback
+    mse:
+        short: MSE
+        long: Mean Squared Error
 ---
 
 \newpage{}
@@ -250,7 +253,7 @@ This section introduces the technical background necessary to understand this th
 
 In +ml, problems are often formulated as data-driven learning tasks, where a computer is used to find a mapping $f: X \rightarrow Y$ from input space $X$ to output space $Y$. For example, $X$ could represent data about an e-mail and $Y$ the probability of this e-mail being spam. In practice, manually defining all the characteristics of a function $f$ that would satisfy this task is considered unpractical. It would require one to manually describe all potential rules defining spam. In +ml, the supervised framework offers a practical solution consisting of acquiring label data pairs, $(x, y) \in X \times Y$ for the current problem. In our case, this would require gathering a dataset of e-mails and asking humans to label those as spam or not.
 
-Let us consider such a training dataset containing n independent pairs $\{(x_1, y_1), \dots, (x_n, y_n)\}$ sampled from the data distribution $D$, $(x_i, y_i) \sim D$. In +ml, we seek for learning a mapping $f: X \rightarrow Y$ by searching the space of the candidates function class $\mathcal{F}$. Defining a scalar objective function $L(\hat{y}, y)$ measuring the distance from true label $y$ and our prediction $f(x_i) = \hat{y}_i$ given $f \in \mathcal{F}$, the ultimate objective is to find the function $f^* \in F$ that best satisfy the following minimization problem (see @eq:f_star_objective):
+**Objective Function**: Let us consider such a training dataset containing n independent pairs $\{(x_1, y_1), \dots, (x_n, y_n)\}$ sampled from the data distribution $D$, $(x_i, y_i) \sim D$. In +ml, we seek for learning a mapping $f: X \rightarrow Y$ by searching the space of the candidates function class $\mathcal{F}$. Defining a scalar objective function $L(\hat{y}, y)$ measuring the distance from true label $y$ and our prediction $f(x_i) = \hat{y}_i$ given $f \in \mathcal{F}$, the ultimate objective is to find the function $f^* \in F$ that best satisfy the following minimization problem (see @eq:f_star_objective):
 
 $$
 f^* = arg \; \underset{f \in \mathcal{F}}{min} \; E_{(x, y) \sim D} L(\hat{y}, y)
@@ -264,15 +267,43 @@ $$
 f^* \approx arg \; \underset{f \in \mathcal{F}}{min} \; \frac{1}{n} \sum_{i=1}^{n} L(\hat{y}_i, y_i)
 $$ {#eq:f_star_objective_approx}
 
-Regularization:
+**Regularization**: While simplifying the problem allows us to perform loss minimization, this approximation comes at a cost. This optimization problem can have multiple solutions, a set of functions $\{f_1, \dots, f_m\} \in F$ performing well on the given training set, but would behave differently outside of the training data and outside of the data distribution. Those functions would not necessarily be able to generalize. To mitigate those concerns, we can introduce a regularization term $R$ into the objective function (see @eq:f_star_objective_regul), a scalar function that is independent of the data distribution and represent a preference on certain function class.
 
-- $f^* = arg \; \underset{f \in \mathcal{F}}{min} E_{(x, y) \sim D} L(f(x), y) + R(f)$
-- $R$ scalar function encodes the complexity, the simpler solution is the better
-- Allow generalize over validation set, and outside of training dist
+$$
+f^* \approx arg \; \underset{f \in \mathcal{F}}{min} \; \frac{1}{n} \sum_{i=1}^{n} L(\hat{y}_i, y_i) + R(f)
+$$ {#eq:f_star_objective_regul}
 
-Regression:
+In the following, we will investigate two examples where supervised learning is first applied to a [+nn]{.full} regression problem, and then a +nn classification problem.
 
-- $\frac{1}{n} \sum_{i=1}^{n} (w_2 tanh(W_1^T x_i + b_1) + b_2 - y_i)^2 + \lambda (||W_1||_2^2 + ||w_2||_2^2)$
+**Regression Problem:** Let us consider the distribution $D$ represented by the $sin$ function in the $[-3 \pi; 3 \pi]$ range (see @fig:regression). We sample $50$ pairs $(x_i, y_i)$ with $X \in [-3 \pi; 3 \pi]$  and $Y \in [-1; 1]$. Our objective is to learn $f_\theta$, a three layers +nn parametrized by its weights $\{w_0, W_1, w_2\} = \theta$. $w_0$ contains $(1 \times 16) + 1$ weights, $W_1$, $(16 \times 16) + 1$ weights, and $w_2$, $(16 \times 1) + 1$ weights. In this case, the function space is limited to the three layers +nn family with $291$ parameters $\mathcal{F}$.
+
+![[+nn]{.full} regression example. The model $f_\theta$ is fit on the training set $(X, Y) \in D$ representing the $sin$ function in the range $[-3 \pi; 3 \pi]$.](./figures/core_nn_regression.svg){#fig:regression}
+
+To achieve this goal using the supervised learning framework, we can optimize the following objective function (see @eq:reg_sin_objective): 
+
+$$
+f^* = arg \; \underset{\theta}{min} \; \frac{1}{n} \sum_{i=1}^{n} (f_\theta(x_i) - y_i)^2 + \lambda ||\theta||_2^2
+$$ {#eq:reg_sin_objective}
+
+where the loss is the +mse $||.||_2^2$ between the ground-truth $y_i$ and the prediction $\hat{y_i} = f_\theta(x_i)$, and the weighted regularization term $\lambda ||\theta||_2^2$ to penalize the model for having large weights and converge to a simpler solution. A python code snippet for the objective function and the model is provided below (see @lst:regression):
+
+```python {#lst:regression}
+from torch.nn import (Linear, Sequential, Tanh)
+
+# Loss and Regularization
+L = lambda y_, y = (y_ - y).pow(2)
+R = lambda f: sum(w.pow(2).sum() for w in f.parameters())
+
+# Neural Network model
+f = Sequential(
+    Linear(1, 16), Tanh(),
+    Linear(16, 16), Tanh(),
+    Linear(16, 1),
+)
+
+# Objective function
+O = (1 / n) * L(f(X), Y).sum() + lam *  R(f)
+```
 
 Classification:
 
