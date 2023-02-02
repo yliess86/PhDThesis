@@ -41,6 +41,9 @@ acronyms:
     ann:
         short: ANN
         long: Artificial Neural Network
+    ml:
+        short: ML
+        long: Machine Learning
     dl:
         short: DL
         long: Deep Learning
@@ -240,19 +243,26 @@ In 2019, AlphStar [@vinyals_2019] from DeepMind also was able to compete and def
 In 2021, Stable Diffusion [@rombach_2021] from Stability AI was released. This Latent +ddm conditioned on text prompts allows to generate images of unprecedented quality and met unprecedented public reach. Finally, Chat-GPT [@openai_2023] was released in 2023 as a chatbot based on GPT3 [@brown_2020] and fine-tuned using +rlhf for natural question-answering interaction publicly available as a web demo. However, these last two milestones are also responsible for ethical and societal concerns about copyright, creativity, and more. This highlights both the potential of Deep Learning algorithms but also the need for further research around their implications.
 
 ### Deep Learning Core Principles {#sec:core}
+
+This section introduces the technical background necessary to understand this thesis dissertation. It introduces [+nn]{.full .plural} from first principles. A more detailed and complete introduction to the field can be found in "the Deep Learning book" by Ian Goodfellow et al [@goodfellow_2016] or in "Dive into Deep Learning" by Aston Zhang et al. [@aston_zhang_2021].
+
 #### Supervised Learning
 
-Intro:
+In +ml, problems are often formulated as data-driven learning tasks, where a computer is used to find a mapping $f: X \rightarrow Y$ from input space $X$ to output space $Y$. For example, $X$ could represent data about an e-mail and $Y$ the probability of this e-mail being spam. In practice, manually defining all the characteristics of a function $f$ that would satisfy this task is considered unpractical. It would require one to manually describe all potential rules defining spam. In +ml, the supervised framework offers a practical solution consisting of acquiring label data pairs, $(x, y) \in X \times Y$ for the current problem. In our case, this would require gathering a dataset of e-mails and asking humans to label those as spam or not.
 
-- Mapping $f: X \rightarrow Y$
-- Mapping is not Manual in +dl, too hard
-- Human annotations (labels)
+Let us consider such a training dataset containing n independent pairs $\{(x_1, y_1), \dots, (x_n, y_n)\}$ sampled from the data distribution $D$, $(x_i, y_i) \sim D$. In +ml, we seek for learning a mapping $f: X \rightarrow Y$ by searching the space of the candidates function class $\mathcal{F}$. Defining a scalar objective function $L(\hat{y}, y)$ measuring the distance from true label $y$ and our prediction $f(x_i) = \hat{y}_i$ given $f \in \mathcal{F}$, the ultimate objective is to find the function $f^* \in F$ that best satisfy the following minimization problem (see @eq:f_star_objective):
 
-Objective:
+$$
+f^* = arg \; \underset{f \in \mathcal{F}}{min} \; E_{(x, y) \sim D} L(\hat{y}, y)
+$$ {#eq:f_star_objective}
 
-- Objective is to learn a mapping $f$
-- Sets of candidates $\mathcal{F}$
-- $f^* = arg \; \underset{f \in \mathcal{F}}{min} E_{(x, y) \sim D} L(f(x), y)$ is untractable
+The function $f^*$ must minimize the expected loss $L$ over the entire data distribution $D$. Once such a function is learned one can use it to perform inference and map any element from the input space $X$ to the output space $Y$.
+
+However, this minimization problem is intractable as it is impossible to represent the entire distribution $D$. Fortunately, as every pair $(x_i, y_i)$ is independently sampled and identically distributed, the objective can be approximated by sampling and minimizing the loss over the training dataset (see @eq:f_star_objective_approx):
+
+$$
+f^* \approx arg \; \underset{f \in \mathcal{F}}{min} \; \frac{1}{n} \sum_{i=1}^{n} L(\hat{y}_i, y_i)
+$$ {#eq:f_star_objective_approx}
 
 Regularization:
 
@@ -292,6 +302,13 @@ Validation and HyperParameter Search:
 ....
 
 #### Backpropagation
+
+- Efficient estimate of the grad w/ inputs
+- Recursive algo based exploiting chain rule
+- Jacobian estimation from end to start
+- Directed Acyclic Graph of Operations
+- Backward and Forward Pass
+
 #### Neural Network
 #### Convolutional Neural Network
 ### Generative Architectures {#sec:generative}
