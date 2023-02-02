@@ -307,7 +307,7 @@ O = (1 / n) * L(f(X), Y).sum() + lam *  R(f)
 
 **Classification Problem:** Let us consider the distribution $D$ representing the 2d positions of two clusters ${0, 1} \in K$ of moons (see @fig:classification). We sample $250$ moon $(x_i, y_i)$ with $X \in [-1; 1]$  and $Y \in [-1; 1]$. Our objective is to learn a classifier $f_\theta$, a three layers +nn parametrized by its weights $\{w_0, W_1, w_2\} = \theta$. $w_0$ contains $(1 \times 32) + 1$ weights, $W_1$, $(32 \times 32) + 1$, and $w_2$, $(32 \times 1) + 1$. In this case, the function space is limited to the three layers +nn family with $1,091$ parameters $\mathcal{F}$.
 
-![[+nn]{.full} classification example.](./figures/core_nn_classification.svg){#fig:classification}
+![[+nn]{.full} classification example. The model $f_\theta$ is trained to classify moons based on their positions. The decision boundary is shown.](./figures/core_nn_classification.svg){#fig:classification}
 
 To achieve this goal using supervised learning, we can optimize an objective function similar to the regression problem (see @eq:reg_sin_objective) using the cross-entropy as the loss function (see @eq:cross_entropy), measuring the classification discordance.
 
@@ -315,14 +315,14 @@ $$
 \mathcal{L} (\hat{y}, y) = \sum_{k=1}^{K} y_k \; log \; \hat{y}_k
 $$ {#eq:cross_entropy}
 
-A python code snippet for the objective function and the model is provided below (see @lst:classification):
+A python code snippet for the loss function and the model is provided below (see @lst:classification):
 
 ```python {#lst:classification}
 from torch.nn import (Linear, Sequential, Tanh)
 from torch.nn.functional import cross_entropy
 
-# Regularization
-R = lambda f: sum(w.pow(2).sum() for w in f.parameters())
+# Loss
+L = lambda y_, y = cross_entropy(y_, y, reduce=False)
 
 # Neural Network model
 f = Sequential(
@@ -330,9 +330,6 @@ f = Sequential(
     Linear(32, 32), Tanh(),
     Linear(32, 1),
 )
-
-# Objective function
-O = (1 / n) * cross_entropy(f(X), Y, reduction="sum") + lam *  R(f)
 ```
 
 #### Optimization
