@@ -176,7 +176,12 @@ The code base for the experiments and contributions is publicly available on Git
 
 This chapter introduces the reader to the field of [+dl]{.full} from first principles to the current architectures used in modern generative +ai. The first section (section [1](#sec:history)) presents a brief history of +ai to ground this technical dissertation into its historical context. The following sections (sections [2](#sec:core)-[4](#sec:attention)) are discussing the first principles of modern +dl from the early Perceptron to more modern frameworks such as [+llm]{.full .plural}.
 
-Additional snippets of code are included to make this chapter more insightful and valuable for newcomers.
+```python {#lst:snippet}
+# This is a code snippet
+print("Hello World!")
+```
+
+Additional code snippets (see @lst:snippet) are included to make this chapter more insightful and valuable for newcomers.
 
 ![A brief timeline of the History of [+ai]{.full}.](./figures/boai_timeline.svg){#fig:timeline}
 
