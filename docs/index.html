@@ -1130,9 +1130,11 @@ class="math inline">\(1,091\)</span> parameters <span
 class="math inline">\(\mathcal{F}\)</span>.</p>
 <figure id="fig:classification">
 <img src="./figures/core_nn_classification.svg"
-alt="Neural Network (NN) classification example." />
-<figcaption>Figure 7: Neural Network (NN) classification
-example.</figcaption>
+alt="Neural Network (NN) classification example. The model f_\theta is trained to classify moons based on their positions. The decision boundary is shown." />
+<figcaption>Figure 7: Neural Network (NN) classification example. The
+model <span class="math inline">\(f_\theta\)</span> is trained to
+classify moons based on their positions. The decision boundary is
+shown.</figcaption>
 </figure>
 <p>To achieve this goal using supervised learning, we can optimize an
 objective function similar to the regression problem (see <a
@@ -1142,24 +1144,21 @@ classification discordance.</p>
 <p><span id="eq:cross_entropy"><span class="math display">\[
 \mathcal{L} (\hat{y}, y) = \sum_{k=1}^{K} y_k \; log \; \hat{y}_k
 \qquad{(5)}\]</span></span></p>
-<p>A python code snippet for the objective function and the model is
-provided below (see Lst <strong>¿lst:classification?</strong>):</p>
+<p>A python code snippet for the loss function and the model is provided
+below (see Lst <strong>¿lst:classification?</strong>):</p>
 <div class="sourceCode" id="lst:classification"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="lst:classification-1"><a href="#lst:classification-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch.nn <span class="im">import</span> (Linear, Sequential, Tanh)</span>
 <span id="lst:classification-2"><a href="#lst:classification-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch.nn.functional <span class="im">import</span> cross_entropy</span>
 <span id="lst:classification-3"><a href="#lst:classification-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="lst:classification-4"><a href="#lst:classification-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Regularization</span></span>
-<span id="lst:classification-5"><a href="#lst:classification-5" aria-hidden="true" tabindex="-1"></a>R <span class="op">=</span> <span class="kw">lambda</span> f: <span class="bu">sum</span>(w.<span class="bu">pow</span>(<span class="dv">2</span>).<span class="bu">sum</span>() <span class="cf">for</span> w <span class="kw">in</span> f.parameters())</span>
+<span id="lst:classification-4"><a href="#lst:classification-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Loss</span></span>
+<span id="lst:classification-5"><a href="#lst:classification-5" aria-hidden="true" tabindex="-1"></a>L <span class="op">=</span> <span class="kw">lambda</span> y_, y <span class="op">=</span> cross_entropy(y_, y, <span class="bu">reduce</span><span class="op">=</span><span class="va">False</span>)</span>
 <span id="lst:classification-6"><a href="#lst:classification-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="lst:classification-7"><a href="#lst:classification-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Neural Network model</span></span>
 <span id="lst:classification-8"><a href="#lst:classification-8" aria-hidden="true" tabindex="-1"></a>f <span class="op">=</span> Sequential(</span>
 <span id="lst:classification-9"><a href="#lst:classification-9" aria-hidden="true" tabindex="-1"></a>    Linear(<span class="dv">1</span>, <span class="dv">32</span>), Tanh(),</span>
 <span id="lst:classification-10"><a href="#lst:classification-10" aria-hidden="true" tabindex="-1"></a>    Linear(<span class="dv">32</span>, <span class="dv">32</span>), Tanh(),</span>
 <span id="lst:classification-11"><a href="#lst:classification-11" aria-hidden="true" tabindex="-1"></a>    Linear(<span class="dv">32</span>, <span class="dv">1</span>),</span>
-<span id="lst:classification-12"><a href="#lst:classification-12" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="lst:classification-13"><a href="#lst:classification-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="lst:classification-14"><a href="#lst:classification-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Objective function</span></span>
-<span id="lst:classification-15"><a href="#lst:classification-15" aria-hidden="true" tabindex="-1"></a>O <span class="op">=</span> (<span class="dv">1</span> <span class="op">/</span> n) <span class="op">*</span> cross_entropy(f(X), Y, reduction<span class="op">=</span><span class="st">&quot;sum&quot;</span>) <span class="op">+</span> lam <span class="op">*</span>  R(f)</span></code></pre></div>
+<span id="lst:classification-12"><a href="#lst:classification-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <h4 id="optimization">Optimization</h4>
 <p>Random:</p>
 <ul>
