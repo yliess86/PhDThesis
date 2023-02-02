@@ -1111,10 +1111,33 @@ class="sourceCode python"><code class="sourceCode python"><span id="lst:regressi
 <span id="lst:regression-14"><a href="#lst:regression-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Objective function</span></span>
 <span id="lst:regression-15"><a href="#lst:regression-15" aria-hidden="true" tabindex="-1"></a>O <span class="op">=</span> (<span class="dv">1</span> <span class="op">/</span> n) <span class="op">*</span> L(f(X), Y).<span class="bu">sum</span>() <span class="op">+</span> lam <span class="op">*</span>  R(f)</span></code></pre></div>
 <p>Classification:</p>
+<figure id="fig:classification">
+<img src="./figures/core_nn_classification.svg"
+alt="Neural Network (NN) classification example." />
+<figcaption>Figure 7: Neural Network (NN) classification
+example.</figcaption>
+</figure>
 <ul>
 <li><span class="math inline">\(\mathcal{L} (\hat{y}, y) =
 \sum_{k=1}^{K} y_k log \hat{y}_k\)</span> cross-entropy</li>
 </ul>
+<div class="sourceCode" id="lst:classification"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="lst:classification-1"><a href="#lst:classification-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch.nn <span class="im">import</span> (Linear, Sequential, Tanh)</span>
+<span id="lst:classification-2"><a href="#lst:classification-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch.nn.functional <span class="im">import</span> cross_entropy</span>
+<span id="lst:classification-3"><a href="#lst:classification-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst:classification-4"><a href="#lst:classification-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Loss and Regularization</span></span>
+<span id="lst:classification-5"><a href="#lst:classification-5" aria-hidden="true" tabindex="-1"></a>L <span class="op">=</span> <span class="kw">lambda</span> y_, y <span class="op">=</span> cross_entropy(y_ <span class="op">-</span> y, <span class="bu">reduce</span><span class="op">=</span><span class="va">False</span>)</span>
+<span id="lst:classification-6"><a href="#lst:classification-6" aria-hidden="true" tabindex="-1"></a>R <span class="op">=</span> <span class="kw">lambda</span> f: <span class="bu">sum</span>(w.<span class="bu">pow</span>(<span class="dv">2</span>).<span class="bu">sum</span>() <span class="cf">for</span> w <span class="kw">in</span> f.parameters())</span>
+<span id="lst:classification-7"><a href="#lst:classification-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst:classification-8"><a href="#lst:classification-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Neural Network model</span></span>
+<span id="lst:classification-9"><a href="#lst:classification-9" aria-hidden="true" tabindex="-1"></a>f <span class="op">=</span> Sequential(</span>
+<span id="lst:classification-10"><a href="#lst:classification-10" aria-hidden="true" tabindex="-1"></a>    Linear(<span class="dv">1</span>, <span class="dv">32</span>), Tanh(),</span>
+<span id="lst:classification-11"><a href="#lst:classification-11" aria-hidden="true" tabindex="-1"></a>    Linear(<span class="dv">32</span>, <span class="dv">32</span>), Tanh(),</span>
+<span id="lst:classification-12"><a href="#lst:classification-12" aria-hidden="true" tabindex="-1"></a>    Linear(<span class="dv">32</span>, <span class="dv">1</span>),</span>
+<span id="lst:classification-13"><a href="#lst:classification-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="lst:classification-14"><a href="#lst:classification-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst:classification-15"><a href="#lst:classification-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Objective function</span></span>
+<span id="lst:classification-16"><a href="#lst:classification-16" aria-hidden="true" tabindex="-1"></a>O <span class="op">=</span> (<span class="dv">1</span> <span class="op">/</span> n) <span class="op">*</span> L(f(X), Y).<span class="bu">sum</span>() <span class="op">+</span> lam <span class="op">*</span>  R(f)</span></code></pre></div>
 <h4 id="optimization">Optimization</h4>
 <p>Random:</p>
 <ul>
