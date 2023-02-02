@@ -365,11 +365,12 @@ id="toc-contributions">Contributions</a></li>
 <ul>
 <li><a href="#sec:history" id="toc-sec:history">A Brief History of
 Artificial Intelligence</a></li>
-<li><a href="#sec:core" id="toc-sec:core">Core Principles</a></li>
+<li><a href="#sec:core" id="toc-sec:core">Deep Learning Core
+Principles</a></li>
 <li><a href="#sec:generative" id="toc-sec:generative">Generative
 Architectures</a></li>
-<li><a href="#sec:attention" id="toc-sec:attention">Attention is all you
-Need</a></li>
+<li><a href="#sec:attention" id="toc-sec:attention">Attention
+Machanism</a></li>
 </ul></li>
 <li><a href="#ch:methodology" id="toc-ch:methodology">Methodology</a>
 <ul>
@@ -754,7 +755,11 @@ where funding was cut and research interest dropped (see <a
 href="#fig:timeline">Fig 2</a>). But with the advent of Big Data and the
 rise of Deep Learning (DL), AI is once again in the spotlight. The
 following sections provide a brief overview of the history of AI, from
-its early days to the current state of the field.</p>
+its early days to the current state of the field. For a more in-depth
+look at the history of modern AI, DL, we recommend “Quand la machine
+apprend” from Yann LeCun <span class="citation"
+data-cites="lecun_2019">[<a href="#ref-lecun_2019"
+role="doc-biblioref">25</a>]</span>.</p>
 <figure id="fig:dartmouth">
 <img src="./figures/boai_dartmouth.png"
 alt="Photography of seven of the Dartmouth workshop participants. From left to right: John McCarthy, Marvin Lee Minsky, Nathaniel Rochester, Claude Elwood Shannon, Ray Solomonoff, Trenchard More, and Oliver Gordon Selfridge. Credit: Margaret Minksy" />
@@ -950,9 +955,68 @@ milestones are also responsible for ethical and societal concerns about
 copyright, creativity, and more. This highlights both the potential of
 Deep Learning algorithms but also the need for further research around
 their implications.</p>
-<h3 id="sec:core">Core Principles</h3>
-<h4 id="perceptron">Perceptron</h4>
-<h4 id="multi-layer-perceptron">Multi-Layer Perceptron</h4>
+<h3 id="sec:core">Deep Learning Core Principles</h3>
+<h4 id="supervised-learning">Supervised Learning</h4>
+<p>Intro:</p>
+<ul>
+<li>Mapping <span
+class="math inline"><em>f</em> : <em>X</em> → <em>Y</em></span></li>
+<li>Mapping is not Manual in DL, too hard</li>
+<li>Human annotations (labels)</li>
+</ul>
+<p>Objective:</p>
+<ul>
+<li>Objective is to learn a mapping <span
+class="math inline"><em>f</em></span></li>
+<li>Sets of candidates <span class="math inline">ℱ</span></li>
+<li><span class="math inline">$f^* = arg \; \underset{f \in
+\mathcal{F}}{min} E_{(x, y) \sim D} L(f(x), y)$</span> is
+untractable</li>
+</ul>
+<p>Regularization:</p>
+<ul>
+<li><span class="math inline">$f^* = arg \; \underset{f \in
+\mathcal{F}}{min} E_{(x, y) \sim D} L(f(x), y) + R(f)$</span></li>
+<li><span class="math inline"><em>R</em></span> scalar function encodes
+the complexity, the simpler solution is the better</li>
+<li>Allow generalize over validation set, and outside of training
+dist</li>
+</ul>
+<p>Regression:</p>
+<ul>
+<li><span class="math inline">$\frac{1}{n} \sum_{i=1}^{n} (w_2
+tanh(W_1^T x_i + b_1) + b_2 - y_i)^2 + \lambda (||W_1||_2^2 +
+||w_2||_2^2)$</span></li>
+</ul>
+<p>Classification:</p>
+<ul>
+<li><span class="math inline">$\mathcal{L} (\hat{y}, y) = \sum_{k=1}^{K}
+y_k log \hat{y}_k$</span> cross-entropy</li>
+</ul>
+<h4 id="optimization">Optimization</h4>
+<p>Random:</p>
+<ul>
+<li>Sampling <span class="math inline"><em>θ</em></span> and taking the
+one minimizing <span class="math inline"><em>L</em></span></li>
+<li>Breading and Mutation …</li>
+<li>Untractable in practice</li>
+</ul>
+<p>First Order Derivation:</p>
+<ul>
+<li>Restriction to <span class="math inline"><em>f</em></span>
+derivable</li>
+<li>Stochastic Gradient Descent</li>
+<li>Weight Update to the Negative of Partial Derivative</li>
+</ul>
+<p>Momentum:</p>
+<ul>
+<li>Adagrad, RMSProp, AdamW</li>
+<li>Adam: Big Gradient = Small Steps, Small Gradient == Big Steps</li>
+</ul>
+<p>Validation and HyperParameter Search:</p>
+<p>….</p>
+<h4 id="backpropagation">Backpropagation</h4>
+<h4 id="neural-network">Neural Network</h4>
 <h4 id="convolutional-neural-network">Convolutional Neural Network</h4>
 <h3 id="sec:generative">Generative Architectures</h3>
 <h4 id="autoencoders">Autoencoders</h4>
@@ -960,7 +1024,7 @@ their implications.</p>
 <h4 id="generative-adversarial-networks">Generative Adversarial
 Networks</h4>
 <h4 id="denoising-diffusion-models">Denoising Diffusion Models</h4>
-<h3 id="sec:attention">Attention is all you Need</h3>
+<h3 id="sec:attention">Attention Machanism</h3>
 <h4 id="multihead-self-attention">Multihead Self-Attention</h4>
 <h4 id="large-language-models">Large Language Models</h4>
 

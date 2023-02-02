@@ -189,7 +189,7 @@ Additional code snippets (see @lst:snippet) are included to make this chapter mo
 
 The history of the field of +ai is not a simple linear and straightforward story. The field had its success and failures. The term [+ai]{.full} has first been introduced in 1956 by John Mc Carthy and Marvin Lee Minsky at a workshop sponsored by Dartmouth College [@dartmouth_2006], gathering about twenty researchers and intellectuals such as the renowned Claude Shannon (see @fig:dartmouth). The field's main questions were supposed to be solved in a short period.
 
-However, the reality has been far less rosy. Over the years, AI has gone through several “winters”, periods of inactivity and disillusion where funding was cut and research interest dropped (see @fig:timeline). But with the advent of Big Data and the rise of [+dl]{.full}, +ai is once again in the spotlight. The following sections provide a brief overview of the history of AI, from its early days to the current state of the field.
+However, the reality has been far less rosy. Over the years, AI has gone through several “winters”, periods of inactivity and disillusion where funding was cut and research interest dropped (see @fig:timeline). But with the advent of Big Data and the rise of [+dl]{.full}, +ai is once again in the spotlight. The following sections provide a brief overview of the history of AI, from its early days to the current state of the field. For a more in-depth look at the history of modern +ai, +dl, we recommend "Quand la machine apprend" from Yann LeCun @lecun_2019.
 
 ![Photography of seven of the Dartmouth workshop participants. From left to right: John McCarthy, Marvin Lee Minsky, Nathaniel Rochester, Claude Elwood Shannon, Ray Solomonoff, Trenchard More, and Oliver Gordon Selfridge. Credit: Margaret Minksy](./figures/boai_dartmouth.png){#fig:dartmouth}
 
@@ -239,16 +239,67 @@ In 2019, AlphStar [@vinyals_2019] from DeepMind also was able to compete and def
 
 In 2021, Stable Diffusion [@rombach_2021] from Stability AI was released. This Latent +ddm conditioned on text prompts allows to generate images of unprecedented quality and met unprecedented public reach. Finally, Chat-GPT [@openai_2023] was released in 2023 as a chatbot based on GPT3 [@brown_2020] and fine-tuned using +rlhf for natural question-answering interaction publicly available as a web demo. However, these last two milestones are also responsible for ethical and societal concerns about copyright, creativity, and more. This highlights both the potential of Deep Learning algorithms but also the need for further research around their implications.
 
-### Core Principles {#sec:core}
-#### Perceptron
-#### Multi-Layer Perceptron
+### Deep Learning Core Principles {#sec:core}
+#### Supervised Learning
+
+Intro:
+
+- Mapping $f: X \rightarrow Y$
+- Mapping is not Manual in +dl, too hard
+- Human annotations (labels)
+
+Objective:
+
+- Objective is to learn a mapping $f$
+- Sets of candidates $\mathcal{F}$
+- $f^* = arg \; \underset{f \in \mathcal{F}}{min} E_{(x, y) \sim D} L(f(x), y)$ is untractable
+
+Regularization:
+
+- $f^* = arg \; \underset{f \in \mathcal{F}}{min} E_{(x, y) \sim D} L(f(x), y) + R(f)$
+- $R$ scalar function encodes the complexity, the simpler solution is the better
+- Allow generalize over validation set, and outside of training dist
+
+Regression:
+
+- $\frac{1}{n} \sum_{i=1}^{n} (w_2 tanh(W_1^T x_i + b_1) + b_2 - y_i)^2 + \lambda (||W_1||_2^2 + ||w_2||_2^2)$
+
+Classification:
+
+- $\mathcal{L} (\hat{y}, y) = \sum_{k=1}^{K} y_k log \hat{y}_k$ cross-entropy
+
+#### Optimization
+
+Random:
+
+- Sampling $\theta$ and taking the one minimizing $L$
+- Breading and Mutation ...
+- Untractable in practice
+
+First Order Derivation:
+
+- Restriction to $f$ derivable
+- Stochastic Gradient Descent
+- Weight Update to the Negative of Partial Derivative
+
+Momentum:
+
+- Adagrad, RMSProp, AdamW
+- Adam: Big Gradient = Small Steps, Small Gradient == Big Steps
+
+Validation and HyperParameter Search:
+
+....
+
+#### Backpropagation
+#### Neural Network
 #### Convolutional Neural Network
 ### Generative Architectures {#sec:generative}
 #### Autoencoders
 #### Variational Autoencoders
 #### Generative Adversarial Networks
 #### Denoising Diffusion Models
-### Attention is all you Need {#sec:attention}
+### Attention Machanism {#sec:attention}
 #### Multihead Self-Attention
 #### Large Language Models
 \newpage{}
