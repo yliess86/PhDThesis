@@ -62,6 +62,9 @@ acronyms:
     gd:
         short: GD
         long: Gradient Descent
+    sgd:
+        short: SGD
+        long: Stochastic Gradient Descent
     vae:
         short: VAE
         long: Variational Autoencoder
@@ -338,7 +341,7 @@ f = Sequential(
 
 In +ml, supervised problems can be reduced to an optimization problem where the computer has to find a set of parameters, weights $\theta$, for a given function class $\mathcal{F}$ by optimizing an objective function $\theta^* = arg \; min_\theta \mathcal{C(\theta)}$ made out of two components, a data-dependant loss $L$ and a regularization $R$.
 
-**Random Search:** One way to find such a function $f_\theta$ that satisfies this objective is to estimate the objective function for a set of random parameter initializations and take the one that minimizes $C$ the most. This $\theta$ setting can then be refined by applying random perturbations to the parameters and repeating the operation (see @lst:random_search). This is possible due to the fact that we can computer $C(\theta)$ for any value of $\theta$ taking the average loss for a given dataset. However, such approach to optimization is unpracticle. +nn often comes with millions or billions of parameters $\theta$ making random-search intractable.
+**Random Search:** One way to find such a function $f_\theta$ that satisfies this objective is to estimate the objective function for a set of random parameter initializations and take the one that minimizes $C$ the most. This $\theta$ setting can then be refined by applying random perturbations to the parameters and repeating the operation (see @lst:random_search). This is possible due to the fact that we can computer $C(\theta)$ for any value of $\theta$ taking the average loss for a given dataset. However, such an approach to optimization is unpractical. +nn often comes with millions or billions of parameters $\theta$ making random-search intractable.
 
 ```python {#lst:random_search}
 import copy
@@ -358,13 +361,26 @@ for step in range(steps):
     f = fs[np.argmax(os)]
 ```
 
-**First Order Derivation:** A more efficient approach can be achieved by making the objective function $C$ and the model $f_\theta$ differentiable. This constraint allows us to computer the gradient of the cost with respect to the model's parameters $\theta$
+**First Order Derivation:** A more efficient approach is to make the objective function $C$ and the model $f_\theta$ differentiable. This constraint allows us to compute the gradient of the cost $C$ with respect to the model's parameters $\theta$. The value $\nabla_\theta C$ can be obtained using backpropagation (discussed in the next sub-section @sec:backpropagation). This vector of first-order derivatives indicates the direction from which we need to move the weights $\theta$ away. By taking small iterative steps toward the negative direction of the gradients, we can improve $\theta$. This algorithm is called +gd. In practice, due to the very large size of the datasets ($14,197,122$ images for ImageNet [@deng_2009]), the objective gradient is approximated using a small subset of the training data for each step referred to as a minibatch. This approximation of the +gd is called +sgd (see @lst:sgd).
 
-<!-- First Order Derivation:
+```python {#lst:sgd}
+for step in range(1_000):
+    # Retrieve the next minibatch
+    x, y = next_minibatch(X, Y)
 
-- Restriction to $f$ derivable
-- Stochastic Gradient Descent
-- Weight Update to the Negative of Partial Derivative -->
+    # Compute the objective function and the gradients
+    C = L(f(x), y) + lam * R(f)
+    C.backward()
+
+    # Update the weights and reset the gradients
+    for w in f.parameters():
+        w -= eps * w.grad
+    f.zero_grad(set_to_none=True)
+```
+
+One critical aspect of the +sgd algorithm is the hyperparameter $\epsilon$, the learning rate. It controls the size of the step we take toward the negative gradients. If it is too height or too low, the optimization may not converge toward an acceptable local minimum. A toy example is provided in @fig:toysgd where different learning rates are used to find the minimum of the square function $y = x^2$.
+
+![Toy example where different learning rates $\epsilon$ are used to find the minimum of the square function $y = x^2$ using the [+gd]{.full} algorithm starting from $x = -1$. Some learning rate setup result in situations where the optimization does not converge to the solution. A learning rate $\epsilon = 2$ diverges toward infinity, $\epsilon = 1$ is stuck and bounces between two positions $-1$ and $1$. However, a small learning rate $\epsilon = 0.1 < 1$ converges towards the minimum $y = 0$. This example illustrates the impact of the hyperparameter $\epsilon$ on +gd.](./figures/core_nn_sgd.svg){#fig:toysgd}
 
 Momentum:
 
@@ -375,7 +391,7 @@ Validation and HyperParameter Search:
 
 ....
 
-#### Backpropagation
+#### Backpropagation {#sec:backpropagation}
 
 - Efficient estimate of the grad w/ inputs
 - Recursive algo based exploiting chain rule

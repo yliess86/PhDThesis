@@ -337,6 +337,10 @@
   
   
   
+  
+  
+  
+  
   <script
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
   type="text/javascript"></script>
@@ -471,6 +475,7 @@ Abbreviations</h2>
 <li><strong>RLHF</strong>: Reinforcement Learning from Human
 Feedback</li>
 <li><strong>RNN</strong>: Recurrent Neural Network</li>
+<li><strong>SGD</strong>: Stochastic Gradient Descent</li>
 <li><strong>SVM</strong>: Support Vector Machine</li>
 <li><strong>TPU</strong>: Tensor Processing Unit</li>
 <li><strong>VAE</strong>: Variational Autoencoder</li>
@@ -1193,8 +1198,8 @@ operation (see Lst <strong>¿lst:random_search?</strong>). This is
 possible due to the fact that we can computer <span
 class="math inline">\(C(\theta)\)</span> for any value of <span
 class="math inline">\(\theta\)</span> taking the average loss for a
-given dataset. However, such approach to optimization is unpracticle. NN
-often comes with millions or billions of parameters <span
+given dataset. However, such an approach to optimization is unpractical.
+NN often comes with millions or billions of parameters <span
 class="math inline">\(\theta\)</span> making random-search
 intractable.</p>
 <div class="sourceCode" id="lst:random_search"><pre
@@ -1213,17 +1218,67 @@ class="sourceCode python"><code class="sourceCode python"><span id="lst:random_s
 <span id="lst:random_search-13"><a href="#lst:random_search-13" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="lst:random_search-14"><a href="#lst:random_search-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Retrieve the winner</span></span>
 <span id="lst:random_search-15"><a href="#lst:random_search-15" aria-hidden="true" tabindex="-1"></a>    f <span class="op">=</span> fs[np.argmax(os)]</span></code></pre></div>
-<p><strong>First Order Derivation:</strong> A more efficient approach
-can be achieved by making the objective function <span
-class="math inline">\(C\)</span> and the model <span
-class="math inline">\(f_\theta\)</span> differentiable. This constraint
-allows us to computer the gradient of the cost with respect to the
-model’s parameters <span class="math inline">\(\theta\)</span></p>
-<!-- First Order Derivation:
-
-- Restriction to $f$ derivable
-- Stochastic Gradient Descent
-- Weight Update to the Negative of Partial Derivative -->
+<p><strong>First Order Derivation:</strong> A more efficient approach is
+to make the objective function <span class="math inline">\(C\)</span>
+and the model <span class="math inline">\(f_\theta\)</span>
+differentiable. This constraint allows us to compute the gradient of the
+cost <span class="math inline">\(C\)</span> with respect to the model’s
+parameters <span class="math inline">\(\theta\)</span>. The value <span
+class="math inline">\(\nabla_\theta C\)</span> can be obtained using
+backpropagation (discussed in the next sub-section <a
+href="#sec:backpropagation">Sec 2.2.2.3</a>). This vector of first-order
+derivatives indicates the direction from which we need to move the
+weights <span class="math inline">\(\theta\)</span> away. By taking
+small iterative steps toward the negative direction of the gradients, we
+can improve <span class="math inline">\(\theta\)</span>. This algorithm
+is called GD. In practice, due to the very large size of the datasets
+(<span class="math inline">\(14,197,122\)</span> images for ImageNet
+<span class="citation" data-cites="deng_2009">[<a href="#ref-deng_2009"
+role="doc-biblioref">7</a>]</span>), the objective gradient is
+approximated using a small subset of the training data for each step
+referred to as a minibatch. This approximation of the GD is called
+Stochastic Gradient Descent (SGD) (see
+Lst <strong>¿lst:sgd?</strong>).</p>
+<div class="sourceCode" id="lst:sgd"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="lst:sgd-1"><a href="#lst:sgd-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> step <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1_000</span>):</span>
+<span id="lst:sgd-2"><a href="#lst:sgd-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Retrieve the next minibatch</span></span>
+<span id="lst:sgd-3"><a href="#lst:sgd-3" aria-hidden="true" tabindex="-1"></a>    x, y <span class="op">=</span> next_minibatch(X, Y)</span>
+<span id="lst:sgd-4"><a href="#lst:sgd-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst:sgd-5"><a href="#lst:sgd-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Compute the objective function and the gradients</span></span>
+<span id="lst:sgd-6"><a href="#lst:sgd-6" aria-hidden="true" tabindex="-1"></a>    C <span class="op">=</span> L(f(x), y) <span class="op">+</span> lam <span class="op">*</span> R(f)</span>
+<span id="lst:sgd-7"><a href="#lst:sgd-7" aria-hidden="true" tabindex="-1"></a>    C.backward()</span>
+<span id="lst:sgd-8"><a href="#lst:sgd-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst:sgd-9"><a href="#lst:sgd-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Update the weights and reset the gradients</span></span>
+<span id="lst:sgd-10"><a href="#lst:sgd-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> w <span class="kw">in</span> f.parameters():</span>
+<span id="lst:sgd-11"><a href="#lst:sgd-11" aria-hidden="true" tabindex="-1"></a>        w <span class="op">-=</span> eps <span class="op">*</span> w.grad</span>
+<span id="lst:sgd-12"><a href="#lst:sgd-12" aria-hidden="true" tabindex="-1"></a>    f.zero_grad(set_to_none<span class="op">=</span><span class="va">True</span>)</span></code></pre></div>
+<p>One critical aspect of the SGD algorithm is the hyperparameter <span
+class="math inline">\(\epsilon\)</span>, the learning rate. It controls
+the size of the step we take toward the negative gradients. If it is too
+height or too low, the optimization may not converge toward an
+acceptable local minimum. A toy example is provided in <a
+href="#fig:toysgd">Fig 9</a> where different learning rates are used to
+find the minimum of the square function <span class="math inline">\(y =
+x^2\)</span>.</p>
+<figure id="fig:toysgd">
+<img src="./figures/core_nn_sgd.svg"
+alt="Toy example where different learning rates \epsilon are used to find the minimum of the square function y = x^2 using the Gradient Descent (GD) algorithm starting from x = -1. Some learning rate setup result in situations where the optimization does not converge to the solution. A learning rate \epsilon = 2 diverges toward infinity, \epsilon = 1 is stuck and bounces between two positions -1 and 1. However, a small learning rate \epsilon = 0.1 &lt; 1 converges towards the minimum y = 0. This example illustrates the impact of the hyperparameter \epsilon on GD." />
+<figcaption>Figure 9: Toy example where different learning rates <span
+class="math inline">\(\epsilon\)</span> are used to find the minimum of
+the square function <span class="math inline">\(y = x^2\)</span> using
+the Gradient Descent (GD) algorithm starting from <span
+class="math inline">\(x = -1\)</span>. Some learning rate setup result
+in situations where the optimization does not converge to the solution.
+A learning rate <span class="math inline">\(\epsilon = 2\)</span>
+diverges toward infinity, <span class="math inline">\(\epsilon =
+1\)</span> is stuck and bounces between two positions <span
+class="math inline">\(-1\)</span> and <span
+class="math inline">\(1\)</span>. However, a small learning rate <span
+class="math inline">\(\epsilon = 0.1 &lt; 1\)</span> converges towards
+the minimum <span class="math inline">\(y = 0\)</span>. This example
+illustrates the impact of the hyperparameter <span
+class="math inline">\(\epsilon\)</span> on GD.</figcaption>
+</figure>
 <p>Momentum:</p>
 <ul>
 <li>Adagrad, RMSProp, AdamW</li>
@@ -1231,7 +1286,7 @@ model’s parameters <span class="math inline">\(\theta\)</span></p>
 </ul>
 <p>Validation and HyperParameter Search:</p>
 <p>….</p>
-<h4 id="backpropagation">Backpropagation</h4>
+<h4 id="sec:backpropagation">Backpropagation</h4>
 <ul>
 <li>Efficient estimate of the grad w/ inputs</li>
 <li>Recursive algo based exploiting chain rule</li>
