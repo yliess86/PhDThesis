@@ -1371,8 +1371,26 @@ of a 1-dimensional mixture of Gaussians given the same starting point
 setup, Moments and Adagrad find the solution, RMSProp explodes, and SGD
 and Adam are stuck into a local minimum.</figcaption>
 </figure>
-<p><strong>Cross-Validation and HyperParameter Search:</strong></p>
-<p>…</p>
+<p><strong>Cross-Validation and HyperParameter Search:</strong> As
+illustrated by the toy examples (see Figs <a href="#fig:toysgd">9</a>,
+<a href="#fig:sgd_moments">10</a>), the training of NN using SGD is
+highly dependent on the initial setting of hyperparameters. One could
+ask if there is a rule for choosing such parameters. Unfortunately, this
+is not the case. The field is highly empirical and driven by exploration
+using the scientific method.</p>
+<p>One common approach is to set up metrics to evaluate the performance
+of the model during the optimization process. It is a good practice to
+divide the dataset into validation folds that are different from the
+training data to evaluate the generalization capabilities of the model.
+This practice is referred to as <span
+class="math inline">\(k\)</span>-fold cross-validation and is most of
+the time in DL, because of the large datasets, reduced to a single fold,
+called the validation set. By defining such a process, NN can be
+compared in a controlled manner and the hyperparameter space can be
+searched. Hyperparameter search is so important that it is a subfield of
+its own. The broad DL literature however contains many examples of
+initial parameters and architectures that can be used to bootstrap this
+search.</p>
 <h4 id="sec:backpropagation">Backpropagation</h4>
 <ul>
 <li>Efficient estimate of the grad w/ inputs</li>
