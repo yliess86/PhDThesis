@@ -1291,7 +1291,8 @@ role="doc-biblioref">18</a>]</span>, Adam <span class="citation"
 data-cites="kingma_2014">[<a href="#ref-kingma_2014"
 role="doc-biblioref">25</a>]</span>, and its correction AdamW <span
 class="citation" data-cites="loshchilov_2017">[<a
-href="#ref-loshchilov_2017" role="doc-biblioref">34</a>]</span>.</p>
+href="#ref-loshchilov_2017" role="doc-biblioref">34</a>]</span>. A toy
+example is shown <a href="#fig:sgd_moments">Fig 10</a>.</p>
 <p>The Momentum update <span class="citation" data-cites="qian_1999">[<a
 href="#ref-qian_1999" role="doc-biblioref">43</a>]</span> introduces the
 use of a momentum inspired by physics’ first principles to favor small
@@ -1358,8 +1359,20 @@ class="sourceCode python"><code class="sourceCode python"><span id="lst:adam-1">
 <span id="lst:adam-24"><a href="#lst:adam-24" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Update weight and reset the gradient</span></span>
 <span id="lst:adam-25"><a href="#lst:adam-25" aria-hidden="true" tabindex="-1"></a>        w <span class="op">-=</span> eps <span class="op">*</span> (corr_m <span class="op">/</span> (corr_v.sqrt() <span class="op">+</span> <span class="fl">1e-8</span>))</span>
 <span id="lst:adam-26"><a href="#lst:adam-26" aria-hidden="true" tabindex="-1"></a>        w.grad <span class="op">=</span> <span class="va">None</span></span></code></pre></div>
-<p>Validation and HyperParameter Search:</p>
-<p>….</p>
+<figure id="fig:sgd_moments">
+<img src="./figures/core_nn_sgd_moments.svg"
+alt="This toy example illustrates the impact of the optimizer choice during objective minimization with first order methods. SGD, Momentum, Adagrad, RMSProp and Adam are tasked to find the minimum of a 1-dimensional mixture of Gaussians given the same starting point x = 1 and the same learning rate \epsilon = 0.5. In this particular setup, Moments and Adagrad find the solution, RMSProp explodes, and SGD and Adam are stuck into a local minimum." />
+<figcaption>Figure 10: This toy example illustrates the impact of the
+optimizer choice during objective minimization with first order methods.
+SGD, Momentum, Adagrad, RMSProp and Adam are tasked to find the minimum
+of a 1-dimensional mixture of Gaussians given the same starting point
+<span class="math inline">\(x = 1\)</span> and the same learning rate
+<span class="math inline">\(\epsilon = 0.5\)</span>. In this particular
+setup, Moments and Adagrad find the solution, RMSProp explodes, and SGD
+and Adam are stuck into a local minimum.</figcaption>
+</figure>
+<p><strong>Cross-Validation and HyperParameter Search:</strong></p>
+<p>…</p>
 <h4 id="sec:backpropagation">Backpropagation</h4>
 <ul>
 <li>Efficient estimate of the grad w/ inputs</li>
