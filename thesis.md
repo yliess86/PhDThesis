@@ -304,7 +304,7 @@ f = Sequential(
 )
 
 # Objective function
-O = (1 / n) * L(f(X), Y).sum() + lam *  R(f)
+C = (1 / n) * L(f(X), Y).sum() + lam *  R(f)
 ```
 
 **Classification Problem:** Let us consider the distribution $D$ representing the 2d positions of two clusters ${0, 1} \in K$ of moons (see @fig:classification). We sample $250$ moon $(x_i, y_i)$ with $X \in [-1; 1]$  and $Y \in [-1; 1]$. Our objective is to learn a classifier $f_\theta$, a three layers +nn parametrized by its weights $\{w_0, W_1, w_2\} = \theta$. $w_0$ contains $(1 \times 32) + 1$ weights, $W_1$, $(32 \times 32) + 1$, and $w_2$, $(32 \times 1) + 1$. In this case, the function space is limited to the three layers +nn family with $1,091$ parameters $\mathcal{F}$.
@@ -336,17 +336,35 @@ f = Sequential(
 
 #### Optimization
 
-Random:
+In +ml, supervised problems can be reduced to an optimization problem where the computer has to find a set of parameters, weights $\theta$, for a given function class $\mathcal{F}$ by optimizing an objective function $\theta^* = arg \; min_\theta \mathcal{C(\theta)}$ made out of two components, a data-dependant loss $L$ and a regularization $R$.
 
-- Sampling $\theta$ and taking the one minimizing $L$
-- Breading and Mutation ...
-- Untractable in practice
+**Random Search:** One way to find such a function $f_\theta$ that satisfies this objective is to estimate the objective function for a set of random parameter initializations and take the one that minimizes $C$ the most. This $\theta$ setting can then be refined by applying random perturbations to the parameters and repeating the operation (see @lst:random_search). This is possible due to the fact that we can computer $C(\theta)$ for any value of $\theta$ taking the average loss for a given dataset. However, such approach to optimization is unpracticle. +nn often comes with millions or billions of parameters $\theta$ making random-search intractable.
 
-First Order Derivation:
+```python {#lst:random_search}
+import copy
+import numpy as np
+
+
+for step in range(steps):
+    fs, os = [f] + [copy.deepcopy(f) for f in range(n_copy)], []
+    for f_ in fs:
+        # Apply weight perturbation
+        for w in f_.parameters():
+            w.normal_(0.0, 1.0 / step)
+        # Estimate the objective function
+        os.append(C(f_(X), Y))
+    
+    # Retrieve the winner
+    f = fs[np.argmax(os)]
+```
+
+**First Order Derivation:** A more efficient approach can be achieved by making the objective function $C$ and the model $f_\theta$ differentiable. This constraint allows us to computer the gradient of the cost with respect to the model's parameters $\theta$
+
+<!-- First Order Derivation:
 
 - Restriction to $f$ derivable
 - Stochastic Gradient Descent
-- Weight Update to the Negative of Partial Derivative
+- Weight Update to the Negative of Partial Derivative -->
 
 Momentum:
 
