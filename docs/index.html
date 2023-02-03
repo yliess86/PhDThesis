@@ -1332,32 +1332,32 @@ Lst <strong>¿lst:adam?</strong>):</p>
 <!-- - Adagrad, RMSProp, AdamW
 - Adam: Big Gradient = Small Steps, Small Gradient == Big Steps -->
 <div class="sourceCode" id="lst:adam"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="lst:adam-1"><a href="#lst:adam-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Adam state (first and second moments)</span></span>
-<span id="lst:adam-2"><a href="#lst:adam-2" aria-hidden="true" tabindex="-1"></a>d_means <span class="op">=</span> [w.clone().zeros_() <span class="cf">for</span> w <span class="kw">in</span> f.parameters()]</span>
-<span id="lst:adam-3"><a href="#lst:adam-3" aria-hidden="true" tabindex="-1"></a>d_vars  <span class="op">=</span> [w.clone().zeros_() <span class="cf">for</span> w <span class="kw">in</span> f.parameters()]</span>
-<span id="lst:adam-4"><a href="#lst:adam-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="lst:adam-5"><a href="#lst:adam-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> step <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1_000</span>):</span>
-<span id="lst:adam-6"><a href="#lst:adam-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Retrieve the next minibatch</span></span>
-<span id="lst:adam-7"><a href="#lst:adam-7" aria-hidden="true" tabindex="-1"></a>    x, y <span class="op">=</span> next_minibatch(X, Y)</span>
-<span id="lst:adam-8"><a href="#lst:adam-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="lst:adam-9"><a href="#lst:adam-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Compute the objective function and the gradients</span></span>
-<span id="lst:adam-10"><a href="#lst:adam-10" aria-hidden="true" tabindex="-1"></a>    C <span class="op">=</span> L(f(x), y) <span class="op">+</span> lam <span class="op">*</span> R(f)</span>
-<span id="lst:adam-11"><a href="#lst:adam-11" aria-hidden="true" tabindex="-1"></a>    C.backward()</span>
-<span id="lst:adam-12"><a href="#lst:adam-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="lst:adam-13"><a href="#lst:adam-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> w_idx, w <span class="kw">in</span> <span class="bu">enumerate</span>(f.parameters()):</span>
-<span id="lst:adam-14"><a href="#lst:adam-14" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Update the moments (mean and uncentered variance)</span></span>
-<span id="lst:adam-15"><a href="#lst:adam-15" aria-hidden="true" tabindex="-1"></a>        d_means[w_idx] <span class="op">=</span> beta1 <span class="op">*</span> d_means[w_idx] <span class="op">+</span> (<span class="dv">1</span> <span class="op">-</span> beta1) <span class="op">*</span> w.grad</span>
-<span id="lst:adam-16"><a href="#lst:adam-16" aria-hidden="true" tabindex="-1"></a>        d_vars [w_idx] <span class="op">=</span> beta2 <span class="op">*</span> d_vars [w_idx] <span class="op">+</span> (<span class="dv">1</span> <span class="op">-</span> beta2) <span class="op">*</span> (w.grad <span class="op">**</span> <span class="dv">2</span>)</span>
-<span id="lst:adam-17"><a href="#lst:adam-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="lst:adam-18"><a href="#lst:adam-18" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Compute bias correction</span></span>
-<span id="lst:adam-19"><a href="#lst:adam-19" aria-hidden="true" tabindex="-1"></a>        corr_mean <span class="op">=</span> d_means[w_idx] <span class="op">/</span> (<span class="fl">1.0</span> <span class="op">-</span> beta1 <span class="op">**</span> step)</span>
-<span id="lst:adam-20"><a href="#lst:adam-20" aria-hidden="true" tabindex="-1"></a>        corr_var  <span class="op">=</span> d_vars[w_idx]  <span class="op">/</span> (<span class="fl">1.0</span> <span class="op">-</span> beta2 <span class="op">**</span> step)</span>
-<span id="lst:adam-21"><a href="#lst:adam-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="lst:adam-22"><a href="#lst:adam-22" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Update weight</span></span>
-<span id="lst:adam-23"><a href="#lst:adam-23" aria-hidden="true" tabindex="-1"></a>        w <span class="op">-=</span> eps <span class="op">*</span> (corr_mean <span class="op">/</span> (corr_var.sqrt() <span class="op">+</span> <span class="fl">1e-8</span>))</span>
-<span id="lst:adam-24"><a href="#lst:adam-24" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="lst:adam-25"><a href="#lst:adam-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Reset the gradient</span></span>
-<span id="lst:adam-26"><a href="#lst:adam-26" aria-hidden="true" tabindex="-1"></a>    f.zero_grad(set_to_none<span class="op">=</span><span class="va">True</span>)</span></code></pre></div>
+class="sourceCode python"><code class="sourceCode python"><span id="lst:adam-1"><a href="#lst:adam-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Adam state (parameters, gradients first and second moments)</span></span>
+<span id="lst:adam-2"><a href="#lst:adam-2" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> <span class="bu">list</span>(f.parameters())</span>
+<span id="lst:adam-3"><a href="#lst:adam-3" aria-hidden="true" tabindex="-1"></a>d_means <span class="op">=</span> [w.clone().zeros_() <span class="cf">for</span> w <span class="kw">in</span> params]</span>
+<span id="lst:adam-4"><a href="#lst:adam-4" aria-hidden="true" tabindex="-1"></a>d_vars  <span class="op">=</span> [w.clone().zeros_() <span class="cf">for</span> w <span class="kw">in</span> params]</span>
+<span id="lst:adam-5"><a href="#lst:adam-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst:adam-6"><a href="#lst:adam-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> step <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1_000</span>):</span>
+<span id="lst:adam-7"><a href="#lst:adam-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Retrieve the next minibatch</span></span>
+<span id="lst:adam-8"><a href="#lst:adam-8" aria-hidden="true" tabindex="-1"></a>    x, y <span class="op">=</span> next_minibatch(X, Y)</span>
+<span id="lst:adam-9"><a href="#lst:adam-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst:adam-10"><a href="#lst:adam-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Compute the objective function and the gradients</span></span>
+<span id="lst:adam-11"><a href="#lst:adam-11" aria-hidden="true" tabindex="-1"></a>    C <span class="op">=</span> L(f(x), y) <span class="op">+</span> lam <span class="op">*</span> R(f)</span>
+<span id="lst:adam-12"><a href="#lst:adam-12" aria-hidden="true" tabindex="-1"></a>    C.backward()</span>
+<span id="lst:adam-13"><a href="#lst:adam-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst:adam-14"><a href="#lst:adam-14" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> <span class="bu">zip</span>(params, d_means, d_vars)</span>
+<span id="lst:adam-15"><a href="#lst:adam-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> w_idx, (w, d_m, d_v) <span class="kw">in</span> <span class="bu">enumerate</span>(data):</span>
+<span id="lst:adam-16"><a href="#lst:adam-16" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Update the moments (mean and uncentered variance)</span></span>
+<span id="lst:adam-17"><a href="#lst:adam-17" aria-hidden="true" tabindex="-1"></a>        d_m <span class="op">=</span> beta1 <span class="op">*</span> d_m <span class="op">+</span> (<span class="dv">1</span> <span class="op">-</span> beta1) <span class="op">*</span> w.grad</span>
+<span id="lst:adam-18"><a href="#lst:adam-18" aria-hidden="true" tabindex="-1"></a>        d_v <span class="op">=</span> beta2 <span class="op">*</span> d_v <span class="op">+</span> (<span class="dv">1</span> <span class="op">-</span> beta2) <span class="op">*</span> (w.grad <span class="op">**</span> <span class="dv">2</span>)</span>
+<span id="lst:adam-19"><a href="#lst:adam-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst:adam-20"><a href="#lst:adam-20" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Compute bias correction</span></span>
+<span id="lst:adam-21"><a href="#lst:adam-21" aria-hidden="true" tabindex="-1"></a>        corr_m <span class="op">=</span> d_m <span class="op">/</span> (<span class="fl">1.0</span> <span class="op">-</span> beta1 <span class="op">**</span> step)</span>
+<span id="lst:adam-22"><a href="#lst:adam-22" aria-hidden="true" tabindex="-1"></a>        corr_v <span class="op">=</span> d_v <span class="op">/</span> (<span class="fl">1.0</span> <span class="op">-</span> beta2 <span class="op">**</span> step)</span>
+<span id="lst:adam-23"><a href="#lst:adam-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst:adam-24"><a href="#lst:adam-24" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Update weight and reset the gradient</span></span>
+<span id="lst:adam-25"><a href="#lst:adam-25" aria-hidden="true" tabindex="-1"></a>        w <span class="op">-=</span> eps <span class="op">*</span> (corr_m <span class="op">/</span> (corr_v.sqrt() <span class="op">+</span> <span class="fl">1e-8</span>))</span>
+<span id="lst:adam-26"><a href="#lst:adam-26" aria-hidden="true" tabindex="-1"></a>        w.grad <span class="op">=</span> <span class="va">None</span></span></code></pre></div>
 <p>Validation and HyperParameter Search:</p>
 <p>….</p>
 <h4 id="sec:backpropagation">Backpropagation</h4>

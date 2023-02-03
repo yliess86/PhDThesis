@@ -394,9 +394,10 @@ Finally Adam [@kingma_2014], and its correction AdamW [@loshchilov_2017], are ap
 - Adam: Big Gradient = Small Steps, Small Gradient == Big Steps -->
 
 ```python {#lst:adam}
-# Adam state (first and second moments)
-d_means = [w.clone().zeros_() for w in f.parameters()]
-d_vars  = [w.clone().zeros_() for w in f.parameters()]
+# Adam state (parameters, gradients first and second moments)
+params = list(f.parameters())
+d_means = [w.clone().zeros_() for w in params]
+d_vars  = [w.clone().zeros_() for w in params]
 
 for step in range(1_000):
     # Retrieve the next minibatch
@@ -406,20 +407,19 @@ for step in range(1_000):
     C = L(f(x), y) + lam * R(f)
     C.backward()
 
-    for w_idx, w in enumerate(f.parameters()):
+    data = zip(params, d_means, d_vars)
+    for w_idx, (w, d_m, d_v) in enumerate(data):
         # Update the moments (mean and uncentered variance)
-        d_means[w_idx] = beta1 * d_means[w_idx] + (1 - beta1) * w.grad
-        d_vars [w_idx] = beta2 * d_vars [w_idx] + (1 - beta2) * (w.grad ** 2)
+        d_m = beta1 * d_m + (1 - beta1) * w.grad
+        d_v = beta2 * d_v + (1 - beta2) * (w.grad ** 2)
 
         # Compute bias correction
-        corr_mean = d_means[w_idx] / (1.0 - beta1 ** step)
-        corr_var  = d_vars[w_idx]  / (1.0 - beta2 ** step)
+        corr_m = d_m / (1.0 - beta1 ** step)
+        corr_v = d_v / (1.0 - beta2 ** step)
 
-        # Update weight
-        w -= eps * (corr_mean / (corr_var.sqrt() + 1e-8))
-    
-    # Reset the gradient
-    f.zero_grad(set_to_none=True)
+        # Update weight and reset the gradient
+        w -= eps * (corr_m / (corr_v.sqrt() + 1e-8))
+        w.grad = None
 ```
 
 Validation and HyperParameter Search:
