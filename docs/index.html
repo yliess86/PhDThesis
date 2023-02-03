@@ -1122,7 +1122,7 @@ class="sourceCode python"><code class="sourceCode python"><span id="lst:regressi
 <span id="lst:regression-12"><a href="#lst:regression-12" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="lst:regression-13"><a href="#lst:regression-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="lst:regression-14"><a href="#lst:regression-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Objective function</span></span>
-<span id="lst:regression-15"><a href="#lst:regression-15" aria-hidden="true" tabindex="-1"></a>O <span class="op">=</span> (<span class="dv">1</span> <span class="op">/</span> n) <span class="op">*</span> L(f(X), Y).<span class="bu">sum</span>() <span class="op">+</span> lam <span class="op">*</span>  R(f)</span></code></pre></div>
+<span id="lst:regression-15"><a href="#lst:regression-15" aria-hidden="true" tabindex="-1"></a>C <span class="op">=</span> (<span class="dv">1</span> <span class="op">/</span> n) <span class="op">*</span> L(f(X), Y).<span class="bu">sum</span>() <span class="op">+</span> lam <span class="op">*</span>  R(f)</span></code></pre></div>
 <p><strong>Classification Problem:</strong> Let us consider the
 distribution <span class="math inline">\(D\)</span> representing the 2d
 positions of two clusters <span class="math inline">\({0, 1} \in
@@ -1174,19 +1174,56 @@ class="sourceCode python"><code class="sourceCode python"><span id="lst:classifi
 <span id="lst:classification-11"><a href="#lst:classification-11" aria-hidden="true" tabindex="-1"></a>    Linear(<span class="dv">32</span>, <span class="dv">1</span>),</span>
 <span id="lst:classification-12"><a href="#lst:classification-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <h4 id="optimization">Optimization</h4>
-<p>Random:</p>
-<ul>
-<li>Sampling <span class="math inline">\(\theta\)</span> and taking the
-one minimizing <span class="math inline">\(L\)</span></li>
-<li>Breading and Mutation …</li>
-<li>Untractable in practice</li>
-</ul>
-<p>First Order Derivation:</p>
-<ul>
-<li>Restriction to <span class="math inline">\(f\)</span> derivable</li>
-<li>Stochastic Gradient Descent</li>
-<li>Weight Update to the Negative of Partial Derivative</li>
-</ul>
+<p>In ML, supervised problems can be reduced to an optimization problem
+where the computer has to find a set of parameters, weights <span
+class="math inline">\(\theta\)</span>, for a given function class <span
+class="math inline">\(\mathcal{F}\)</span> by optimizing an objective
+function <span class="math inline">\(\theta^* = arg \; min_\theta
+\mathcal{C(\theta)}\)</span> made out of two components, a
+data-dependant loss <span class="math inline">\(L\)</span> and a
+regularization <span class="math inline">\(R\)</span>.</p>
+<p><strong>Random Search:</strong> One way to find such a function <span
+class="math inline">\(f_\theta\)</span> that satisfies this objective is
+to estimate the objective function for a set of random parameter
+initializations and take the one that minimizes <span
+class="math inline">\(C\)</span> the most. This <span
+class="math inline">\(\theta\)</span> setting can then be refined by
+applying random perturbations to the parameters and repeating the
+operation (see Lst <strong>¿lst:random_search?</strong>). This is
+possible due to the fact that we can computer <span
+class="math inline">\(C(\theta)\)</span> for any value of <span
+class="math inline">\(\theta\)</span> taking the average loss for a
+given dataset. However, such approach to optimization is unpracticle. NN
+often comes with millions or billions of parameters <span
+class="math inline">\(\theta\)</span> making random-search
+intractable.</p>
+<div class="sourceCode" id="lst:random_search"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="lst:random_search-1"><a href="#lst:random_search-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> copy</span>
+<span id="lst:random_search-2"><a href="#lst:random_search-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="lst:random_search-3"><a href="#lst:random_search-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst:random_search-4"><a href="#lst:random_search-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst:random_search-5"><a href="#lst:random_search-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> step <span class="kw">in</span> <span class="bu">range</span>(steps):</span>
+<span id="lst:random_search-6"><a href="#lst:random_search-6" aria-hidden="true" tabindex="-1"></a>    fs, os <span class="op">=</span> [f] <span class="op">+</span> [copy.deepcopy(f) <span class="cf">for</span> f <span class="kw">in</span> <span class="bu">range</span>(n_copy)], []</span>
+<span id="lst:random_search-7"><a href="#lst:random_search-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> f_ <span class="kw">in</span> fs:</span>
+<span id="lst:random_search-8"><a href="#lst:random_search-8" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Apply weight perturbation</span></span>
+<span id="lst:random_search-9"><a href="#lst:random_search-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> w <span class="kw">in</span> f_.parameters():</span>
+<span id="lst:random_search-10"><a href="#lst:random_search-10" aria-hidden="true" tabindex="-1"></a>            w.normal_(<span class="fl">0.0</span>, <span class="fl">1.0</span> <span class="op">/</span> step)</span>
+<span id="lst:random_search-11"><a href="#lst:random_search-11" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Estimate the objective function</span></span>
+<span id="lst:random_search-12"><a href="#lst:random_search-12" aria-hidden="true" tabindex="-1"></a>        os.append(C(f_(X), Y))</span>
+<span id="lst:random_search-13"><a href="#lst:random_search-13" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="lst:random_search-14"><a href="#lst:random_search-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Retrieve the winner</span></span>
+<span id="lst:random_search-15"><a href="#lst:random_search-15" aria-hidden="true" tabindex="-1"></a>    f <span class="op">=</span> fs[np.argmax(os)]</span></code></pre></div>
+<p><strong>First Order Derivation:</strong> A more efficient approach
+can be achieved by making the objective function <span
+class="math inline">\(C\)</span> and the model <span
+class="math inline">\(f_\theta\)</span> differentiable. This constraint
+allows us to computer the gradient of the cost with respect to the
+model’s parameters <span class="math inline">\(\theta\)</span></p>
+<!-- First Order Derivation:
+
+- Restriction to $f$ derivable
+- Stochastic Gradient Descent
+- Weight Update to the Negative of Partial Derivative -->
 <p>Momentum:</p>
 <ul>
 <li>Adagrad, RMSProp, AdamW</li>
