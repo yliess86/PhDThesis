@@ -991,7 +991,8 @@ that would satisfy this task is considered unpractical. It would require
 one to manually describe all potential rules defining spam. In ML, the
 supervised framework offers a practical solution consisting of acquiring
 label data pairs, <span class="math inline">\((x, y) \in X \times
-Y\)</span> for the current problem. In our case, this would require
+Y\)</span> for the current problem (see <a
+href="#fig:dataflow">Fig 6</a>). In our case, this would require
 gathering a dataset of e-mails and asking humans to label those as spam
 or not.</p>
 <p><strong>Objective Function</strong>: Let us consider such a training
@@ -1046,14 +1047,27 @@ certain function class.</p>
 f^* \approx arg \; \underset{f \in \mathcal{F}}{min} \; \frac{1}{n}
 \sum_{i=1}^{n} L(\hat{y}_i, y_i) + R(f)
 \qquad{(3)}\]</span></span></p>
-<p>In the following, we will investigate two examples where supervised
+<figure id="fig:dataflow">
+<img src="./figures/core_nn_dataflow.svg"
+alt="Supervised learning data flow. The dataset {(x_i, y_i)} \in D is used to train the model f \in \mathcal{F} to minimize an objective function with two terms, a data dependant loss L, and a regularization R measuring the system complexity." />
+<figcaption>Figure 6: Supervised learning data flow. The dataset <span
+class="math inline">\({(x_i, y_i)} \in D\)</span> is used to train the
+model <span class="math inline">\(f \in \mathcal{F}\)</span> to minimize
+an objective function with two terms, a data dependant loss <span
+class="math inline">\(L\)</span>, and a regularization <span
+class="math inline">\(R\)</span> measuring the system
+complexity.</figcaption>
+</figure>
+<p>In the following, we investigate two examples where supervised
 learning is first applied to a Neural Network (NN) regression problem,
-and then a NN classification problem.</p>
+and then a NN classification problem. The examples highlight the
+objective functions composed by the loss and the regularization term for
+regression and classification respectively.</p>
 <p><strong>Regression Problem:</strong> Let us consider the distribution
 <span class="math inline">\(D\)</span> represented by the <span
 class="math inline">\(sin\)</span> function in the <span
 class="math inline">\([-3 \pi; 3 \pi]\)</span> range (see <a
-href="#fig:regression">Fig 6</a>). We sample <span
+href="#fig:regression">Fig 7</a>). We sample <span
 class="math inline">\(50\)</span> pairs <span
 class="math inline">\((x_i, y_i)\)</span> with <span
 class="math inline">\(X \in [-3 \pi; 3 \pi]\)</span> and <span
@@ -1071,7 +1085,7 @@ parameters <span class="math inline">\(\mathcal{F}\)</span>.</p>
 <figure id="fig:regression">
 <img src="./figures/core_nn_regression.svg"
 alt="Neural Network (NN) regression example. The model f_\theta is fit on the training set (X, Y) \in D representing the sin function in the range [-3 \pi; 3 \pi]." />
-<figcaption>Figure 6: Neural Network (NN) regression example. The model
+<figcaption>Figure 7: Neural Network (NN) regression example. The model
 <span class="math inline">\(f_\theta\)</span> is fit on the training set
 <span class="math inline">\((X, Y) \in D\)</span> representing the <span
 class="math inline">\(sin\)</span> function in the range <span
@@ -1112,7 +1126,7 @@ class="sourceCode python"><code class="sourceCode python"><span id="lst:regressi
 <p><strong>Classification Problem:</strong> Let us consider the
 distribution <span class="math inline">\(D\)</span> representing the 2d
 positions of two clusters <span class="math inline">\({0, 1} \in
-K\)</span> of moons (see <a href="#fig:classification">Fig 7</a>). We
+K\)</span> of moons (see <a href="#fig:classification">Fig 8</a>). We
 sample <span class="math inline">\(250\)</span> moon <span
 class="math inline">\((x_i, y_i)\)</span> with <span
 class="math inline">\(X \in [-1; 1]\)</span> and <span
@@ -1131,7 +1145,7 @@ class="math inline">\(\mathcal{F}\)</span>.</p>
 <figure id="fig:classification">
 <img src="./figures/core_nn_classification.svg"
 alt="Neural Network (NN) classification example. The model f_\theta is trained to classify moons based on their positions. The decision boundary is shown." />
-<figcaption>Figure 7: Neural Network (NN) classification example. The
+<figcaption>Figure 8: Neural Network (NN) classification example. The
 model <span class="math inline">\(f_\theta\)</span> is trained to
 classify moons based on their positions. The decision boundary is
 shown.</figcaption>
