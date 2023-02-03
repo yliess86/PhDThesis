@@ -361,7 +361,7 @@ for step in range(steps):
     f = fs[np.argmax(os)]
 ```
 
-**First Order Derivation:** A more efficient approach is to make the objective function $C$ and the model $f_\theta$ differentiable. This constraint allows us to compute the gradient of the cost $C$ with respect to the model's parameters $\theta$. The value $\nabla_\theta C$ can be obtained using backpropagation (discussed in the next sub-section @sec:backpropagation). This vector of first-order derivatives indicates the direction from which we need to move the weights $\theta$ away. By taking small iterative steps toward the negative direction of the gradients, we can improve $\theta$. This algorithm is called +gd. In practice, due to the very large size of the datasets ($14,197,122$ images for ImageNet [@deng_2009]), the objective gradient is approximated using a small subset of the training data for each step referred to as a minibatch. This approximation of the +gd is called +sgd (see @lst:sgd).
+**First Order Derivation:** A more efficient approach is to make the objective function $C$ and the model $f_\theta$ differentiable. This constraint allows us to compute the gradient of the cost $C$ with respect to the model's parameters $\theta$. The value $\nabla_\theta C$ can be obtained using backpropagation (discussed in the next sub-section @sec:backpropagation). This vector of first order derivatives indicates the direction from which we need to move the weights $\theta$ away. By taking small iterative steps toward the negative direction of the gradients, we can improve $\theta$. This algorithm is called +gd. In practice, due to the very large size of the datasets ($14,197,122$ images for ImageNet [@deng_2009]), the objective gradient is approximated using a small subset of the training data for each step referred to as a minibatch. This approximation of the +gd is called +sgd (see @lst:sgd).
 
 ```python {#lst:sgd}
 for step in range(1_000):
@@ -382,10 +382,45 @@ One critical aspect of the +sgd algorithm is the hyperparameter $\epsilon$, the 
 
 ![Toy example where different learning rates $\epsilon$ are used to find the minimum of the square function $y = x^2$ using the [+gd]{.full} algorithm starting from $x = -1$. Some learning rate setup result in situations where the optimization does not converge to the solution. A learning rate $\epsilon = 2$ diverges toward infinity, $\epsilon = 1$ is stuck and bounces between two positions $-1$ and $1$. However, a small learning rate $\epsilon = 0.1 < 1$ converges towards the minimum $y = 0$. This example illustrates the impact of the hyperparameter $\epsilon$ on +gd.](./figures/core_nn_sgd.svg){#fig:toysgd}
 
-Momentum:
+**First Order Derivation with Momentum:** The +dl literature contains abundant work on first order optimizer variants aiming for faster convergence such as +sgd with Momentum [@qian_1999],  Adagrad [@duchi_2011], RMSProp [@hinton_lecture6a], Adam [@kingma_2014], and its correction AdamW [@loshchilov_2017].
 
-- Adagrad, RMSProp, AdamW
-- Adam: Big Gradient = Small Steps, Small Gradient == Big Steps
+The Momentum update [@qian_1999] introduces the use of a momentum inspired by physics' first principles to favor small and consistent gradient directions. In this particular case, the momentum is represented by a variable $v$ updated to store an exponential decaying sum of the previous gradients $v := \alpha v + \nabla_\theta C(\theta)$. The weights are then updated using negative $v$ as the gradient direction instead of $\nabla_\theta C(\theta)$.
+
+Other optimizers also make use of the second moment of the gradients. Adagrad [@duchi_2011] uses another variable $r$ to store the second moment $r := r + \nabla_\theta C(\theta) \odot \nabla_\theta C(\theta)$ and modulate the update rule toward the negative direction $\frac{1}{\delta + \sqrt{r}} \odot \nabla_\theta C(\theta)$ where $\delta$ is a small value to avoid division by zero. Similarly, RMSProp [@hinton_lecture6a] maintains a running mean of the second moment $r := \rho r + (1 - \rho) \nabla_\theta C(\theta) \odot \nabla_\theta C(\theta)$.
+
+Finally Adam [@kingma_2014], and its correction AdamW [@loshchilov_2017], are applying both Momentum and RMSProp estimating the first and second moment to make parameters with large gradients take small steps and parameters with low gradients take larger ones. This has the advantage to allow for bigger learning rates and faster convergence at the cost of triple the amount of parameters to store during training. A simple implementation of Adam is shown below (see @lst:adam):
+
+<!-- - Adagrad, RMSProp, AdamW
+- Adam: Big Gradient = Small Steps, Small Gradient == Big Steps -->
+
+```python {#lst:adam}
+# Adam state (first and second moments)
+d_means = [w.clone().zeros_() for w in f.parameters()]
+d_vars  = [w.clone().zeros_() for w in f.parameters()]
+
+for step in range(1_000):
+    # Retrieve the next minibatch
+    x, y = next_minibatch(X, Y)
+
+    # Compute the objective function and the gradients
+    C = L(f(x), y) + lam * R(f)
+    C.backward()
+
+    for w_idx, w in enumerate(f.parameters()):
+        # Update the moments (mean and uncentered variance)
+        d_means[w_idx] = beta1 * d_means[w_idx] + (1 - beta1) * w.grad
+        d_vars [w_idx] = beta2 * d_vars [w_idx] + (1 - beta2) * (w.grad ** 2)
+
+        # Compute bias correction
+        corr_mean = d_means[w_idx] / (1.0 - beta1 ** step)
+        corr_var  = d_vars[w_idx]  / (1.0 - beta2 ** step)
+
+        # Update weight
+        w -= eps * (corr_mean / (corr_var.sqrt() + 1e-8))
+    
+    # Reset the gradient
+    f.zero_grad(set_to_none=True)
+```
 
 Validation and HyperParameter Search:
 
