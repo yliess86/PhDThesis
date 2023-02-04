@@ -78,12 +78,12 @@ def adam(x: torch.Tensor, lr: float) -> torch.Tensor:
     return x
 
 
-plt.figure(figsize=(12, 6))
+plt.figure(figsize=(12, 16))
 plt.plot(x, y)
 
 lr = 0.5
 for i, (method, c) in enumerate(zip([sgd, moment, adagrad, rmsprop, adam], ["dodgerblue", "darkorange", "crimson", "limegreen", "darkmagenta"])):
-   plt.subplot(2, 3, i + 1)
+   plt.subplot(5, 1, i + 1)
    plt.plot(x, y, label="$y = x^2$", alpha=0.5)
   
    xs = [torch.tensor(1.0, requires_grad=True)]
@@ -97,8 +97,9 @@ for i, (method, c) in enumerate(zip([sgd, moment, adagrad, rmsprop, adam], ["dod
    plt.ylim(y.min().item() * (1 + 0.1), y.max().item() * (1 + 0.01))
   
    plt.legend(loc="upper left")
-   if i % 3 != 0: plt.yticks([], [])
-   plt.xlabel("$x$")
-   if i % 3 == 0: plt.ylabel("$y$")
+   if i <  4: plt.xticks([], [])
+   if i == 4: plt.xlabel("$x$")
+   plt.ylabel("$y$")
+   plt.tight_layout()
 
 plt.savefig("./figures/core_nn_sgd_moments.svg")
