@@ -3,6 +3,7 @@ import numpy as np
 import seaborn as sns
 
 
+np.random.seed = 42
 sns.set_style("white")
 sns.set_context(context="paper", font_scale=1)
 
@@ -33,4 +34,5 @@ for i, (lr, c) in enumerate(zip([2, 1, 0.1], ["dodgerblue", "darkorange", "crims
     plt.xlabel("$x$")
     if i == 0: plt.ylabel("$y$")
 
+plt.tight_layout()
 plt.savefig("./figures/core_nn_sgd.svg")

@@ -10,6 +10,7 @@ import torch.nn.functional as F
 import sklearn.datasets as skld
 
 
+np.random.seed = 42
 sns.set_style("white")
 sns.set_context(context="paper", font_scale=1)
 
@@ -52,4 +53,5 @@ for k, c in zip([0, 1], ["dodgerblue", "darkorange"]):
 plt.legend()
 plt.xlabel("$x$")
 plt.ylabel("$y$")
+plt.tight_layout()
 plt.savefig("./figures/core_nn_classification.svg")
