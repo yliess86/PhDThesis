@@ -9,6 +9,7 @@ import torch
 import torch.nn as nn
 
 
+np.random.seed = 42
 sns.set_style("white")
 sns.set_context(context="paper", font_scale=1)
 
@@ -51,4 +52,5 @@ plt.scatter(x, y_, label="$\hat{y}_i = f_\\theta(x_i)$", marker="+")
 plt.legend()
 plt.xlabel("$x$")
 plt.ylabel("$y$")
+plt.tight_layout()
 plt.savefig("./figures/core_nn_regression.svg")
