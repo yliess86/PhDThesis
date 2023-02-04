@@ -451,6 +451,93 @@ We distinguish two modes of operation for +ad, forward mode differentiation, and
 
 In modern +dl frameworks [@pytorch; @tensorflow], the +ad is centered on the implementation of a Graph object with Nodes. Both entities possess a `forward()` and a `backward()` function. The forward pass calls the `forward()` function of each node of the graph by traversing it in order while saving the node output for differentiation. The backward pass traverses the graph recursively in backward order calling the `backward()` function responsible for computing the local gradient of the node operation and multiplying it by its output gradient following the chain rule. Nodes are in most frameworks referred to as Layers, the elementary building block of the +nn operation chain.
 
+**Toy Implementation:** Here is a simple implementation of such a computation graph for backpropagation and +ad engines adapted from Micrograd by Andrej Karpathy [@karpathy_micrograd]. The Node class is responsible for storing the value, the chained gradient, and additional information to trace the graph for the backward pass.
+
+```python
+from dataclasses import dataclass
+
+@dataclass
+class Node:
+    value: float
+    grad: float = 0.0
+    _backward = lambda: None
+    _children: set[Node] = {}
+    _op = ""
+```
+
+The Node can then be populated with elementary operations (`__add__`, `__mul__`) and functions (`tanh`).
+
+```python
+import numpy as np
+
+
+class Node:
+    ...
+    def __add__(self, other: Node) -> Node:
+        out = Node(self.value + other.value, {self, other}, "+")
+
+        def _backward() -> None:
+            self.grad += out.grad
+            other.grad += out.grad
+        out._backward = _backward
+        
+        return out
+
+    def __mul__(self, other: Node) -> Node:
+        out = Node(self.value * other.value, {self, other}, "*")
+
+        def _backward() -> None:
+            self.grad += other.value * out.grad
+            other.grad += self.value * out.grad
+        out._backward = _backward
+        
+        return out
+
+    def tanh(self) -> Node:
+        act = np.tanh(self.value)
+        out = Node(act, {self}, "tanh")
+
+        def _backward() -> None:
+            self.grad += (1.0 - act ** 2) * out.grad
+        out._backward = _backward
+        
+        return out
+```
+
+Every elementary transformation needs to be differentiable and implements its own backward function using the chain rule. The chained gradient stored in the node is the multiplication of the local gradient with its output gradient computed when the parent node is encountered during the backward pass. The Node object needs to be extended with support for other elementary operations (e.g. `__pow__`, `__neg__`) and functions (e.g. `sigmoid`, `relu`) to be useful for +dl.
+
+We add the ability for a Node to compute its backward pass by first tracing all the current +dag operations recursively. The gradients can then be computed by initializing the first node (the last in the graph) gradient to $1$. The backward call on the graph iteratively traverses the graph from end to start and applies the inner backward functions to compute the chain gradients along the way while storing them in their respective Node object.
+
+```python
+class Node:
+    ...
+    def backward(self) -> None:
+        trace, visited = [], {}
+        def trace_graph(node: Node) -> None:
+            if node not in visited:
+                visited.add(node)
+                for child in node._children:
+                    trace_graph(child)
+                trace.append(node)
+        trace_graph(self)
+
+        self.grad = 1.0
+        for node in trace[::-1]:
+            node._backward()
+```
+
+The simple [+ad]{.full} engine is now ready to perform forward and backward passes. The gradients stored in the node can then be used for [+sgd]{.full} to update the weights of a [+nn]{.full} for example.
+
+```python
+w1, w2 = Node(0.1), Node(0.2)  # Weights
+a,  b  = Node(1.0), Node(0.0)  # Inputs
+
+z = (w1 * a + w2 * b).tanh()   # Eager forward pass
+z.backward()                   # Backward pass
+```
+
+Fortunatly open-source implementations of such engines are already available and extensively used by the +dl community. They have the adantage to work at the Tensor level, not at the Scalar level like Micrograd, and offer support for accelerated hardware such as [+gpu]{.full .plural}, [+tpu]{.full .plural}, and [+npu]{.full .plural}. In this dissertation, most examples are using the PyTorch [@pytorch] framework, a Python Tensor library written in C++ and equipped with a powerful eager mode reverse +ad engine.  
+
 **Eager or Graph Execution:** Modern +dl frameworks such as PyTorch [@pytorch] and Tensorflow [@tensorflow] now propose two execution modes. An eager mode, where the graph is built dynamically and operations are applied immediately, and a graph mode where the computational graph has to be defined beforehand. Both modes come with advantages and inconveniences. Eager mode is useful for iterative development and provides an intuitive interface similar to imperative programming, it is easier to debug and offers natural control flows as well as hardware acceleration support. On the other side, graph mode allows for more efficient execution. The graph can be optimized by applying operations similar to the ones used in programming language [+ast]{.plural}. Graph edges can be merged into a single fused operation, and execution can be optimized for parallelization. It is often the preferred way for deployment where the execution time and memory are at stake.
 
 #### Neural Network {#sec:nn}
