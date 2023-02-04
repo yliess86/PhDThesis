@@ -104,6 +104,9 @@ acronyms:
     mse:
         short: MSE
         long: Mean Squared Error
+    dag:
+        short: DAG
+        long: Directed Acyclic Graph
 ---
 
 \newpage{}
@@ -337,7 +340,7 @@ f = Sequential(
 )
 ```
 
-#### Optimization
+#### Optimization {#sec:optimization}
 
 In +ml, supervised problems can be reduced to an optimization problem where the computer has to find a set of parameters, weights $\theta$, for a given function class $\mathcal{F}$ by optimizing an objective function $\theta^* = arg \; min_\theta \mathcal{C(\theta)}$ made out of two components, a data-dependant loss $L$ and a regularization $R$.
 
@@ -430,11 +433,22 @@ One common approach is to set up metrics to evaluate the performance of the mode
 
 #### Backpropagation {#sec:backpropagation}
 
-- Efficient estimate of the grad w/ inputs
-- Recursive algo based exploiting chain rule
-- Jacobian estimation from end to start
-- Directed Acyclic Graph of Operations
-- Backward and Forward Pass
+In the previous sub-section (see @sec:optimization), we saw how to learn parametrized functions $f_\theta$ given a training dataset. By evaulating the gradients of the objective function with respect to the model's parameters, it is possible to obtain a good enough mapping $f_\theta: X \rightarrow Y$. In this sub-section, we discuss backpropagation, the recursive algorithm used to efficiently compute those gradients exploiting the chain rule $\frac{\partial z}{\partial x} = \frac{\partial z}{\partial y} \cdot \frac{\partial y}{\partial x}$ with $z$ dependant on $y$ and $y$ on $x$.
+
+**Forward Mode Differentiation**:
+
+- Forward vs Reverse Mode
+- Forward efficient when input > outputs
+- Reverse efficient when input < outputs
+- +nn is succession of differentiable Linear Trans + Non Linearity
+
+**Computation Graph**:
+
+- +nn can be expressed as a computation +dag
+- Graph object and Nodes implem backward and forward pass
+- Node compute local gradient * output grad and chain to children
+- Graph can be made efficient by fusing computation into single kernel
+- Dynamic (Eager Mode) vs Static Graph
 
 #### Neural Network
 #### Convolutional Neural Network

@@ -341,6 +341,10 @@
   
   
   
+  
+  
+  
+  
   <script
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
   type="text/javascript"></script>
@@ -460,6 +464,7 @@ Abbreviations</h2>
 <li><strong>ANN</strong>: Artificial Neural Network</li>
 <li><strong>CNN</strong>: Convolutional Neural Network</li>
 <li><strong>CV</strong>: Computer Vision</li>
+<li><strong>DAG</strong>: Directed Acyclic Graph</li>
 <li><strong>DDM</strong>: Denoising Diffusion Model</li>
 <li><strong>DL</strong>: Deep Learning</li>
 <li><strong>GAN</strong>: Generative Adversarial Network</li>
@@ -1178,7 +1183,7 @@ class="sourceCode python"><code class="sourceCode python"><span id="lst:classifi
 <span id="lst:classification-10"><a href="#lst:classification-10" aria-hidden="true" tabindex="-1"></a>    Linear(<span class="dv">32</span>, <span class="dv">32</span>), Tanh(),</span>
 <span id="lst:classification-11"><a href="#lst:classification-11" aria-hidden="true" tabindex="-1"></a>    Linear(<span class="dv">32</span>, <span class="dv">1</span>),</span>
 <span id="lst:classification-12"><a href="#lst:classification-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<h4 id="optimization">Optimization</h4>
+<h4 id="sec:optimization">Optimization</h4>
 <p>In ML, supervised problems can be reduced to an optimization problem
 where the computer has to find a set of parameters, weights <span
 class="math inline">\(\theta\)</span>, for a given function class <span
@@ -1392,12 +1397,36 @@ its own. The broad DL literature however contains many examples of
 initial parameters and architectures that can be used to bootstrap this
 search.</p>
 <h4 id="sec:backpropagation">Backpropagation</h4>
+<p>In the previous sub-section (see <a
+href="#sec:optimization">Sec 2.2.2.2</a>), we saw how to learn
+parametrized functions <span class="math inline">\(f_\theta\)</span>
+given a training dataset. By evaulating the gradients of the objective
+function with respect to the model’s parameters, it is possible to
+obtain a good enough mapping <span class="math inline">\(f_\theta: X
+\rightarrow Y\)</span>. In this sub-section, we discuss backpropagation,
+the recursive algorithm used to efficiently compute those gradients
+exploiting the chain rule <span class="math inline">\(\frac{\partial
+z}{\partial x} = \frac{\partial z}{\partial y} \cdot \frac{\partial
+y}{\partial x}\)</span> with <span class="math inline">\(z\)</span>
+dependant on <span class="math inline">\(y\)</span> and <span
+class="math inline">\(y\)</span> on <span
+class="math inline">\(x\)</span>.</p>
+<p><strong>Forward Mode Differentiation</strong>:</p>
 <ul>
-<li>Efficient estimate of the grad w/ inputs</li>
-<li>Recursive algo based exploiting chain rule</li>
-<li>Jacobian estimation from end to start</li>
-<li>Directed Acyclic Graph of Operations</li>
-<li>Backward and Forward Pass</li>
+<li>Forward vs Reverse Mode</li>
+<li>Forward efficient when input &gt; outputs</li>
+<li>Reverse efficient when input &lt; outputs</li>
+<li>NN is succession of differentiable Linear Trans + Non Linearity</li>
+</ul>
+<p><strong>Computation Graph</strong>:</p>
+<ul>
+<li>NN can be expressed as a computation Directed Acyclic Graph
+(DAG)</li>
+<li>Graph object and Nodes implem backward and forward pass</li>
+<li>Node compute local gradient * output grad and chain to children</li>
+<li>Graph can be made efficient by fusing computation into single
+kernel</li>
+<li>Dynamic (Eager Mode) vs Static Graph</li>
 </ul>
 <h4 id="neural-network">Neural Network</h4>
 <h4 id="convolutional-neural-network">Convolutional Neural Network</h4>
