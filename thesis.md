@@ -107,6 +107,9 @@ acronyms:
     dag:
         short: DAG
         long: Directed Acyclic Graph
+    ad:
+        short: AD
+        long: Automatic Differentiation
 ---
 
 \newpage{}
@@ -433,16 +436,13 @@ One common approach is to set up metrics to evaluate the performance of the mode
 
 #### Backpropagation {#sec:backpropagation}
 
-In the previous sub-section (see @sec:optimization), we saw how to learn parametrized functions $f_\theta$ given a training dataset. By evaulating the gradients of the objective function with respect to the model's parameters, it is possible to obtain a good enough mapping $f_\theta: X \rightarrow Y$. In this sub-section, we discuss backpropagation, the recursive algorithm used to efficiently compute those gradients exploiting the chain rule $\frac{\partial z}{\partial x} = \frac{\partial z}{\partial y} \cdot \frac{\partial y}{\partial x}$ with $z$ dependant on $y$ and $y$ on $x$.
+In the previous sub-section (see @sec:optimization), we saw how to learn parametrized functions $f_\theta$ given a training dataset. By evaluating the gradients of the objective function with respect to the model's parameters, it is possible to obtain a good enough mapping $f_\theta: X \rightarrow Y$. In this sub-section, we discuss backpropagation, the recursive algorithm used to efficiently compute those gradients exploiting the chain rule $\frac{\partial z}{\partial x} = \frac{\partial z}{\partial y} \cdot \frac{\partial y}{\partial x}$ with $z$ dependant on $y$ and $y$ on $x$.
 
-**Forward Mode Differentiation**:
+**Automatic Differentiation:** In mathermatics, +ad describes the set of techniques used to evaluate the derivative of a function and exploits the fact that any complex computation can be transformed into a sequence of elementary operations and functions with known symbolic derivatives. By applying the chain rule recursively to this sequence of operations, one can automatically compute the derivatives with precision at the cost of storage.
 
-- Forward vs Reverse Mode
-- Forward efficient when input > outputs
-- Reverse efficient when input < outputs
-- +nn is succession of differentiable Linear Trans + Non Linearity
+We distinguish two modes of operation for +ad, forward mode differentiation, and reverse mode differentiation. In forward mode, the derivatives are computed after applying each elementary operation and function in order using the chain rule. It requires storing the gradients along the way and carrying them until the last computation. This mode is preferred when the size of the outputs exceeds the size of the inputs. This is generally not the case for +nn where the input, an image for example, is larger than the output, a scalar for the objective function. On the opposite, reverse mode differentiation traverses the sequence of operations from end to start using the chain rule and requires to store the output of the operations instead. This method is preferred when the size of the inputs exceeds the outputs. This mode thus has to happen in two passes, a forward pass where one computes the output of every operation in the order, and a backward pass, where the sequence of operations is traversed in backward order to compute the derivatives.
 
-**Computation Graph**:
+**Computation Graph:**
 
 - +nn can be expressed as a computation +dag
 - Graph object and Nodes implem backward and forward pass
@@ -450,7 +450,7 @@ In the previous sub-section (see @sec:optimization), we saw how to learn paramet
 - Graph can be made efficient by fusing computation into single kernel
 - Dynamic (Eager Mode) vs Static Graph
 
-#### Neural Network
+#### Neural Network {#sec:nn}
 #### Convolutional Neural Network
 ### Generative Architectures {#sec:generative}
 #### Autoencoders
