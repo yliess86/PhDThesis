@@ -1421,13 +1421,28 @@ y}{\partial x}\)</span> with <span class="math inline">\(z\)</span>
 dependant on <span class="math inline">\(y\)</span> and <span
 class="math inline">\(y\)</span> on <span
 class="math inline">\(x\)</span>.</p>
-<p><strong>Automatic Differentiation:</strong> In mathematics, Automatic
-Differentiation (AD) describes the set of techniques used to evaluate
-the derivative of a function and exploits the fact that any complex
-computation can be transformed into a sequence of elementary operations
-and functions with known symbolic derivatives. By applying the chain
-rule recursively to this sequence of operations, one can automatically
-compute the derivatives with precision at the cost of storage.</p>
+<figure id="fig:dag">
+<img src="./figures/core_nn_dag.svg"
+alt="Illustration of reverse mode Automatic Differentiation (AD). This Directed Acyclic Graph (DAG) shows the forward pass in green and backward in red. The gradient of an activation is computed by multiplying the local gradient of a node by its output gradient computed in the previous step when following backward differentiation \frac{\partial C}{\partial x} = \frac{\partial z}{\partial x} \cdot \frac{\partial C}{\partial z} where \frac{\partial z}{\partial x} is the location derivative and \frac{\partial C}{\partial z} the output one." />
+<figcaption>Figure 11: Illustration of reverse mode Automatic
+Differentiation (AD). This Directed Acyclic Graph (DAG) shows the
+forward pass in green and backward in red. The gradient of an activation
+is computed by multiplying the local gradient of a node by its output
+gradient computed in the previous step when following backward
+differentiation <span class="math inline">\(\frac{\partial C}{\partial
+x} = \frac{\partial z}{\partial x} \cdot \frac{\partial C}{\partial
+z}\)</span> where <span class="math inline">\(\frac{\partial z}{\partial
+x}\)</span> is the location derivative and <span
+class="math inline">\(\frac{\partial C}{\partial z}\)</span> the output
+one.</figcaption>
+</figure>
+<p><strong>Automatic Differentiation:</strong> In mathematics, AD
+describes the set of techniques used to evaluate the derivative of a
+function and exploits the fact that any complex computation can be
+transformed into a sequence of elementary operations and functions with
+known symbolic derivatives. By applying the chain rule recursively to
+this sequence of operations, one can automatically compute the
+derivatives with precision at the cost of storage.</p>
 <p>We distinguish two modes of operation for AD, forward mode
 differentiation, and reverse mode differentiation. In forward mode, the
 derivatives are computed after applying each elementary operation and
@@ -1448,8 +1463,8 @@ derivatives.</p>
 succession of linear transformations followed by non-linear activations
 (discussed in the next sub-section <a href="#sec:nn">Sec 2.2.2.4</a>).
 Those elementary operations are differentiable and when thinking of the
-data flow can be viewed as a computation Directed Acyclic Graph (DAG) to
-which backpropagation, reverse mode differentiation, can be applied.</p>
+data flow can be viewed as a computation DAG to which backpropagation,
+reverse mode differentiation, can be applied.</p>
 <p>In modern DL frameworks <span class="citation"
 data-cites="pytorch tensorflow">[<a href="#ref-tensorflow"
 role="doc-biblioref">1</a>, <a href="#ref-pytorch"
