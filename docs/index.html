@@ -391,8 +391,8 @@ id="toc-contributions">Contributions</a></li>
 <ul>
 <li><a href="#sec:history" id="toc-sec:history">A Brief History of
 Artificial Intelligence</a></li>
-<li><a href="#sec:core" id="toc-sec:core">Deep Learning Core
-Principles</a></li>
+<li><a href="#sec:core" id="toc-sec:core">Core Principles</a></li>
+<li><a href="#sec:nn" id="toc-sec:nn">Neural Networks</a></li>
 <li><a href="#sec:generative" id="toc-sec:generative">Generative
 Architectures</a></li>
 <li><a href="#sec:attention" id="toc-sec:attention">Attention
@@ -987,7 +987,7 @@ milestones are also responsible for ethical and societal concerns about
 copyright, creativity, and more. This highlights both the potential of
 Deep Learning algorithms but also the need for further research around
 their implications.</p>
-<h3 id="sec:core">Deep Learning Core Principles</h3>
+<h3 id="sec:core">Core Principles</h3>
 <p>This section introduces the technical background necessary to
 understand this thesis dissertation. It introduces Neural Networks (NN)
 from first principles. A more detailed and complete introduction to the
@@ -1461,9 +1461,9 @@ sequence of operations is traversed in backward order to compute the
 derivatives.</p>
 <p><strong>Computation Graph:</strong> A NN can be defined as a
 succession of linear transformations followed by non-linear activations
-(discussed in the next sub-section <a href="#sec:nn">Sec 2.2.2.4</a>).
-Those elementary operations are differentiable and when thinking of the
-data flow can be viewed as a computation DAG to which backpropagation,
+(discussed in the next section <a href="#sec:nn">Sec 2.2.3</a>). Those
+elementary operations are differentiable and when thinking of the data
+flow can be viewed as a computation DAG to which backpropagation,
 reverse mode differentiation, can be applied.</p>
 <p>In modern DL frameworks <span class="citation"
 data-cites="pytorch tensorflow">[<a href="#ref-tensorflow"
@@ -1603,17 +1603,72 @@ Abstract Syntax Trees (AST). Graph edges can be merged into a single
 fused operation, and execution can be optimized for parallelization. It
 is often the preferred way for deployment where the execution time and
 memory are at stake.</p>
-<h4 id="sec:nn">Neural Network</h4>
-<h4 id="convolutional-neural-network">Convolutional Neural Network</h4>
+<h3 id="sec:nn">Neural Networks</h3>
+<p>In the previous section, we described the general setup for ML, where
+one has to fit a model from a given function family <span
+class="math inline">\(f \in \mathcal{F}\)</span> on a given dataset
+<span class="math inline">\((X, Y) \in D\)</span> optimized using +sdg
+and backpropagation. This section begings discussing a particular class
+of parameterized function <span class="math inline">\(f_\theta\)</span>
+called Neural Networks (NN).</p>
+<h4 id="sec:perceptron">Perceptron</h4>
+<p>The Perceptron, introduced by Frank Rosenblatt in 1958 <span
+class="citation" data-cites="rosenblatt_1958">[<a
+href="#ref-rosenblatt_1958" role="doc-biblioref">48</a>]</span>, is the
+building block of Neural Networks (NN). It was introduced as a
+simplified model of the human neuron, containing three parts: dendrites
+handling incoming signals from other neurons, a soma with a nucleus
+responsible for signal aggregation, and an axone responsible for the
+transmission of the processed signal to other neurons. When the signal
+aggregation in the soma reaches a predefined threshold, the neuron
+activates. This pehnomenon is called an action potential. Although this
+is not an accurate representation of the modern neuroscience state of
+knowledge, this simplified model was believed to be accurate at the
+time.</p>
+<figure id="fig:perceptron">
+<img src="./figures/core_nn_perceptron.svg"
+alt="Diagram of a Perceptron with three inputs \{x_1; x_2; x_3\}. The perceptron computes an activated weighted sum of its inputs y = \sigma(\sum_{i=1}^{3} w_i \cdot x_i) where \sigma, the activation function is a threshold function." />
+<figcaption>Figure 12: Diagram of a Perceptron with three inputs <span
+class="math inline">\(\{x_1; x_2; x_3\}\)</span>. The perceptron
+computes an activated weighted sum of its inputs <span
+class="math inline">\(y = \sigma(\sum_{i=1}^{3} w_i \cdot x_i)\)</span>
+where <span class="math inline">\(\sigma\)</span>, the activation
+function is a threshold function.</figcaption>
+</figure>
+<p>Similarly, the Perceptron computes a weighted sum of its inputs and
+activates if a certain threshold is reached (see <a
+href="#fig:perceptron">Fig 12</a>). The Perceptron is parametrized by
+the weights representing the importance attributed to the incoming
+inputs and are part of the parameters <span
+class="math inline">\(\theta\)</span> that are trained on a given
+dataset. It can be viewed as a learned linear regressor followed by a
+non-linear activation, historically a threshold function, a function
+<span class="math inline">\(\sigma\)</span> that activates <span
+class="math inline">\(\sigma(x) = 1\)</span> when <span
+class="math inline">\(x &gt; 0.5\)</span> and <span
+class="math inline">\(\sigma(x) = 0\)</span> otherwise (see
+Lst <strong>¿lst:perceptron?</strong>).</p>
+<div class="sourceCode" id="lst:perceptron"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="lst:perceptron-1"><a href="#lst:perceptron-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> perceptron(<span class="va">self</span>, x: Tensor, W: Tensor) <span class="op">-&gt;</span> Tensor:</span>
+<span id="lst:perceptron-2"><a href="#lst:perceptron-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (x <span class="op">*</span> <span class="va">self</span>.W.T) <span class="op">&gt;</span> <span class="fl">0.5</span></span></code></pre></div>
+<p>The objective of a perceptron is to learn a hyperplane, a plane with
+<span class="math inline">\(n - 1\)</span> dimensions where <span
+class="math inline">\(n\)</span> is the number of inputs, that can
+perform binary classification, separate two classes. However, as
+mentionned by Marvin L. Minsky and al. in their controversial book
+Perceptrons <span class="citation" data-cites="minsky_1969">[<a
+href="#ref-minsky_1969" role="doc-biblioref">39</a>]</span>, a
+hyperplane regressor cannot solve a simple XOR problem.</p>
+<h4 id="sec:mlp">Multi-Layer Perceptron</h4>
+<h4 id="sec:cnn">Convolutional Neural Network</h4>
 <h3 id="sec:generative">Generative Architectures</h3>
-<h4 id="autoencoders">Autoencoders</h4>
-<h4 id="variational-autoencoders">Variational Autoencoders</h4>
-<h4 id="generative-adversarial-networks">Generative Adversarial
-Networks</h4>
-<h4 id="denoising-diffusion-models">Denoising Diffusion Models</h4>
+<h4 id="sec:ae">Autoencoders</h4>
+<h4 id="sec:vae">Variational Autoencoders</h4>
+<h4 id="sec:gan">Generative Adversarial Networks</h4>
+<h4 id="sec:ddm">Denoising Diffusion Models</h4>
 <h3 id="sec:attention">Attention Machanism</h3>
-<h4 id="multihead-self-attention">Multihead Self-Attention</h4>
-<h4 id="large-language-models">Large Language Models</h4>
+<h4 id="sec:mha">Multihead Self-Attention</h4>
+<h4 id="sec:llm">Large Language Models</h4>
 
 <h2 id="ch:methodology">Methodology</h2>
 <h3 id="implementation">Implementation</h3>
