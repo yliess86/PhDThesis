@@ -114,8 +114,11 @@ acronyms:
         short: AST
         long: Abstract Syntax Tree
     relu:
-     short: ReLU
-     long: Rectified Linear Unit
+        short: ReLU
+        long: Rectified Linear Unit
+    mnist:
+        short: MNIST
+        long: Modified National Institute of Standards and Technology
 ---
 
 \newpage{}
@@ -574,7 +577,115 @@ A +mlp with Identity as its activation function is useless as its chain of linea
 
 ![Activation functions. Sigmoid $\sigma(x) = \frac{1}{1 + e^{-x}}$ acts as a filter $y \in [0; 1]$, tanh $tanh(x) = \frac{e^{z} - e^{-z}}{e^{z} + e^{-z}}$ acts as a normalization compressor $y \in [-1; 1]$, +relu $ReLU(x) = max(x, 0)$ folds all negatives down to zero $y \in [0; +\infty]$.](./figures/core_nn_activations.svg){#fig:activations}
 
-**MNIST Classifier:**
+**MNIST Classifier:** A classic toy example showing the capabilities of [+mlp]{.plural} is the hand written digit classification challenge on the +mnist dataset [@mnist]. +mnist contains $60,000$ training and $10,000$ test examples. It has been written by high school students and gather $28 \times 28$ centered black and white hand written digits from $0$ to $9$ (see @fig:mnist).
+
+![First $27$ hand written digits from the [+mnist]{.full} dataset. The digits are stored as $28 \times 28$ centered black and white images.](./figures/core_nn_mnist.svg){#fig:mnist}
+
+Training a +mlp on such a challenge is simple and effective. With little training, parameters (according to the +dl standards), and no hyperparameter tweaking, a vanilla 3-layer +nn with ReLU activations is able to achieve $97.5%$ accuracy on the test set. The inputs however needs to be transformed before injestion by the model as [+mlp]{.plural} are constrained to $1$-dimensional input vectors. The following demonstrates how to implement such a model and train it on +mnist.
+
+```python
+from torch.utils.data import (Subset, DataLoader)
+from torchvision.datasets.mnist import MNIST
+from torchvision.transforms.functional import to_tensor
+
+# Load MNIST images as Tensors and Normalize [0; 1]
+T = lambda x: to_tensor(x).float().flatten()
+dataset = MNIST("dataset", train=True,  transform=T.ToTensor())
+testset = MNIST("dataset", train=False, transform=T.ToTensor())
+
+# Split dataset in Train and Validation Splits
+n, split = len(dataset), int(np.floor(0.8 * len(dataset)))
+train_idxs = np.random.choice(range(n), size=split, replace=False)
+valid_idxs = [idx for idx in range(n) if idx not in train_idxs]
+trainset = Subset(dataset, indices=train_idxs)
+validset = Subset(dataset, indices=valid_idxs)
+
+# Mini Batch Loaders (Shuffle Order for Training)
+trainloader = DataLoader(trainset, batch_size=1_024, shuffle=True )
+validloader = DataLoader(validset, batch_size=1_024, shuffle=False)
+testloader  = DataLoader(testset,  batch_size=1_024, shuffle=False)
+```
+
+The first step consists in loading the +mnist dataset and applying preprocessing to the data for preparing the injestion by the model. The images needs to be transformed into a normalized tensor and flatten to form a $1$-dimensional vector. The datasets are split into a training set, a validation set, and a test set. A mini-batch loader is then used to wrap the dataset and allow to load multiple input and output pairs at the same time.
+
+```python
+from torch.nn import (Linear, Module, ReLU, Sequential)
+from torch.optim import (AdamW, Optimizer)
+
+# Model and Optimizer
+model = Sequential(
+    Linear(28 * 28, 128), ReLU(),
+    Linear(    128, 128), ReLU(),
+    Linear(    128,  10),
+)
+optim = AdamW(model.parameters(), lr=1e-2)
+```
+
+Then, the model is defined as a sequence of three linear layers (linear transformations with bias for the intercept) and ReLU activations except for the last one responsible for outputing the logits, used for computing the loss, here the cross entropy for multi class classification. The enhanced +sgd optimizer, Adam, is then initialized with the model's weight and a learning rate $\epsilon$. AdamW is a variant of Adam with a corrected weight decay term for regularization.
+
+```python
+from torch import Tensor
+from torch.nn.functional import cross_entropy
+
+# Perform one Step and estimate Metrics
+def step(
+    model: Module,
+    optim: Optimizer,
+    imgs: Tensor,
+    labels: Tensor,
+    split: str,
+) -> Tuple[float, float]:
+    logits = model(imgs)                  # Prediction
+    loss = cross_entropy(logits, labels)  # Mean Loss
+    n_correct = logits.argmax(dim=-1)     # Correct Predictions
+
+    # Train if split is "train"
+    if split == "train":
+        loss.backward()
+        optim.step()
+        optim.zero_grad(set_to_none=True)
+
+    return loss.item(), n_correct.item()
+```
+
+The `step` function is responsible for performing one training step when the given split is set to `"train"` and computes the metrics used for monitoring. In our case, we monitor the average loss and the accuracy of the model. For a more complete evaluation other metrics such as the F-$1$ score, the perplexity, the recall, and a confusion matrix can be evaluated. They are here omitted for the sake of illustration and simplicity. 
+
+```python
+# Train for 10 epochs
+for epoch in range(10):
+    # Training
+    model.train()
+    loss, acc = 0, 0
+    for imgs, labels in trainloader:
+        metrics = step(model, optim, imgs, label, "train")
+        loss += metrics[0] / len(trainloader)
+        acc  += metrics[1] / len(trainloader.dataset)
+    print(f"[Train] Epoch {epoch}, loss: {loss:.2e}, acc: {acc * 100:.2f}%")
+
+    # Validation
+    model.eval()
+    with torch.inference_mode():
+        loss, acc = 0, 0
+        for imgs, labels in validloader:
+            metrics = step(model, optim, imgs, label, "valid")
+            loss += metrics[0] / len(validloader)
+            acc  += metrics[1] / len(validloader.dataset)
+    print(f"[Valid] Epoch {epoch}, loss: {loss:.2e}, acc: {acc * 100:.2f}%")
+
+# Test
+model.eval()
+with torch.inference_mode():
+    loss, acc = 0, 0
+    for imgs, labels in testloader:
+        metrics = step(model, optim, imgs, label, "test")
+        loss += metrics[0] / len(testloader)
+        acc  += metrics[1] / len(testloader.dataset)
+print(f"[Test] loss: {loss:.2e}, acc: {acc * 100:.2f}%")
+```
+
+Finally, the model is trained for $10$ epochs, the number of time the entire dataset is looped through. This number was arbitrarly chosen to correspond with the loss saturation, when the model does not improve much. A training loop is divided in few steps, a training phase where one continously performs a training step followed by a validation step to monitor generalization, and, when stopped, a test phase to monitor model generalization without bias. This last step prevents from trying to overfit the validation set specifically and should be performed at the very end. An example training history is shown in @fig:mnist_history. In this example the model's reach $97.5%$ accuracy. By spending time tweaking the hyperparameters (the model's weights, the learning rate, the number of epochs, ...), the model can be improved further.
+
+![Training history of a 3-layer [+mlp]{.full} with $128$ neurons in every layer on the +mnist dataset. The average loss (cros entropy) on the left, and the accuracy on the right are displayed for the training, validation, and test splits.](./figures/core_nn_mnist_history.svg){#fig:mnist_history}
 
 #### Convolutional Neural Network {#sec:cnn}
 
