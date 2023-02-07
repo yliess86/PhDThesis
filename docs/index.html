@@ -357,6 +357,10 @@
   
   
   
+  
+  
+  
+  
   <script
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
   type="text/javascript"></script>
@@ -488,6 +492,8 @@ Abbreviations</h2>
 <li><strong>LSTM</strong>: Long Short-Term Memory</li>
 <li><strong>ML</strong>: Machine Learning</li>
 <li><strong>MLP</strong>: Multi-Layer Perceptron</li>
+<li><strong>MNIST</strong>: Modified National Institute of Standards and
+Technology</li>
 <li><strong>MSE</strong>: Mean Squared Error</li>
 <li><strong>NN</strong>: Neural Network</li>
 <li><strong>NPU</strong>: Neural Processing Unit</li>
@@ -556,7 +562,7 @@ data-cites="ho_2020">[<a href="#ref-ho_2020"
 role="doc-biblioref">20</a>]</span>, and Large Language Models (LLM)
 <span class="citation" data-cites="vaswani_2017 brown_2020">[<a
 href="#ref-brown_2020" role="doc-biblioref">3</a>, <a
-href="#ref-vaswani_2017" role="doc-biblioref">56</a>]</span> are used to
+href="#ref-vaswani_2017" role="doc-biblioref">57</a>]</span> are used to
 generate artifacts such as text, audio, images, and videos of
 unprecedented quality and complexity.</p>
 <p>This dissertation aims at exploring how one could train and use
@@ -605,7 +611,7 @@ colorization, particularly in comparison to its grayscale counterpart
 data-cites="furusawa_2O17 hensman_2017 zhang_richard_2017">[<a
 href="#ref-furusawa_2O17" role="doc-biblioref">12</a>, <a
 href="#ref-hensman_2017" role="doc-biblioref">18</a>, <a
-href="#ref-zhang_richard_2017" role="doc-biblioref">61</a>]</span>.
+href="#ref-zhang_richard_2017" role="doc-biblioref">62</a>]</span>.
 Without the added semantic information provided by textures and shadows,
 inferring materials and 3D shapes from black and white linearts is
 difficult. They can only be deduced from silhouettes.</p>
@@ -619,7 +625,7 @@ reasons, online scrapping and synthetic lineart extraction is the method
 of choice for many of the contributions in the field <span
 class="citation" data-cites="ci_2018 zhang_richard_2017">[<a
 href="#ref-ci_2018" role="doc-biblioref">5</a>, <a
-href="#ref-zhang_richard_2017" role="doc-biblioref">61</a>]</span>.</p>
+href="#ref-zhang_richard_2017" role="doc-biblioref">62</a>]</span>.</p>
 <p>Previous works in automatic lineart colorization are based on the GAN
 <span class="citation" data-cites="goodfellow_2014">[<a
 href="#ref-goodfellow_2014" role="doc-biblioref">14</a>]</span>
@@ -633,7 +639,7 @@ href="#ref-liu_2017" role="doc-biblioref">36</a>, <a
 href="#ref-paintschainer_2017" role="doc-biblioref">45</a>, <a
 href="#ref-sangkloy_2016" role="doc-biblioref">53</a>]</span>, style
 transfer <span class="citation" data-cites="zhang_ji_2017">[<a
-href="#ref-zhang_ji_2017" role="doc-biblioref">60</a>]</span>, tagging
+href="#ref-zhang_ji_2017" role="doc-biblioref">61</a>]</span>, tagging
 <span class="citation" data-cites="kim_2019">[<a href="#ref-kim_2019"
 role="doc-biblioref">27</a>]</span>, and more recently natural language
 <span class="citation" data-cites="ho_2020">[<a href="#ref-ho_2020"
@@ -707,7 +713,7 @@ discrimination. These models are trained on large amounts of data, and
 if the data is not diverse or representative enough, the model may
 perpetuate or even amplify existing biases. The Microsoft Tay Twitter
 bot <span class="citation" data-cites="wolf_2017">[<a
-href="#ref-wolf_2017" role="doc-biblioref">58</a>]</span> scandal is an
+href="#ref-wolf_2017" role="doc-biblioref">59</a>]</span> scandal is an
 outcome of such a phenomenon. This initially innocent chatbot has been
 easily turned into a racist bot perpetuating hate speech. The task was
 made easier because of the inherently biased dataset it was trained
@@ -939,7 +945,7 @@ role="doc-biblioref">14</a>]</span>, a high fidelity and high-resolution
 generative framework, attention mechanisms with the rise of the
 Transformer “Attention is all you Need” architecture <span
 class="citation" data-cites="vaswani_2017">[<a href="#ref-vaswani_2017"
-role="doc-biblioref">56</a>]</span> present in almost all modern DL
+role="doc-biblioref">57</a>]</span> present in almost all modern DL
 contributions, and more recently the Denoising Diffusion Model (DDM)
 <span class="citation" data-cites="ho_2020">[<a href="#ref-ho_2020"
 role="doc-biblioref">20</a>]</span>, the spiritual autoregressive
@@ -963,7 +969,7 @@ recognition capabilities of deep NN in combination with efficient search
 algorithms.</p>
 <p>In 2019, AlphStar <span class="citation"
 data-cites="vinyals_2019">[<a href="#ref-vinyals_2019"
-role="doc-biblioref">57</a>]</span> from DeepMind also was able to
+role="doc-biblioref">58</a>]</span> from DeepMind also was able to
 compete and defeat grandmasters in StarCraft the real-time strategy game
 of Blizzard. This demonstrated the capability of Deep Learning
 algorithms to achieve beyond human-level performance in real-time and
@@ -1001,7 +1007,7 @@ field can be found in “the Deep Learning book” by Ian Goodfellow et al
 href="#ref-goodfellow_2016" role="doc-biblioref">13</a>]</span> or in
 “Dive into Deep Learning” by Aston Zhang et al. <span class="citation"
 data-cites="aston_zhang_2021">[<a href="#ref-aston_zhang_2021"
-role="doc-biblioref">59</a>]</span>.</p>
+role="doc-biblioref">60</a>]</span>.</p>
 <h4 id="supervised-learning">Supervised Learning</h4>
 <p>In Machine Learning (ML), problems are often formulated as
 data-driven learning tasks, where a computer is used to find a mapping
@@ -1718,7 +1724,168 @@ class="math inline">\(ReLU(x) = max(x, 0)\)</span> folds all negatives
 down to zero <span class="math inline">\(y \in [0;
 +\infty]\)</span>.</figcaption>
 </figure>
-<p><strong>MNIST Classifier:</strong></p>
+<p><strong>MNIST Classifier:</strong> A classic toy example showing the
+capabilities of MLPs is the hand written digit classification challenge
+on the Modified National Institute of Standards and Technology (MNIST)
+dataset <span class="citation" data-cites="mnist">[<a href="#ref-mnist"
+role="doc-biblioref">56</a>]</span>. MNIST contains <span
+class="math inline">\(60,000\)</span> training and <span
+class="math inline">\(10,000\)</span> test examples. It has been written
+by high school students and gather <span class="math inline">\(28 \times
+28\)</span> centered black and white hand written digits from <span
+class="math inline">\(0\)</span> to <span
+class="math inline">\(9\)</span> (see <a
+href="#fig:mnist">Fig 16</a>).</p>
+<figure id="fig:mnist">
+<img src="./figures/core_nn_mnist.svg"
+alt="First 27 hand written digits from the Modified National Institute of Standards and Technology (MNIST) dataset. The digits are stored as 28 \times 28 centered black and white images." />
+<figcaption>Figure 16: First <span class="math inline">\(27\)</span>
+hand written digits from the Modified National Institute of Standards
+and Technology (MNIST) dataset. The digits are stored as <span
+class="math inline">\(28 \times 28\)</span> centered black and white
+images.</figcaption>
+</figure>
+<p>Training a MLP on such a challenge is simple and effective. With
+little training, parameters (according to the DL standards), and no
+hyperparameter tweaking, a vanilla 3-layer NN with ReLU activations is
+able to achieve <span class="math inline">\(97.5%\)</span> accuracy on
+the test set. The inputs however needs to be transformed before
+injestion by the model as MLPs are constrained to <span
+class="math inline">\(1\)</span>-dimensional input vectors. The
+following demonstrates how to implement such a model and train it on
+MNIST.</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch.utils.data <span class="im">import</span> (Subset, DataLoader)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torchvision.datasets.mnist <span class="im">import</span> MNIST</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torchvision.transforms.functional <span class="im">import</span> to_tensor</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Load MNIST images as Tensors and Normalize [0; 1]</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>T <span class="op">=</span> <span class="kw">lambda</span> x: to_tensor(x).<span class="bu">float</span>().flatten()</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>dataset <span class="op">=</span> MNIST(<span class="st">&quot;dataset&quot;</span>, train<span class="op">=</span><span class="va">True</span>,  transform<span class="op">=</span>T.ToTensor())</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>testset <span class="op">=</span> MNIST(<span class="st">&quot;dataset&quot;</span>, train<span class="op">=</span><span class="va">False</span>, transform<span class="op">=</span>T.ToTensor())</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Split dataset in Train and Validation Splits</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>n, split <span class="op">=</span> <span class="bu">len</span>(dataset), <span class="bu">int</span>(np.floor(<span class="fl">0.8</span> <span class="op">*</span> <span class="bu">len</span>(dataset)))</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>train_idxs <span class="op">=</span> np.random.choice(<span class="bu">range</span>(n), size<span class="op">=</span>split, replace<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>valid_idxs <span class="op">=</span> [idx <span class="cf">for</span> idx <span class="kw">in</span> <span class="bu">range</span>(n) <span class="cf">if</span> idx <span class="kw">not</span> <span class="kw">in</span> train_idxs]</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>trainset <span class="op">=</span> Subset(dataset, indices<span class="op">=</span>train_idxs)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>validset <span class="op">=</span> Subset(dataset, indices<span class="op">=</span>valid_idxs)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Mini Batch Loaders (Shuffle Order for Training)</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>trainloader <span class="op">=</span> DataLoader(trainset, batch_size<span class="op">=</span><span class="dv">1_024</span>, shuffle<span class="op">=</span><span class="va">True</span> )</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>validloader <span class="op">=</span> DataLoader(validset, batch_size<span class="op">=</span><span class="dv">1_024</span>, shuffle<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>testloader  <span class="op">=</span> DataLoader(testset,  batch_size<span class="op">=</span><span class="dv">1_024</span>, shuffle<span class="op">=</span><span class="va">False</span>)</span></code></pre></div>
+<p>The first step consists in loading the MNIST dataset and applying
+preprocessing to the data for preparing the injestion by the model. The
+images needs to be transformed into a normalized tensor and flatten to
+form a <span class="math inline">\(1\)</span>-dimensional vector. The
+datasets are split into a training set, a validation set, and a test
+set. A mini-batch loader is then used to wrap the dataset and allow to
+load multiple input and output pairs at the same time.</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch.nn <span class="im">import</span> (Linear, Module, ReLU, Sequential)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch.optim <span class="im">import</span> (AdamW, Optimizer)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Model and Optimizer</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> Sequential(</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    Linear(<span class="dv">28</span> <span class="op">*</span> <span class="dv">28</span>, <span class="dv">128</span>), ReLU(),</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    Linear(    <span class="dv">128</span>, <span class="dv">128</span>), ReLU(),</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    Linear(    <span class="dv">128</span>,  <span class="dv">10</span>),</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>optim <span class="op">=</span> AdamW(model.parameters(), lr<span class="op">=</span><span class="fl">1e-2</span>)</span></code></pre></div>
+<p>Then, the model is defined as a sequence of three linear layers
+(linear transformations with bias for the intercept) and ReLU
+activations except for the last one responsible for outputing the
+logits, used for computing the loss, here the cross entropy for multi
+class classification. The enhanced SGD optimizer, Adam, is then
+initialized with the model’s weight and a learning rate <span
+class="math inline">\(\epsilon\)</span>. AdamW is a variant of Adam with
+a corrected weight decay term for regularization.</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch <span class="im">import</span> Tensor</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch.nn.functional <span class="im">import</span> cross_entropy</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform one Step and estimate Metrics</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> step(</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    model: Module,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    optim: Optimizer,</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    imgs: Tensor,</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    labels: Tensor,</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    split: <span class="bu">str</span>,</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> Tuple[<span class="bu">float</span>, <span class="bu">float</span>]:</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    logits <span class="op">=</span> model(imgs)                  <span class="co"># Prediction</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    loss <span class="op">=</span> cross_entropy(logits, labels)  <span class="co"># Mean Loss</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    n_correct <span class="op">=</span> logits.argmax(dim<span class="op">=-</span><span class="dv">1</span>)     <span class="co"># Correct Predictions</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Train if split is &quot;train&quot;</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> split <span class="op">==</span> <span class="st">&quot;train&quot;</span>:</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>        loss.backward()</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>        optim.step()</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>        optim.zero_grad(set_to_none<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> loss.item(), n_correct.item()</span></code></pre></div>
+<p>The <code>step</code> function is responsible for performing one
+training step when the given split is set to <code>"train"</code> and
+computes the metrics used for monitoring. In our case, we monitor the
+average loss and the accuracy of the model. For a more complete
+evaluation other metrics such as the F-<span
+class="math inline">\(1\)</span> score, the perplexity, the recall, and
+a confusion matrix can be evaluated. They are here omitted for the sake
+of illustration and simplicity.</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Train for 10 epochs</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> epoch <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>):</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Training</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    model.train()</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    loss, acc <span class="op">=</span> <span class="dv">0</span>, <span class="dv">0</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> imgs, labels <span class="kw">in</span> trainloader:</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>        metrics <span class="op">=</span> step(model, optim, imgs, label, <span class="st">&quot;train&quot;</span>)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>        loss <span class="op">+=</span> metrics[<span class="dv">0</span>] <span class="op">/</span> <span class="bu">len</span>(trainloader)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>        acc  <span class="op">+=</span> metrics[<span class="dv">1</span>] <span class="op">/</span> <span class="bu">len</span>(trainloader.dataset)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;[Train] Epoch </span><span class="sc">{</span>epoch<span class="sc">}</span><span class="ss">, loss: </span><span class="sc">{</span>loss<span class="sc">:.2e}</span><span class="ss">, acc: </span><span class="sc">{</span>acc <span class="op">*</span> <span class="dv">100</span><span class="sc">:.2f}</span><span class="ss">%&quot;</span>)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Validation</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    model.<span class="bu">eval</span>()</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> torch.inference_mode():</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>        loss, acc <span class="op">=</span> <span class="dv">0</span>, <span class="dv">0</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> imgs, labels <span class="kw">in</span> validloader:</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>            metrics <span class="op">=</span> step(model, optim, imgs, label, <span class="st">&quot;valid&quot;</span>)</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>            loss <span class="op">+=</span> metrics[<span class="dv">0</span>] <span class="op">/</span> <span class="bu">len</span>(validloader)</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>            acc  <span class="op">+=</span> metrics[<span class="dv">1</span>] <span class="op">/</span> <span class="bu">len</span>(validloader.dataset)</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;[Valid] Epoch </span><span class="sc">{</span>epoch<span class="sc">}</span><span class="ss">, loss: </span><span class="sc">{</span>loss<span class="sc">:.2e}</span><span class="ss">, acc: </span><span class="sc">{</span>acc <span class="op">*</span> <span class="dv">100</span><span class="sc">:.2f}</span><span class="ss">%&quot;</span>)</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Test</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>model.<span class="bu">eval</span>()</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> torch.inference_mode():</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>    loss, acc <span class="op">=</span> <span class="dv">0</span>, <span class="dv">0</span></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> imgs, labels <span class="kw">in</span> testloader:</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>        metrics <span class="op">=</span> step(model, optim, imgs, label, <span class="st">&quot;test&quot;</span>)</span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>        loss <span class="op">+=</span> metrics[<span class="dv">0</span>] <span class="op">/</span> <span class="bu">len</span>(testloader)</span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>        acc  <span class="op">+=</span> metrics[<span class="dv">1</span>] <span class="op">/</span> <span class="bu">len</span>(testloader.dataset)</span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;[Test] loss: </span><span class="sc">{</span>loss<span class="sc">:.2e}</span><span class="ss">, acc: </span><span class="sc">{</span>acc <span class="op">*</span> <span class="dv">100</span><span class="sc">:.2f}</span><span class="ss">%&quot;</span>)</span></code></pre></div>
+<p>Finally, the model is trained for <span
+class="math inline">\(10\)</span> epochs, the number of time the entire
+dataset is looped through. This number was arbitrarly chosen to
+correspond with the loss saturation, when the model does not improve
+much. A training loop is divided in few steps, a training phase where
+one continously performs a training step followed by a validation step
+to monitor generalization, and, when stopped, a test phase to monitor
+model generalization without bias. This last step prevents from trying
+to overfit the validation set specifically and should be performed at
+the very end. An example training history is shown in <a
+href="#fig:mnist_history">Fig 17</a>. In this example the model’s reach
+<span class="math inline">\(97.5%\)</span> accuracy. By spending time
+tweaking the hyperparameters (the model’s weights, the learning rate,
+the number of epochs, …), the model can be improved further.</p>
+<figure id="fig:mnist_history">
+<img src="./figures/core_nn_mnist_history.svg"
+alt="Training history of a 3-layer Multi-Layer Perceptron (MLP) with 128 neurons in every layer on the MNIST dataset. The average loss (cros entropy) on the left, and the accuracy on the right are displayed for the training, validation, and test splits." />
+<figcaption>Figure 17: Training history of a 3-layer Multi-Layer
+Perceptron (MLP) with <span class="math inline">\(128\)</span> neurons
+in every layer on the MNIST dataset. The average loss (cros entropy) on
+the left, and the accuracy on the right are displayed for the training,
+validation, and test splits.</figcaption>
+</figure>
 <h4 id="sec:cnn">Convolutional Neural Network</h4>
 <h3 id="sec:generative">Generative Architectures</h3>
 <h4 id="sec:ae">Autoencoders</h4>
@@ -2151,22 +2318,28 @@ go with deep neural networks and tree search. <em>Nature</em>. 529, 7587
 (Jan. 2016), 484–489. DOI:https://doi.org/<a
 href="https://doi.org/10.1038/nature16961">10.1038/nature16961</a>.</div>
 </div>
-<div id="ref-vaswani_2017" class="csl-entry" role="listitem">
+<div id="ref-mnist" class="csl-entry" role="listitem">
 <div class="csl-left-margin">[56] </div><div
+class="csl-right-inline">The MNIST database: <a
+href="http://yann.lecun.com/exdb/mnist/"><em>http://yann.lecun.com/exdb/mnist/</em></a>.
+Accessed: 2023-02-07.</div>
+</div>
+<div id="ref-vaswani_2017" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[57] </div><div
 class="csl-right-inline">Vaswani, A., Shazeer, N., Parmar, N.,
 Uszkoreit, J., Jones, L., Gomez, A.N., Kaiser, Ł. and Polosukhin, I.
 2017. Attention is all you need. <em>Advances in neural information
 processing systems</em>. 30, (2017).</div>
 </div>
 <div id="ref-vinyals_2019" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[57] </div><div
+<div class="csl-left-margin">[58] </div><div
 class="csl-right-inline">Vinyals, O. et al. 2019. Grandmaster level in
 StarCraft II using multi-agent reinforcement learning. <em>Nature</em>.
 575, 7782 (Nov. 2019), 350–354. DOI:https://doi.org/<a
 href="https://doi.org/10.1038/s41586-019-1724-z">10.1038/s41586-019-1724-z</a>.</div>
 </div>
 <div id="ref-wolf_2017" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[58] </div><div
+<div class="csl-left-margin">[59] </div><div
 class="csl-right-inline">Wolf, M.J., Miller, K. and Grodzinsky, F.S.
 2017. Why we should have seen that coming: Comments on microsoft’s tay
 "experiment," and wider implications. <em>SIGCAS Comput. Soc.</em> 47, 3
@@ -2174,13 +2347,13 @@ class="csl-right-inline">Wolf, M.J., Miller, K. and Grodzinsky, F.S.
 href="https://doi.org/10.1145/3144592.3144598">10.1145/3144592.3144598</a>.</div>
 </div>
 <div id="ref-aston_zhang_2021" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[59] </div><div
+<div class="csl-left-margin">[60] </div><div
 class="csl-right-inline">Zhang, A., Lipton, Z.C., Li, M. and Smola, A.J.
 2021. Dive into deep learning. <em>arXiv preprint arXiv:2106.11342</em>.
 (2021).</div>
 </div>
 <div id="ref-zhang_ji_2017" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[60] </div><div
+<div class="csl-left-margin">[61] </div><div
 class="csl-right-inline">Zhang, L., Ji, Y., Lin, X. and Liu, C. 2017. <a
 href="https://doi.org/10.1109/ACPR.2017.61">Style transfer for anime
 sketches with enhanced residual u-net and auxiliary classifier GAN</a>.
@@ -2188,7 +2361,7 @@ sketches with enhanced residual u-net and auxiliary classifier GAN</a>.
 (2017), 506–511.</div>
 </div>
 <div id="ref-zhang_richard_2017" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[61] </div><div
+<div class="csl-left-margin">[62] </div><div
 class="csl-right-inline">Zhang, R., Zhu, J.-Y., Isola, P., Geng, X.,
 Lin, A.S., Yu, T. and Efros, A.A. 2017. Real-time user-guided image
 colorization with learned deep priors. <em>ACM Trans. Graph.</em> 36, 4
