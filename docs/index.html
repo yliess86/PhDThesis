@@ -1903,7 +1903,33 @@ Convolutional Neural Networks (CNN) (ConvNets) are such a NN specialized
 in handling spatially correlated data such as images.</p>
 <p><strong>Convolution:</strong> The core component of a ConvNet is the
 convolution operation. A +CNN operates by convolving (rolling) a set of
-parametrized filters on the input.</p>
+parametrized filters on the input. If we reconsider our <span
+class="math inline">\(W_1 \times H_1 \times D_1 = 256 \times 256 \times
+3\)</span>, convolving a single filter of size <span
+class="math inline">\(F_W \times F_H \times D_1 = 3 \times 3 \times
+3\)</span> would require sliding the filter across the entire input
+image tensor and computing the dot product of the overlapping tensor
+chunk and the filter. This operation results in what is called an
+activation map, or feature map. The filter can be convolved in different
+configurations. The stride <span class="math inline">\(S\)</span>
+defines the hop size when rolling the filter over the input, and the
+padding <span class="math inline">\(P\)</span> defines the additional
+border added to the input tensor in order to parkour the input border
+(<span class="math inline">\(252\)</span> unique positions for the
+filter in the <span class="math inline">\(256\)</span> image, <span
+class="math inline">\(256\)</span> positions with a padding of <span
+class="math inline">\(1\)</span> on each side of the input). A CNN
+convolves multiple parametrized filters <span
+class="math inline">\(K\)</span> in a single convolution operation.
+Given a convolution setting, the operation requires $$ parameters and
+outputs a feature map tensor of size <span class="math inline">\(W_2 =
+(W_1 - F_W + 2P_W) / S + 1\)</span>, <span class="math inline">\(H_2 =
+(H_1 - F_H + 2P_H) / S + 1\)</span>, and <span class="math inline">\(D_2
+= K\)</span>. The different filters are responsible for looking for the
+activation of different patterns in the input. The Convolution layer
+introduces the notion of weight sharing enabled by the sliding filter
+(neurons) and reduces computation by a large margin in comparison to a
+standard MLP layer.</p>
 <p><strong>Pooling:</strong> …</p>
 <p><strong>ConvNet:</strong> …</p>
 <p><strong>MNIST Classifier:</strong> …</p>
