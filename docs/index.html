@@ -1619,7 +1619,7 @@ memory are at stake.</p>
 one has to fit a model from a given function family <span
 class="math inline">\(f \in \mathcal{F}\)</span> on a given dataset
 <span class="math inline">\((X, Y) \in D\)</span> optimized using +sdg
-and backpropagation. This section begings discussing a particular class
+and backpropagation. This section begins discussing a particular class
 of parameterized function <span class="math inline">\(f_\theta\)</span>
 called Neural Networks (NN).</p>
 <h4 id="sec:perceptron">Perceptron</h4>
@@ -1632,7 +1632,7 @@ handling incoming signals from other neurons, a soma with a nucleus
 responsible for signal aggregation, and an axone responsible for the
 transmission of the processed signal to other neurons. When the signal
 aggregation in the soma reaches a predefined threshold, the neuron
-activates. This pehnomenon is called an action potential. Although this
+activates. This phenomenon is called an action potential. Although this
 is not an accurate representation of the modern neuroscience state of
 knowledge, this simplified model was believed to be accurate at the
 time.</p>
@@ -1666,19 +1666,19 @@ class="sourceCode python"><code class="sourceCode python"><span id="lst:perceptr
 <span class="math inline">\(n - 1\)</span> dimensions where <span
 class="math inline">\(n\)</span> is the number of inputs, that can
 perform binary classification, separate two classes. However, as
-mentionned by Marvin L. Minsky and al. in their controversial book
+mentioned by Marvin L. Minsky and al. in their controversial book
 Perceptrons <span class="citation" data-cites="minsky_1969">[<a
 href="#ref-minsky_1969" role="doc-biblioref">40</a>]</span>, a
 hyperplane regressor cannot solve a simple XOR problem (see <a
 href="#fig:xor">Fig 13</a>).</p>
 <figure id="fig:xor">
 <img src="./figures/core_nn_xor.svg"
-alt="Illustration of the Perceptron’s decision hyperplan when trained to solve the AND problem on the left, the OR problem in the middle, and the XOR problem on the right. The first two problems are linearly sperable, thus adapted for a Perceptron. However, a signel perceptron cannot solve the XOR problem as it is not linearly separable." />
+alt="Illustration of the Perceptron’s decision hyperplane when trained to solve the AND problem on the left, the OR problem in the middle, and the XOR problem on the right. The first two problems are linearly sperable, thus adapted for a Perceptron. However, a single perceptron cannot solve the XOR problem as it is not linearly separable." />
 <figcaption>Figure 13: Illustration of the Perceptron’s decision
-hyperplan when trained to solve the AND problem on the left, the OR
+hyperplane when trained to solve the AND problem on the left, the OR
 problem in the middle, and the XOR problem on the right. The first two
 problems are linearly sperable, thus adapted for a Perceptron. However,
-a signel perceptron cannot solve the XOR problem as it is not linearly
+a single perceptron cannot solve the XOR problem as it is not linearly
 separable.</figcaption>
 </figure>
 <h4 id="sec:mlp">Multi-Layer Perceptron</h4>
@@ -1693,22 +1693,22 @@ perceptrons is called a Multi-Layer Perceptron (MLP) (see <a
 href="#fig:mlp">Fig 14</a>).</p>
 <figure id="fig:mlp" width="90%">
 <img src="./figures/core_nn_mlp.svg" style="width:90.0%"
-alt="Diagram of a 3-layer Multi-Layer Perceptron (MLP). When using the matrix formulation, this arrangement of neurons can be summarized into a signel expression y = \sigma(\sigma(x \cdot W_1^T) \cdot W_2^T) \cdot W_3^T." />
+alt="Diagram of a 3-layer Multi-Layer Perceptron (MLP). When using the matrix formulation, this arrangement of neurons can be summarized into a single expression y = \sigma(\sigma(x \cdot W_1^T) \cdot W_2^T) \cdot W_3^T." />
 <figcaption>Figure 14: Diagram of a 3-layer Multi-Layer Perceptron
 (MLP). When using the matrix formulation, this arrangement of neurons
-can be summarized into a signel expression <span class="math inline">\(y
+can be summarized into a single expression <span class="math inline">\(y
 = \sigma(\sigma(x \cdot W_1^T) \cdot W_2^T) \cdot
 W_3^T\)</span>.</figcaption>
 </figure>
 <p>A MLP with Identity as its activation function is useless as its
 chain of linear transformations can be collapsed into a single one.
 Since the advent of the Perceptron, the literature has moved away from
-using theshold functions as activations. Common activation functions are
-the sigmoid <span class="math inline">\(\sigma(x) = \frac{1}{1 +
+using threshold functions as activations. Common activation functions
+are the sigmoid <span class="math inline">\(\sigma(x) = \frac{1}{1 +
 e^{-x}}\)</span>, tanh <span class="math inline">\(tanh(x) = \frac{e^{z}
 - e^{-z}}{e^{z} + e^{-z}}\)</span>, Rectified Linear Unit (ReLU) <span
 class="math inline">\(ReLU(x) = max(x, 0)\)</span> functions and
-variants presenting additionnal properties such as infinit continuity,
+variants presenting additional properties such as infinite continuity,
 gradient smoothness, and more (see <a
 href="#fig:activations">Fig 15</a>).</p>
 <figure id="fig:activations">
@@ -1725,32 +1725,32 @@ down to zero <span class="math inline">\(y \in [0;
 +\infty]\)</span>.</figcaption>
 </figure>
 <p><strong>MNIST Classifier:</strong> A classic toy example showing the
-capabilities of MLPs is the hand written digit classification challenge
+capabilities of MLPs is the handwritten digit classification challenge
 on the Modified National Institute of Standards and Technology (MNIST)
 dataset <span class="citation" data-cites="mnist">[<a href="#ref-mnist"
 role="doc-biblioref">56</a>]</span>. MNIST contains <span
 class="math inline">\(60,000\)</span> training and <span
 class="math inline">\(10,000\)</span> test examples. It has been written
 by high school students and gather <span class="math inline">\(28 \times
-28\)</span> centered black and white hand written digits from <span
+28\)</span> centered black and white handwritten digits from <span
 class="math inline">\(0\)</span> to <span
 class="math inline">\(9\)</span> (see <a
 href="#fig:mnist">Fig 16</a>).</p>
 <figure id="fig:mnist">
 <img src="./figures/core_nn_mnist.svg"
-alt="First 27 hand written digits from the Modified National Institute of Standards and Technology (MNIST) dataset. The digits are stored as 28 \times 28 centered black and white images." />
+alt="First 27 handwritten digits from the Modified National Institute of Standards and Technology (MNIST) dataset. The digits are stored as 28 \times 28 centered black and white images." />
 <figcaption>Figure 16: First <span class="math inline">\(27\)</span>
-hand written digits from the Modified National Institute of Standards
-and Technology (MNIST) dataset. The digits are stored as <span
+handwritten digits from the Modified National Institute of Standards and
+Technology (MNIST) dataset. The digits are stored as <span
 class="math inline">\(28 \times 28\)</span> centered black and white
 images.</figcaption>
 </figure>
 <p>Training a MLP on such a challenge is simple and effective. With
 little training, parameters (according to the DL standards), and no
-hyperparameter tweaking, a vanilla 3-layer NN with ReLU activations is
-able to achieve <span class="math inline">\(97.5%\)</span> accuracy on
-the test set. The inputs however needs to be transformed before
-injestion by the model as MLPs are constrained to <span
+hyperparameter tweaking, a vanilla 3-layer NN with ReLU activations can
+achieve <span class="math inline">\(97.5%\)</span> accuracy on the test
+set. The inputs however need to be transformed before ingestion by the
+model as MLPs are constrained to <span
 class="math inline">\(1\)</span>-dimensional input vectors. The
 following demonstrates how to implement such a model and train it on
 MNIST.</p>
@@ -1776,12 +1776,12 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a hr
 <span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>validloader <span class="op">=</span> DataLoader(validset, batch_size<span class="op">=</span><span class="dv">1_024</span>, shuffle<span class="op">=</span><span class="va">False</span>)</span>
 <span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>testloader  <span class="op">=</span> DataLoader(testset,  batch_size<span class="op">=</span><span class="dv">1_024</span>, shuffle<span class="op">=</span><span class="va">False</span>)</span></code></pre></div>
 <p>The first step consists in loading the MNIST dataset and applying
-preprocessing to the data for preparing the injestion by the model. The
-images needs to be transformed into a normalized tensor and flatten to
+preprocessing to the data for preparing the ingestion by the model. The
+images need to be transformed into a normalized tensor and flatten to
 form a <span class="math inline">\(1\)</span>-dimensional vector. The
 datasets are split into a training set, a validation set, and a test
-set. A mini-batch loader is then used to wrap the dataset and allow to
-load multiple input and output pairs at the same time.</p>
+set. A mini-batch loader is then used to wrap the dataset and load
+multiple input and output pairs at the same time.</p>
 <div class="sourceCode" id="cb6"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch.nn <span class="im">import</span> (Linear, Module, ReLU, Sequential)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch.optim <span class="im">import</span> (AdamW, Optimizer)</span>
@@ -1794,10 +1794,10 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a hr
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>optim <span class="op">=</span> AdamW(model.parameters(), lr<span class="op">=</span><span class="fl">1e-2</span>)</span></code></pre></div>
 <p>Then, the model is defined as a sequence of three linear layers
-(linear transformations with bias for the intercept) and ReLU
-activations except for the last one responsible for outputing the
-logits, used for computing the loss, here the cross entropy for multi
-class classification. The enhanced SGD optimizer, Adam, is then
+(linear transformations with a bias for the intercept) and ReLU
+activations except for the last one responsible for outputting the
+logits, used for computing the loss, here the cross entropy for
+multi-class classification. The enhanced SGD optimizer, Adam, is then
 initialized with the model’s weight and a learning rate <span
 class="math inline">\(\epsilon\)</span>. AdamW is a variant of Adam with
 a corrected weight decay term for regularization.</p>
@@ -1828,7 +1828,7 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a hr
 training step when the given split is set to <code>"train"</code> and
 computes the metrics used for monitoring. In our case, we monitor the
 average loss and the accuracy of the model. For a more complete
-evaluation other metrics such as the F-<span
+evaluation, other metrics such as the F-<span
 class="math inline">\(1\)</span> score, the perplexity, the recall, and
 a confusion matrix can be evaluated. They are here omitted for the sake
 of illustration and simplicity.</p>
@@ -1864,29 +1864,49 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a hr
 <span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>        acc  <span class="op">+=</span> metrics[<span class="dv">1</span>] <span class="op">/</span> <span class="bu">len</span>(testloader.dataset)</span>
 <span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;[Test] loss: </span><span class="sc">{</span>loss<span class="sc">:.2e}</span><span class="ss">, acc: </span><span class="sc">{</span>acc <span class="op">*</span> <span class="dv">100</span><span class="sc">:.2f}</span><span class="ss">%&quot;</span>)</span></code></pre></div>
 <p>Finally, the model is trained for <span
-class="math inline">\(10\)</span> epochs, the number of time the entire
-dataset is looped through. This number was arbitrarly chosen to
-correspond with the loss saturation, when the model does not improve
-much. A training loop is divided in few steps, a training phase where
-one continously performs a training step followed by a validation step
-to monitor generalization, and, when stopped, a test phase to monitor
-model generalization without bias. This last step prevents from trying
-to overfit the validation set specifically and should be performed at
-the very end. An example training history is shown in <a
-href="#fig:mnist_history">Fig 17</a>. In this example the model’s reach
+class="math inline">\(10\)</span> epochs, the number of times the entire
+dataset is looped through. This number was arbitrarily chosen to
+correspond with the loss saturation when the model does not improve
+much. A training loop is divided into a few steps, a training phase
+where one continuously performs a training step followed by a validation
+step to monitor generalization, and when stopped, a test phase to
+monitor model generalization without bias. This last step prevents
+trying to overfit the validation set specifically and should be
+performed at the very end. An example of training history is shown in <a
+href="#fig:mnist_history">Fig 17</a>. In this example, the model reaches
 <span class="math inline">\(97.5%\)</span> accuracy. By spending time
 tweaking the hyperparameters (the model’s weights, the learning rate,
 the number of epochs, …), the model can be improved further.</p>
 <figure id="fig:mnist_history">
 <img src="./figures/core_nn_mnist_history.svg"
-alt="Training history of a 3-layer Multi-Layer Perceptron (MLP) with 128 neurons in every layer on the MNIST dataset. The average loss (cros entropy) on the left, and the accuracy on the right are displayed for the training, validation, and test splits." />
+alt="Training history of a 3-layer Multi-Layer Perceptron (MLP) with 128 neurons in every layer on the MNIST dataset. The average loss (cross-entropy) on the left, and the accuracy on the right are displayed for the training, validation, and test splits." />
 <figcaption>Figure 17: Training history of a 3-layer Multi-Layer
 Perceptron (MLP) with <span class="math inline">\(128\)</span> neurons
-in every layer on the MNIST dataset. The average loss (cros entropy) on
+in every layer on the MNIST dataset. The average loss (cross-entropy) on
 the left, and the accuracy on the right are displayed for the training,
 validation, and test splits.</figcaption>
 </figure>
 <h4 id="sec:cnn">Convolutional Neural Network</h4>
+<p>While MLPs can be viewed as universal function approximators, they
+scale poorly with respect to high dimensional inputs such as images,
+videos, sound representations such as a spectrogram, volumetric data,
+and long sequences. For example, if we consider a small RGB image of
+size <span class="math inline">\(256 \times 256 \times 3\)</span>, the
+input of a MLP would be a 1-dimensional vector of size <span
+class="math inline">\(196,608\)</span>. The input layer of a MLP with
+<span class="math inline">\(64\)</span> neurons would already mean that
+the network contains more than <span
+class="math inline">\(12,582,912\)</span> parameters. For this reason,
+researchers have created specialized NNs with biases in their
+architecture inspired by cognitive and biophysical mechanisms.
+Convolutional Neural Networks (CNN) (ConvNets) are such a NN specialized
+in handling spatially correlated data such as images.</p>
+<p><strong>Convolution:</strong> The core component of a ConvNet is the
+convolution operation. A +CNN operates by convolving (rolling) a set of
+parametrized filters on the input.</p>
+<p><strong>Pooling:</strong> …</p>
+<p><strong>ConvNet:</strong> …</p>
+<p><strong>MNIST Classifier:</strong> …</p>
 <h3 id="sec:generative">Generative Architectures</h3>
 <h4 id="sec:ae">Autoencoders</h4>
 <h4 id="sec:vae">Variational Autoencoders</h4>
