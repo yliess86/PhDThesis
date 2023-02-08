@@ -1930,8 +1930,23 @@ activation of different patterns in the input. The Convolution layer
 introduces the notion of weight sharing enabled by the sliding filter
 (neurons) and reduces computation by a large margin in comparison to a
 standard MLP layer.</p>
-<p><strong>Pooling:</strong> …</p>
-<p><strong>ConvNet:</strong> …</p>
+<p><strong>Pooling:</strong> It is common to follow convolution layers
+by pooling layers to reduce the dimensionality when growing the ConvNet
+deeper. The pooling layer reduces its input by applying a reduction
+operation. The reduction operation can be taking the <code>max</code>,
+<code>min</code>, or <code>average</code>, of a rolling window. This
+operation does not involve any additional parameter and is applied
+channel-wise. If we consider a max-pooling operation with a <span
+class="math inline">\(2 \times 2\)</span> kernel and a stride of <span
+class="math inline">\(2\)</span>, the output becomes half the size of
+the input. It also has the benefit of making the CNN more robust to
+scale and translation.</p>
+<p><strong>ConvNet:</strong> Finally, a CNN is assembled by stacking
+multiple convolution layers and pooling layers. When the feature maps
+are small enough, the final feature map is flattened and passed to an
+additional MLP in charge of the classification or regression. This
+combination of a parametric convolutional feature extractor and a MLP is
+what we call a ConvNet.</p>
 <p><strong>MNIST Classifier:</strong> …</p>
 <h3 id="sec:generative">Generative Architectures</h3>
 <h4 id="sec:ae">Autoencoders</h4>
