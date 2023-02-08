@@ -1953,6 +1953,16 @@ class="math inline">\(2 \times 2\)</span> kernel and a stride of <span
 class="math inline">\(2\)</span>, the output becomes half the size of
 the input. It also has the benefit of making the CNN more robust to
 scale and translation.</p>
+<figure id="fig:convnet">
+<img src="./figures/core_nn_convnet.svg"
+alt="Illustration of a small Convolutional Neural Networks (CNN) containing a convolution (conv) layer, a max-pooling (maxpool), and another convolution followed by another max-pooling. The last feature map is then flattened into a 1-dimensional vector and used as the input for the Multi-Layer Perceptron (MLP) classifier." />
+<figcaption>Figure 19: Illustration of a small Convolutional Neural
+Networks (CNN) containing a convolution (conv) layer, a max-pooling
+(maxpool), and another convolution followed by another max-pooling. The
+last feature map is then flattened into a <span
+class="math inline">\(1\)</span>-dimensional vector and used as the
+input for the Multi-Layer Perceptron (MLP) classifier.</figcaption>
+</figure>
 <p><strong>ConvNet:</strong> Finally, a CNN is assembled by stacking
 multiple convolution layers and pooling layers. When the feature maps
 are small enough, the final feature map is flattened and passed to an
