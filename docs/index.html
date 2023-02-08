@@ -1901,6 +1901,18 @@ researchers have created specialized NNs with biases in their
 architecture inspired by cognitive and biophysical mechanisms.
 Convolutional Neural Networks (CNN) (ConvNets) are such a NN specialized
 in handling spatially correlated data such as images.</p>
+<figure id="fig:convolution">
+<img src="./figures/core_nn_convolution.svg"
+alt="Illustration of a single 3 \times 3 \times 3 filter convolution in the middle applied to a 8 \times 8 \times 3 input tensor on the left. The result is a 6 \times 6 \times 1 activation map on the right. The filter receptive field is drawn in dashed lines. This convolution is applied in valid model, no passing was applied to the input resulting in a lower resolution output tensor." />
+<figcaption>Figure 18: Illustration of a single <span
+class="math inline">\(3 \times 3 \times 3\)</span> filter convolution in
+the middle applied to a <span class="math inline">\(8 \times 8 \times
+3\)</span> input tensor on the left. The result is a <span
+class="math inline">\(6 \times 6 \times 1\)</span> activation map on the
+right. The filter receptive field is drawn in dashed lines. This
+convolution is applied in valid model, no passing was applied to the
+input resulting in a lower resolution output tensor.</figcaption>
+</figure>
 <p><strong>Convolution:</strong> The core component of a ConvNet is the
 convolution operation. A +CNN operates by convolving (rolling) a set of
 parametrized filters on the input. If we reconsider our <span
@@ -1925,11 +1937,11 @@ Given a convolution setting, the operation requires $$ parameters and
 outputs a feature map tensor of size <span class="math inline">\(W_2 =
 (W_1 - F_W + 2P_W) / S + 1\)</span>, <span class="math inline">\(H_2 =
 (H_1 - F_H + 2P_H) / S + 1\)</span>, and <span class="math inline">\(D_2
-= K\)</span>. The different filters are responsible for looking for the
-activation of different patterns in the input. The Convolution layer
-introduces the notion of weight sharing enabled by the sliding filter
-(neurons) and reduces computation by a large margin in comparison to a
-standard MLP layer.</p>
+= K\)</span> (see <a href="#fig:convolution">Fig 18</a>). The different
+filters are responsible for looking for the activation of different
+patterns in the input. The Convolution layer introduces the notion of
+weight sharing enabled by the sliding filter (neurons) and reduces
+computation by a large margin in comparison to a standard MLP layer.</p>
 <p><strong>Pooling:</strong> It is common to follow convolution layers
 by pooling layers to reduce the dimensionality when growing the ConvNet
 deeper. The pooling layer reduces its input by applying a reduction
@@ -1947,6 +1959,7 @@ are small enough, the final feature map is flattened and passed to an
 additional MLP in charge of the classification or regression. This
 combination of a parametric convolutional feature extractor and a MLP is
 what we call a ConvNet.</p>
+<p><strong>Feature Maps:</strong> …</p>
 <p><strong>MNIST Classifier:</strong> …</p>
 <h3 id="sec:generative">Generative Architectures</h3>
 <h4 id="sec:ae">Autoencoders</h4>
