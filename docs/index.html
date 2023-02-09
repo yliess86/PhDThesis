@@ -1972,7 +1972,21 @@ are small enough, the final feature map is flattened and passed to an
 additional MLP in charge of the classification or regression. This
 combination of a parametric convolutional feature extractor and a MLP is
 what we call a ConvNet.</p>
-<p><strong>Feature Maps:</strong> …</p>
+<figure id="fig:vgg_activations">
+<img src="./figures/core_nn_vgg_activations.svg"
+alt="Visualisation of VGG16’s four first activation maps (feature maps). The input image is left and the activations are shown in order of the layers top to bottom and left to right. Credit https://images.all4ed.org/" />
+<figcaption>Figure 20: Visualisation of VGG16’s four first activation
+maps (feature maps). The input image is left and the activations are
+shown in order of the layers top to bottom and left to right. Credit <a
+href="https://images.all4ed.org/">https://images.all4ed.org/</a></figcaption>
+</figure>
+<p><strong>Feature Maps:</strong> The feature maps learned by a CNN are
+hierarchical. In the first layers, the learned filters are focusing on
+simple features such as lines, diagonals, and arcs, and act as edge
+detectors. The deeper the layers are, the more complex the features are
+because they are resulting from a succession of combinations from
+previous activations (see <a
+href="#fig:vgg_activations">Fig 20</a>).</p>
 <p><strong>Finetuning:</strong> …</p>
 <p><strong>MNIST Classifier:</strong> …</p>
 <div class="sourceCode" id="cb9"><pre
@@ -1986,7 +2000,7 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a hr
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Model</span></span>
 <span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> Sequential(OrderedDict(</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    feature_extractor<span class="op">=</span>Sequential(</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    features<span class="op">=</span>Sequential(</span>
 <span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>        Conv2d(<span class="dv">1</span>,  <span class="dv">6</span>, <span class="dv">5</span>), ReLU(), MaxPool2d(<span class="dv">2</span>),</span>
 <span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>        Conv2d(<span class="dv">6</span>, <span class="dv">16</span>, <span class="dv">5</span>), ReLU(), MaxPool2d(<span class="dv">2</span>),</span>
 <span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    ),</span>
@@ -2001,7 +2015,7 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a hr
 <figure id="fig:mnist_convnet_history">
 <img src="./figures/core_nn_mnist_convnet_history.svg"
 alt="Training history of a Convolutional Neural Network (CNN) made out of a sequence of two convolutions followed by max-pooling and a 3-layer Multi-Layer Perceptron (MLP) classifier on the MNIST dataset. The average loss (cross-entropy) on the left, and the accuracy on the right are displayed for the training, validation, and test splits." />
-<figcaption>Figure 20: Training history of a Convolutional Neural
+<figcaption>Figure 21: Training history of a Convolutional Neural
 Network (CNN) made out of a sequence of two convolutions followed by
 max-pooling and a 3-layer Multi-Layer Perceptron (MLP) classifier on the
 MNIST dataset. The average loss (cross-entropy) on the left, and the
