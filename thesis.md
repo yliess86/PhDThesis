@@ -701,15 +701,33 @@ While [+mlp]{.plural} can be viewed as universal function approximators, they sc
 
 **ConvNet:** Finally, a +cnn is assembled by stacking multiple convolution layers and pooling layers. When the feature maps are small enough, the final feature map is flattened and passed to an additional +mlp in charge of the classification or regression. This combination of a parametric convolutional feature extractor and a +mlp is what we call a ConvNet.
 
-![Visualisation of VGG16's four first activation maps (feature maps). The input image is left and the activations are shown in order of the layers top to bottom and left to right. Credit [https://images.all4ed.org/](https://images.all4ed.org/)](./figures/core_nn_vgg_activations.svg){#fig:vgg_activations}
+![Visualization of VGG16's four first activation maps (feature maps). The input image is left and the activations are shown in order of the layers top to bottom and left to right. Credit [https://images.all4ed.org/](https://images.all4ed.org/)](./figures/core_nn_vgg_activations.svg){#fig:vgg_activations}
 
 **Feature Maps:** The feature maps learned by a +cnn are hierarchical. In the first layers, the learned filters are focusing on simple features such as lines, diagonals, and arcs, and act as edge detectors. The deeper the layers are, the more complex the features are because they are resulting from a succession of combinations from previous activations (see @fig:vgg_activations). 
 
-**Finetuning:**
-...
+**Finetuning:** Training [+cnn]{.plural} on bigger and more diverse datasets allows learning more general filters increasing the likelihood that the network will perform on out-of-domain data. In practice, [+cnn]{.plural} are not often trained from scratch. Such a process requires the use of expensive dedicated hardware and hours of training. However, thanks to the open-source mindset of the +dl field, big actors often share the weights of such models referred to as pretrained models, or foundation models [@foundation_2021].
 
-**MNIST Classifier:**
-...
+Foundation models can be further refined through smaller training on smaller and specialized datasets containing few good-quality examples. This process is called finetuning and is less expensive and time-consuming than full training. One method for finetuning consists in removing the classification head of a pre-trained model such as VGG16 [@simonyan_2014] and replacing it with a new one adapted to the number of classes required for the task. The pretrained weights are then frozen (not updated during training), and the new weights are trained following a standard supervised-learning procedure (see @lst:finetune).
+
+```python {#lst:finetune}
+from torchvision.models import (vgg16, VGG16_Weights)
+
+# Import pretrained VGG16 model
+model = vgg16(weights=VGG16_Weights.DEFAULT)
+
+#Freeze pretrained features weights
+for param in model.features.parameters():
+    param.requires_grad = False
+
+# Replace the classifier head
+model.classifier = Sequential(
+    Linear(512 * 7 * 7, 512), ReLU(),
+    Linear(512,         512), ReLU(),
+    Linear(512, num_classes),
+)
+```
+
+**MNIST Classifier:** Let us reconsider the +mnist toy classification example and replace the +mlp with a +cnn. The model is divided in two sections, the feature extractor made out of two convolutional and max-pooling layers with $5 \times 5$ filters, the middle layer responsible for flattening the feature maps down to a $1$-dimensional vector fed to the classifier head, a $3$-layer +mlp similar to the first one. The training procedure is left unchanged, the number of parameters is approximately similar, a little less for the +cnn, and the number of epochs is the same. The input is however not flattened as the +cnn consumes a full image tensor.
 
 ```python
 from collections import OrderedDict
@@ -735,6 +753,8 @@ model = Sequential(OrderedDict(
 ))
 ...
 ```
+
+The +cnn is able to achieve a $99%$ accuracy on the test set early during training (epoch $5$). The +cnn is a more robust, specialized, and thus more efficient architecture for handling images. The training history can be observed in @fig:mnist_convnet_history. 
 
 ![Training history of a [+cnn]{.full} made out of a sequence of two convolutions followed by max-pooling and a 3-layer [+mlp]{.full} classifier on the +mnist dataset. The average loss (cross-entropy) on the left, and the accuracy on the right are displayed for the training, validation, and test splits.](./figures/core_nn_mnist_convnet_history.svg){#fig:mnist_convnet_history}
 
