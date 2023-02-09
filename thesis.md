@@ -701,8 +701,9 @@ While [+mlp]{.plural} can be viewed as universal function approximators, they sc
 
 **ConvNet:** Finally, a +cnn is assembled by stacking multiple convolution layers and pooling layers. When the feature maps are small enough, the final feature map is flattened and passed to an additional +mlp in charge of the classification or regression. This combination of a parametric convolutional feature extractor and a +mlp is what we call a ConvNet.
 
-**Feature Maps:**
-...
+![Visualisation of VGG16's four first activation maps (feature maps). The input image is left and the activations are shown in order of the layers top to bottom and left to right. Credit [https://images.all4ed.org/](https://images.all4ed.org/)](./figures/core_nn_vgg_activations.svg){#fig:vgg_activations}
+
+**Feature Maps:** The feature maps learned by a +cnn are hierarchical. In the first layers, the learned filters are focusing on simple features such as lines, diagonals, and arcs, and act as edge detectors. The deeper the layers are, the more complex the features are because they are resulting from a succession of combinations from previous activations (see @fig:vgg_activations). 
 
 **Finetuning:**
 ...
@@ -721,7 +722,7 @@ T = lambda x: to_tensor(x).float()
 
 # Model
 model = Sequential(OrderedDict(
-    feature_extractor=Sequential(
+    features=Sequential(
         Conv2d(1,  6, 5), ReLU(), MaxPool2d(2),
         Conv2d(6, 16, 5), ReLU(), MaxPool2d(2),
     ),
