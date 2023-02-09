@@ -695,7 +695,7 @@ While [+mlp]{.plural} can be viewed as universal function approximators, they sc
 
 **Convolution:** The core component of a ConvNet is the convolution operation. A +CNN operates by convolving (rolling) a set of parametrized filters on the input. If we reconsider our $W_1 \times H_1 \times D_1 = 256 \times 256 \times 3$, convolving a single filter of size $F_W \times F_H \times D_1 = 3 \times 3 \times 3$ would require sliding the filter across the entire input image tensor and computing the dot product of the overlapping tensor chunk and the filter. This operation results in what is called an activation map, or feature map. The filter can be convolved in different configurations. The stride $S$ defines the hop size when rolling the filter over the input, and the padding $P$ defines the additional border added to the input tensor in order to parkour the input border ($252$ unique positions for the filter in the $256$ image, $256$ positions with a padding of $1$ on each side of the input). A +cnn convolves multiple parametrized filters $K$ in a single convolution operation. Given a convolution setting, the operation requires $$ parameters and outputs a feature map tensor of size $W_2 = (W_1 - F_W + 2P_W) / S + 1$, $H_2 = (H_1 - F_H + 2P_H) / S + 1$, and $D_2 = K$ (see @fig:convolution). The different filters are responsible for looking for the activation of different patterns in the input. The Convolution layer introduces the notion of weight sharing enabled by the sliding filter (neurons) and reduces computation by a large margin in comparison to a standard +mlp layer.
 
-**Pooling:** It is common to follow convolution layers by pooling layers to reduce the dimensionality when growing the ConvNet deeper. The pooling layer reduces its input by applying a reduction operation. The reduction operation can be taking the `max`, `min`, or `average`, of a rolling window. This operation does not involve any additional parameter and is applied channel-wise. If we consider a max-pooling operation with a $2 \times 2$ kernel and a stride of $2$, the output becomes half the size of the input. It also has the benefit of making the +cnn more robust to scale and translation.
+**Pooling:** It is common to follow convolution layers by pooling layers to reduce the dimensionality when growing the ConvNet deeper. The pooling layer reduces its input by applying a reduction operation. The reduction operation can be taking the `max`, `min`, or `average`, of a rolling window. This operation does not involve any additional parameter and is applied channel-wise. If we consider a max-pooling operation with a $2 \times 2$ kernel and a stride of $2$, the output becomes half the size of the input. It also has the benefit of making the +cnn more robust to scale and translation. It is sometimes more strategic to make use of stride instead of adding pooling layers. It has the same benefit of reducing the feature map size while avoiding an additional operation.
 
 ![Illustration of a small [+cnn]{.full .plural} containing a convolution (conv) layer, a max-pooling (maxpool), and another convolution followed by another max-pooling. The last feature map is then flattened into a $1$-dimensional vector and used as the input for the [+mlp]{.full} classifier.](./figures/core_nn_convnet.svg){#fig:convnet}
 
@@ -704,8 +704,38 @@ While [+mlp]{.plural} can be viewed as universal function approximators, they sc
 **Feature Maps:**
 ...
 
+**Finetuning:**
+...
+
 **MNIST Classifier:**
 ...
+
+```python
+from collections import OrderedDict
+from torch.nn import (Conv2d, Flatten, Linear, MaxPool2d, ReLU, Sequential)
+from torchvision.transforms.functional import to_tensor
+
+# Load MNIST images as Tensors and Normalize [0; 1]
+T = lambda x: to_tensor(x).float()
+...
+
+# Model
+model = Sequential(OrderedDict(
+    feature_extractor=Sequential(
+        Conv2d(1,  6, 5), ReLU(), MaxPool2d(2),
+        Conv2d(6, 16, 5), ReLU(), MaxPool2d(2),
+    ),
+    flatten=Flatten(),
+    classifier=Sequential(
+        Linear(256, 128), ReLU(),
+        Linear(128,  64), ReLU(),
+        Linear( 64,  10),
+    ),
+))
+...
+```
+
+![Training history of a [+cnn]{.full} made out of a sequence of two convolutions followed by max-pooling and a 3-layer [+mlp]{.full} classifier on the +mnist dataset. The average loss (cross-entropy) on the left, and the accuracy on the right are displayed for the training, validation, and test splits.](./figures/core_nn_mnist_convnet_history.svg){#fig:mnist_convnet_history}
 
 ### Generative Architectures {#sec:generative}
 #### Autoencoders {#sec:ae}
