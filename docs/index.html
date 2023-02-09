@@ -1952,7 +1952,10 @@ channel-wise. If we consider a max-pooling operation with a <span
 class="math inline">\(2 \times 2\)</span> kernel and a stride of <span
 class="math inline">\(2\)</span>, the output becomes half the size of
 the input. It also has the benefit of making the CNN more robust to
-scale and translation.</p>
+scale and translation. It is sometimes more strategic to make use of
+stride instead of adding pooling layers. It has the same benefit of
+reducing the feature map size while avoiding an additional
+operation.</p>
 <figure id="fig:convnet">
 <img src="./figures/core_nn_convnet.svg"
 alt="Illustration of a small Convolutional Neural Networks (CNN) containing a convolution (conv) layer, a max-pooling (maxpool), and another convolution followed by another max-pooling. The last feature map is then flattened into a 1-dimensional vector and used as the input for the Multi-Layer Perceptron (MLP) classifier." />
@@ -1970,7 +1973,41 @@ additional MLP in charge of the classification or regression. This
 combination of a parametric convolutional feature extractor and a MLP is
 what we call a ConvNet.</p>
 <p><strong>Feature Maps:</strong> …</p>
+<p><strong>Finetuning:</strong> …</p>
 <p><strong>MNIST Classifier:</strong> …</p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> OrderedDict</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch.nn <span class="im">import</span> (Conv2d, Flatten, Linear, MaxPool2d, ReLU, Sequential)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torchvision.transforms.functional <span class="im">import</span> to_tensor</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Load MNIST images as Tensors and Normalize [0; 1]</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>T <span class="op">=</span> <span class="kw">lambda</span> x: to_tensor(x).<span class="bu">float</span>()</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>...</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Model</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> Sequential(OrderedDict(</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    feature_extractor<span class="op">=</span>Sequential(</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>        Conv2d(<span class="dv">1</span>,  <span class="dv">6</span>, <span class="dv">5</span>), ReLU(), MaxPool2d(<span class="dv">2</span>),</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>        Conv2d(<span class="dv">6</span>, <span class="dv">16</span>, <span class="dv">5</span>), ReLU(), MaxPool2d(<span class="dv">2</span>),</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    flatten<span class="op">=</span>Flatten(),</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    classifier<span class="op">=</span>Sequential(</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>        Linear(<span class="dv">256</span>, <span class="dv">128</span>), ReLU(),</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>        Linear(<span class="dv">128</span>,  <span class="dv">64</span>), ReLU(),</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>        Linear( <span class="dv">64</span>,  <span class="dv">10</span>),</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>))</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>...</span></code></pre></div>
+<figure id="fig:mnist_convnet_history">
+<img src="./figures/core_nn_mnist_convnet_history.svg"
+alt="Training history of a Convolutional Neural Network (CNN) made out of a sequence of two convolutions followed by max-pooling and a 3-layer Multi-Layer Perceptron (MLP) classifier on the MNIST dataset. The average loss (cross-entropy) on the left, and the accuracy on the right are displayed for the training, validation, and test splits." />
+<figcaption>Figure 20: Training history of a Convolutional Neural
+Network (CNN) made out of a sequence of two convolutions followed by
+max-pooling and a 3-layer Multi-Layer Perceptron (MLP) classifier on the
+MNIST dataset. The average loss (cross-entropy) on the left, and the
+accuracy on the right are displayed for the training, validation, and
+test splits.</figcaption>
+</figure>
 <h3 id="sec:generative">Generative Architectures</h3>
 <h4 id="sec:ae">Autoencoders</h4>
 <h4 id="sec:vae">Variational Autoencoders</h4>
