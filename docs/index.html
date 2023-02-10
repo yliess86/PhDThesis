@@ -2104,18 +2104,23 @@ complexity.</p>
 <h4 id="sec:ae">Autoencoders</h4>
 <p>Autoencoders (AE) are part of a family of feedforward NNs for which
 the input tensor is the same as the output tensor. They encode
-(compress), the input into a low dimensional code in a latent space, and
-then decoder (reconstruct) the original input from this compressed
+(compress), the input into a low-dimensional code in a latent space, and
+then decode (reconstruct) the original input from this compressed
 representation (see <a href="#fig:gai_autoencoder">Fig 22</a>). An AE is
-built using two network parts, an encoder, NN that reduces the input
-dimension, a decoder that recover the input from the reduced tensor, and
-a reconstruction objective. This architecture can be viewed as a
-dimensionality reduction technique but can be used as a generative
-model. By feeding the decoder with arbitrary latent codes, one can
-generate unseen data points similar to the training distribution by
-interpolation. Additional training objectives can be used to disentangle
-the latent representation so that the data points are organized
-mindfully in the latent space, semantically for example.</p>
+built using two network parts, an encoder <span
+class="math inline">\(E\)</span>, NN that reduces the input dimension, a
+decoder <span class="math inline">\(D\)</span> that recovers the input
+<span class="math inline">\(x\)</span> from the reduced tensor <span
+class="math inline">\(z\)</span>, and a reconstruction objective. This
+architecture can be viewed as a dimensionality reduction technique but
+can be used as a generative model. By feeding the decoder <span
+class="math inline">\(D\)</span> with arbitrary latent codes <span
+class="math inline">\(z\)</span>, one can generate unseen data points
+<span class="math inline">\(\hat{x}\)</span> similar to the training
+distribution by interpolation. Additional training objectives can be
+used to disentangle the latent representation so that the data points
+are organized mindfully in the latent space, semantically for
+example.</p>
 <figure id="fig:gai_autoencoder">
 <img src="./figures/core_gai_autoencoder.svg"
 alt="Autoencoder (AE) architecture." />
@@ -2191,21 +2196,54 @@ class="citation" data-cites="umap">[<a href="#ref-umap"
 role="doc-biblioref">41</a>]</span> for visualization purposes. Our
 latent space is not organized in a way that we can visually distinguish
 between the digit classes.</p>
-<figure id="fig:gai_autoencoder_latent" width="80%">
-<img src="./figures/core_gai_autoencoder_latent.svg" style="width:80.0%"
-alt="Trained Autoencoder (AE) latent space visualization. The latent code, originally in 32-dimensions, is reduced to a 2-d space for visualization purposes. The data points represent the encoded latent code of images from the MNIST dataset and are colored based on their corresponding label (digit). The latent space is not organized in a way that allows us to visually separate these classes." />
+<figure id="fig:gai_autoencoder_latent" width="50%">
+<img src="./figures/core_gai_autoencoder_latent.svg" style="width:50.0%"
+alt="Trained Autoencoder (AE) latent space visualization. The latent code, originally a 32-dimensional tensor, is reduced to a 2-dimensional space for visualization purposes. The data points represent the encoded latent code of images from the MNIST dataset and are colored based on their corresponding label (digit). The latent space is not organized in a way that allows us to visually separate these classes." />
 <figcaption>Figure 24: Trained Autoencoder (AE) latent space
-visualization. The latent code, originally in <span
-class="math inline">\(32\)</span>-dimensions, is reduced to a <span
-class="math inline">\(2\)</span>-d space for visualization purposes. The
-data points represent the encoded latent code of images from the MNIST
-dataset and are colored based on their corresponding label (digit). The
-latent space is not organized in a way that allows us to visually
-separate these classes.</figcaption>
+visualization. The latent code, originally a <span
+class="math inline">\(32\)</span>-dimensional tensor, is reduced to a
+<span class="math inline">\(2\)</span>-dimensional space for
+visualization purposes. The data points represent the encoded latent
+code of images from the MNIST dataset and are colored based on their
+corresponding label (digit). The latent space is not organized in a way
+that allows us to visually separate these classes.</figcaption>
 </figure>
 <h4 id="sec:vae">Variational Autoencoders</h4>
-<p>Core Concepts</p>
-<p><strong>Latent Space:</strong> …</p>
+<p>Due to a lack of latent space regularization as shown in the previous
+sub-section, AE cannot be used without any hacking to generate, or
+produce unseen samples. A vanilla AE does not encode any structure on
+the latent space. It is trained only for reconstruction and is thus
+subject to high overfitting resulting in a meaningless structural
+organization of the latent codes. The Variational Autoencoder (VAE)
+architecture <span class="citation" data-cites="kingma_2013">[<a
+href="#ref-kingma_2013" role="doc-biblioref">30</a>]</span> is one
+answer to this issue. It can be viewed as a special AE hacked by adding
+a regularization objective enabling generation by exploring the learned
+and structured latent space.</p>
+<p><strong>Regularization:</strong> VAEs are topologically similar to
+AE. They possess an encoder to compress the input into a latent code,
+and a decoder to reconstruct the signal from it. However, instead of
+encoding the input as a single point, it encodes it as a distribution in
+the latent space. In practice, the distribution used is chosen to be
+close to a normal distribution. The encoder is changed to output the
+parameters of this distribution, the mean <span
+class="math inline">\(\mu\)</span>, and the standard deviation <span
+class="math inline">\(\sigma\)</span>. <span
+class="math inline">\(\sigma\)</span> is often replaced by a proxy <span
+class="math inline">\(\rho = log(\sigma)\)</span> to enforce positivity
+and stability. The new inference scheme is changed for <span
+class="math inline">\(\hat{x} = D(z)\)</span>, where the latent code
+<span class="math inline">\(z \sim \mathcal{N}(E(x)_\mu,
+exp(E(x)_\rho))\)</span>.</p>
+<p><strong>Probabilistic Formulation:</strong> latent sampled from prior
+<span class="math inline">\(z \sim p(z)\)</span> … data sampled from
+conditional likelihood <span class="math inline">\(x \sim p(x |
+z)\)</span>, probabilistic decoder <span class="math inline">\(p(x |
+z)\)</span> and probabilistic encoder <span class="math inline">\(p(z |
+x)\)</span>, Bayes theorem <span class="math inline">\(p(z | x) =
+\frac{p(x | z)p(z)}{p(x)} = \frac{p(x | z)p(z)}{\int p(x | u) p(u)
+du}\)</span> where the integral is intractable.</p>
+<p><strong>Variational Inference:</strong> …</p>
 <p><strong>MNIST Digit Image Generation:</strong> …</p>
 <h4 id="sec:gan">Generative Adversarial Networks</h4>
 <p>Core Concepts</p>

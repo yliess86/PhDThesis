@@ -772,7 +772,7 @@ This section does not only discuss the technical details of those architectures 
 
 #### Autoencoders {#sec:ae}
 
-[+ae]{.full .plural} are part of a family of feedforward [+nn]{.plural} for which the input tensor is the same as the output tensor. They encode (compress), the input into a low dimensional code in a latent space, and then decoder (reconstruct) the original input from this compressed representation (see @fig:gai_autoencoder). An +ae is built using two network parts, an encoder, +nn that reduces the input dimension, a decoder that recover the input from the reduced tensor, and a reconstruction objective. This architecture can be viewed as a dimensionality reduction technique but can be used as a generative model. By feeding the decoder with arbitrary latent codes, one can generate unseen data points similar to the training distribution by interpolation. Additional training objectives can be used to disentangle the latent representation so that the data points are organized mindfully in the latent space, semantically for example.
+[+ae]{.full .plural} are part of a family of feedforward [+nn]{.plural} for which the input tensor is the same as the output tensor. They encode (compress), the input into a low-dimensional code in a latent space, and then decode (reconstruct) the original input from this compressed representation (see @fig:gai_autoencoder). An +ae is built using two network parts, an encoder $E$, +nn that reduces the input dimension, a decoder $D$ that recovers the input $x$ from the reduced tensor $z$, and a reconstruction objective. This architecture can be viewed as a dimensionality reduction technique but can be used as a generative model. By feeding the decoder $D$ with arbitrary latent codes $z$, one can generate unseen data points $\hat{x}$ similar to the training distribution by interpolation. Additional training objectives can be used to disentangle the latent representation so that the data points are organized mindfully in the latent space, semantically for example.
 
 ![[+ae]{.full} architecture.](./figures/core_gai_autoencoder.svg){#fig:gai_autoencoder}
 
@@ -817,14 +817,19 @@ x_ = model.decoder(z)
 
 The latent space can be observed in @fig:gai_autoencoder_latent after being reduced to a $2$-dimensional proxy space using [+umap]{.full} [@umap] for visualization purposes. Our latent space is not organized in a way that we can visually distinguish between the digit classes.
 
-![Trained [+ae]{.full} latent space visualization. The latent code, originally in $32$-dimensions, is reduced to a $2$-d space for visualization purposes. The data points represent the encoded latent code of images from the +mnist dataset and are colored based on their corresponding label (digit). The latent space is not organized in a way that allows us to visually separate these classes.](./figures/core_gai_autoencoder_latent.svg){#fig:gai_autoencoder_latent width=80%}
+![Trained [+ae]{.full} latent space visualization. The latent code, originally a $32$-dimensional tensor, is reduced to a $2$-dimensional space for visualization purposes. The data points represent the encoded latent code of images from the +mnist dataset and are colored based on their corresponding label (digit). The latent space is not organized in a way that allows us to visually separate these classes.](./figures/core_gai_autoencoder_latent.svg){#fig:gai_autoencoder_latent width=50%}
 
 
 #### Variational Autoencoders {#sec:vae}
 
-Core Concepts
+Due to a lack of latent space regularization as shown in the previous sub-section, +ae cannot be used without any hacking to generate, or produce unseen samples. A vanilla +ae does not encode any structure on the latent space. It is trained only for reconstruction and is thus subject to high overfitting resulting in a meaningless structural organization of the latent codes. The [+vae]{.full} architecture [@kingma_2013] is one answer to this issue. It can be viewed as a special +ae hacked by adding a regularization objective enabling generation by exploring the learned and structured latent space. 
 
-**Latent Space:**
+**Regularization:** [+vae]{.plural} are topologically similar to +ae. They possess an encoder to compress the input into a latent code, and a decoder to reconstruct the signal from it. However, instead of encoding the input as a single point, it encodes it as a distribution in the latent space. In practice, the distribution used is chosen to be close to a normal distribution. The encoder is changed to output the parameters of this distribution, the mean $\mu$, and the standard deviation $\sigma$. $\sigma$ is often replaced by a proxy $\rho = log(\sigma)$ to enforce positivity and stability. The new inference scheme is changed for $\hat{x} = D(z)$, where the latent code $z \sim \mathcal{N}(E(x)_\mu, exp(E(x)_\rho))$.
+
+**Probabilistic Formulation:**
+latent sampled from prior $z \sim p(z)$ ... data sampled from conditional likelihood $x \sim p(x | z)$, probabilistic decoder $p(x | z)$ and probabilistic encoder $p(z | x)$, Bayes theorem $p(z | x) = \frac{p(x | z)p(z)}{p(x)} = \frac{p(x | z)p(z)}{\int p(x | u) p(u) du}$ where the integral is intractable.
+
+**Variational Inference:**
 ...
 
 **MNIST Digit Image Generation:**
