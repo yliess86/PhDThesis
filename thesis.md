@@ -65,6 +65,9 @@ acronyms:
     sgd:
         short: SGD
         long: Stochastic Gradient Descent
+    ae:
+        short: AE
+        long: Autoencoder
     vae:
         short: VAE
         long: Variational Autoencoder
@@ -119,6 +122,9 @@ acronyms:
     mnist:
         short: MNIST
         long: Modified National Institute of Standards and Technology
+    umap:
+        short: UMAP
+        long: Uniform Manifold Approximation and Projection
 ---
 
 \newpage{}
@@ -759,10 +765,90 @@ The +cnn is able to achieve a $99%$ accuracy on the test set early during traini
 ![Training history of a [+cnn]{.full} made out of a sequence of two convolutions followed by max-pooling and a 3-layer [+mlp]{.full} classifier on the +mnist dataset. The average loss (cross-entropy) on the left, and the accuracy on the right are displayed for the training, validation, and test splits.](./figures/core_nn_mnist_convnet_history.svg){#fig:mnist_convnet_history}
 
 ### Generative Architectures {#sec:generative}
+
+In this section, we extend our [+dl]{.full} architecture toolbox with generative +ai architectures such as the [+ae]{.full} (see @sec:ae), the [+vae]{.full} (see @sec:vae), the [+gan]{.full} (see @sec:gan), and the [+ddm]{.full} (see @sec:ddm) with a strong focus on image generation. Similarly to the previous sections, the [+mnist]{.full} dataset is used for illustrative purposes.
+
+This section does not only discuss the technical details of those architectures but also compares them on three criteria, generation inference speed, generation variance, and generation quality and complexity.
+
 #### Autoencoders {#sec:ae}
+
+[+ae]{.full .plural} are part of a family of feedforward [+nn]{.plural} for which the input tensor is the same as the output tensor. They encode (compress), the input into a low dimensional code in a latent space, and then decoder (reconstruct) the original input from this compressed representation (see @fig:gai_autoencoder). An +ae is built using two network parts, an encoder, +nn that reduces the input dimension, a decoder that recover the input from the reduced tensor, and a reconstruction objective. This architecture can be viewed as a dimensionality reduction technique but can be used as a generative model. By feeding the decoder with arbitrary latent codes, one can generate unseen data points similar to the training distribution by interpolation. Additional training objectives can be used to disentangle the latent representation so that the data points are organized mindfully in the latent space, semantically for example.
+
+![[+ae]{.full} architecture.](./figures/core_gai_autoencoder.svg){#fig:gai_autoencoder}
+
+**Properties:** Compared to a traditional compression method, [+ae]{.plural} are tied to their training data. They are trained to learn data-specific features useful for in-domain compression not for out-of-domain. An +ae trained on +mnist cannot be used for compressing photos of faces. Such architecture cannot be considered a lossless compression algorithm. The reconstruction is most of the time degraded. One strong advantage of using an +ae is that they do not require complex data preparation. They are part of the unsupervised training family, where labeled data is not needed for training, and in this case, self-supervised learning where the target output is built synthetically from the input.
+
+**MNIST Digit Image Generation:** Let us consider +mnist and train a small [+ae]{.full} to compress handwritten digits to $32$ latent codes. Our +ae is made out of a small +mlp encoder and decoder both with two inner layers with a hidden dimension of $128$.
+
+```python
+from collections import OrderedDict
+from torch.nn import (Linear, ReLU, Sequential, Sigmoid)
+
+# Model definition
+model = Sequential(OrderedDict(
+    encoder=Sequential(
+        Linear(28 * 28, 128), ReLU(),
+        Linear(    128,  32), ReLU(),
+    ),
+    decoder=Sequential(
+        Linear( 32,     128), ReLU(),
+        Linear(128, 28 * 28), Sigmoid(),
+    ),
+))
+```
+
+The model is trained on $10$ epochs with no hyperparameter tuning using the `binar_cross_entropy` objective function as the dataset contains black and white images normalized in the $[0; 1]$ range.
+
+```python
+from torch.nn.functional import binary_cross_entropy
+
+# Compute loss
+loss = binary_cross_entropy(model(x), x)
+```
+
+![Training history of a small $2$-layer [+ae]{.full}. The binary cross entropy loss is shown on the left, a training sample in the middle, and its corresponding reconstruction on the right.](./figures/core_gai_autoencoder_history.svg){#fig:gai_autoencoder_history}
+
+The result of the training can be observed in @fig:gai_autoencoder_history. Despite little degradation, our model can reconstruct the handwritten digits from their latent code. The degradation is minimized by the fact that we are dealing with a toy dataset. The phenomenon can be observed by reducing the number of parameters of the network or the size of the latent space. To reconstruct the images, we first need to get a latent code, either by encoding an existing image, or by randomly initializing a latent vector in a reasonable range, and providing it to the decoder as shown below.
+
+```python
+# Generate sample given latent-code
+x_ = model.decoder(z)
+```
+
+The latent space can be observed in @fig:gai_autoencoder_latent after being reduced to a $2$-dimensional proxy space using [+umap]{.full} [@umap] for visualization purposes. Our latent space is not organized in a way that we can visually distinguish between the digit classes.
+
+![Trained [+ae]{.full} latent space visualization. The latent code, originally in $32$-dimensions, is reduced to a $2$-d space for visualization purposes. The data points represent the encoded latent code of images from the +mnist dataset and are colored based on their corresponding label (digit). The latent space is not organized in a way that allows us to visually separate these classes.](./figures/core_gai_autoencoder_latent.svg){#fig:gai_autoencoder_latent width=80%}
+
+
 #### Variational Autoencoders {#sec:vae}
+
+Core Concepts
+
+**Latent Space:**
+...
+
+**MNIST Digit Image Generation:**
+...
+
 #### Generative Adversarial Networks {#sec:gan}
+
+Core Concepts
+
+**Latent Space:**
+...
+
+**MNIST Digit Image Generation:**
+...
+
 #### Denoising Diffusion Models {#sec:ddm}
+
+Core Concepts
+
+**Latent Space:**
+...
+
+**MNIST Digit Image Generation:**
+...
 
 ### Attention Machanism {#sec:attention}
 #### Multihead Self-Attention {#sec:mha}
