@@ -884,6 +884,58 @@ Performing the latent sampling using the reparametrization trick (see @eq:vae_re
 **MNIST Digit Image Generation:**
 ...
 
+```python
+from torch import Tensor
+
+import torch
+
+# Parametrized Gaussian Distribution
+class GaussianDistribution:
+    def __init__(self, params: Tensor) -> None:
+        self.mu, self.rho = params.chunk(2, dim=-1)
+        self.std = torch.exp(0.5 * self.rho)
+        self.var = torch.exp(self.rho)
+
+    # Reparametrization Trick
+    def sample(self) -> Tensor:
+        return self.mu + self.std * torch.randn_like(self.mu)
+
+    # Average KL-Divergence with Gaussian Prior
+    def kld(self) -> Tensor:
+        kld = 0.5 * (self.mu.pow(2) + self.var - 1.0 - self.rho)
+        return torch.mean(torch.sum(kld, dim=1), dim=0)
+```
+
+```python
+from collections import OrderedDict
+from torch.nn import (Linear, ReLU, Sequential, Sigmoid)
+
+# Model definition (encoder out: mu and rho)
+model = Sequential(OrderedDict(
+    encoder=Sequential(
+        Linear(28 * 28,    128), ReLU(),
+        Linear(    128, 2 * 32), ReLU(),
+    ),
+    decoder=Sequential(
+        Linear( 32,     128), ReLU(),
+        Linear(128, 28 * 28), Sigmoid(),
+    ),
+))
+```
+
+```python
+from torch.nn.functional import binary_cross_entropy
+
+# Compute output
+posterior = GaussianDistribution(model.encoder(x))
+x_ = model.decoder(posterior.sample())
+
+# Compute loss
+loss_reco = binary_cross_entropy(x_, x)
+loss_kld = p.kld()
+loss = loss_reco + kld_weight * loss_kld
+```
+
 #### Generative Adversarial Networks {#sec:gan}
 
 Core Concepts
