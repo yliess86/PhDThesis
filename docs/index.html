@@ -2239,11 +2239,11 @@ encoding the input as a single point, it encodes it as a distribution in
 the latent space. In practice, the distribution used is chosen to be
 close to a normal distribution. The encoder is changed to output the
 parameters of this distribution, the mean <span
-class="math inline">\(\mu\)</span>, and the standard deviation <span
-class="math inline">\(\sigma\)</span>. <span
-class="math inline">\(\sigma\)</span> is often replaced by a proxy <span
-class="math inline">\(\rho = log(\sigma)\)</span> to enforce positivity
-and stability. The new inference scheme is changed for <span
+class="math inline">\(\mu\)</span>, and the variance <span
+class="math inline">\(\sigma^2\)</span>. <span
+class="math inline">\(\sigma^2\)</span> is often replaced by a proxy
+<span class="math inline">\(\rho = log(\sigma^2)\)</span> to enforce
+positivity and stability. The new inference scheme is changed for <span
 class="math inline">\(\hat{x} = D(z)\)</span>, where the latent code
 <span class="math inline">\(z \sim \mathcal{N}(E(x)_\mu,
 exp(E(x)_\rho))\)</span>.</p>
@@ -2302,7 +2302,7 @@ class="math inline">\(q_x(z) \sim \mathcal{N}(g(x), h(x))\)</span>. we
 can now look for the optimal <span class="math inline">\(g^*\)</span>
 and <span class="math inline">\(h^*\)</span> minimizing the
 KL-Divergence between the target and the approximation:</p>
-<p><span class="math display">\[
+<p><span id="eq:vae_objective"><span class="math display">\[
 \begin{aligned}
 (g^*, h^*) &amp;= \underset{(g, h) \in G \times H}{arg \; min} KL(q_x(z)
 || p(z | x)) \\
@@ -2319,7 +2319,7 @@ log \; p(x | z) - KL(q_x(z) || p(z)) \\
            &amp;= \underset{(g, h) \in G \times H}{arg \; min} (E_z
 [-\frac{||x - f(z)||^2}{2c}] - KL(q_x(z) || p(z)) \\
 \end{aligned}
-\]</span></p>
+\qquad{(8)}\]</span></span></p>
 <p>This rewrite of the objective equations demonstrates a natural
 tradeoff between the data confidence <span class="math inline">\(E_z
 [-\frac{||x - f(z)||^2}{2c}]\)</span> and the prior confidence <span
@@ -2332,7 +2332,42 @@ objective between <span class="math inline">\(q_x(z)\)</span> and the
 prior <span class="math inline">\(p(z)\)</span> which is gaussian. We
 can view the constant <span class="math inline">\(c\)</span> as a
 strength parameter that can adjust how we favor the regularization.</p>
-<p><strong>Reparametrization Trick:</strong> …</p>
+<p><strong>Reparametrization Trick:</strong> The VAE architecture is
+trained to find the parameters of the functions <span
+class="math inline">\(f\)</span>, <span
+class="math inline">\(g\)</span>, and <span
+class="math inline">\(h\)</span> by minimizing the VI objective (see <a
+href="#eq:vae_objective">Eq 8</a>). The encoder is charged to output two
+vectors, one for representing <span class="math inline">\(g(x)\)</span>
+the mean, in the case of a Gaussian distribution <span
+class="math inline">\(\mu\)</span>, and the other representing the
+variance of the distribution <span class="math inline">\(h(x)\)</span>,
+<span class="math inline">\(\rho = log(\sigma^2)\)</span>. The latent
+code <span class="math inline">\(z\)</span> is then sampled from the
+Gaussian distribution <span class="math inline">\(z \sim
+\mathcal{N}(\mu, \sigma)\)</span> and finally decoded to reconstruct the
+original input <span class="math inline">\(x\)</span>.</p>
+<p>There is however a catch. The sampling process is stochastic and thus
+not differentiable. And we know that a NN needs to be differentiable to
+be optimized using SGD. To solve this problem, Kingma et al. <span
+class="citation" data-cites="kingma_2013">[<a href="#ref-kingma_2013"
+role="doc-biblioref">30</a>]</span> propose to use what they call a
+reparametrization trick. It consists in sampling a surrogate standard
+Gaussian distribution <span class="math inline">\(\zeta \sim
+\mathcal{N}(0, I)\)</span> and scaling it by the output of the learned
+encoder <span class="math inline">\(\mu\)</span> and <span
+class="math inline">\(\sigma^2\)</span>. This the process becomes:</p>
+<p><span id="eq:vae_reparametrization"><span class="math display">\[
+\begin{aligned}
+E(x)    &amp;= (\mu, \rho) \\
+\hat{x} &amp;= D(\mu + \zeta \; exp(\rho)), \; \zeta \sim N(O, I)
+\end{aligned}
+\qquad{(9)}\]</span></span></p>
+<p>Performing the latent sampling using the reparametrization trick (see
+<a href="#eq:vae_reparametrization">Eq 9</a>) conserves the gradient
+flow. The VAE can thus be trained to learn a structured latent space
+that can be used to interpolate latent codes and decode them into
+samples similar to the training distribution.</p>
 <p><strong>MNIST Digit Image Generation:</strong> …</p>
 <h4 id="sec:gan">Generative Adversarial Networks</h4>
 <p>Core Concepts</p>
