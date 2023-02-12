@@ -1944,15 +1944,17 @@ class="math inline">\(256\)</span> positions with a padding of <span
 class="math inline">\(1\)</span> on each side of the input). A CNN
 convolves multiple parametrized filters <span
 class="math inline">\(K\)</span> in a single convolution operation.
-Given a convolution setting, the operation requires $$ parameters and
-outputs a feature map tensor of size <span class="math inline">\(W_2 =
-(W_1 - F_W + 2P_W) / S + 1\)</span>, <span class="math inline">\(H_2 =
-(H_1 - F_H + 2P_H) / S + 1\)</span>, and <span class="math inline">\(D_2
-= K\)</span> (see <a href="#fig:convolution">Fig 18</a>). The different
-filters are responsible for looking for the activation of different
-patterns in the input. The Convolution layer introduces the notion of
-weight sharing enabled by the sliding filter (neurons) and reduces
-computation by a large margin in comparison to a standard MLP layer.</p>
+Given a convolution setting, the operation requires <span
+class="math inline">\(F_H \times F_W \times D_1 \times D_2\)</span>
+parameters and outputs a feature map tensor of size <span
+class="math inline">\(W_2 = (W_1 - F_W + 2P_W) / S + 1\)</span>, <span
+class="math inline">\(H_2 = (H_1 - F_H + 2P_H) / S + 1\)</span>, and
+<span class="math inline">\(D_2 = K\)</span> (see <a
+href="#fig:convolution">Fig 18</a>). The different filters are
+responsible for looking for the activation of different patterns in the
+input. The Convolution layer introduces the notion of weight sharing
+enabled by the sliding filter (neurons) and reduces computation by a
+large margin in comparison to a standard MLP layer.</p>
 <p><strong>Pooling:</strong> It is common to follow convolution layers
 by pooling layers to reduce the dimensionality when growing the ConvNet
 deeper. The pooling layer reduces its input by applying a reduction
@@ -2235,15 +2237,46 @@ and stability. The new inference scheme is changed for <span
 class="math inline">\(\hat{x} = D(z)\)</span>, where the latent code
 <span class="math inline">\(z \sim \mathcal{N}(E(x)_\mu,
 exp(E(x)_\rho))\)</span>.</p>
-<p><strong>Probabilistic Formulation:</strong> latent sampled from prior
-<span class="math inline">\(z \sim p(z)\)</span> … data sampled from
-conditional likelihood <span class="math inline">\(x \sim p(x |
-z)\)</span>, probabilistic decoder <span class="math inline">\(p(x |
-z)\)</span> and probabilistic encoder <span class="math inline">\(p(z |
-x)\)</span>, Bayes theorem <span class="math inline">\(p(z | x) =
-\frac{p(x | z)p(z)}{p(x)} = \frac{p(x | z)p(z)}{\int p(x | u) p(u)
-du}\)</span> where the integral is intractable.</p>
+<p><strong>Probabilistic Formulation:</strong> Let us consider the VAE
+as a probabilistic model. <span class="math inline">\(x\)</span>, our
+data, is generated from the latent variable <span
+class="math inline">\(z\)</span> that cannot be observed. In this
+framework, the generation steps are the following: <span
+class="math inline">\(z\)</span> is sampled from the prior distribution
+<span class="math inline">\(p(z)\)</span>, and <span
+class="math inline">\(x\)</span> is sampled from the conditional
+likelihood <span class="math inline">\(x \sim p(x | z)\)</span>. In this
+setting, the probabilistic decoder is <span class="math inline">\(p(x |
+z)\)</span>, and the probabilistic encoder is <span
+class="math inline">\(p(z | x)\)</span>. The Bayes theorem allows
+expressing a natural relation between the prior <span
+class="math inline">\(p(z)\)</span>, the likelihood <span
+class="math inline">\(p(x | z)\)</span>, and the posterior <span
+class="math inline">\(p(z|x)\)</span>:</p>
+<p><span id="eq:vae_bayes"><span class="math display">\[
+p(z | x) = \frac{p(x | z)p(z)}{p(x)} = \frac{p(x | z)p(z)}{\int p(x | u)
+p(u) du}
+\qquad{(6)}\]</span></span></p>
+<p>A standard Gaussian distribution is often assumed for the prior <span
+class="math inline">\(p(z)\)</span>, and a parametric Gaussian for the
+likelihood <span class="math inline">\(p(x | z)\)</span> with its mean
+being defined by a deterministic function <span class="math inline">\(f
+\in F\)</span> and a positive constant <span class="math inline">\(c
+\cdot I\)</span> for the covariance. In this setting:</p>
+<p><span id="eq:vae_gaussian"><span class="math display">\[
+\begin{aligned}
+p(z)     &amp;\sim \mathcal{N}(0, I) \\
+p(x | z) &amp;\sim \mathcal{N}(f(z), cI), \; f \in F, \; c &gt; 0
+\end{aligned}
+\qquad{(7)}\]</span></span></p>
+<p>These equations (see Eqns <a href="#eq:vae_bayes">6</a>, <a
+href="#eq:vae_gaussian">7</a>) define a classical Bayesian Inference
+problem. This problem is however intractable because of the
+denominator’s integral <span class="math inline">\(\int p(x | u) p(u)
+du\)</span> and thus requires the use of approximation techniques.</p>
+<!-- latent sampled from prior $z \sim p(z)$ ... data sampled from conditional likelihood $x \sim p(x | z)$, probabilistic decoder $p(x | z)$ and probabilistic encoder $p(z | x)$, Bayes theorem $p(z | x) = \frac{p(x | z)p(z)}{p(x)} = \frac{p(x | z)p(z)}{\int p(x | u) p(u) du}$ where the integral is intractable.  -->
 <p><strong>Variational Inference:</strong> …</p>
+<p><strong>Reparametrization Trick:</strong> …</p>
 <p><strong>MNIST Digit Image Generation:</strong> …</p>
 <h4 id="sec:gan">Generative Adversarial Networks</h4>
 <p>Core Concepts</p>
