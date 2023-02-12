@@ -2382,6 +2382,52 @@ flow. The VAE can thus be trained to learn a structured latent space
 that can be used to interpolate latent codes and decode them into
 samples similar to the training distribution.</p>
 <p><strong>MNIST Digit Image Generation:</strong> …</p>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch <span class="im">import</span> Tensor</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Parametrized Gaussian Distribution</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> GaussianDistribution:</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, params: Tensor) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.mu, <span class="va">self</span>.rho <span class="op">=</span> params.chunk(<span class="dv">2</span>, dim<span class="op">=-</span><span class="dv">1</span>)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.std <span class="op">=</span> torch.exp(<span class="fl">0.5</span> <span class="op">*</span> <span class="va">self</span>.rho)</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.var <span class="op">=</span> torch.exp(<span class="va">self</span>.rho)</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Reparametrization Trick</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> sample(<span class="va">self</span>) <span class="op">-&gt;</span> Tensor:</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.mu <span class="op">+</span> <span class="va">self</span>.std <span class="op">*</span> torch.randn_like(<span class="va">self</span>.mu)</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Average KL-Divergence with Gaussian Prior</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> kld(<span class="va">self</span>) <span class="op">-&gt;</span> Tensor:</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>        kld <span class="op">=</span> <span class="fl">0.5</span> <span class="op">*</span> (<span class="va">self</span>.mu.<span class="bu">pow</span>(<span class="dv">2</span>) <span class="op">+</span> <span class="va">self</span>.var <span class="op">-</span> <span class="fl">1.0</span> <span class="op">-</span> <span class="va">self</span>.rho)</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> torch.mean(torch.<span class="bu">sum</span>(kld, dim<span class="op">=</span><span class="dv">1</span>), dim<span class="op">=</span><span class="dv">0</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> OrderedDict</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch.nn <span class="im">import</span> (Linear, ReLU, Sequential, Sigmoid)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Model definition (encoder out: mu and rho)</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> Sequential(OrderedDict(</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    encoder<span class="op">=</span>Sequential(</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>        Linear(<span class="dv">28</span> <span class="op">*</span> <span class="dv">28</span>,    <span class="dv">128</span>), ReLU(),</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>        Linear(    <span class="dv">128</span>, <span class="dv">2</span> <span class="op">*</span> <span class="dv">32</span>), ReLU(),</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    decoder<span class="op">=</span>Sequential(</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>        Linear( <span class="dv">32</span>,     <span class="dv">128</span>), ReLU(),</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>        Linear(<span class="dv">128</span>, <span class="dv">28</span> <span class="op">*</span> <span class="dv">28</span>), Sigmoid(),</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>))</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch.nn.functional <span class="im">import</span> binary_cross_entropy</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute output</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>posterior <span class="op">=</span> GaussianDistribution(model.encoder(x))</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>x_ <span class="op">=</span> model.decoder(posterior.sample())</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute loss</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>loss_reco <span class="op">=</span> binary_cross_entropy(x_, x)</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>loss_kld <span class="op">=</span> p.kld()</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>loss <span class="op">=</span> loss_reco <span class="op">+</span> kld_weight <span class="op">*</span> loss_kld</span></code></pre></div>
 <h4 id="sec:gan">Generative Adversarial Networks</h4>
 <p>Core Concepts</p>
 <p><strong>Latent Space:</strong> …</p>
