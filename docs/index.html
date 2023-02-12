@@ -2135,8 +2135,10 @@ are organized mindfully in the latent space, semantically for
 example.</p>
 <figure id="fig:gai_autoencoder">
 <img src="./figures/core_gai_autoencoder.svg"
-alt="Autoencoder (AE) architecture." />
-<figcaption>Figure 22: Autoencoder (AE) architecture.</figcaption>
+alt="+ae architecture. The encoder compresses the input into a latent code that is reconstructed using the decoder. architecture." />
+<figcaption>Figure 22: <span class="full">+ae architecture. The encoder
+compresses the input into a latent code that is reconstructed using the
+decoder.</span> architecture.</figcaption>
 </figure>
 <p><strong>Properties:</strong> Compared to a traditional compression
 method, AEs are tied to their training data. They are trained to learn
@@ -2231,7 +2233,19 @@ architecture <span class="citation" data-cites="kingma_2013">[<a
 href="#ref-kingma_2013" role="doc-biblioref">30</a>]</span> is one
 answer to this issue. It can be viewed as a special AE hacked by adding
 a regularization objective enabling generation by exploring the learned
-and structured latent space.</p>
+and structured latent space (see <a href="#fig:gai_vae">Fig 25</a>).</p>
+<figure id="fig:gai_vae">
+<img src="./figures/core_gai_vae.svg"
+alt="+vae architecture. The encoder compresses the input and regresses the latent distribution parameters \mu and \rho from which a latent code is sampled using the reparametrization trick with a surrogate parameter \zeta sampled from the standard Gaussian distribution and then decoded to recover the input using the decoder. architecture." />
+<figcaption>Figure 25: <span class="full">+vae architecture. The encoder
+compresses the input and regresses the latent distribution parameters
+<span class="math inline">\(\mu\)</span> and <span
+class="math inline">\(\rho\)</span> from which a latent code is sampled
+using the reparametrization trick with a surrogate parameter <span
+class="math inline">\(\zeta\)</span> sampled from the standard Gaussian
+distribution and then decoded to recover the input using the
+decoder.</span> architecture.</figcaption>
+</figure>
 <p><strong>Regularization:</strong> VAEs are topologically similar to
 AE. They possess an encoder to compress the input into a latent code,
 and a decoder to reconstruct the signal from it. However, instead of
@@ -2284,7 +2298,6 @@ href="#eq:vae_gaussian">7</a>) define a classical Bayesian Inference
 problem. This problem is however intractable because of the
 denominator’s integral <span class="math inline">\(\int p(x | u) p(u)
 du\)</span> and thus requires the use of approximation techniques.</p>
-<!-- latent sampled from prior $z \sim p(z)$ ... data sampled from conditional likelihood $x \sim p(x | z)$, probabilistic decoder $p(x | z)$ and probabilistic encoder $p(z | x)$, Bayes theorem $p(z | x) = \frac{p(x | z)p(z)}{p(x)} = \frac{p(x | z)p(z)}{\int p(x | u) p(u) du}$ where the integral is intractable.  -->
 <p><strong>Variational Inference</strong>: In statistics, Variational
 Inference (VI) is one of the techniques used to approximate complex
 distributions. It consists in setting a parametrized distribution
