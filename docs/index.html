@@ -2200,8 +2200,8 @@ below.</p>
 <div class="sourceCode" id="cb12"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate sample given latent-code</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>x_ <span class="op">=</span> model.decoder(z)</span></code></pre></div>
-<figure id="fig:gai_autoencoder_latent" width="50%">
-<img src="./figures/core_gai_autoencoder_latent.svg" style="width:50.0%"
+<figure id="fig:gai_autoencoder_latent" width="60%">
+<img src="./figures/core_gai_autoencoder_latent.svg" style="width:60.0%"
 alt="Trained Autoencoder (AE) 2-dimensional latent space visualization. The data points represent the encoded latent code of images from the MNIST dataset and are colored based on their corresponding label (digit). The latent space is not organized in a way that allows us to visually separate these classes." />
 <figcaption>Figure 24: Trained Autoencoder (AE) <span
 class="math inline">\(2\)</span>-dimensional latent space visualization.
@@ -2383,7 +2383,20 @@ E(x)    &amp;= (\mu, \rho) \\
 flow. The VAE can thus be trained to learn a structured latent space
 that can be used to interpolate latent codes and decode them into
 samples similar to the training distribution.</p>
-<p><strong>MNIST Digit Image Generation:</strong> …</p>
+<p><strong>MNIST Digit Image Generation:</strong> Let us reconsider our
+toy example with training a VAE on the MNIST handwritten digit dataset.
+There is almost nothing change in comparison to the AE.</p>
+<p>We implement a <code>GaussianDistribution</code> class helper for
+handling the parametrized Gaussian distribution taking the output
+parameters <span class="math inline">\((\mu, \rho)\)</span> from the
+encoder in its constructor from which the mean <span
+class="math inline">\(\mu\)</span> and variance <span
+class="math inline">\(\sigma^2\)</span> are derived. The class is
+augmented with utility functions such as <code>sample</code> to sample
+the distribution using the reparametrization trick, and a
+<code>kld</code> function to compute the average KL-Divergence
+regularization loss when compared with a standard Gaussian distribution
+target prior.</p>
 <div class="sourceCode" id="cb13"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch <span class="im">import</span> Tensor</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -2404,6 +2417,11 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a h
 <span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> kld(<span class="va">self</span>) <span class="op">-&gt;</span> Tensor:</span>
 <span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>        kld <span class="op">=</span> <span class="fl">0.5</span> <span class="op">*</span> (<span class="va">self</span>.mu.<span class="bu">pow</span>(<span class="dv">2</span>) <span class="op">+</span> <span class="va">self</span>.var <span class="op">-</span> <span class="fl">1.0</span> <span class="op">-</span> <span class="va">self</span>.rho)</span>
 <span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> torch.mean(torch.<span class="bu">sum</span>(kld, dim<span class="op">=</span><span class="dv">1</span>), dim<span class="op">=</span><span class="dv">0</span>)</span></code></pre></div>
+<p>The network is the same as for the AE except in the encoder output
+which in our case has to double its output size to encode both the mean
+<span class="math inline">\(\mu\)</span> and the <span
+class="math inline">\(\rho = log(\sigma^2)\)</span> of the latent
+distribution.</p>
 <div class="sourceCode" id="cb14"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> OrderedDict</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch.nn <span class="im">import</span> (Linear, ReLU, Sequential, Sigmoid)</span>
@@ -2419,6 +2437,16 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a h
 <span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>        Linear(<span class="dv">256</span>, <span class="dv">28</span> <span class="op">*</span> <span class="dv">28</span>), Sigmoid(),</span>
 <span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    ),</span>
 <span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>))</span></code></pre></div>
+<p>The encoder can then be used to compress the input into the latent
+distribution parameters from which the latent code can be sampled and
+decoded using the decoder. The loss is a combination of the
+reconstruction term using the <code>binary_cross_entropy</code>, and the
+regularization term using the <code>kld</code> computed from the
+posterior distribution helper. The KL-Divergence term is weighted by the
+<code>kld_weight</code> and is set to <span
+class="math inline">\(0\)</span> at the beginning of training and slowly
+increased toward a defined weight set to <span
+class="math inline">\(1e-4\)</span> in this case.</p>
 <div class="sourceCode" id="cb15"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch.nn.functional <span class="im">import</span> binary_cross_entropy</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -2430,6 +2458,12 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a h
 <span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>loss_reco <span class="op">=</span> binary_cross_entropy(x_, x)</span>
 <span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>loss_kld <span class="op">=</span> p.kld()</span>
 <span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>loss <span class="op">=</span> loss_reco <span class="op">+</span> kld_weight <span class="op">*</span> loss_kld</span></code></pre></div>
+<p>The model is trained to minimize the objective functions. Satisfying
+both the reconstruction loss and the KL-Divergence regularization is
+harder than the task of the vanilla AE. Intuitively this has to result
+in a structured latent space at the cost of a small reconstruction
+quality degradation. The training history and reconstruction
+capabilities are shown in <a href="#fig:gai_vae_history">Fig 27</a>.</p>
 <figure id="fig:gai_vae_history">
 <img src="./figures/core_gai_vae_history.svg"
 alt="Training history of a small 2-layer Autoencoder (AE). The combination of the binary cross entropy loss and the KL-Divergence regularization is shown on the left, a training sample in the middle, and its corresponding reconstruction on the right." />
@@ -2439,8 +2473,11 @@ of the binary cross entropy loss and the KL-Divergence regularization is
 shown on the left, a training sample in the middle, and its
 corresponding reconstruction on the right.</figcaption>
 </figure>
-<figure id="fig:gai_vae_latent" width="50%">
-<img src="./figures/core_gai_vae_latent.svg" style="width:50.0%"
+<p>As expected, the latent space (see <a
+href="#fig:gai_vae_latent">Fig 28</a>) presents structural organization.
+The specific digit classes are visible and separable.</p>
+<figure id="fig:gai_vae_latent" width="60%">
+<img src="./figures/core_gai_vae_latent.svg" style="width:60.0%"
 alt="Trained Variational Autoencoder (VAE) 2-dimensional latent space visualization. The data points represent the encoded latent code of images from the MNIST dataset and are colored based on their corresponding label (digit). The latent space is organized in a way that allows us to visually separate these classes." />
 <figcaption>Figure 28: Trained Variational Autoencoder (VAE) <span
 class="math inline">\(2\)</span>-dimensional latent space visualization.
@@ -2449,6 +2486,10 @@ MNIST dataset and are colored based on their corresponding label
 (digit). The latent space is organized in a way that allows us to
 visually separate these classes.</figcaption>
 </figure>
+<p>The structure of the trained VAE latent space allows the generation
+of new data points by sampling latent codes and decoding them using the
+trained decoder (see <a
+href="#fig:gai_vae_latent_sampling">Fig 29</a>).</p>
 <figure id="fig:gai_vae_latent_sampling">
 <img src="./figures/core_gai_vae_latent_sampling.svg"
 alt="Trained Variational Autoencoder (VAE) 2-dimensional latent space sampling visualization. The decoder is used for generation by sampling the latent space in a grid pattern." />
