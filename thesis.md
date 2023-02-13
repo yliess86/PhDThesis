@@ -821,7 +821,7 @@ The result of the training can be observed in @fig:gai_autoencoder_history. Desp
 x_ = model.decoder(z)
 ```
 
-![Trained [+ae]{.full} $2$-dimensional latent space visualization. The data points represent the encoded latent code of images from the +mnist dataset and are colored based on their corresponding label (digit). The latent space is not organized in a way that allows us to visually separate these classes.](./figures/core_gai_autoencoder_latent.svg){#fig:gai_autoencoder_latent width=50%}
+![Trained [+ae]{.full} $2$-dimensional latent space visualization. The data points represent the encoded latent code of images from the +mnist dataset and are colored based on their corresponding label (digit). The latent space is not organized in a way that allows us to visually separate these classes.](./figures/core_gai_autoencoder_latent.svg){#fig:gai_autoencoder_latent width=60%}
 
 The $2$-dimensional latent space can be observed in @fig:gai_autoencoder_latent. Our latent space is not organized in a way that we can visually distinguish between the digit classes. This clearly demonstrates a lack of structural organization preventing the +ae from being used as a generator by sampling its latent space.
 
@@ -883,8 +883,9 @@ $$ {#eq:vae_reparametrization}
 
 Performing the latent sampling using the reparametrization trick (see @eq:vae_reparametrization) conserves the gradient flow. The +vae can thus be trained to learn a structured latent space that can be used to interpolate latent codes and decode them into samples similar to the training distribution.
 
-**MNIST Digit Image Generation:**
-...
+**MNIST Digit Image Generation:** Let us reconsider our toy example with training a +vae on the +mnist handwritten digit dataset. There is almost nothing change in comparison to the +ae.
+
+We implement a `GaussianDistribution` class helper for handling the parametrized Gaussian distribution taking the output parameters $(\mu, \rho)$ from the encoder in its constructor from which the mean $\mu$ and variance $\sigma^2$ are derived. The class is augmented with utility functions such as `sample` to sample the distribution using the reparametrization trick, and a `kld` function to compute the average +kld regularization loss when compared with a standard Gaussian distribution target prior.
 
 ```python
 from torch import Tensor
@@ -908,6 +909,8 @@ class GaussianDistribution:
         return torch.mean(torch.sum(kld, dim=1), dim=0)
 ```
 
+The network is the same as for the +ae except in the encoder output which in our case has to double its output size to encode both the mean $\mu$ and the $\rho = log(\sigma^2)$ of the latent distribution.
+
 ```python
 from collections import OrderedDict
 from torch.nn import (Linear, ReLU, Sequential, Sigmoid)
@@ -925,6 +928,8 @@ model = Sequential(OrderedDict(
 ))
 ```
 
+The encoder can then be used to compress the input into the latent distribution parameters from which the latent code can be sampled and decoded using the decoder. The loss is a combination of the reconstruction term using the `binary_cross_entropy`, and the regularization term using the `kld` computed from the posterior distribution helper. The +kld term is weighted by the `kld_weight` and is set to $0$ at the beginning of training and slowly increased toward a defined weight set to $1e-4$ in this case.
+
 ```python
 from torch.nn.functional import binary_cross_entropy
 
@@ -938,9 +943,15 @@ loss_kld = p.kld()
 loss = loss_reco + kld_weight * loss_kld
 ```
 
+The model is trained to minimize the objective functions. Satisfying both the reconstruction loss and the +kld regularization is harder than the task of the vanilla +ae. Intuitively this has to result in a structured latent space at the cost of a small reconstruction quality degradation. The training history and reconstruction capabilities are shown in @fig:gai_vae_history.
+
 ![Training history of a small $2$-layer [+ae]{.full}. The combination of the binary cross entropy loss and the +kld regularization is shown on the left, a training sample in the middle, and its corresponding reconstruction on the right.](./figures/core_gai_vae_history.svg){#fig:gai_vae_history}
 
-![Trained [+vae]{.full} $2$-dimensional latent space visualization. The data points represent the encoded latent code of images from the +mnist dataset and are colored based on their corresponding label (digit). The latent space is organized in a way that allows us to visually separate these classes.](./figures/core_gai_vae_latent.svg){#fig:gai_vae_latent width=50%}
+As expected, the latent space (see @fig:gai_vae_latent) presents structural organization. The specific digit classes are visible and separable.
+
+![Trained [+vae]{.full} $2$-dimensional latent space visualization. The data points represent the encoded latent code of images from the +mnist dataset and are colored based on their corresponding label (digit). The latent space is organized in a way that allows us to visually separate these classes.](./figures/core_gai_vae_latent.svg){#fig:gai_vae_latent width=60%}
+
+The structure of the trained +vae latent space allows the generation of new data points by sampling latent codes and decoding them using the trained decoder (see @fig:gai_vae_latent_sampling).
 
 ![Trained [+vae]{.full} $2$-dimensional latent space sampling visualization. The decoder is used for generation by sampling the latent space in a grid pattern.](./figures/core_gai_vae_latent_sampling.svg){#fig:gai_vae_latent_sampling}
 
