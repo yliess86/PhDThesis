@@ -3,3 +3,4 @@
 **/tmp-*.pdf
 **/tmp-*.html
 **/tmp-*.log
+.crop*

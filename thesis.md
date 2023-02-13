@@ -74,6 +74,9 @@ acronyms:
     gan:
         short: GAN
         long: Generative Adversarial Network
+    wgan:
+        short: WGAN
+        long: Wasserstein Generative Adversarial Network
     ddm:
         short: DDM
         long: Denoising Diffusion Model
@@ -957,10 +960,38 @@ The structure of the trained +vae latent space allows the generation of new data
 
 #### Generative Adversarial Networks {#sec:gan}
 
-Core Concepts
+While [+vae]{.plurals} allow learning structured latent spaces ready for sampling and generation, they suffer from quality degradation. The [+gan]{.full} architecture, introduced by Ian Goodfellow et al. [@goodfellow_2014], is one answer to this problem. [+gan]{.plural} can generate high-quality images in real-time settings.
 
-**Latent Space:**
-...
+**Vanilla GAN:** In its vanilla formulation, a +gan consists of a generator $G$ trained to produce images $G(z)$ similar to the training distribution given a latent code $z$ which is then fed to a discriminator $D$ trained to differentiate fake images (generated images) from true images $x$. The two networks are jointly trained in an end-to-end fashion to optimize a Min-Max objective (see @eq:gan_minmax) that can be split into two objectives, one for the generator, and another for the discriminator (see @eq:gan_minmax_split).
+
+$$
+\underset{D}{min} \; \underset{G}{max} \; E_x \; log \; D(x) + E_z \; log(1 - D(G(z))) \\
+$$ {#eq:gan_minmax}
+
+$$
+\begin{aligned}
+\frac{1}{n} \sum_{i=1}^{n} \; &log \; D(x_i) + log(1 - D(G(z_i))) \\
+\frac{1}{n} \sum_{i=1}^{n} \; &log \; D(G(z_i))
+\end{aligned}
+$$ {#eq:gan_minmax_split}
+
+
+**Vanishing Gradients and Mode Collapse**: In practice, the vanilla formulation is however unstable. The generator training often saturates if it cannot keep up with the discriminator training which is in most cases easier to satisfy. It suffers from vanishing gradients where the loss signal becomes too small and gradients do not propagate to layers resulting in the early stop of the generator training. It is also subject to mode collapse where the generator finds a simple solution fooling the discriminator and failing at generating diverse enough outputs. Solutions such as the hinge loss [@lim_2017], the Wasserstein distance [@arjovsky_2017], gradient penalty [@ishaan_2017], the use of batch [@ioffe_2015] and spectral [@miyato_2018] normalization can be found in the literature.
+
+**Wasserstein GAN:** The most famous improvement of the vanilla +gan is the +wgan [@arjovsky_2017]. It both resolves the mode collapse and limits the vanishing gradients issues. The last activation of the discriminator is swapped from a sigmoid to a linear activation. This small change turns the discriminator into a critic network in charge of scoring the quality (fidelity to the original distribution) of input images. The new simplified objectives are shown in @eq:gan_wasserstein and are often combined with gradient clipping to satisfy a Lipschitz constraint.
+
+$$
+\begin{aligned}
+\frac{1}{n} \sum_{i=1}^{n} \; & D(x_i) - D(G(z_i)) \\
+\frac{1}{n} \sum_{i=1}^{n} \; & D(G(z_i))
+\end{aligned}
+$$ {#eq:gan_wasserstein}
+
+**Gradient Penalty:** In their contribution, Gulrajani et al. [@gulrajani_2017] propose to replace gradient clipping with gradient penalty to enforce a constraint on the critic such that its gradients with respect to the inputs are unit vectors. The critic loss is thus augmented with an additional term (see @eq:gan_gp) where $\hat{x}$ is sampled from a linear interpolation between real and fake samples to satisfy the critic's Lipschitz constraint.
+
+$$
+\lambda \; E_{\hat{x}} \; (||\nabla_{\hat{x}}D(\hat{x})||_2 - 1)^2
+$$ {#eq:gan_gp}
 
 **MNIST Digit Image Generation:**
 ...
