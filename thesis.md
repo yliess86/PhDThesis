@@ -793,12 +793,12 @@ from torch.nn import (Linear, ReLU, Sequential, Sigmoid)
 # Model definition
 model = Sequential(OrderedDict(
     encoder=Sequential(
-        Linear(28 * 28, 128), ReLU(),
-        Linear(    128,  32), ReLU(),
+        Linear(28 * 28, 256), ReLU(),
+        Linear(    256,   2),
     ),
     decoder=Sequential(
-        Linear( 32,     128), ReLU(),
-        Linear(128, 28 * 28), Sigmoid(),
+        Linear(  2,     256), ReLU(),
+        Linear(256, 28 * 28), Sigmoid(),
     ),
 ))
 ```
@@ -821,9 +821,11 @@ The result of the training can be observed in @fig:gai_autoencoder_history. Desp
 x_ = model.decoder(z)
 ```
 
-The latent space can be observed in @fig:gai_autoencoder_latent after being reduced to a $2$-dimensional proxy space using [+umap]{.full} [@umap] for visualization purposes. Our latent space is not organized in a way that we can visually distinguish between the digit classes.
+![Trained [+ae]{.full} $2$-dimensional latent space visualization. The data points represent the encoded latent code of images from the +mnist dataset and are colored based on their corresponding label (digit). The latent space is not organized in a way that allows us to visually separate these classes.](./figures/core_gai_autoencoder_latent.svg){#fig:gai_autoencoder_latent width=50%}
 
-![Trained [+ae]{.full} latent space visualization. The latent code, originally a $32$-dimensional tensor, is reduced to a $2$-dimensional space for visualization purposes. The data points represent the encoded latent code of images from the +mnist dataset and are colored based on their corresponding label (digit). The latent space is not organized in a way that allows us to visually separate these classes.](./figures/core_gai_autoencoder_latent.svg){#fig:gai_autoencoder_latent width=50%}
+The $2$-dimensional latent space can be observed in @fig:gai_autoencoder_latent. Our latent space is not organized in a way that we can visually distinguish between the digit classes. This clearly demonstrates a lack of structural organization preventing the +ae from being used as a generator by sampling its latent space.
+
+![Trained [+ae]{.full} $2$-dimensional latent space sampling visualization. The decoder is used for generation by sampling the latent space in a grid pattern.](./figures/core_gai_autoencoder_latent_sampling.svg){#fig:gai_autoencoder_latent_sampling}
 
 
 #### Variational Autoencoders {#sec:vae}
@@ -913,12 +915,12 @@ from torch.nn import (Linear, ReLU, Sequential, Sigmoid)
 # Model definition (encoder out: mu and rho)
 model = Sequential(OrderedDict(
     encoder=Sequential(
-        Linear(28 * 28,    128), ReLU(),
-        Linear(    128, 2 * 32), ReLU(),
+        Linear(28 * 28,  256), ReLU(),
+        Linear(    256, 2 * 2),
     ),
     decoder=Sequential(
-        Linear( 32,     128), ReLU(),
-        Linear(128, 28 * 28), Sigmoid(),
+        Linear(  2,     256), ReLU(),
+        Linear(256, 28 * 28), Sigmoid(),
     ),
 ))
 ```
@@ -935,6 +937,12 @@ loss_reco = binary_cross_entropy(x_, x)
 loss_kld = p.kld()
 loss = loss_reco + kld_weight * loss_kld
 ```
+
+![Training history of a small $2$-layer [+ae]{.full}. The combination of the binary cross entropy loss and the +kld regularization is shown on the left, a training sample in the middle, and its corresponding reconstruction on the right.](./figures/core_gai_vae_history.svg){#fig:gai_vae_history}
+
+![Trained [+vae]{.full} $2$-dimensional latent space visualization. The data points represent the encoded latent code of images from the +mnist dataset and are colored based on their corresponding label (digit). The latent space is organized in a way that allows us to visually separate these classes.](./figures/core_gai_vae_latent.svg){#fig:gai_vae_latent width=50%}
+
+![Trained [+vae]{.full} $2$-dimensional latent space sampling visualization. The decoder is used for generation by sampling the latent space in a grid pattern.](./figures/core_gai_vae_latent_sampling.svg){#fig:gai_vae_latent_sampling}
 
 #### Generative Adversarial Networks {#sec:gan}
 
