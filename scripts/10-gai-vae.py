@@ -49,7 +49,7 @@ history = []
 with tqdm(range(50), desc="Epoch") as pbar:
     for epoch in pbar:
         model = model.train()
-        total_loss, total_reco, total_kl = 0, 0, 0
+        total_loss = 0
         for x, _ in loader:
             x = x.cuda()
             p  = GaussianDistribution(model.encoder(x))
