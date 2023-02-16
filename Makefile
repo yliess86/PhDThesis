@@ -39,5 +39,8 @@ pdf:
 	${PANDOC_PDF}
 	${BOOKLET_PDF}
 
-build: progress html pdf
+clean:
+	rm tmp-*
+
+build: progress html pdf clean
 	echo "Build Done!\n"

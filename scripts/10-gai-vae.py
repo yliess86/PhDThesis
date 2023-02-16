@@ -130,8 +130,7 @@ plt.legend(loc="upper right")
 
 plt.subplot(1, 2, 2)
 plt.imshow(x_)
-plt.xlabel("$z_1$")
-plt.ylabel("$z_2$")
+plt.axis("off")
 
 plt.tight_layout()
 plt.savefig("./figures/core_gai_vae_latent_sampling.svg")
