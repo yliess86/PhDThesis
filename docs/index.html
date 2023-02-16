@@ -2472,12 +2472,12 @@ quality degradation. The training history and reconstruction
 capabilities are shown in <a href="#fig:gai_vae_history">Fig 27</a>.</p>
 <figure id="fig:gai_vae_history">
 <img src="./figures/core_gai_vae_history.svg"
-alt="Training history of a small 2-layer Autoencoder (AE). The combination of the binary cross entropy loss and the KL-Divergence regularization is shown on the left, a training sample in the middle, and its corresponding reconstruction on the right." />
-<figcaption>Figure 27: Training history of a small <span
-class="math inline">\(2\)</span>-layer Autoencoder (AE). The combination
-of the binary cross entropy loss and the KL-Divergence regularization is
-shown on the left, a training sample in the middle, and its
-corresponding reconstruction on the right.</figcaption>
+alt="Training history of a small Variational Autoencoder (VAE). The combination of the binary cross entropy loss and the KL-Divergence regularization is shown on the left, a training sample in the middle, and its corresponding reconstruction on the right." />
+<figcaption>Figure 27: Training history of a small Variational
+Autoencoder (VAE). The combination of the binary cross entropy loss and
+the KL-Divergence regularization is shown on the left, a training sample
+in the middle, and its corresponding reconstruction on the
+right.</figcaption>
 </figure>
 <p>As expected, the latent space (see <a
 href="#fig:gai_vae_latent">Fig 28</a>) presents structural organization.
@@ -2584,7 +2584,161 @@ Lipschitz constraint.</p>
 <p><span id="eq:gan_gp"><span class="math display">\[
 \lambda \; E_{\hat{x}} \; (||\nabla_{\hat{x}}D(\hat{x})||_2 - 1)^2
 \qquad{(13)}\]</span></span></p>
-<p><strong>MNIST Digit Image Generation:</strong> …</p>
+<p><strong>MNIST Digit Image Generation:</strong> Let us reconsider the
+MNIST dataset and train a GAN to enable qualitative generation by
+providing a latent code to the generator. We first need to define the
+generator <span class="math inline">\(G\)</span> model and the critic
+network <span class="math inline">\(C\)</span>. In this case, we keep
+the same architecture for both. They are <span
+class="math inline">\(3\)</span>-layer NNs with a sigmoid activation for
+the generator and a linear activation for the critic. For the sake of
+the example and comparability with the previous generative architecture,
+we choose a latent dimension of <span
+class="math inline">\(2\)</span>.</p>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch.nn <span class="im">import</span> (Linear, ReLU, Sequential, Sigmoid)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Generator model</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>generator <span class="op">=</span> Sequential(</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    Linear(  <span class="dv">2</span>,      <span class="dv">256</span>), ReLU(),</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    Linear(<span class="dv">256</span>,      <span class="dv">256</span>), ReLU(),</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    Linear(<span class="dv">256</span>,  <span class="dv">28</span> <span class="op">*</span> <span class="dv">28</span>), Sigmoid(),</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Critic model</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>critic <span class="op">=</span> Sequential(</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>    Linear(<span class="dv">28</span> <span class="op">*</span> <span class="dv">28</span>, <span class="dv">256</span>), ReLU(),</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>    Linear(    <span class="dv">256</span>, <span class="dv">256</span>), ReLU(),</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>    Linear(    <span class="dv">256</span>, <span class="dv">1</span>),</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>).cuda()</span></code></pre></div>
+<p>Even though the formulation of the Minmax objective is common, both
+networks require their own optimizer in practice. We thus define the
+optimizer for the generator and the critic. Their hyperparameters can be
+different and tweaked to further optimize the training. For the sake of
+simplicity, we keep the default parameters in this toy example.</p>
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch.optim <span class="im">import</span> AdamW</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Optimizers (one per model)</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>g_optim <span class="op">=</span> AdamW(generator.parameters(), lr<span class="op">=</span><span class="fl">1e-3</span>)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>c_optim <span class="op">=</span> AdamW(critic.parameters(), lr<span class="op">=</span><span class="fl">1e-3</span>)</span></code></pre></div>
+<p>Latent variables are sampled from the standard normal distribution
+<span class="math inline">\(z \sim \mathcal{N}(O, I)\)</span>. The
+<code>gen_latent_code</code> is a helper that generates such latent
+codes given a mini-batch size as DL frameworks work on the batch
+level.</p>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate latent code</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>gen_latent_code <span class="op">=</span> <span class="kw">lambda</span> B: torch.randn((B, <span class="dv">2</span>))</span></code></pre></div>
+<p>One generator training step consists in sampling a latent code <span
+class="math inline">\(z\)</span>, using it to generate a handwritten
+digit fake image <span class="math inline">\(G(z)\)</span> and computing
+the average generator hinge/Wasserstein loss <span
+class="math inline">\(ReLU(1 - C(G(z)))\)</span>. This loss is then used
+to backpropagate gradients with respect to the generator’s parameters.
+The generator’s weights are finally updated using the Adam optimizer
+policy.</p>
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch <span class="im">import</span> Tensor</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch.nn <span class="im">import</span> Module</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> generator_step(generator: Module, optim: AdamW, real: Tensor) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    fake <span class="op">=</span> generator(gen_latent_code(real.shape[<span class="dv">0</span>]))</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    loss <span class="op">=</span> torch.relu(<span class="fl">1.0</span> <span class="op">-</span> critic(fake)).mean(dim<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    loss.backward()</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    optim.step()</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    optim.zero_grad(set_to_none<span class="op">=</span><span class="va">True</span>)</span></code></pre></div>
+<p>For stability purposes and to satisfy the <span
+class="math inline">\(1\)</span>-Lipschitz constraint of the critic
+network we implement a <code>grad_penalty</code> helper for computing
+the gradient penalty term. It consists of sampling interpolations
+between fake and real samples <span class="math inline">\(t = \alpha
+x_{real} + (1 - \alpha) x_{fake}\)</span> with <span
+class="math inline">\(\alpha \sim \mathcal{U}(0, 1)\)</span>, scoring
+them using the critic network <span class="math inline">\(C\)</span>. We
+then compute the gradients with respect to the critic’s parameters and
+optimize them to be close to <span class="math inline">\(1\)</span>,
+<span class="math inline">\(\; E_{\hat{x}} \;
+(||\nabla_{\hat{x}}D(\hat{x})||_2 - 1)^2\)</span>.</p>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch <span class="im">import</span> Tensor</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch.autograd <span class="im">import</span> grad</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch.nn <span class="im">import</span> Module</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute Gradient Penatly for Critic</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> grad_penalty(critic: Module, real: Tensor, fake: Tensor) <span class="op">-&gt;</span> Tensor:</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    alpha <span class="op">=</span> torch.rand((real.shape[<span class="dv">0</span>], <span class="dv">1</span>), requires_grad<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    t <span class="op">=</span> alpha <span class="op">*</span> real <span class="op">-</span> (<span class="dv">1</span> <span class="op">-</span> alpha) <span class="op">*</span> fake</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    mixed <span class="op">=</span> critic(t)</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    grads <span class="op">=</span> grad(mixed, t, torch.ones_like(mixed), <span class="va">True</span>, <span class="va">True</span>, <span class="va">True</span>)[<span class="dv">0</span>]</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>    grads <span class="op">=</span> grads.view(grads.shape[<span class="dv">0</span>], <span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>    grads <span class="op">=</span> grads.norm(<span class="dv">2</span>, dim<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> torch.mean((grads <span class="op">-</span> <span class="dv">1</span>).<span class="bu">pow</span>(<span class="dv">2</span>))</span></code></pre></div>
+<p>One critic training step consists in sampling a latent code <span
+class="math inline">\(z\)</span>, using it to generate a fake image
+<span class="math inline">\(G(z)\)</span> and computing the three
+average critic’s loss terms <span class="math inline">\(ReLU(1 +
+C(G(z)))\)</span>, $ReLU(1 - C(x)), and <span
+class="math inline">\(\lambda \nabla_{gp}\)</span> with <span
+class="math inline">\(\lambda = 10\)</span> to minimize. The losses are
+then backward and the resulting gradients are used to update the
+critic’s weights using the Adam policy.</p>
+<div class="sourceCode" id="cb21"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch <span class="im">import</span> Tensor</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch.nn <span class="im">import</span> Module</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> critic_step(critic: Module, optim: AdamW, real: Tensor) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> torch.no_grad():</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>        fake <span class="op">=</span> generator(gen_latent_code(real.shape[<span class="dv">0</span>]))</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    loss_fake <span class="op">=</span> torch.relu(<span class="fl">1.0</span> <span class="op">+</span> critic(fake)).mean(dim<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    loss_real <span class="op">=</span> torch.relu(<span class="fl">1.0</span> <span class="op">-</span> critic(real)).mean(dim<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>    loss_gp <span class="op">=</span> grad_penalty(critic, real.detach(), fake.detach())</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>    loss <span class="op">=</span> loss_fake <span class="op">+</span> loss_real <span class="op">+</span> <span class="dv">10</span> <span class="op">*</span> loss_gp</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>    loss.backward()</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>    optim.step()</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>    optim.zero_grad(set_to_none<span class="op">=</span><span class="va">True</span>)</span></code></pre></div>
+<p>The overall training loop consists in alternating between generator
+training steps and critic training steps until convergence. It is common
+to train the critic for more cycles, especially at the beginning of
+training where the training signal for the generator is not constructive
+enough. In this toy example, we optimize the critic five times more than
+the generator.</p>
+<div class="sourceCode" id="cb22"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Training Loop</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> epoch <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">100</span>):</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> real <span class="kw">in</span> loader:</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Train the Generator</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>        generator_step(generator, g_optim, real)</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Train the Critic</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>):</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>            critic_step(critic, c_optim, real)</span></code></pre></div>
+<p>The training history monitoring the generator’s and critic’s loss
+terms are shown in <a href="#fig:gai_gan_history">Fig 30</a>. GAN are in
+practice hard to train and monitoring each term independently allows us
+to diagnose mode collapse and vanishing gradients when the gradient
+distributions are checked.</p>
+<figure id="fig:gai_gan_history">
+<img src="./figures/core_gai_gan_history.svg"
+alt="Training history of a small Generative Adversarial Network (GAN). The objective terms are plotted separately and follow a hinge loss and Wasserstein objective. The loss for the generator is shown in orange and the losses for the critic in blue." />
+<figcaption>Figure 30: Training history of a small Generative
+Adversarial Network (GAN). The objective terms are plotted separately
+and follow a hinge loss and Wasserstein objective. The loss for the
+generator is shown in orange and the losses for the critic in
+blue.</figcaption>
+</figure>
+<p>Overall, the GAN architecture is highly efficient at generating new
+samples giving latent codes. The quality of the generation is superior
+to those of VAE at the cost of a small loss in variation (see <a
+href="#fig:gai_gan_latent_sampling">Fig 31</a>).</p>
+<figure id="fig:gai_gan_latent_sampling">
+<img src="./figures/core_gai_gan_latent_sampling.svg"
+alt="Trained Generative Adversarial Network (GAN) 2-dimensional latent space sampling visualization. The generator is used for generation by sampling the latent space in a grid pattern." />
+<figcaption>Figure 31: Trained Generative Adversarial Network (GAN)
+<span class="math inline">\(2\)</span>-dimensional latent space sampling
+visualization. The generator is used for generation by sampling the
+latent space in a grid pattern.</figcaption>
+</figure>
 <h4 id="sec:ddm">Denoising Diffusion Models</h4>
 <p>Core Concepts</p>
 <p><strong>Latent Space:</strong> …</p>

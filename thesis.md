@@ -948,7 +948,7 @@ loss = loss_reco + kld_weight * loss_kld
 
 The model is trained to minimize the objective functions. Satisfying both the reconstruction loss and the +kld regularization is harder than the task of the vanilla +ae. Intuitively this has to result in a structured latent space at the cost of a small reconstruction quality degradation. The training history and reconstruction capabilities are shown in @fig:gai_vae_history.
 
-![Training history of a small $2$-layer [+ae]{.full}. The combination of the binary cross entropy loss and the +kld regularization is shown on the left, a training sample in the middle, and its corresponding reconstruction on the right.](./figures/core_gai_vae_history.svg){#fig:gai_vae_history}
+![Training history of a small [+vae]{.full}. The combination of the binary cross entropy loss and the +kld regularization is shown on the left, a training sample in the middle, and its corresponding reconstruction on the right.](./figures/core_gai_vae_history.svg){#fig:gai_vae_history}
 
 As expected, the latent space (see @fig:gai_vae_latent) presents structural organization. The specific digit classes are visible and separable.
 
@@ -993,8 +993,114 @@ $$
 \lambda \; E_{\hat{x}} \; (||\nabla_{\hat{x}}D(\hat{x})||_2 - 1)^2
 $$ {#eq:gan_gp}
 
-**MNIST Digit Image Generation:**
-...
+**MNIST Digit Image Generation:** Let us reconsider the +mnist dataset and train a +gan to enable qualitative generation by providing a latent code to the generator. We first need to define the generator $G$ model and the critic network $C$. In this case, we keep the same architecture for both. They are $3$-layer [+nn]{.plural} with a sigmoid activation for the generator and a linear activation for the critic. For the sake of the example and comparability with the previous generative architecture, we choose a latent dimension of $2$.
+
+```python
+from torch.nn import (Linear, ReLU, Sequential, Sigmoid)
+
+# Generator model
+generator = Sequential(
+    Linear(  2,      256), ReLU(),
+    Linear(256,      256), ReLU(),
+    Linear(256,  28 * 28), Sigmoid(),
+)
+
+# Critic model
+critic = Sequential(
+    Linear(28 * 28, 256), ReLU(),
+    Linear(    256, 256), ReLU(),
+    Linear(    256, 1),
+).cuda()
+```
+
+Even though the formulation of the Minmax objective is common, both networks require their own optimizer in practice. We thus define the optimizer for the generator and the critic. Their hyperparameters can be different and tweaked to further optimize the training. For the sake of simplicity, we keep the default parameters in this toy example.
+
+```python
+from torch.optim import AdamW
+
+# Optimizers (one per model)
+g_optim = AdamW(generator.parameters(), lr=1e-3)
+c_optim = AdamW(critic.parameters(), lr=1e-3)
+```
+
+Latent variables are sampled from the standard normal distribution $z \sim \mathcal{N}(O, I)$. The `gen_latent_code` is a helper that generates such latent codes given a mini-batch size as +dl frameworks work on the batch level.
+
+```python
+# Generate latent code
+gen_latent_code = lambda B: torch.randn((B, 2))
+```
+
+One generator training step consists in sampling a latent code $z$, using it to generate a handwritten digit fake image $G(z)$ and computing the average generator hinge/Wasserstein loss $ReLU(1 - C(G(z)))$. This loss is then used to backpropagate gradients with respect to the generator's parameters. The generator's weights are finally updated using the Adam optimizer policy.
+
+```python
+from torch import Tensor
+from torch.nn import Module
+
+def generator_step(generator: Module, optim: AdamW, real: Tensor) -> None:
+    fake = generator(gen_latent_code(real.shape[0]))
+    loss = torch.relu(1.0 - critic(fake)).mean(dim=0)
+    loss.backward()
+    optim.step()
+    optim.zero_grad(set_to_none=True)
+```
+
+For stability purposes and to satisfy the $1$-Lipschitz constraint of the critic network we implement a `grad_penalty` helper for computing the gradient penalty term. It consists of sampling interpolations between fake and real samples $t = \alpha x_{real} + (1 - \alpha) x_{fake}$ with $\alpha \sim \mathcal{U}(0, 1)$, scoring them using the critic network $C$. We then compute the gradients with respect to the critic's parameters and optimize them to be close to $1$, $\; E_{\hat{x}} \; (||\nabla_{\hat{x}}D(\hat{x})||_2 - 1)^2$.
+
+```python
+from torch import Tensor
+from torch.autograd import grad
+from torch.nn import Module
+
+# Compute Gradient Penatly for Critic
+def grad_penalty(critic: Module, real: Tensor, fake: Tensor) -> Tensor:
+    alpha = torch.rand((real.shape[0], 1), requires_grad=True)
+    t = alpha * real - (1 - alpha) * fake
+    mixed = critic(t)
+    grads = grad(mixed, t, torch.ones_like(mixed), True, True, True)[0]
+    grads = grads.view(grads.shape[0], -1)
+    grads = grads.norm(2, dim=1)
+    return torch.mean((grads - 1).pow(2))
+```
+
+One critic training step consists in sampling a latent code $z$, using it to generate a fake image $G(z)$ and computing the three average critic's loss terms $ReLU(1 + C(G(z)))$, $ReLU(1 - C(x)), and $\lambda \nabla_{gp}$ with $\lambda = 10$ to minimize. The losses are then backward and the resulting gradients are used to update the critic's weights using the Adam policy.
+
+```python
+from torch import Tensor
+from torch.nn import Module
+
+def critic_step(critic: Module, optim: AdamW, real: Tensor) -> None:
+    with torch.no_grad():
+        fake = generator(gen_latent_code(real.shape[0]))
+    loss_fake = torch.relu(1.0 + critic(fake)).mean(dim=0)
+    loss_real = torch.relu(1.0 - critic(real)).mean(dim=0)
+    loss_gp = grad_penalty(critic, real.detach(), fake.detach())
+    loss = loss_fake + loss_real + 10 * loss_gp
+    loss.backward()
+    optim.step()
+    optim.zero_grad(set_to_none=True)
+```
+
+The overall training loop consists in alternating between generator training steps and critic training steps until convergence. It is common to train the critic for more cycles, especially at the beginning of training where the training signal for the generator is not constructive enough. In this toy example, we optimize the critic five times more than the generator.
+
+```python
+# Training Loop
+for epoch in range(100):
+    for real in loader:
+        # Train the Generator
+        generator_step(generator, g_optim, real)
+        
+        # Train the Critic
+        for _ in range(5):
+            critic_step(critic, c_optim, real)
+```
+
+The training history monitoring the generator's and critic's loss terms are shown in @fig:gai_gan_history. +gan are in practice hard to train and monitoring each term independently allows us to diagnose mode collapse and vanishing gradients when the gradient distributions are checked.
+
+![Training history of a small [+gan]{.full}. The objective terms are plotted separately and follow a hinge loss and Wasserstein objective. The loss for the generator is shown in orange and the losses for the critic in blue.](./figures/core_gai_gan_history.svg){#fig:gai_gan_history}
+
+Overall, the +gan architecture is highly efficient at generating new samples giving latent codes. The quality of the generation is superior to those of +vae at the cost of a small loss in variation (see @fig:gai_gan_latent_sampling).
+
+![Trained [+gan]{.full} $2$-dimensional latent space sampling visualization. The generator is used for generation by sampling the latent space in a grid pattern.](./figures/core_gai_gan_latent_sampling.svg){#fig:gai_gan_latent_sampling}
 
 #### Denoising Diffusion Models {#sec:ddm}
 
