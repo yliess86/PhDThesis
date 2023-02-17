@@ -841,7 +841,7 @@ The $2$-dimensional latent space can be observed in @fig:gai_autoencoder_latent.
 
 Due to a lack of latent space regularization as shown in the previous sub-section, +ae cannot be used without any hacking to generate, or produce unseen samples. A vanilla +ae does not encode any structure on the latent space. It is trained only for reconstruction and is thus subject to high overfitting resulting in a meaningless structural organization of the latent codes. The [+vae]{.full} architecture [@kingma_2013] is one answer to this issue. It can be viewed as a special +ae hacked by adding a regularization objective enabling generation by exploring the learned and structured latent space (see @fig:gai_vae).
 
-![[+vae architecture. The encoder compresses the input and regresses the latent distribution parameters $\mu$ and $\rho$ from which a latent code is sampled using the reparametrization trick with a surrogate parameter $\zeta$ sampled from the standard Gaussian distribution and then decoded to recover the input using the decoder.]{.full} architecture.](./figures/core_gai_vae.svg){#fig:gai_vae}
+![[+vae architecture. The encoder compresses the input and regresses the latent distribution parameters $\mu$ and $\rho$ from which a latent code is sampled using the reparametrization trick with a surrogate parameter $\epsilon$ sampled from the standard Gaussian distribution and then decoded to recover the input using the decoder.]{.full} architecture.](./figures/core_gai_vae.svg){#fig:gai_vae}
 
 **Regularization:** [+vae]{.plural} are topologically similar to +ae. They possess an encoder to compress the input into a latent code, and a decoder to reconstruct the signal from it. However, instead of encoding the input as a single point, it encodes it as a distribution in the latent space. In practice, the distribution used is chosen to be close to a normal distribution. The encoder is changed to output the parameters of this distribution, the mean $\mu$, and the variance $\sigma^2$. $\sigma^2$ is often replaced by a proxy $\rho = log(\sigma^2)$ to enforce positivity and stability. The new inference scheme is changed for $\hat{x} = D(z)$, where the latent code $z \sim \mathcal{N}(E(x)_\mu, exp(E(x)_\rho))$.
 
@@ -881,12 +881,12 @@ This rewrite of the objective equations demonstrates a natural tradeoff between 
 
 **Reparametrization Trick:** The +vae architecture is trained to find the parameters of the functions $f$, $g$, and $h$ by minimizing the +vi objective (see @eq:vae_objective). The encoder is charged to output two vectors, one for representing $g(x)$ the mean, in the case of a Gaussian distribution $\mu$, and the other representing the variance of the distribution $h(x)$, $\rho = log(\sigma^2)$. The latent code $z$ is then sampled from the Gaussian distribution $z \sim \mathcal{N}(\mu, \sigma)$ and finally decoded to reconstruct the original input $x$.
 
-There is however a catch. The sampling process is stochastic and thus not differentiable. And we know that a +nn needs to be differentiable to be optimized using +sgd. To solve this problem, Kingma et al. [@kingma_2013] propose to use what they call a reparametrization trick. It consists in sampling a surrogate standard Gaussian distribution $\zeta \sim \mathcal{N}(0, I)$ and scaling it by the output of the learned encoder $\mu$ and $\sigma^2$. This the process becomes:
+There is however a catch. The sampling process is stochastic and thus not differentiable. And we know that a +nn needs to be differentiable to be optimized using +sgd. To solve this problem, Kingma et al. [@kingma_2013] propose to use what they call a reparametrization trick. It consists in sampling a surrogate standard Gaussian distribution $\epsilon \sim \mathcal{N}(0, I)$ and scaling it by the output of the learned encoder $\mu$ and $\sigma^2$. This the process becomes:
 
 $$
 \begin{aligned}
 E(x)    &= (\mu, \rho) \\
-\hat{x} &= D(\mu + \zeta \; exp(\rho)), \; \zeta \sim N(O, I)
+\hat{x} &= D(\mu + \epsilon \; exp(\rho)), \; \epsilon \sim N(O, I)
 \end{aligned}
 $$ {#eq:vae_reparametrization}
 
@@ -1127,20 +1127,20 @@ By adding noise to the input data in small enough steps, when $T \rightarrow +\i
 
 $$
 \begin{aligned}
-x_t &= \sqrt{\alpha_t} x_{t - 1} + \sqrt{1 - \alpha_t} \zeta_{t-1} \\
-    &= \sqrt{\alpha_t \alpha_{t - 1}} x_{t - 2} + \sqrt{1 - \alpha_t \alpha_{t - 1}} \zeta_{t-2} \\
+x_t &= \sqrt{\alpha_t} x_{t - 1} + \sqrt{1 - \alpha_t} \epsilon_{t-1} \\
+    &= \sqrt{\alpha_t \alpha_{t - 1}} x_{t - 2} + \sqrt{1 - \alpha_t \alpha_{t - 1}} \epsilon_{t-2} \\
     &= \dots \\
-    &= \sqrt{\bar{\alpha_t}} x_{0} + \sqrt{1 - \bar{\alpha_t}} \zeta_0
+    &= \sqrt{\bar{\alpha_t}} x_{0} + \sqrt{1 - \bar{\alpha_t}} \epsilon_0
 \end{aligned}
 $$ {#eq:ddm_froward_closed}
 
-where $\zeta_t \sim \mathcal{N}(0, I)$ and $\zeta_{t-2}$ results from merging two Gaussian distributions, $\mathcal{N}(0, \sigma_1^2 I) + \mathcal{N}(0, \sigma_2^2 I) = \mathcal{N}(0, (\sigma_1^2 + \sigma_2^2) I)$.
+where $\epsilon_t \sim \mathcal{N}(0, I)$ and $\epsilon_{t-2}$ results from merging two Gaussian distributions, $\mathcal{N}(0, \sigma_1^2 I) + \mathcal{N}(0, \sigma_2^2 I) = \mathcal{N}(0, (\sigma_1^2 + \sigma_2^2) I)$.
 
 To summarize, $x_t$ can be sampled as follow:
 
 $$
 x_t \sim q(x_t | x_0) = \mathcal{N}(x_T; \sqrt{\bar{\alpha_t}} x_0, (1 - \bar{\alpha}_t) I)
-$$
+$$ {#eq:ddm_froward_xt}
 
 **Beta Schedule:** $\beta_t$, the variance parameter can be fixed to a constant or chosen using a schedule over $T$ timesteps. In the original paper [@ho_2020] and follow-up contribution [@nichol_2021], the authors propose a linear ($\beta_1=1e^{-4}$, $\beta_T=0.02$), a quadratic, and a cosine schedule. Their experiments show that the cosine schedule results are better.
 
@@ -1176,11 +1176,228 @@ q(x_{t - 1} | x_t, x_0) &= \mathcal{N}(x_{t - 1}; \tilde{\mu}(x_t, x_0), \tilde{
 \end{aligned}
 $$ {#eq:ddm_backward_conditionned}
 
-**Denoising Diffusion Implicit Model:** 
-...
+Using the reparametrization trick in @eq:ddm_froward_closed, we can express $x_0$ using $x_t$ and $\epsilon \sim \mathcal{N}(0, I)$:
+
+$$
+x_0 = (x_t - \sqrt{1 - \bar{\alpha}}_t \epsilon) / \sqrt{\bar{\alpha}_t}
+$$ {#eq:ddm_backward_x0}
+
+Injecting @eq:ddm_backward_x0 in @eq:ddm_backward_conditionned allows us to express the target mean $\tilde{\mu}_t$ to only depend on $x_t$ and trained a +nn to approximate the noise $\epsilon_\theta(x_t, t)$:
+
+$$
+\begin{aligned}
+\tilde{\mu}_t(x_t)        &= (x_t - \frac{\beta_t}{\sqrt{1 - \bar{\alpha}}_t} \epsilon) / \sqrt{\alpha_t} \\
+\tilde{\mu_\theta}_t(x_t) &= (x_t - \frac{\beta_t}{\sqrt{1 - \bar{\alpha}}_t} \epsilon_\theta(x_t, t)) / \sqrt{\alpha_t}
+\end{aligned}
+$$ {#eq:ddm_backward_mutilde}
+
+The $L_t$ denoising loss can thus be expressed as follow:
+
+$$
+\begin{aligned}
+L_t &= E_{x_0, t, \epsilon} [\frac{1}{2 ||\Sigma_\theta(x_t, t)||_2^2} ||\tilde{\mu}_t - \mu_\theta(x_t, t)||_2^2] \\
+    &= E_{x_0, t, \epsilon} [\frac{\beta_t^2}{2 \alpha_t (1 - \bar{\alpha}_t) ||\Sigma_\theta(x_t, t)||_2^2} ||\epsilon_t - \epsilon_\theta(x_t, t)||_2^2] 
+\end{aligned}
+$$ {#eq:ddm_backward_lt_rewrite}
+
+This tells us that the objective can be simplified to learning a noise model to predict the noise $\epsilon$ at timestep $t$. Ho et al. [@ho_2020] propose to further simplify the objective function $L_t^{simple}$ by removing the weighting term and making the variance fixed.
+
+$$
+\begin{aligned}
+L_t^{simple} &= E_{x_0, t, \epsilon} [||\epsilon_t - \epsilon_\theta(x_t, t)||_2^2] \\
+x_t          &= \sqrt{\bar{\alpha}_t} x_0 + \sqrt{1 - \bar{\alpha}_t} \epsilon
+\end{aligned}
+$$ {#eq:ddm_backward_lt_simple}
+
+Finally, when the model $\epsilon_\theta$ is trained, we just need to iteratively denoise the latent code $z \sim \mathcal{N}(0, I)$ using:
+
+$$
+x_{t - 1} = \frac{1 / \sqrt{\alpha_t}} (x_t - \frac{1 - \alpha_t}{\sqrt{1 - \bar{\alpha}_t}} \epsilon\theta(x_t, t))
+$$ {#eq:ddm_backward_denoise
 
 **MNIST Digit Image Generation:**
 ...
+
+```python
+from torch import Tensor
+from typing import Callable
+
+# BetaSchedule type
+BetaSchedule = Callable[[int], Tensor]
+
+# Linear Beta Schedule from Ho et al.
+def linear_beta_schedule(
+    T: int,
+    beta_0: float = 1e-4,
+    beta_T: float = 0.02,
+) -> Tensor:
+    return torch.linspace(beta_0, beta_T, T + 1, dtype=torch.float32)
+```
+
+```python
+from torch.nn import Module
+
+# Denoising Diffusion Probabilistic Model class
+class DDPM(Module):
+    def __init__(self, T: int, schedule: BetaSchedule) -> None:
+        super().__init__()
+        self.T = T
+        
+        # Compute Beta Schedule
+        betas = schedule(T)
+        alphas = 1.0 - betas
+        alphas_cp = torch.cumprod(alphas, axis=0)
+        
+        # Precompute and Store as Buffers
+        self.register_buffer(
+            "betas",
+            betas,
+        )
+        self.register_buffer(
+            "alphas",
+            alphas,
+        )
+        self.register_buffer(
+            "alphas_cp",
+            alphas_cp,
+        )
+        self.register_buffer(
+            "sqrt_betas",
+            torch.sqrt(betas),
+        )
+        self.register_buffer(
+            "sqrt_recip_alphas",
+            torch.sqrt(1.0 / alphas),
+        )
+        self.register_buffer(
+            "sqrt_alphas_cp",
+            torch.sqrt(alphas_cp),
+        )
+        self.register_buffer(
+            "sqrt_one_minus_alphas_cp",
+            torch.sqrt(1.0 - alphas_cp),
+        )
+        self.register_buffer(
+            "beta_over_sqrt_one_minus_alphas_cp",
+            betas / torch.sqrt(1.0 - alphas_cp),
+        )
+```
+
+```python
+class DDPM(Module):
+    ...
+    # Helper function to extract Precomputed Buffers
+    # Along the t timestep and reshape
+    def _extract(self, x: Tensor, t: Tensor) -> Tensor:
+        return x.gather(-1, t).reshape(-1, 1)
+```
+
+```python
+from functools import partial
+
+class DDPM(Module):
+    ...
+    # Forward Diffusion Step
+    def forward_diffusion(
+        self,
+        x_0: Tensor,
+        t: Tensor,
+        noise: Tensor,
+    ) -> Tensor:
+        extract = partial(self._extract, t=t)
+        return (
+            extract(self.sqrt_alphas_cp) * x_0 +
+            extract(self.sqrt_one_minus_alphas_cp) * noise
+        )
+```
+
+```python
+from functools import partial
+
+class DDPM(Module):
+    ...
+    # Reverse Diffusion Step
+    def reverse_diffusion(
+        self,
+        eps: Tensor,
+        x_t: Tensor,
+        t: Tensor,
+        noise: Tensor,
+    ) -> Tensor:
+        noise = noise * (t > 1).to(x_t.dtype)[:, None, None, None]
+        extract = partial(self._extract, t=t)
+        eps = eps * extract(self.beta_over_sqrt_one_minus_alphas_cp)
+        return (
+            extract(self.sqrt_recip_alphas) * (x_t - eps) +
+            extract(self.sqrt_betas) * noise
+        )
+```
+
+```python
+from collections import OrderedDict
+from torch.nn import (Linear, Module, ReLU, Sequential, Sigmoid)
+
+# Noise Model definition
+class NoiseModel(Module):
+    def __init__(self) -> None:
+        super().__init__()
+        # The model is conditioned on timestep
+        # Timestep Embedding
+        self.t_emb = Sequential(
+            Linear(  1, 256), ReLU(),
+            Linear(256, 256),
+        )
+
+        # Core autoencoder model
+        self.autoencoder = Sequential(OrderedDict(
+            encoder=Sequential(
+                Linear(28 * 28, 256), ReLU(),
+                Linear(    256,   2), ReLU(),
+            ),
+            decoder=Sequential(
+                Linear(  2,     256), ReLU(),
+                Linear(256, 28 * 28),
+            ),
+        ))
+
+    def forward(self, x_t: Tensor, t: Tensor) -> Tensor:
+        return self.autoencoder(x_t + self.t_emb(t))
+```
+
+```python
+# Train the Noise Model
+def train_step(
+    ddpm: DDPM,
+    model: NoiseModel,
+    optim: AdamW,
+    x_0: Tensor,
+) -> None:
+    B = x_0.shape[0]
+    with torch.no_grad():
+        t = torch.randint(0, ddpm.T + 1, size=(B, ))
+        noise = torch.randn_like(x_0)
+        x_t = ddpm.forward_diffusion(x_0, t, noise)
+    loss = mse_loss(model(x_t, t / ddpm.T), noise)
+    loss.backward()
+    optim.step()
+    optim.zero_grad(set_to_none=True)
+```
+
+```python
+# Sample using the Noise Model
+def sample(
+    ddpm: DDPM,
+    model: NoiseModel,
+    n_samples: int,
+) -> Tensor:
+    x_t = torch.randn((n_samples, 28 * 28))
+    for t in range(ddpm.T, 1, -1):
+        t = torch.tensor([t] * n_samples)
+        eps = model(x_t, t / ddpm.T)
+        noise = torch.randn_like(x_t)
+        x_t = ddpm.reverse_diffusion(eps, x_t, t, noise)
+    return x_t
+```
 
 ### Attention Machanism {#sec:attention}
 #### Multihead Self-Attention {#sec:mha}
