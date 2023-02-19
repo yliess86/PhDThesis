@@ -513,6 +513,7 @@ Abbreviations</h2>
 <li><strong>CV</strong>: Computer Vision</li>
 <li><strong>DAG</strong>: Directed Acyclic Graph</li>
 <li><strong>DDM</strong>: Denoising Diffusion Model</li>
+<li><strong>DDPM</strong>: Denoising Diffusion Probabilistic Model</li>
 <li><strong>DL</strong>: Deep Learning</li>
 <li><strong>GAN</strong>: Generative Adversarial Network</li>
 <li><strong>GD</strong>: Gradient Descent</li>
@@ -579,7 +580,7 @@ the AI community <span class="citation" data-cites="lecun_2019">[<a
 href="#ref-lecun_2019" role="doc-biblioref">37</a>]</span>, are now
 trainable using Gradient Descent (GD) <span class="citation"
 data-cites="rumelhart_1986">[<a href="#ref-rumelhart_1986"
-role="doc-biblioref">58</a>]</span> thanks to the massive availability
+role="doc-biblioref">59</a>]</span> thanks to the massive availability
 of data and the processing power of modern hardware accelerators such as
 Graphical Processing Units (GPU), Tensor Processing Units (TPU), and
 Neural Processing Units (NPU).</p>
@@ -595,7 +596,7 @@ data-cites="ho_2020">[<a href="#ref-ho_2020"
 role="doc-biblioref">24</a>]</span>, and Large Language Models (LLM)
 <span class="citation" data-cites="vaswani_2017 brown_2020">[<a
 href="#ref-brown_2020" role="doc-biblioref">5</a>, <a
-href="#ref-vaswani_2017" role="doc-biblioref">66</a>]</span> are used to
+href="#ref-vaswani_2017" role="doc-biblioref">67</a>]</span> are used to
 generate artifacts such as text, audio, images, and videos of
 unprecedented quality and complexity.</p>
 <p>This dissertation aims at exploring how one could train and use
@@ -644,7 +645,7 @@ colorization, particularly in comparison to its grayscale counterpart
 data-cites="furusawa_2O17 hensman_2017 zhang_richard_2017">[<a
 href="#ref-furusawa_2O17" role="doc-biblioref">14</a>, <a
 href="#ref-hensman_2017" role="doc-biblioref">22</a>, <a
-href="#ref-zhang_richard_2017" role="doc-biblioref">71</a>]</span>.
+href="#ref-zhang_richard_2017" role="doc-biblioref">72</a>]</span>.
 Without the added semantic information provided by textures and shadows,
 inferring materials and 3D shapes from black and white linearts is
 difficult. They can only be deduced from silhouettes.</p>
@@ -658,7 +659,7 @@ reasons, online scrapping and synthetic lineart extraction is the method
 of choice for many of the contributions in the field <span
 class="citation" data-cites="ci_2018 zhang_richard_2017">[<a
 href="#ref-ci_2018" role="doc-biblioref">7</a>, <a
-href="#ref-zhang_richard_2017" role="doc-biblioref">71</a>]</span>.</p>
+href="#ref-zhang_richard_2017" role="doc-biblioref">72</a>]</span>.</p>
 <p>Previous works in automatic lineart colorization are based on the GAN
 <span class="citation" data-cites="goodfellow_2014">[<a
 href="#ref-goodfellow_2014" role="doc-biblioref">16</a>]</span>
@@ -670,16 +671,16 @@ href="#ref-ci_2018" role="doc-biblioref">7</a>, <a
 href="#ref-frans_2017" role="doc-biblioref">12</a>, <a
 href="#ref-liu_2017" role="doc-biblioref">42</a>, <a
 href="#ref-paintschainer_2017" role="doc-biblioref">53</a>, <a
-href="#ref-sangkloy_2016" role="doc-biblioref">61</a>]</span>, style
+href="#ref-sangkloy_2016" role="doc-biblioref">62</a>]</span>, style
 transfer <span class="citation" data-cites="zhang_ji_2017">[<a
-href="#ref-zhang_ji_2017" role="doc-biblioref">70</a>]</span>, tagging
+href="#ref-zhang_ji_2017" role="doc-biblioref">71</a>]</span>, tagging
 <span class="citation" data-cites="kim_2019">[<a href="#ref-kim_2019"
 role="doc-biblioref">32</a>]</span>, and more recently natural language
 <span class="citation" data-cites="ho_2020">[<a href="#ref-ho_2020"
 role="doc-biblioref">24</a>]</span>. One common pattern in these methods
 is the use of a feature extractor such as Illustration2Vec <span
 class="citation" data-cites="saito_2015">[<a href="#ref-saito_2015"
-role="doc-biblioref">60</a>]</span> allowing to compensate for the lack
+role="doc-biblioref">61</a>]</span> allowing to compensate for the lack
 of semantic descriptors by injecting its feature vector into the
 models.</p>
 <h3 id="contributions">Contributions</h3>
@@ -746,7 +747,7 @@ discrimination. These models are trained on large amounts of data, and
 if the data is not diverse or representative enough, the model may
 perpetuate or even amplify existing biases. The Microsoft Tay Twitter
 bot <span class="citation" data-cites="wolf_2017">[<a
-href="#ref-wolf_2017" role="doc-biblioref">68</a>]</span> scandal is an
+href="#ref-wolf_2017" role="doc-biblioref">69</a>]</span> scandal is an
 outcome of such a phenomenon. This initially innocent chatbot has been
 easily turned into a racist bot perpetuating hate speech. The task was
 made easier because of the inherently biased dataset it was trained
@@ -862,14 +863,14 @@ programming, production rules, semantic nets and frames, knowledge-based
 systems, symbolic mathematics, automatons, automated provers, ontologies
 and other paradigms were at the core of symbolic AI <span
 class="citation" data-cites="russell_2016">[<a href="#ref-russell_2016"
-role="doc-biblioref">59</a>]</span>. This approach was based on the
+role="doc-biblioref">60</a>]</span>. This approach was based on the
 early work of Alan Turing and the development of functional languages
 such as the LISP by McCarthy and al. at MIT <span class="citation"
 data-cites="mccarthy_1978">[<a href="#ref-mccarthy_1978"
 role="doc-biblioref">44</a>]</span>.</p>
 <p>One significant contribution of this period was the Perceptron by
 Frank Rosenblatt <span class="citation" data-cites="rosenblatt_1958">[<a
-href="#ref-rosenblatt_1958" role="doc-biblioref">57</a>]</span>, a
+href="#ref-rosenblatt_1958" role="doc-biblioref">58</a>]</span>, a
 simplified biomimical model of a single neuron. This artificial neuron
 fires when the weighted sum of its input is above a predefined
 threshold. The weights, scalars attributed to the connection edges of
@@ -917,7 +918,7 @@ href="#ref-fukushima_1980" role="doc-biblioref">13</a>]</span>, or David
 E. Rumelhart et al. who introduced the most used learning procedure for
 training Multi-Layer Perceptrons (MLP), the backpropagation <span
 class="citation" data-cites="rumelhart_1986">[<a
-href="#ref-rumelhart_1986" role="doc-biblioref">58</a>]</span>.</p>
+href="#ref-rumelhart_1986" role="doc-biblioref">59</a>]</span>.</p>
 <h4 id="the-second-ai-winter">The Second AI Winter</h4>
 <p>Unfortunately, this period was also marked by a lack of progress
 because of the resource limitations of the time. Those algorithms
@@ -978,7 +979,7 @@ role="doc-biblioref">16</a>]</span>, a high fidelity and high-resolution
 generative framework, attention mechanisms with the rise of the
 Transformer “Attention is all you Need” architecture <span
 class="citation" data-cites="vaswani_2017">[<a href="#ref-vaswani_2017"
-role="doc-biblioref">66</a>]</span> present in almost all modern DL
+role="doc-biblioref">67</a>]</span> present in almost all modern DL
 contributions, and more recently the Denoising Diffusion Model (DDM)
 <span class="citation" data-cites="ho_2020">[<a href="#ref-ho_2020"
 role="doc-biblioref">24</a>]</span>, the spiritual autoregressive
@@ -995,20 +996,20 @@ href="#fig:milestones">Fig 5</a>). These milestones have been essential
 in advancing the field and enabling its applications within various
 sectors. One of the first notable milestones was AlphaGo from DeepMind
 in 2016 <span class="citation" data-cites="silver_2016">[<a
-href="#ref-silver_2016" role="doc-biblioref">63</a>]</span>, where an AI
+href="#ref-silver_2016" role="doc-biblioref">64</a>]</span>, where an AI
 system was able to beat the Korean world champion Lee Se Dol in the game
 of Go. AlphaGo is an illustration of the compression and pattern
 recognition capabilities of deep NN in combination with efficient search
 algorithms.</p>
 <p>In 2019, AlphStar <span class="citation"
 data-cites="vinyals_2019">[<a href="#ref-vinyals_2019"
-role="doc-biblioref">67</a>]</span> from DeepMind also was able to
+role="doc-biblioref">68</a>]</span> from DeepMind also was able to
 compete and defeat grandmasters in StarCraft the real-time strategy game
 of Blizzard. This demonstrated the capability of Deep Learning
 algorithms to achieve beyond human-level performance in real-time and
 long-term planification. In 2020, AlphaFold <span class="citation"
 data-cites="senior_2020">[<a href="#ref-senior_2020"
-role="doc-biblioref">62</a>]</span> improved the Protein Folding
+role="doc-biblioref">63</a>]</span> improved the Protein Folding
 competition by quite a margin, showing that DL could be used to help
 solve complex problems that have implications for medical research and
 drug discovery. In 2021 a follow-up model, AlphaFold 2 <span
@@ -1040,7 +1041,7 @@ field can be found in “the Deep Learning book” by Ian Goodfellow et al
 href="#ref-goodfellow_2016" role="doc-biblioref">15</a>]</span> or in
 “Dive into Deep Learning” by Aston Zhang et al. <span class="citation"
 data-cites="aston_zhang_2021">[<a href="#ref-aston_zhang_2021"
-role="doc-biblioref">69</a>]</span>.</p>
+role="doc-biblioref">70</a>]</span>.</p>
 <h4 id="supervised-learning">Supervised Learning</h4>
 <p>In Machine Learning (ML), problems are often formulated as
 data-driven learning tasks, where a computer is used to find a mapping
@@ -1658,7 +1659,7 @@ called Neural Networks (NN).</p>
 <h4 id="sec:perceptron">Perceptron</h4>
 <p>The Perceptron, introduced by Frank Rosenblatt in 1958 <span
 class="citation" data-cites="rosenblatt_1958">[<a
-href="#ref-rosenblatt_1958" role="doc-biblioref">57</a>]</span>, is the
+href="#ref-rosenblatt_1958" role="doc-biblioref">58</a>]</span>, is the
 building block of Neural Networks (NN). It was introduced as a
 simplified model of the human neuron, containing three parts: dendrites
 handling incoming signals from other neurons, a soma with a nucleus
@@ -1761,7 +1762,7 @@ down to zero <span class="math inline">\(y \in [0;
 capabilities of MLPs is the handwritten digit classification challenge
 on the Modified National Institute of Standards and Technology (MNIST)
 dataset <span class="citation" data-cites="mnist">[<a href="#ref-mnist"
-role="doc-biblioref">65</a>]</span>. MNIST contains <span
+role="doc-biblioref">66</a>]</span>. MNIST contains <span
 class="math inline">\(60,000\)</span> training and <span
 class="math inline">\(10,000\)</span> test examples. It has been written
 by high school students and gather <span class="math inline">\(28 \times
@@ -2037,7 +2038,7 @@ This process is called finetuning and is less expensive and
 time-consuming than full training. One method for finetuning consists in
 removing the classification head of a pre-trained model such as VGG16
 <span class="citation" data-cites="simonyan_2014">[<a
-href="#ref-simonyan_2014" role="doc-biblioref">64</a>]</span> and
+href="#ref-simonyan_2014" role="doc-biblioref">65</a>]</span> and
 replacing it with a new one adapted to the number of classes required
 for the task. The pretrained weights are then frozen (not updated during
 training), and the new weights are trained following a standard
@@ -2817,7 +2818,8 @@ x_t \sim q(x_t | x_0) = \mathcal{N}(x_T; \sqrt{\bar{\alpha_t}} x_0, (1 -
 <p><strong>Beta Schedule:</strong> <span
 class="math inline">\(\beta_t\)</span>, the variance parameter can be
 fixed to a constant or chosen using a schedule over <span
-class="math inline">\(T\)</span> timesteps. In the original paper <span
+class="math inline">\(T\)</span> timesteps (see <a
+href="#fig:gai_ddpm_forward">Fig 32</a>). In the original paper <span
 class="citation" data-cites="ho_2020">[<a href="#ref-ho_2020"
 role="doc-biblioref">24</a>]</span> and follow-up contribution <span
 class="citation" data-cites="nichol_2021">[<a href="#ref-nichol_2021"
@@ -2826,6 +2828,14 @@ class="math inline">\(\beta_1=1e^{-4}\)</span>, <span
 class="math inline">\(\beta_T=0.02\)</span>), a quadratic, and a cosine
 schedule. Their experiments show that the cosine schedule results are
 better.</p>
+<figure id="fig:gai_ddpm_forward">
+<img src="./figures/core_gai_ddpm_forward.svg"
+alt="Visualization of a Denoising Diffusion Probabilistic Model (DDPM) forward diffusion with 1,000 timesteps applied to a handwritten image of a digit extracted from the MNIST training dataset." />
+<figcaption>Figure 32: Visualization of a Denoising Diffusion
+Probabilistic Model (DDPM) forward diffusion with <span
+class="math inline">\(1,000\)</span> timesteps applied to a handwritten
+image of a digit extracted from the MNIST training dataset.</figcaption>
+</figure>
 <p><strong>Backward Diffusion:</strong> The backward diffusion process,
 also called reverse diffusion, consists in learning the reverse mapping
 <span class="math inline">\(q(x_{t-1} | x_t)\)</span>. By taking into
@@ -2944,176 +2954,275 @@ x_t          &amp;= \sqrt{\bar{\alpha}_t} x_0 + \sqrt{1 -
 class="math inline">\(\epsilon_\theta\)</span> is trained, we just need
 to iteratively denoise the latent code <span class="math inline">\(z
 \sim \mathcal{N}(0, I)\)</span> using:</p>
-<p><span class="math display">\[
-x_{t - 1} = \frac{1 / \sqrt{\alpha_t}} (x_t - \frac{1 -
-\alpha_t}{\sqrt{1 - \bar{\alpha}_t}} \epsilon\theta(x_t, t))
-\]</span> {#eq:ddm_backward_denoise</p>
-<p><strong>MNIST Digit Image Generation:</strong> …</p>
+<p><span id="eq:ddm_backward_denoise"><span class="math display">\[
+x_{t - 1} = \frac{1}{\sqrt{\alpha_t}} (x_t - \frac{1 - \alpha_t}{\sqrt{1
+- \bar{\alpha}_t}} \epsilon\theta(x_t, t))
+\qquad{(24)}\]</span></span></p>
+<p><strong>MNIST Digit Image Generation:</strong> For the last time, let
+us reconsider the MNIST handwritten digit dataset and train a Denoising
+Diffusion Probabilistic Model (DDPM) to generate new data samples from
+Gaussian distributed latent codes <span
+class="math inline">\(z\)</span>. For this example, the data samples
+must be normalized in the <span class="math inline">\([-1; 1]\)</span>
+range.</p>
 <div class="sourceCode" id="cb23"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch <span class="im">import</span> Tensor</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> typing <span class="im">import</span> Callable</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co"># BetaSchedule type</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>BetaSchedule <span class="op">=</span> Callable[[<span class="bu">int</span>], Tensor]</span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Linear Beta Schedule from Ho et al.</span></span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> linear_beta_schedule(</span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>    T: <span class="bu">int</span>,</span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>    beta_0: <span class="bu">float</span> <span class="op">=</span> <span class="fl">1e-4</span>,</span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>    beta_T: <span class="bu">float</span> <span class="op">=</span> <span class="fl">0.02</span>,</span>
-<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> Tensor:</span>
-<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> torch.linspace(beta_0, beta_T, T <span class="op">+</span> <span class="dv">1</span>, dtype<span class="op">=</span>torch.float32)</span></code></pre></div>
+class="sourceCode python"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Data Transformation and Normalization</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="co"># [-1, 1] range</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>T <span class="op">=</span> <span class="kw">lambda</span> x: <span class="dv">2</span> <span class="op">*</span> to_tensor(x).<span class="bu">float</span>().flatten() <span class="op">-</span> <span class="dv">1</span></span></code></pre></div>
+<p>Next, we define the <span
+class="math inline">\(\beta\)</span>-scheduler as a function taking the
+number of timesteps and precomputing the corresponding beta values
+following the desired schedule. Here we only implement the
+<code>linear_beta_schedule</code> defining a linear pattern between
+<span class="math inline">\(1e^{-4}\)</span> and <span
+class="math inline">\(0.02\)</span>.</p>
 <div class="sourceCode" id="cb24"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch.nn <span class="im">import</span> Module</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Denoising Diffusion Probabilistic Model class</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> DDPM(Module):</span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, T: <span class="bu">int</span>, schedule: BetaSchedule) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.T <span class="op">=</span> T</span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Compute Beta Schedule</span></span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>        betas <span class="op">=</span> schedule(T)</span>
-<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>        alphas <span class="op">=</span> <span class="fl">1.0</span> <span class="op">-</span> betas</span>
-<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>        alphas_cp <span class="op">=</span> torch.cumprod(alphas, axis<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Precompute and Store as Buffers</span></span>
-<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.register_buffer(</span>
-<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;betas&quot;</span>,</span>
-<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>            betas,</span>
-<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.register_buffer(</span>
-<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;alphas&quot;</span>,</span>
-<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>            alphas,</span>
-<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.register_buffer(</span>
-<span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;alphas_cp&quot;</span>,</span>
-<span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a>            alphas_cp,</span>
-<span id="cb24-26"><a href="#cb24-26" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb24-27"><a href="#cb24-27" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.register_buffer(</span>
-<span id="cb24-28"><a href="#cb24-28" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;sqrt_betas&quot;</span>,</span>
-<span id="cb24-29"><a href="#cb24-29" aria-hidden="true" tabindex="-1"></a>            torch.sqrt(betas),</span>
-<span id="cb24-30"><a href="#cb24-30" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb24-31"><a href="#cb24-31" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.register_buffer(</span>
-<span id="cb24-32"><a href="#cb24-32" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;sqrt_recip_alphas&quot;</span>,</span>
-<span id="cb24-33"><a href="#cb24-33" aria-hidden="true" tabindex="-1"></a>            torch.sqrt(<span class="fl">1.0</span> <span class="op">/</span> alphas),</span>
-<span id="cb24-34"><a href="#cb24-34" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb24-35"><a href="#cb24-35" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.register_buffer(</span>
-<span id="cb24-36"><a href="#cb24-36" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;sqrt_alphas_cp&quot;</span>,</span>
-<span id="cb24-37"><a href="#cb24-37" aria-hidden="true" tabindex="-1"></a>            torch.sqrt(alphas_cp),</span>
-<span id="cb24-38"><a href="#cb24-38" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb24-39"><a href="#cb24-39" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.register_buffer(</span>
-<span id="cb24-40"><a href="#cb24-40" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;sqrt_one_minus_alphas_cp&quot;</span>,</span>
-<span id="cb24-41"><a href="#cb24-41" aria-hidden="true" tabindex="-1"></a>            torch.sqrt(<span class="fl">1.0</span> <span class="op">-</span> alphas_cp),</span>
-<span id="cb24-42"><a href="#cb24-42" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb24-43"><a href="#cb24-43" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.register_buffer(</span>
-<span id="cb24-44"><a href="#cb24-44" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;beta_over_sqrt_one_minus_alphas_cp&quot;</span>,</span>
-<span id="cb24-45"><a href="#cb24-45" aria-hidden="true" tabindex="-1"></a>            betas <span class="op">/</span> torch.sqrt(<span class="fl">1.0</span> <span class="op">-</span> alphas_cp),</span>
-<span id="cb24-46"><a href="#cb24-46" aria-hidden="true" tabindex="-1"></a>        )</span></code></pre></div>
+class="sourceCode python"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch <span class="im">import</span> Tensor</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> typing <span class="im">import</span> Callable</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co"># BetaSchedule type</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>BetaSchedule <span class="op">=</span> Callable[[<span class="bu">int</span>], Tensor]</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Linear Beta Schedule from Ho et al.</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> linear_beta_schedule(</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>    T: <span class="bu">int</span>,</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>    beta_0: <span class="bu">float</span> <span class="op">=</span> <span class="fl">1e-4</span>,</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>    beta_T: <span class="bu">float</span> <span class="op">=</span> <span class="fl">0.02</span>,</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> Tensor:</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>    t <span class="op">=</span> torch.arange(<span class="dv">0</span>, T <span class="op">+</span> <span class="dv">1</span>, dtype<span class="op">=</span>torch.float32) <span class="op">/</span> T</span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (beta_T <span class="op">-</span> beta_0) <span class="op">*</span> t <span class="op">+</span> beta_0</span></code></pre></div>
+<p>The <code>DDPM</code> class is implemented as a PyTorch
+<code>Module</code> to store precomputed values and perform the forward
+and reverse diffusion processes. Because many values such as <span
+class="math inline">\(\beta_t\)</span>, <span
+class="math inline">\(\alpha_t\)</span>, and <span
+class="math inline">\(\bar{\alpha}_t\)</span> do not depend on <span
+class="math inline">\(x_t\)</span> nor <span
+class="math inline">\(t\)</span>, they can be cached to save time during
+training and inference. The pre-computed values are stored as tensor
+buffers to inherit the transfer to specialized devices and Automatic
+Differentiation (AD) features.</p>
 <div class="sourceCode" id="cb25"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> DDPM(Module):</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    ...</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Helper function to extract Precomputed Buffers</span></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Along the t timestep and reshape</span></span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> _extract(<span class="va">self</span>, x: Tensor, t: Tensor) <span class="op">-&gt;</span> Tensor:</span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> x.gather(<span class="op">-</span><span class="dv">1</span>, t).reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>)</span></code></pre></div>
+class="sourceCode python"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch.nn <span class="im">import</span> Module</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Denoising Diffusion Probabilistic Model class</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> DDPM(Module):</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, T: <span class="bu">int</span>, schedule: BetaSchedule) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.T <span class="op">=</span> T</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Compute Beta Schedule</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>        betas <span class="op">=</span> schedule(T)</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>        alphas <span class="op">=</span> <span class="fl">1.0</span> <span class="op">-</span> betas</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>        alphas_cp <span class="op">=</span> torch.cumprod(alphas, axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Precompute and Store as Buffers</span></span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.register_buffer(</span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;betas&quot;</span>,</span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>            betas,</span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.register_buffer(</span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;alphas&quot;</span>,</span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>            alphas,</span>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.register_buffer(</span>
+<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;alphas_cp&quot;</span>,</span>
+<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a>            alphas_cp,</span>
+<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb25-27"><a href="#cb25-27" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.register_buffer(</span>
+<span id="cb25-28"><a href="#cb25-28" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;sqrt_betas&quot;</span>,</span>
+<span id="cb25-29"><a href="#cb25-29" aria-hidden="true" tabindex="-1"></a>            torch.sqrt(betas),</span>
+<span id="cb25-30"><a href="#cb25-30" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb25-31"><a href="#cb25-31" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.register_buffer(</span>
+<span id="cb25-32"><a href="#cb25-32" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;sqrt_recip_alphas&quot;</span>,</span>
+<span id="cb25-33"><a href="#cb25-33" aria-hidden="true" tabindex="-1"></a>            torch.sqrt(<span class="fl">1.0</span> <span class="op">/</span> alphas),</span>
+<span id="cb25-34"><a href="#cb25-34" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb25-35"><a href="#cb25-35" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.register_buffer(</span>
+<span id="cb25-36"><a href="#cb25-36" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;sqrt_alphas_cp&quot;</span>,</span>
+<span id="cb25-37"><a href="#cb25-37" aria-hidden="true" tabindex="-1"></a>            torch.sqrt(alphas_cp),</span>
+<span id="cb25-38"><a href="#cb25-38" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb25-39"><a href="#cb25-39" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.register_buffer(</span>
+<span id="cb25-40"><a href="#cb25-40" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;sqrt_one_minus_alphas_cp&quot;</span>,</span>
+<span id="cb25-41"><a href="#cb25-41" aria-hidden="true" tabindex="-1"></a>            torch.sqrt(<span class="fl">1.0</span> <span class="op">-</span> alphas_cp),</span>
+<span id="cb25-42"><a href="#cb25-42" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb25-43"><a href="#cb25-43" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.register_buffer(</span>
+<span id="cb25-44"><a href="#cb25-44" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;beta_over_sqrt_one_minus_alphas_cp&quot;</span>,</span>
+<span id="cb25-45"><a href="#cb25-45" aria-hidden="true" tabindex="-1"></a>            betas <span class="op">/</span> torch.sqrt(<span class="fl">1.0</span> <span class="op">-</span> alphas_cp),</span>
+<span id="cb25-46"><a href="#cb25-46" aria-hidden="true" tabindex="-1"></a>        )</span></code></pre></div>
+<p>We augment the <code>DDPM</code> class with a special
+<code>_extract</code> helper responsible for extracting the given
+precomputed value from its timestep <span
+class="math inline">\(t\)</span> and reshaping it for broadcasting and
+allowing operations with image tensors.</p>
 <div class="sourceCode" id="cb26"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> functools <span class="im">import</span> partial</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> DDPM(Module):</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    ...</span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Forward Diffusion Step</span></span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward_diffusion(</span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>,</span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>        x_0: Tensor,</span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>        t: Tensor,</span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>        noise: Tensor,</span>
-<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>    ) <span class="op">-&gt;</span> Tensor:</span>
-<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>        extract <span class="op">=</span> partial(<span class="va">self</span>._extract, t<span class="op">=</span>t)</span>
-<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> (</span>
-<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>            extract(<span class="va">self</span>.sqrt_alphas_cp) <span class="op">*</span> x_0 <span class="op">+</span></span>
-<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>            extract(<span class="va">self</span>.sqrt_one_minus_alphas_cp) <span class="op">*</span> noise</span>
-<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>        )</span></code></pre></div>
+class="sourceCode python"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> DDPM(Module):</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    ...</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Helper function to extract Precomputed Buffers</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Along the t timestep and reshape</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> _extract(<span class="va">self</span>, x: Tensor, t: Tensor) <span class="op">-&gt;</span> Tensor:</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> x.gather(<span class="op">-</span><span class="dv">1</span>, t).reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>)</span></code></pre></div>
+<p>The <code>DDPM</code> is augmented with its corresponding
+<code>forward_diffusion</code> function responsible for computing a
+forward diffusion process given the initial image <span
+class="math inline">\(x_0\)</span> and the given timestep <span
+class="math inline">\(t\)</span>: <span class="math inline">\(x_t =
+\sqrt{\bar{\alpha}_t} x_0 + \sqrt{1 - \bar{\alpha}_t}
+\epsilon\)</span>.</p>
 <div class="sourceCode" id="cb27"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> functools <span class="im">import</span> partial</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> DDPM(Module):</span>
 <span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>    ...</span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Reverse Diffusion Step</span></span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> reverse_diffusion(</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Forward Diffusion Step</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward_diffusion(</span>
 <span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>,</span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>        eps: Tensor,</span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>        x_t: Tensor,</span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>        t: Tensor,</span>
-<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>        noise: Tensor,</span>
-<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>    ) <span class="op">-&gt;</span> Tensor:</span>
-<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>        noise <span class="op">=</span> noise <span class="op">*</span> (t <span class="op">&gt;</span> <span class="dv">1</span>).to(x_t.dtype)[:, <span class="va">None</span>, <span class="va">None</span>, <span class="va">None</span>]</span>
-<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>        extract <span class="op">=</span> partial(<span class="va">self</span>._extract, t<span class="op">=</span>t)</span>
-<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>        eps <span class="op">=</span> eps <span class="op">*</span> extract(<span class="va">self</span>.beta_over_sqrt_one_minus_alphas_cp)</span>
-<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> (</span>
-<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>            extract(<span class="va">self</span>.sqrt_recip_alphas) <span class="op">*</span> (x_t <span class="op">-</span> eps) <span class="op">+</span></span>
-<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>            extract(<span class="va">self</span>.sqrt_betas) <span class="op">*</span> noise</span>
-<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>        )</span></code></pre></div>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>        x_0: Tensor,</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>        t: Tensor,</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>        noise: Tensor,</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>    ) <span class="op">-&gt;</span> Tensor:</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>        extract <span class="op">=</span> partial(<span class="va">self</span>._extract, t<span class="op">=</span>t)</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> (</span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>            extract(<span class="va">self</span>.sqrt_alphas_cp) <span class="op">*</span> x_0 <span class="op">+</span></span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>            extract(<span class="va">self</span>.sqrt_one_minus_alphas_cp) <span class="op">*</span> noise</span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>        )</span></code></pre></div>
+<p>Finally, the <code>DPPM</code> class is equipped with a
+<code>reverse_diffusion</code> function responsible for computing a
+single reverse diffusion step given the model noise estimate <span
+class="math inline">\(\epsilon_\theta(x_t, t)\)</span>
+(<code>eps</code>), the current <span
+class="math inline">\(x_t\)</span>, its corresponding timestep <span
+class="math inline">\(t\)</span>, and gaussian noise <span
+class="math inline">\(\epsilon\)</span> (<code>noise</code>): <span
+class="math inline">\(x_{t - 1} = (1/\sqrt{\alpha_t}) (x_t -
+(\beta/\sqrt{1 - \bar{\alpha}_t}) \epsilon_\theta(x_t, t)) +
+\sqrt{\beta_t} \epsilon\)</span></p>
 <div class="sourceCode" id="cb28"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> OrderedDict</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch.nn <span class="im">import</span> (Linear, Module, ReLU, Sequential, Sigmoid)</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Noise Model definition</span></span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> NoiseModel(Module):</span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>        <span class="co"># The model is conditioned on timestep</span></span>
-<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Timestep Embedding</span></span>
-<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.t_emb <span class="op">=</span> Sequential(</span>
-<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>            Linear(  <span class="dv">1</span>, <span class="dv">256</span>), ReLU(),</span>
-<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>            Linear(<span class="dv">256</span>, <span class="dv">256</span>),</span>
-<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Core autoencoder model</span></span>
-<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.autoencoder <span class="op">=</span> Sequential(OrderedDict(</span>
-<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>            encoder<span class="op">=</span>Sequential(</span>
-<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>                Linear(<span class="dv">28</span> <span class="op">*</span> <span class="dv">28</span>, <span class="dv">256</span>), ReLU(),</span>
-<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a>                Linear(    <span class="dv">256</span>,   <span class="dv">2</span>), ReLU(),</span>
-<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a>            ),</span>
-<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a>            decoder<span class="op">=</span>Sequential(</span>
-<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a>                Linear(  <span class="dv">2</span>,     <span class="dv">256</span>), ReLU(),</span>
-<span id="cb28-23"><a href="#cb28-23" aria-hidden="true" tabindex="-1"></a>                Linear(<span class="dv">256</span>, <span class="dv">28</span> <span class="op">*</span> <span class="dv">28</span>),</span>
-<span id="cb28-24"><a href="#cb28-24" aria-hidden="true" tabindex="-1"></a>            ),</span>
-<span id="cb28-25"><a href="#cb28-25" aria-hidden="true" tabindex="-1"></a>        ))</span>
-<span id="cb28-26"><a href="#cb28-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-27"><a href="#cb28-27" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, x_t: Tensor, t: Tensor) <span class="op">-&gt;</span> Tensor:</span>
-<span id="cb28-28"><a href="#cb28-28" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.autoencoder(x_t <span class="op">+</span> <span class="va">self</span>.t_emb(t))</span></code></pre></div>
+class="sourceCode python"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> functools <span class="im">import</span> partial</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> DDPM(Module):</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    ...</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Reverse Diffusion Step</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> reverse_diffusion(</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>,</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>        eps: Tensor,</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>        x_t: Tensor,</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>        t: Tensor,</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>        noise: Tensor,</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>    ) <span class="op">-&gt;</span> Tensor:</span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>        extract <span class="op">=</span> partial(<span class="va">self</span>._extract, t<span class="op">=</span>t)</span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>        eps <span class="op">=</span> eps <span class="op">*</span> extract(<span class="va">self</span>.beta_over_sqrt_one_minus_alphas_cp)</span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> (</span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>            extract(<span class="va">self</span>.sqrt_recip_alphas) <span class="op">*</span> (x_t <span class="op">-</span> eps) <span class="op">+</span></span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>            extract(<span class="va">self</span>.sqrt_betas) <span class="op">*</span> noise</span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>        )</span></code></pre></div>
+<p>A simple MLP does not perform well enough using this approach. Thus,
+we implement a simple CNN. The network conditioning on the timestep
+<span class="math inline">\(t\)</span> is omitted for the sake of
+simplicity. It is however required for a faithful implementation using a
+more common U-net architecture <span class="citation"
+data-cites="ronneberger_2015">[<a href="#ref-ronneberger_2015"
+role="doc-biblioref">57</a>]</span>.</p>
 <div class="sourceCode" id="cb29"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Train the Noise Model</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> train_step(</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>    ddpm: DDPM,</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    model: NoiseModel,</span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>    optim: AdamW,</span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    x_0: Tensor,</span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>    B <span class="op">=</span> x_0.shape[<span class="dv">0</span>]</span>
-<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> torch.no_grad():</span>
-<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>        t <span class="op">=</span> torch.randint(<span class="dv">0</span>, ddpm.T <span class="op">+</span> <span class="dv">1</span>, size<span class="op">=</span>(B, ))</span>
-<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>        noise <span class="op">=</span> torch.randn_like(x_0)</span>
-<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>        x_t <span class="op">=</span> ddpm.forward_diffusion(x_0, t, noise)</span>
-<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>    loss <span class="op">=</span> mse_loss(model(x_t, t <span class="op">/</span> ddpm.T), noise)</span>
-<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>    loss.backward()</span>
-<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>    optim.step()</span>
-<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>    optim.zero_grad(set_to_none<span class="op">=</span><span class="va">True</span>)</span></code></pre></div>
+class="sourceCode python"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> OrderedDict</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch.nn <span class="im">import</span> (BatchNorm2d, Conv2d, GELU, Module, Sequential)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Conv Batchnorm GELU Layer</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>CBG <span class="op">=</span> <span class="kw">lambda</span> ic, oc: Sequential(</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    Conv2d(ic, oc, <span class="dv">7</span>, <span class="dv">1</span>, <span class="dv">3</span>), BatchNorm2d(oc), GELU(),</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Noise Model</span></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> NoiseModel(Module):</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.model <span class="op">=</span> Sequential(</span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>            CBG(<span class="dv">1</span>, h_dim <span class="op">//</span> <span class="dv">4</span>), GELU(),</span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>            CBG(h_dim <span class="op">//</span> <span class="dv">4</span>, h_dim <span class="op">//</span> <span class="dv">2</span>), GELU(),</span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>            CBG(h_dim <span class="op">//</span> <span class="dv">2</span>, h_dim), GELU(),</span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>            CBG(h_dim, h_dim <span class="op">//</span> <span class="dv">2</span>), GELU(),</span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>            CBG(h_dim <span class="op">//</span> <span class="dv">2</span>, h_dim <span class="op">//</span> <span class="dv">4</span>), GELU(),</span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a>            Conv2d(h_dim <span class="op">//</span> <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">1</span>),</span>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, x_t: Tensor, t: Tensor) <span class="op">-&gt;</span> Tensor:</span>
+<span id="cb29-23"><a href="#cb29-23" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.model(x_t)</span></code></pre></div>
+<p>The training procedure is straightforward and consists of sampling
+<span class="math inline">\(t\)</span> and <span
+class="math inline">\(\epsilon\)</span> values, and computing the
+corresponding <span class="math inline">\(x_t\)</span> using forward
+diffusion starting from the original images <span
+class="math inline">\(x_0\)</span>. This step does not require any
+gradient to be computed and stored. Next, the noise model is used to
+predict the noise applied <span class="math inline">\(\epsilon\)</span>
+and used to compute the objective function which is finally used for
+backpropagation and SGD using the Adam policy. The training history is
+shown in <a href="#fig:gai_ddpm_history">Fig 33</a>.</p>
 <div class="sourceCode" id="cb30"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample using the Noise Model</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sample(</span>
+class="sourceCode python"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Train the Noise Model</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> train_step(</span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>    ddpm: DDPM,</span>
 <span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    model: NoiseModel,</span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>    n_samples: <span class="bu">int</span>,</span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> Tensor:</span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>    x_t <span class="op">=</span> torch.randn((n_samples, <span class="dv">28</span> <span class="op">*</span> <span class="dv">28</span>))</span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> t <span class="kw">in</span> <span class="bu">range</span>(ddpm.T, <span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>):</span>
-<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>        t <span class="op">=</span> torch.tensor([t] <span class="op">*</span> n_samples)</span>
-<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>        eps <span class="op">=</span> model(x_t, t <span class="op">/</span> ddpm.T)</span>
-<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>        noise <span class="op">=</span> torch.randn_like(x_t)</span>
-<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>        x_t <span class="op">=</span> ddpm.reverse_diffusion(eps, x_t, t, noise)</span>
-<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> x_t</span></code></pre></div>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>    optim: AdamW,</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>    x_0: Tensor,</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>    B <span class="op">=</span> x_0.shape[<span class="dv">0</span>]</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> torch.no_grad():</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>        t <span class="op">=</span> torch.randint(<span class="dv">0</span>, ddpm.T <span class="op">+</span> <span class="dv">1</span>, size<span class="op">=</span>(B, ))</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>        noise <span class="op">=</span> torch.randn_like(x_0)</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>        x_t <span class="op">=</span> ddpm.forward_diffusion(x_0, t, noise)</span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>    eps <span class="op">=</span> model(x_t, t[:, <span class="va">None</span>, <span class="va">None</span>, <span class="va">None</span>, <span class="va">None</span>] <span class="op">/</span> ddpm.T)</span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>    loss <span class="op">=</span> mse_loss(eps, noise)</span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>    loss.backward()</span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a>    optim.step()</span>
+<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>    optim.zero_grad(set_to_none<span class="op">=</span><span class="va">True</span>)</span></code></pre></div>
+<figure id="fig:gai_ddpm_history">
+<img src="./figures/core_gai_ddpm_history.svg"
+alt="Denoising Diffusion Probabilistic Model (DDPM) training history. The noise model is trained to generate the noise value used for a DDM reverse process and generate handwritten digits resembling those of the MNIST dataset." />
+<figcaption>Figure 33: Denoising Diffusion Probabilistic Model (DDPM)
+training history. The noise model is trained to generate the noise value
+used for a DDM reverse process and generate handwritten digits
+resembling those of the MNIST dataset.</figcaption>
+</figure>
+<p>The sampling procedure consists of applying reverse diffusion steps
+in sequence going from a <span class="math inline">\(t = T\)</span>
+timestep to <span class="math inline">\(t = 0\)</span>. The trained
+noise model is used to infer the noise at each step of the process. The
+final image is clipped in the <span class="math inline">\([-1;
+1]\)</span> range and unnormalized <span class="math inline">\([0;
+1]\)</span>. Generated samples are shown in Figs <a
+href="#fig:gai_ddpm_latent_sampling">34</a>, <a
+href="#fig:gai_ddpm_latent_samples">35</a>.</p>
+<div class="sourceCode" id="cb31"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample using the Noise Model</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sample(</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    ddpm: DDPM,</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    model: NoiseModel,</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    n_samples: <span class="bu">int</span>,</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> Tensor:</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>    x_t <span class="op">=</span> torch.randn((n_samples, <span class="dv">28</span> <span class="op">*</span> <span class="dv">28</span>))</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> t <span class="kw">in</span> <span class="bu">range</span>(ddpm.T, <span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>):</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>        t <span class="op">=</span> torch.tensor([t] <span class="op">*</span> n_samples)</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>        eps <span class="op">=</span> model(x_t, t[:, <span class="va">None</span>, <span class="va">None</span>, <span class="va">None</span>, <span class="va">None</span>] <span class="op">/</span> ddpm.T)</span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>        noise <span class="op">=</span> torch.randn_like(x_t)</span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>        x_t <span class="op">=</span> ddpm.reverse_diffusion(eps, x_t, t, noise)</span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="fl">0.5</span> <span class="op">+</span> <span class="fl">0.5</span> <span class="op">*</span> x_t.clip(<span class="op">-</span><span class="fl">1.0</span>, <span class="fl">1.0</span>)</span></code></pre></div>
+<figure id="fig:gai_ddpm_latent_sampling">
+<img src="./figures/core_gai_ddpm_latent_sampling.svg"
+alt="Visualization of a sequence of Denoising Diffusion Probabilistic Model (DDPM) reverse diffusion steps applied to a Gaussian distributed latent code and a trained noise model. The result is a new data sample resembling the MNIST training data distribution" />
+<figcaption>Figure 34: Visualization of a sequence of Denoising
+Diffusion Probabilistic Model (DDPM) reverse diffusion steps applied to
+a Gaussian distributed latent code and a trained noise model. The result
+is a new data sample resembling the MNIST training data
+distribution</figcaption>
+</figure>
+<figure id="fig:gai_ddpm_latent_samples">
+<img src="./figures/core_gai_ddpm_latent_samples.svg"
+alt="Selection of generated samples using a trained Denoising Diffusion Probabilistic Model (DDPM) noise model. The initial latent codes are reversed for 1,000 steps." />
+<figcaption>Figure 35: Selection of generated samples using a trained
+Denoising Diffusion Probabilistic Model (DDPM) noise model. The initial
+latent codes are reversed for <span class="math inline">\(1,000\)</span>
+steps.</figcaption>
+</figure>
 <h3 id="sec:attention">Attention Machanism</h3>
 <h4 id="sec:mha">Multihead Self-Attention</h4>
 <h4 id="sec:llm">Large Language Models</h4>
@@ -3547,8 +3656,16 @@ P. and Ommer, B. 2021. <a
 href="https://arxiv.org/abs/2112.10752">High-resolution image synthesis
 with latent diffusion models</a>.</div>
 </div>
-<div id="ref-rosenblatt_1958" class="csl-entry" role="listitem">
+<div id="ref-ronneberger_2015" class="csl-entry" role="listitem">
 <div class="csl-left-margin">[57] </div><div
+class="csl-right-inline">Ronneberger, O., Fischer, P. and Brox, T. 2015.
+U-net: Convolutional networks for biomedical image segmentation.
+<em>Medical image computing and computer-assisted intervention–MICCAI
+2015: 18th international conference, munich, germany, october 5-9, 2015,
+proceedings, part III 18</em> (2015), 234–241.</div>
+</div>
+<div id="ref-rosenblatt_1958" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[58] </div><div
 class="csl-right-inline">Rosenblatt, F. 1958. <span class="nocase">The
 perceptron: A probabilistic model for information storage and
 organization in the brain.</span> <em>Psychological Review</em>. 65, 6
@@ -3556,26 +3673,26 @@ organization in the brain.</span> <em>Psychological Review</em>. 65, 6
 href="https://doi.org/10.1037/h0042519">10.1037/h0042519</a>.</div>
 </div>
 <div id="ref-rumelhart_1986" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[58] </div><div
+<div class="csl-left-margin">[59] </div><div
 class="csl-right-inline">Rumelhart, D.E., Hinton, G.E. and Williams,
 R.J. 1986. Learning representations by back-propagating errors.
 <em>Nature</em>. 323, 6088 (Oct. 1986), 533–536. DOI:https://doi.org/<a
 href="https://doi.org/10.1038/323533a0">10.1038/323533a0</a>.</div>
 </div>
 <div id="ref-russell_2016" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[59] </div><div
+<div class="csl-left-margin">[60] </div><div
 class="csl-right-inline">Russell, S.J. and Norvig, P. 2009.
 <em>Artificial intelligence: A modern approach</em>. Pearson.</div>
 </div>
 <div id="ref-saito_2015" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[60] </div><div
+<div class="csl-left-margin">[61] </div><div
 class="csl-right-inline">Saito, M. and Matsui, Y. 2015. <a
 href="https://doi.org/10.1145/2820903.2820907">Illustration2Vec: A
 semantic vector representation of illustrations</a>. <em>SIGGRAPH asia
 2015 technical briefs</em> (New York, NY, USA, 2015), 5:1–5:4.</div>
 </div>
 <div id="ref-sangkloy_2016" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[61] </div><div
+<div class="csl-left-margin">[62] </div><div
 class="csl-right-inline">Sangkloy, P., Lu, J., Fang, C., Yu, F. and
 Hays, J. 2017. <a
 href="https://doi.org/10.1109/CVPR.2017.723">Scribbler: Controlling deep
@@ -3584,47 +3701,47 @@ conference on computer vision and pattern recognition, <span>CVPR</span>
 2017, honolulu, HI, USA, july 21-26, 2017</em> (2017), 6836–6845.</div>
 </div>
 <div id="ref-senior_2020" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[62] </div><div
+<div class="csl-left-margin">[63] </div><div
 class="csl-right-inline">Senior, A.W. et al. 2020. Improved protein
 structure prediction using potentials from deep learning.
 <em>Nature</em>. 577, 7792 (Jan. 2020), 706–710. DOI:https://doi.org/<a
 href="https://doi.org/10.1038/s41586-019-1923-7">10.1038/s41586-019-1923-7</a>.</div>
 </div>
 <div id="ref-silver_2016" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[63] </div><div
+<div class="csl-left-margin">[64] </div><div
 class="csl-right-inline">Silver, D. et al. 2016. Mastering the game of
 go with deep neural networks and tree search. <em>Nature</em>. 529, 7587
 (Jan. 2016), 484–489. DOI:https://doi.org/<a
 href="https://doi.org/10.1038/nature16961">10.1038/nature16961</a>.</div>
 </div>
 <div id="ref-simonyan_2014" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[64] </div><div
+<div class="csl-left-margin">[65] </div><div
 class="csl-right-inline">Simonyan, K. and Zisserman, A. 2014. Very deep
 convolutional networks for large-scale image recognition. <em>arXiv
 preprint arXiv:1409.1556</em>. (2014).</div>
 </div>
 <div id="ref-mnist" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[65] </div><div
+<div class="csl-left-margin">[66] </div><div
 class="csl-right-inline">The MNIST database: <a
 href="http://yann.lecun.com/exdb/mnist/"><em>http://yann.lecun.com/exdb/mnist/</em></a>.
 Accessed: 2023-02-07.</div>
 </div>
 <div id="ref-vaswani_2017" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[66] </div><div
+<div class="csl-left-margin">[67] </div><div
 class="csl-right-inline">Vaswani, A., Shazeer, N., Parmar, N.,
 Uszkoreit, J., Jones, L., Gomez, A.N., Kaiser, Ł. and Polosukhin, I.
 2017. Attention is all you need. <em>Advances in neural information
 processing systems</em>. 30, (2017).</div>
 </div>
 <div id="ref-vinyals_2019" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[67] </div><div
+<div class="csl-left-margin">[68] </div><div
 class="csl-right-inline">Vinyals, O. et al. 2019. Grandmaster level in
 StarCraft II using multi-agent reinforcement learning. <em>Nature</em>.
 575, 7782 (Nov. 2019), 350–354. DOI:https://doi.org/<a
 href="https://doi.org/10.1038/s41586-019-1724-z">10.1038/s41586-019-1724-z</a>.</div>
 </div>
 <div id="ref-wolf_2017" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[68] </div><div
+<div class="csl-left-margin">[69] </div><div
 class="csl-right-inline">Wolf, M.J., Miller, K. and Grodzinsky, F.S.
 2017. Why we should have seen that coming: Comments on microsoft’s tay
 "experiment," and wider implications. <em>SIGCAS Comput. Soc.</em> 47, 3
@@ -3632,13 +3749,13 @@ class="csl-right-inline">Wolf, M.J., Miller, K. and Grodzinsky, F.S.
 href="https://doi.org/10.1145/3144592.3144598">10.1145/3144592.3144598</a>.</div>
 </div>
 <div id="ref-aston_zhang_2021" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[69] </div><div
+<div class="csl-left-margin">[70] </div><div
 class="csl-right-inline">Zhang, A., Lipton, Z.C., Li, M. and Smola, A.J.
 2021. Dive into deep learning. <em>arXiv preprint arXiv:2106.11342</em>.
 (2021).</div>
 </div>
 <div id="ref-zhang_ji_2017" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[70] </div><div
+<div class="csl-left-margin">[71] </div><div
 class="csl-right-inline">Zhang, L., Ji, Y., Lin, X. and Liu, C. 2017. <a
 href="https://doi.org/10.1109/ACPR.2017.61">Style transfer for anime
 sketches with enhanced residual u-net and auxiliary classifier GAN</a>.
@@ -3646,7 +3763,7 @@ sketches with enhanced residual u-net and auxiliary classifier GAN</a>.
 (2017), 506–511.</div>
 </div>
 <div id="ref-zhang_richard_2017" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[71] </div><div
+<div class="csl-left-margin">[72] </div><div
 class="csl-right-inline">Zhang, R., Zhu, J.-Y., Isola, P., Geng, X.,
 Lin, A.S., Yu, T. and Efros, A.A. 2017. Real-time user-guided image
 colorization with learned deep priors. <em>ACM Trans. Graph.</em> 36, 4

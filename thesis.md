@@ -1142,7 +1142,9 @@ $$
 x_t \sim q(x_t | x_0) = \mathcal{N}(x_T; \sqrt{\bar{\alpha_t}} x_0, (1 - \bar{\alpha}_t) I)
 $$ {#eq:ddm_froward_xt}
 
-**Beta Schedule:** $\beta_t$, the variance parameter can be fixed to a constant or chosen using a schedule over $T$ timesteps. In the original paper [@ho_2020] and follow-up contribution [@nichol_2021], the authors propose a linear ($\beta_1=1e^{-4}$, $\beta_T=0.02$), a quadratic, and a cosine schedule. Their experiments show that the cosine schedule results are better.
+**Beta Schedule:** $\beta_t$, the variance parameter can be fixed to a constant or chosen using a schedule over $T$ timesteps (see @fig:gai_ddpm_forward). In the original paper [@ho_2020] and follow-up contribution [@nichol_2021], the authors propose a linear ($\beta_1=1e^{-4}$, $\beta_T=0.02$), a quadratic, and a cosine schedule. Their experiments show that the cosine schedule results are better.
+
+![Visualization of a [+ddpm]{.full} forward diffusion with $1,000$ timesteps applied to a handwritten image of a digit extracted from the +mnist training dataset.](./figures/core_gai_ddpm_forward.svg){#fig:gai_ddpm_forward}
 
 **Backward Diffusion:** The backward diffusion process, also called reverse diffusion, consists in learning the reverse mapping $q(x_{t-1} | x_t)$. By taking into account that with enough steps $T \rightarrow +\infty$, the latent variable $x_T$ follows an isotropic Gaussian distribution, $x_T$ can be sampled from $\mathcal{0, I}$ and $x_0$ reconstructed by successively applying this process resulting in $q(x_0)$, a novel data sample from the training data distribution.
 
@@ -1212,11 +1214,18 @@ $$ {#eq:ddm_backward_lt_simple}
 Finally, when the model $\epsilon_\theta$ is trained, we just need to iteratively denoise the latent code $z \sim \mathcal{N}(0, I)$ using:
 
 $$
-x_{t - 1} = \frac{1 / \sqrt{\alpha_t}} (x_t - \frac{1 - \alpha_t}{\sqrt{1 - \bar{\alpha}_t}} \epsilon\theta(x_t, t))
-$$ {#eq:ddm_backward_denoise
+x_{t - 1} = \frac{1}{\sqrt{\alpha_t}} (x_t - \frac{1 - \alpha_t}{\sqrt{1 - \bar{\alpha}_t}} \epsilon\theta(x_t, t))
+$$ {#eq:ddm_backward_denoise}
 
-**MNIST Digit Image Generation:**
-...
+**MNIST Digit Image Generation:** For the last time, let us reconsider the +mnist handwritten digit dataset and train a [+ddpm]{.full} to generate new data samples from Gaussian distributed latent codes $z$. For this example, the data samples must be normalized in the $[-1; 1]$ range. 
+
+```python
+# Data Transformation and Normalization
+# [-1, 1] range
+T = lambda x: 2 * to_tensor(x).float().flatten() - 1
+```
+
+Next, we define the $\beta$-scheduler as a function taking the number of timesteps and precomputing the corresponding beta values following the desired schedule. Here we only implement the `linear_beta_schedule` defining a linear pattern between $1e^{-4}$ and $0.02$. 
 
 ```python
 from torch import Tensor
@@ -1231,8 +1240,11 @@ def linear_beta_schedule(
     beta_0: float = 1e-4,
     beta_T: float = 0.02,
 ) -> Tensor:
-    return torch.linspace(beta_0, beta_T, T + 1, dtype=torch.float32)
+    t = torch.arange(0, T + 1, dtype=torch.float32) / T
+    return (beta_T - beta_0) * t + beta_0
 ```
+
+The `DDPM` class is implemented as a PyTorch `Module` to store precomputed values and perform the forward and reverse diffusion processes. Because many values such as $\beta_t$, $\alpha_t$, and $\bar{\alpha}_t$ do not depend on $x_t$ nor $t$, they can be cached to save time during training and inference. The pre-computed values are stored as tensor buffers to inherit the transfer to specialized devices and [+ad]{.full} features.
 
 ```python
 from torch.nn import Module
@@ -1283,14 +1295,18 @@ class DDPM(Module):
         )
 ```
 
+We augment the `DDPM` class with a special `_extract` helper responsible for extracting the given precomputed value from its timestep $t$ and reshaping it for broadcasting and allowing operations with image tensors.
+
 ```python
 class DDPM(Module):
     ...
     # Helper function to extract Precomputed Buffers
     # Along the t timestep and reshape
     def _extract(self, x: Tensor, t: Tensor) -> Tensor:
-        return x.gather(-1, t).reshape(-1, 1)
+        return x.gather(-1, t).reshape(-1, 1, 1, 1)
 ```
+
+The `DDPM` is augmented with its corresponding `forward_diffusion` function responsible for computing a forward diffusion process given the initial image $x_0$ and the given timestep $t$: $x_t = \sqrt{\bar{\alpha}_t} x_0 + \sqrt{1 - \bar{\alpha}_t} \epsilon$.
 
 ```python
 from functools import partial
@@ -1311,6 +1327,8 @@ class DDPM(Module):
         )
 ```
 
+Finally, the `DPPM` class is equipped with a `reverse_diffusion` function responsible for computing a single reverse diffusion step given the model noise estimate $\epsilon_\theta(x_t, t)$ (`eps`), the current $x_t$, its corresponding timestep $t$, and gaussian noise $\epsilon$ (`noise`): $x_{t - 1} = (1/\sqrt{\alpha_t}) (x_t - (\beta/\sqrt{1 - \bar{\alpha}_t}) \epsilon_\theta(x_t, t)) + \sqrt{\beta_t} \epsilon$
+
 ```python
 from functools import partial
 
@@ -1324,7 +1342,6 @@ class DDPM(Module):
         t: Tensor,
         noise: Tensor,
     ) -> Tensor:
-        noise = noise * (t > 1).to(x_t.dtype)[:, None, None, None]
         extract = partial(self._extract, t=t)
         eps = eps * extract(self.beta_over_sqrt_one_minus_alphas_cp)
         return (
@@ -1333,36 +1350,35 @@ class DDPM(Module):
         )
 ```
 
+A simple +mlp does not perform well enough using this approach. Thus, we implement a simple +cnn. The network conditioning on the timestep $t$ is omitted for the sake of simplicity. It is however required for a faithful implementation using a more common U-net architecture [@ronneberger_2015].
+
 ```python
 from collections import OrderedDict
-from torch.nn import (Linear, Module, ReLU, Sequential, Sigmoid)
+from torch.nn import (BatchNorm2d, Conv2d, GELU, Module, Sequential)
 
-# Noise Model definition
+# Conv Batchnorm GELU Layer
+CBG = lambda ic, oc: Sequential(
+    Conv2d(ic, oc, 7, 1, 3), BatchNorm2d(oc), GELU(),
+)
+
+# Noise Model
 class NoiseModel(Module):
     def __init__(self) -> None:
         super().__init__()
-        # The model is conditioned on timestep
-        # Timestep Embedding
-        self.t_emb = Sequential(
-            Linear(  1, 256), ReLU(),
-            Linear(256, 256),
+        self.model = Sequential(
+            CBG(1, h_dim // 4), GELU(),
+            CBG(h_dim // 4, h_dim // 2), GELU(),
+            CBG(h_dim // 2, h_dim), GELU(),
+            CBG(h_dim, h_dim // 2), GELU(),
+            CBG(h_dim // 2, h_dim // 4), GELU(),
+            Conv2d(h_dim // 4, 1, 3, 1, 1),
         )
 
-        # Core autoencoder model
-        self.autoencoder = Sequential(OrderedDict(
-            encoder=Sequential(
-                Linear(28 * 28, 256), ReLU(),
-                Linear(    256,   2), ReLU(),
-            ),
-            decoder=Sequential(
-                Linear(  2,     256), ReLU(),
-                Linear(256, 28 * 28),
-            ),
-        ))
-
     def forward(self, x_t: Tensor, t: Tensor) -> Tensor:
-        return self.autoencoder(x_t + self.t_emb(t))
+        return self.model(x_t)
 ```
+
+The training procedure is straightforward and consists of sampling $t$ and $\epsilon$ values, and computing the corresponding $x_t$ using forward diffusion starting from the original images $x_0$. This step does not require any gradient to be computed and stored. Next, the noise model is used to predict the noise applied $\epsilon$ and used to compute the objective function which is finally used for backpropagation and +sgd using the Adam policy. The training history is shown in @fig:gai_ddpm_history.
 
 ```python
 # Train the Noise Model
@@ -1377,11 +1393,17 @@ def train_step(
         t = torch.randint(0, ddpm.T + 1, size=(B, ))
         noise = torch.randn_like(x_0)
         x_t = ddpm.forward_diffusion(x_0, t, noise)
-    loss = mse_loss(model(x_t, t / ddpm.T), noise)
+    eps = model(x_t, t[:, None, None, None, None] / ddpm.T)
+    loss = mse_loss(eps, noise)
     loss.backward()
     optim.step()
     optim.zero_grad(set_to_none=True)
 ```
+
+![[+ddpm]{.full} training history. The noise model is trained to generate the noise value used for a +ddm reverse process and generate handwritten digits resembling those of the +mnist dataset.](./figures/core_gai_ddpm_history.svg){#fig:gai_ddpm_history}
+
+
+The sampling procedure consists of applying reverse diffusion steps in sequence going from a $t = T$ timestep to $t = 0$. The trained noise model is used to infer the noise at each step of the process. The final image is clipped in the $[-1; 1]$ range and unnormalized $[0; 1]$. Generated samples are shown in [@fig:gai_ddpm_latent_sampling; @fig:gai_ddpm_latent_samples].
 
 ```python
 # Sample using the Noise Model
@@ -1393,11 +1415,15 @@ def sample(
     x_t = torch.randn((n_samples, 28 * 28))
     for t in range(ddpm.T, 1, -1):
         t = torch.tensor([t] * n_samples)
-        eps = model(x_t, t / ddpm.T)
+        eps = model(x_t, t[:, None, None, None, None] / ddpm.T)
         noise = torch.randn_like(x_t)
         x_t = ddpm.reverse_diffusion(eps, x_t, t, noise)
-    return x_t
+    return 0.5 + 0.5 * x_t.clip(-1.0, 1.0)
 ```
+
+![Visualization of a sequence of [+ddpm]{.full} reverse diffusion steps applied to a Gaussian distributed latent code and a trained noise model. The result is a new data sample resembling the +mnist training data distribution](./figures/core_gai_ddpm_latent_sampling.svg){#fig:gai_ddpm_latent_sampling}
+
+![Selection of generated samples using a trained [+ddpm]{.full} noise model. The initial latent codes are reversed for $1,000$ steps.](./figures/core_gai_ddpm_latent_samples.svg){#fig:gai_ddpm_latent_samples}
 
 ### Attention Machanism {#sec:attention}
 #### Multihead Self-Attention {#sec:mha}
