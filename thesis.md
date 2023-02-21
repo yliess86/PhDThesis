@@ -784,13 +784,28 @@ The +cnn is able to achieve a $99%$ accuracy on the test set early during traini
 
 #### Transformers {#sec:transformers}
 
-When considering sequences such as text, audio, video, or a single image divided into a sequence of $n \times n$ blocks, [+mlp]{.plural} and [+cnn]{.plural} fail at capturing long-term relationships being subject to vanishing and exploding gradients. When taking a guess from a long sequence of information, we humans do not attribute as much weight to every bit of the sequence. We selectively gather and retain information that we feel serves our decision-making called a task-dependent context. This selective mechanism is called attention and has been the subject of implementation attempts, first in the field of [+nlp]{.full} [@bahdanau_2014; @luong_2015; @vaswani_2017], and later transposed to field of [+cv]{.full} [@dosovitskiy_2020; @caron_2021]. This section focuses on visual applications of the attention mechanism only as this thesis is about image generation.  
+When considering sequences such as text, audio, video, or a single image divided into a sequence of $n \times n$ blocks, [+mlp]{.plural} and [+cnn]{.plural} fail at capturing long-term relationships being subject to vanishing and exploding gradients. When taking a guess from a long sequence of information, we humans do not attribute as much weight to every bit of the sequence. We selectively gather and retain information that we feel serves our decision-making called a task-dependent context. This selective mechanism is called attention and has been the subject of implementation attempts, first in the field of [+nlp]{.full} [@bahdanau_2014; @luong_2015; @vaswani_2017], and later transposed to field of [+cv]{.full} [@dosovitskiy_2020; @caron_2021].
 
-**Self-Attention:**
-...
+This section focuses on visual applications of the attention mechanism only as this thesis is about image generation, and more specifically a particular type of attention that made the success of the modern Transformer [@vaswani_2017] architecture called Self-Attention.
 
-**Multihead Self-Attention:**
-...
+**Self-Attention:** Computing self-attention requires the creation of three vectors for each element of the sequence in latent space. For every element $x_i$, we create a query vector $q_i$, a key vector $k_i$, and a value vector $v_i$. Those vectors are obtained by multiplying the latent input vectors $x_i$ by trainable embedding weight matrices $W_q$, $W_k$, and $W_v$. The generated output embeddings are usually chosen to be smaller than the original input size to save computation.
+
+The query and key vectors are then combined using a dot product to compute a score $s_{i,j} = q_i \cdot k_j$ matching every query vector with every key. This score determines how much focus is put on the element at position $j$ in order to encode the element at position $i$. The scores are then scaled by dividing them by the square root of the key vectors dimensions $\sqrt{d_k}$ and normalizing them using a softmax so they add up to one and form probability vectors. This value describes how much each element attends to each other.
+
+Finally, we apply and make the element attend to each other, by multiplying the softmax vectors with the value vectors and aggregating them with a sum. This final vector representing the new context for which attention is used can be propagated to the next layers of the +nn.
+
+When summarized and expressed in matrix form, by stacking the element vectors $x_i$ into the matrix $X$, the self-attention mechanism can be summarized into the following formula:
+
+$$
+\begin{aligned}
+Q = (x \cdot W_q), \; K = (X \cdot W_k), \; V = (X \cdot W_v) \\
+Z = softmax(\frac{Q \cdot K^T}{\sqrt{d_k}}) \cdot V
+\end{aligned}
+$$ {#eq:nn_sa_formula}
+
+One other adventage of using such a technique is explainability. We can explore the "reasoning" of the +nn by looking at the attention scores and observe how the sequence elements attend to each others.
+
+**Multihead Self-Attention:** 
 
 **Visual Transformer:**
 ...
