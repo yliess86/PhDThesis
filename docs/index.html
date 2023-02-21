@@ -2246,20 +2246,32 @@ residual injection and normalization. The input embeddings are first
 augmented with positional encoding and go through every block one by
 one. This architecture is flexible and has first been presented as a
 sequence-to-sequence network with encoder blocks and decoder blocks.</p>
+<figure id="fig:core_nn_patches">
+<img src="./figures/core_nn_patches.svg"
+alt="256 \times 256 image processed into 32 \times 32 patches with a no overlap. Each patch can be processed by a CNN or a MLP after flattening and their embedding used in a Transformer network which is thus called a Vision Transformer (ViT)" />
+<figcaption>Figure 24: <span class="math inline">\(256 \times
+256\)</span> image processed into <span class="math inline">\(32 \times
+32\)</span> patches with a no overlap. Each patch can be processed by a
+CNN or a MLP after flattening and their embedding used in a Transformer
+network which is thus called a Vision Transformer (ViT)</figcaption>
+</figure>
 <p><strong>Vision Transformers:</strong> The success of the Transformer
 architecture <span class="citation" data-cites="vaswani_2017">[<a
 href="#ref-vaswani_2017" role="doc-biblioref">72</a>]</span> in the NLP
 community has pushed the CV community to explore how one can use this
 kind of NNs for vision tasks. It turns out that by expression images as
 sequences of patches, <span class="math inline">\(n \times n\)</span>
-image blocks, and embedding them, transformers can exceed the
-performance of a CNN for classification <span class="citation"
-data-cites="dosovitskiy_2020">[<a href="#ref-dosovitskiy_2020"
-role="doc-biblioref">14</a>]</span>, but also present emerging faculties
-resulting from the use of self-attention such as segmentation and
-saliency maps <span class="citation" data-cites="caron_2021">[<a
-href="#ref-caron_2021" role="doc-biblioref">8</a>]</span>. This
-architecture is referred to as a Vision Transformer (ViT).</p>
+image blocks (see <span class="citation"
+data-cites="core_nn_patches">[<a href="#ref-core_nn_patches"
+role="doc-biblioref"><strong>core_nn_patches?</strong></a>]</span>), and
+embedding them, transformers can exceed the performance of a CNN for
+classification <span class="citation" data-cites="dosovitskiy_2020">[<a
+href="#ref-dosovitskiy_2020" role="doc-biblioref">14</a>]</span>, but
+also present emerging faculties resulting from the use of self-attention
+such as segmentation and saliency maps <span class="citation"
+data-cites="caron_2021">[<a href="#ref-caron_2021"
+role="doc-biblioref">8</a>]</span>. This architecture is referred to as
+a ViT.</p>
 <p><strong>MNIST Classifier:</strong> …</p>
 <!-- TODO: You are here -->
 <h3 id="sec:generative">Generative Architectures</h3>
@@ -2283,7 +2295,7 @@ complexity.</p>
 the input tensor is the same as the output tensor. They encode
 (compress), the input into a low-dimensional code in a latent space, and
 then decode (reconstruct) the original input from this compressed
-representation (see <a href="#fig:gai_autoencoder">Fig 24</a>). An AE is
+representation (see <a href="#fig:gai_autoencoder">Fig 25</a>). An AE is
 built using two network parts, an encoder <span
 class="math inline">\(E\)</span>, NN that reduces the input dimension, a
 decoder <span class="math inline">\(D\)</span> that recovers the input
@@ -2301,7 +2313,7 @@ example.</p>
 <figure id="fig:gai_autoencoder">
 <img src="./figures/core_gai_autoencoder.svg"
 alt="+ae architecture. The encoder compresses the input into a latent code that is reconstructed using the decoder. architecture." />
-<figcaption>Figure 24: <span class="full">+ae architecture. The encoder
+<figcaption>Figure 25: <span class="full">+ae architecture. The encoder
 compresses the input into a latent code that is reconstructed using the
 decoder.</span> architecture.</figcaption>
 </figure>
@@ -2349,13 +2361,13 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a h
 <figure id="fig:gai_autoencoder_history">
 <img src="./figures/core_gai_autoencoder_history.svg"
 alt="Training history of a small 2-layer Autoencoder (AE). The binary cross entropy loss is shown on the left, a training sample in the middle, and its corresponding reconstruction on the right." />
-<figcaption>Figure 25: Training history of a small <span
+<figcaption>Figure 26: Training history of a small <span
 class="math inline">\(2\)</span>-layer Autoencoder (AE). The binary
 cross entropy loss is shown on the left, a training sample in the
 middle, and its corresponding reconstruction on the right.</figcaption>
 </figure>
 <p>The result of the training can be observed in <a
-href="#fig:gai_autoencoder_history">Fig 25</a>. Despite little
+href="#fig:gai_autoencoder_history">Fig 26</a>. Despite little
 degradation, our model can reconstruct the handwritten digits from their
 latent code. The degradation is minimized by the fact that we are
 dealing with a toy dataset. The phenomenon can be observed by reducing
@@ -2370,7 +2382,7 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a h
 <figure id="fig:gai_autoencoder_latent" width="60%">
 <img src="./figures/core_gai_autoencoder_latent.svg" style="width:60.0%"
 alt="Trained Autoencoder (AE) 2-dimensional latent space visualization. The data points represent the encoded latent code of images from the MNIST dataset and are colored based on their corresponding label (digit). The latent space is not organized in a way that allows us to visually separate these classes." />
-<figcaption>Figure 26: Trained Autoencoder (AE) <span
+<figcaption>Figure 27: Trained Autoencoder (AE) <span
 class="math inline">\(2\)</span>-dimensional latent space visualization.
 The data points represent the encoded latent code of images from the
 MNIST dataset and are colored based on their corresponding label
@@ -2378,7 +2390,7 @@ MNIST dataset and are colored based on their corresponding label
 visually separate these classes.</figcaption>
 </figure>
 <p>The <span class="math inline">\(2\)</span>-dimensional latent space
-can be observed in <a href="#fig:gai_autoencoder_latent">Fig 26</a>. Our
+can be observed in <a href="#fig:gai_autoencoder_latent">Fig 27</a>. Our
 latent space is not organized in a way that we can visually distinguish
 between the digit classes. This clearly demonstrates a lack of
 structural organization preventing the AE from being used as a generator
@@ -2386,7 +2398,7 @@ by sampling its latent space.</p>
 <figure id="fig:gai_autoencoder_latent_sampling">
 <img src="./figures/core_gai_autoencoder_latent_sampling.svg"
 alt="Trained Autoencoder (AE) 2-dimensional latent space sampling visualization. The decoder is used for generation by sampling the latent space in a grid pattern." />
-<figcaption>Figure 27: Trained Autoencoder (AE) <span
+<figcaption>Figure 28: Trained Autoencoder (AE) <span
 class="math inline">\(2\)</span>-dimensional latent space sampling
 visualization. The decoder is used for generation by sampling the latent
 space in a grid pattern.</figcaption>
@@ -2402,11 +2414,11 @@ architecture <span class="citation" data-cites="kingma_2013">[<a
 href="#ref-kingma_2013" role="doc-biblioref">38</a>]</span> is one
 answer to this issue. It can be viewed as a special AE hacked by adding
 a regularization objective enabling generation by exploring the learned
-and structured latent space (see <a href="#fig:gai_vae">Fig 28</a>).</p>
+and structured latent space (see <a href="#fig:gai_vae">Fig 29</a>).</p>
 <figure id="fig:gai_vae">
 <img src="./figures/core_gai_vae.svg"
 alt="+vae architecture. The encoder compresses the input and regresses the latent distribution parameters \mu and \rho from which a latent code is sampled using the reparametrization trick with a surrogate parameter \epsilon sampled from the standard Gaussian distribution and then decoded to recover the input using the decoder. architecture." />
-<figcaption>Figure 28: <span class="full">+vae architecture. The encoder
+<figcaption>Figure 29: <span class="full">+vae architecture. The encoder
 compresses the input and regresses the latent distribution parameters
 <span class="math inline">\(\mu\)</span> and <span
 class="math inline">\(\rho\)</span> from which a latent code is sampled
@@ -2630,23 +2642,23 @@ both the reconstruction loss and the KL-Divergence regularization is
 harder than the task of the vanilla AE. Intuitively this has to result
 in a structured latent space at the cost of a small reconstruction
 quality degradation. The training history and reconstruction
-capabilities are shown in <a href="#fig:gai_vae_history">Fig 29</a>.</p>
+capabilities are shown in <a href="#fig:gai_vae_history">Fig 30</a>.</p>
 <figure id="fig:gai_vae_history">
 <img src="./figures/core_gai_vae_history.svg"
 alt="Training history of a small Variational Autoencoder (VAE). The combination of the binary cross entropy loss and the KL-Divergence regularization is shown on the left, a training sample in the middle, and its corresponding reconstruction on the right." />
-<figcaption>Figure 29: Training history of a small Variational
+<figcaption>Figure 30: Training history of a small Variational
 Autoencoder (VAE). The combination of the binary cross entropy loss and
 the KL-Divergence regularization is shown on the left, a training sample
 in the middle, and its corresponding reconstruction on the
 right.</figcaption>
 </figure>
 <p>As expected, the latent space (see <a
-href="#fig:gai_vae_latent">Fig 30</a>) presents structural organization.
+href="#fig:gai_vae_latent">Fig 31</a>) presents structural organization.
 The specific digit classes are visible and separable.</p>
 <figure id="fig:gai_vae_latent" width="60%">
 <img src="./figures/core_gai_vae_latent.svg" style="width:60.0%"
 alt="Trained Variational Autoencoder (VAE) 2-dimensional latent space visualization. The data points represent the encoded latent code of images from the MNIST dataset and are colored based on their corresponding label (digit). The latent space is organized in a way that allows us to visually separate these classes." />
-<figcaption>Figure 30: Trained Variational Autoencoder (VAE) <span
+<figcaption>Figure 31: Trained Variational Autoencoder (VAE) <span
 class="math inline">\(2\)</span>-dimensional latent space visualization.
 The data points represent the encoded latent code of images from the
 MNIST dataset and are colored based on their corresponding label
@@ -2656,11 +2668,11 @@ visually separate these classes.</figcaption>
 <p>The structure of the trained VAE latent space allows the generation
 of new data points by sampling latent codes and decoding them using the
 trained decoder (see <a
-href="#fig:gai_vae_latent_sampling">Fig 31</a>).</p>
+href="#fig:gai_vae_latent_sampling">Fig 32</a>).</p>
 <figure id="fig:gai_vae_latent_sampling">
 <img src="./figures/core_gai_vae_latent_sampling.svg"
 alt="Trained Variational Autoencoder (VAE) 2-dimensional latent space sampling visualization. The decoder is used for generation by sampling the latent space in a grid pattern." />
-<figcaption>Figure 31: Trained Variational Autoencoder (VAE) <span
+<figcaption>Figure 32: Trained Variational Autoencoder (VAE) <span
 class="math inline">\(2\)</span>-dimensional latent space sampling
 visualization. The decoder is used for generation by sampling the latent
 space in a grid pattern.</figcaption>
@@ -2875,14 +2887,14 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb22-1"><a h
 <span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>):</span>
 <span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>            critic_step(critic, c_optim, real)</span></code></pre></div>
 <p>The training history monitoring the generator’s and critic’s loss
-terms are shown in <a href="#fig:gai_gan_history">Fig 32</a>. GAN are in
+terms are shown in <a href="#fig:gai_gan_history">Fig 33</a>. GAN are in
 practice hard to train and monitoring each term independently allows us
 to diagnose mode collapse and vanishing gradients when the gradient
 distributions are checked.</p>
 <figure id="fig:gai_gan_history">
 <img src="./figures/core_gai_gan_history.svg"
 alt="Training history of a small Generative Adversarial Network (GAN). The objective terms are plotted separately and follow a hinge loss and Wasserstein objective. The loss for the generator is shown in orange and the losses for the critic in blue." />
-<figcaption>Figure 32: Training history of a small Generative
+<figcaption>Figure 33: Training history of a small Generative
 Adversarial Network (GAN). The objective terms are plotted separately
 and follow a hinge loss and Wasserstein objective. The loss for the
 generator is shown in orange and the losses for the critic in
@@ -2891,11 +2903,11 @@ blue.</figcaption>
 <p>Overall, the GAN architecture is highly efficient at generating new
 samples giving latent codes. The quality of the generation is superior
 to those of VAE at the cost of a small loss in variation (see <a
-href="#fig:gai_gan_latent_sampling">Fig 33</a>).</p>
+href="#fig:gai_gan_latent_sampling">Fig 34</a>).</p>
 <figure id="fig:gai_gan_latent_sampling">
 <img src="./figures/core_gai_gan_latent_sampling.svg"
 alt="Trained Generative Adversarial Network (GAN) 2-dimensional latent space sampling visualization. The generator is used for generation by sampling the latent space in a grid pattern." />
-<figcaption>Figure 33: Trained Generative Adversarial Network (GAN)
+<figcaption>Figure 34: Trained Generative Adversarial Network (GAN)
 <span class="math inline">\(2\)</span>-dimensional latent space sampling
 visualization. The generator is used for generation by sampling the
 latent space in a grid pattern.</figcaption>
@@ -2971,7 +2983,7 @@ x_t \sim q(x_t | x_0) = \mathcal{N}(x_T; \sqrt{\bar{\alpha_t}} x_0, (1 -
 class="math inline">\(\beta_t\)</span>, the variance parameter can be
 fixed to a constant or chosen using a schedule over <span
 class="math inline">\(T\)</span> timesteps (see <a
-href="#fig:gai_ddpm_forward">Fig 34</a>). In the original paper <span
+href="#fig:gai_ddpm_forward">Fig 35</a>). In the original paper <span
 class="citation" data-cites="ho_2020">[<a href="#ref-ho_2020"
 role="doc-biblioref">28</a>]</span> and follow-up contribution <span
 class="citation" data-cites="nichol_2021">[<a href="#ref-nichol_2021"
@@ -2983,7 +2995,7 @@ better.</p>
 <figure id="fig:gai_ddpm_forward">
 <img src="./figures/core_gai_ddpm_forward.svg"
 alt="Visualization of a Denoising Diffusion Probabilistic Model (DDPM) forward diffusion with 1,000 timesteps applied to a handwritten image of a digit extracted from the MNIST training dataset." />
-<figcaption>Figure 34: Visualization of a Denoising Diffusion
+<figcaption>Figure 35: Visualization of a Denoising Diffusion
 Probabilistic Model (DDPM) forward diffusion with <span
 class="math inline">\(1,000\)</span> timesteps applied to a handwritten
 image of a digit extracted from the MNIST training dataset.</figcaption>
@@ -3308,7 +3320,7 @@ gradient to be computed and stored. Next, the noise model is used to
 predict the noise applied <span class="math inline">\(\epsilon\)</span>
 and used to compute the objective function which is finally used for
 backpropagation and SGD using the Adam policy. The training history is
-shown in <a href="#fig:gai_ddpm_history">Fig 35</a>.</p>
+shown in <a href="#fig:gai_ddpm_history">Fig 36</a>.</p>
 <div class="sourceCode" id="cb30"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Train the Noise Model</span></span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> train_step(</span>
@@ -3330,7 +3342,7 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb30-1"><a h
 <figure id="fig:gai_ddpm_history">
 <img src="./figures/core_gai_ddpm_history.svg"
 alt="Denoising Diffusion Probabilistic Model (DDPM) training history. The noise model is trained to generate the noise value used for a DDM reverse process and generate handwritten digits resembling those of the MNIST dataset." />
-<figcaption>Figure 35: Denoising Diffusion Probabilistic Model (DDPM)
+<figcaption>Figure 36: Denoising Diffusion Probabilistic Model (DDPM)
 training history. The noise model is trained to generate the noise value
 used for a DDM reverse process and generate handwritten digits
 resembling those of the MNIST dataset.</figcaption>
@@ -3342,8 +3354,8 @@ noise model is used to infer the noise at each step of the process. The
 final image is clipped in the <span class="math inline">\([-1;
 1]\)</span> range and unnormalized <span class="math inline">\([0;
 1]\)</span>. Generated samples are shown in Figs <a
-href="#fig:gai_ddpm_latent_sampling">36</a>, <a
-href="#fig:gai_ddpm_latent_samples">37</a>.</p>
+href="#fig:gai_ddpm_latent_sampling">37</a>, <a
+href="#fig:gai_ddpm_latent_samples">38</a>.</p>
 <div class="sourceCode" id="cb31"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample using the Noise Model</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sample(</span>
@@ -3361,7 +3373,7 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb31-1"><a h
 <figure id="fig:gai_ddpm_latent_sampling">
 <img src="./figures/core_gai_ddpm_latent_sampling.svg"
 alt="Visualization of a sequence of Denoising Diffusion Probabilistic Model (DDPM) reverse diffusion steps applied to a Gaussian distributed latent code and a trained noise model. The result is a new data sample resembling the MNIST training data distribution" />
-<figcaption>Figure 36: Visualization of a sequence of Denoising
+<figcaption>Figure 37: Visualization of a sequence of Denoising
 Diffusion Probabilistic Model (DDPM) reverse diffusion steps applied to
 a Gaussian distributed latent code and a trained noise model. The result
 is a new data sample resembling the MNIST training data
@@ -3370,7 +3382,7 @@ distribution</figcaption>
 <figure id="fig:gai_ddpm_latent_samples">
 <img src="./figures/core_gai_ddpm_latent_samples.svg"
 alt="Selection of generated samples using a trained Denoising Diffusion Probabilistic Model (DDPM) noise model. The initial latent codes are reversed for 1,000 steps." />
-<figcaption>Figure 37: Selection of generated samples using a trained
+<figcaption>Figure 38: Selection of generated samples using a trained
 Denoising Diffusion Probabilistic Model (DDPM) noise model. The initial
 latent codes are reversed for <span class="math inline">\(1,000\)</span>
 steps.</figcaption>
