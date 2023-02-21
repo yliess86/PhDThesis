@@ -89,6 +89,9 @@ acronyms:
     ddim:
         short: DDIM
         long: Denoising Diffusion Implicit Model
+    vit:
+        short: ViT
+        long: Vision Transformer
     llm:
         short: LLM
         long: Large Language Model
@@ -811,8 +814,7 @@ One other advantage of using such a technique is explainability. We can explore 
 
 **Transformers:** A Transformer architecture is defined by a succession of transformer blocks. Those blocks follow a similar pattern and are using tricks from previous work such as layer normalization [@ba_2016] and residual connections [@he_2016] to allow to train deeper networks with a large number of blocks. A block is made out of a multi-head self-attention layer, followed by a residual injection and a normalization layer followed by a feed-forward layer and another residual injection and normalization. The input embeddings are first augmented with positional encoding and go through every block one by one. This architecture is flexible and has first been presented as a sequence-to-sequence network with encoder blocks and decoder blocks.
 
-**Visual Transformers:**
-...
+**Vision Transformers:** The success of the Transformer architecture [@vaswani_2017] in the +nlp community has pushed the +cv community to explore how one can use this kind of [+nn]{.plural} for vision tasks. It turns out that by expression images as sequences of patches, $n \times n$ image blocks, and embedding them, transformers can exceed the performance of a +cnn for classification [@dosovitskiy_2020], but also present emerging faculties resulting from the use of self-attention such as segmentation and saliency maps [@caron_2021]. This architecture is referred to as a +vit.
 
 **MNIST Classifier:**
 ...

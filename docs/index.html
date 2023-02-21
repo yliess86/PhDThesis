@@ -393,6 +393,10 @@
   
   
   
+  
+  
+  
+  
   <script
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
   type="text/javascript"></script>
@@ -540,6 +544,7 @@ Feedback</li>
 <li><strong>TPU</strong>: Tensor Processing Unit</li>
 <li><strong>VAE</strong>: Variational Autoencoder</li>
 <li><strong>VI</strong>: Variational Inference</li>
+<li><strong>ViT</strong>: Vision Transformer</li>
 <li><strong>WGAN</strong>: Wasserstein Generative Adversarial
 Network</li>
 </ul>
@@ -2216,7 +2221,20 @@ residual injection and normalization. The input embeddings are first
 augmented with positional encoding and go through every block one by
 one. This architecture is flexible and has first been presented as a
 sequence-to-sequence network with encoder blocks and decoder blocks.</p>
-<p><strong>Visual Transformers:</strong> …</p>
+<p><strong>Vision Transformers:</strong> The success of the Transformer
+architecture <span class="citation" data-cites="vaswani_2017">[<a
+href="#ref-vaswani_2017" role="doc-biblioref">72</a>]</span> in the NLP
+community has pushed the CV community to explore how one can use this
+kind of NNs for vision tasks. It turns out that by expression images as
+sequences of patches, <span class="math inline">\(n \times n\)</span>
+image blocks, and embedding them, transformers can exceed the
+performance of a CNN for classification <span class="citation"
+data-cites="dosovitskiy_2020">[<a href="#ref-dosovitskiy_2020"
+role="doc-biblioref">14</a>]</span>, but also present emerging faculties
+resulting from the use of self-attention such as segmentation and
+saliency maps <span class="citation" data-cites="caron_2021">[<a
+href="#ref-caron_2021" role="doc-biblioref">8</a>]</span>. This
+architecture is referred to as a Vision Transformer (ViT).</p>
 <p><strong>MNIST Classifier:</strong> …</p>
 <!-- TODO: You are here -->
 <h3 id="sec:generative">Generative Architectures</h3>
