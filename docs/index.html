@@ -2132,11 +2132,55 @@ href="#ref-vaswani_2017" role="doc-biblioref">71</a>]</span>, and later
 transposed to field of Computer Vision (CV) <span class="citation"
 data-cites="dosovitskiy_2020 caron_2021">[<a href="#ref-caron_2021"
 role="doc-biblioref">7</a>, <a href="#ref-dosovitskiy_2020"
-role="doc-biblioref">13</a>]</span>. This section focuses on visual
-applications of the attention mechanism only as this thesis is about
-image generation.</p>
-<p><strong>Self-Attention:</strong> …</p>
-<p><strong>Multihead Self-Attention:</strong> …</p>
+role="doc-biblioref">13</a>]</span>.</p>
+<p>This section focuses on visual applications of the attention
+mechanism only as this thesis is about image generation, and more
+specifically a particular type of attention that made the success of the
+modern Transformer <span class="citation" data-cites="vaswani_2017">[<a
+href="#ref-vaswani_2017" role="doc-biblioref">71</a>]</span>
+architecture called Self-Attention.</p>
+<p><strong>Self-Attention:</strong> Computing self-attention requires
+the creation of three vectors for each element of the sequence in latent
+space. For every element <span class="math inline">\(x_i\)</span>, we
+create a query vector <span class="math inline">\(q_i\)</span>, a key
+vector <span class="math inline">\(k_i\)</span>, and a value vector
+<span class="math inline">\(v_i\)</span>. Those vectors are obtained by
+multiplying the latent input vectors <span
+class="math inline">\(x_i\)</span> by trainable embedding weight
+matrices <span class="math inline">\(W_q\)</span>, <span
+class="math inline">\(W_k\)</span>, and <span
+class="math inline">\(W_v\)</span>. The generated output embeddings are
+usually chosen to be smaller than the original input size to save
+computation.</p>
+<p>The query and key vectors are then combined using a dot product to
+compute a score <span class="math inline">\(s_{i,j} = q_i \cdot
+k_j\)</span> matching every query vector with every key. This score
+determines how much focus is put on the element at position <span
+class="math inline">\(j\)</span> in order to encode the element at
+position <span class="math inline">\(i\)</span>. The scores are then
+scaled by dividing them by the square root of the key vectors dimensions
+<span class="math inline">\(\sqrt{d_k}\)</span> and normalizing them
+using a softmax so they add up to one and form probability vectors. This
+value describes how much each element attends to each other.</p>
+<p>Finally, we apply and make the element attend to each other, by
+multiplying the softmax vectors with the value vectors and aggregating
+them with a sum. This final vector representing the new context for
+which attention is used can be propagated to the next layers of the
+NN.</p>
+<p>When summarized and expressed in matrix form, by stacking the element
+vectors <span class="math inline">\(x_i\)</span> into the matrix <span
+class="math inline">\(X\)</span>, the self-attention mechanism can be
+summarized into the following formula:</p>
+<p><span id="eq:nn_sa_formula"><span class="math display">\[
+\begin{aligned}
+Q = (x \cdot W_q), \; K = (X \cdot W_k), \; V = (X \cdot W_v) \\
+Z = softmax(\frac{Q \cdot K^T}{\sqrt{d_k}}) \cdot V
+\end{aligned}
+\qquad{(6)}\]</span></span></p>
+<p>One other adventage of using such a technique is explainability. We
+can explore the “reasoning” of the NN by looking at the attention scores
+and observe how the sequence elements attend to each others.</p>
+<p><strong>Multihead Self-Attention:</strong></p>
 <p><strong>Visual Transformer:</strong> …</p>
 <p><strong>MNIST Classifier:</strong> …</p>
 <!-- TODO: You are here -->
@@ -2327,7 +2371,7 @@ class="math inline">\(p(z|x)\)</span>:</p>
 <p><span id="eq:vae_bayes"><span class="math display">\[
 p(z | x) = \frac{p(x | z)p(z)}{p(x)} = \frac{p(x | z)p(z)}{\int p(x | u)
 p(u) du}
-\qquad{(6)}\]</span></span></p>
+\qquad{(7)}\]</span></span></p>
 <p>A standard Gaussian distribution is often assumed for the prior <span
 class="math inline">\(p(z)\)</span>, and a parametric Gaussian for the
 likelihood <span class="math inline">\(p(x | z)\)</span> with its mean
@@ -2339,9 +2383,9 @@ being defined by a deterministic function <span class="math inline">\(f
 p(z)     &amp;\sim \mathcal{N}(0, I) \\
 p(x | z) &amp;\sim \mathcal{N}(f(z), cI), \; f \in F, \; c &gt; 0
 \end{aligned}
-\qquad{(7)}\]</span></span></p>
-<p>These equations (see Eqns <a href="#eq:vae_bayes">6</a>, <a
-href="#eq:vae_gaussian">7</a>) define a classical Bayesian Inference
+\qquad{(8)}\]</span></span></p>
+<p>These equations (see Eqns <a href="#eq:vae_bayes">7</a>, <a
+href="#eq:vae_gaussian">8</a>) define a classical Bayesian Inference
 problem. This problem is however intractable because of the
 denominator’s integral <span class="math inline">\(\int p(x | u) p(u)
 du\)</span> and thus requires the use of approximation techniques.</p>
@@ -2379,7 +2423,7 @@ log \; p(x | z) - KL(q_x(z) || p(z)) \\
            &amp;= \underset{(g, h) \in G \times H}{arg \; min} (E_z
 [-\frac{||x - f(z)||^2}{2c}] - KL(q_x(z) || p(z)) \\
 \end{aligned}
-\qquad{(8)}\]</span></span></p>
+\qquad{(9)}\]</span></span></p>
 <p>This rewrite of the objective equations demonstrates a natural
 tradeoff between the data confidence <span class="math inline">\(E_z
 [-\frac{||x - f(z)||^2}{2c}]\)</span> and the prior confidence <span
@@ -2397,7 +2441,7 @@ trained to find the parameters of the functions <span
 class="math inline">\(f\)</span>, <span
 class="math inline">\(g\)</span>, and <span
 class="math inline">\(h\)</span> by minimizing the VI objective (see <a
-href="#eq:vae_objective">Eq 8</a>). The encoder is charged to output two
+href="#eq:vae_objective">Eq 9</a>). The encoder is charged to output two
 vectors, one for representing <span class="math inline">\(g(x)\)</span>
 the mean, in the case of a Gaussian distribution <span
 class="math inline">\(\mu\)</span>, and the other representing the
@@ -2422,9 +2466,9 @@ class="math inline">\(\sigma^2\)</span>. This the process becomes:</p>
 E(x)    &amp;= (\mu, \rho) \\
 \hat{x} &amp;= D(\mu + \epsilon \; exp(\rho)), \; \epsilon \sim N(O, I)
 \end{aligned}
-\qquad{(9)}\]</span></span></p>
+\qquad{(10)}\]</span></span></p>
 <p>Performing the latent sampling using the reparametrization trick (see
-<a href="#eq:vae_reparametrization">Eq 9</a>) conserves the gradient
+<a href="#eq:vae_reparametrization">Eq 10</a>) conserves the gradient
 flow. The VAE can thus be trained to learn a structured latent space
 that can be used to interpolate latent codes and decode them into
 samples similar to the training distribution.</p>
@@ -2560,19 +2604,19 @@ class="math inline">\(z\)</span> which is then fed to a discriminator
 images (generated images) from true images <span
 class="math inline">\(x\)</span>. The two networks are jointly trained
 in an end-to-end fashion to optimize a Min-Max objective (see <a
-href="#eq:gan_minmax">Eq 10</a>) that can be split into two objectives,
+href="#eq:gan_minmax">Eq 11</a>) that can be split into two objectives,
 one for the generator, and another for the discriminator (see <a
-href="#eq:gan_minmax_split">Eq 11</a>).</p>
+href="#eq:gan_minmax_split">Eq 12</a>).</p>
 <p><span id="eq:gan_minmax"><span class="math display">\[
 \underset{D}{min} \; \underset{G}{max} \; E_x \; log \; D(x) + E_z \;
 log(1 - D(G(z))) \\
-\qquad{(10)}\]</span></span></p>
+\qquad{(11)}\]</span></span></p>
 <p><span id="eq:gan_minmax_split"><span class="math display">\[
 \begin{aligned}
 \frac{1}{n} \sum_{i=1}^{n} \; &amp;log \; D(x_i) + log(1 - D(G(z_i))) \\
 \frac{1}{n} \sum_{i=1}^{n} \; &amp;log \; D(G(z_i))
 \end{aligned}
-\qquad{(11)}\]</span></span></p>
+\qquad{(12)}\]</span></span></p>
 <p><strong>Vanishing Gradients and Mode Collapse</strong>: In practice,
 the vanilla formulation is however unstable. The generator training
 often saturates if it cannot keep up with the discriminator training
@@ -2602,27 +2646,27 @@ The last activation of the discriminator is swapped from a sigmoid to a
 linear activation. This small change turns the discriminator into a
 critic network in charge of scoring the quality (fidelity to the
 original distribution) of input images. The new simplified objectives
-are shown in <a href="#eq:gan_wasserstein">Eq 12</a> and are often
+are shown in <a href="#eq:gan_wasserstein">Eq 13</a> and are often
 combined with gradient clipping to satisfy a Lipschitz constraint.</p>
 <p><span id="eq:gan_wasserstein"><span class="math display">\[
 \begin{aligned}
 \frac{1}{n} \sum_{i=1}^{n} \; &amp; D(x_i) - D(G(z_i)) \\
 \frac{1}{n} \sum_{i=1}^{n} \; &amp; D(G(z_i))
 \end{aligned}
-\qquad{(12)}\]</span></span></p>
+\qquad{(13)}\]</span></span></p>
 <p><strong>Gradient Penalty:</strong> In their contribution, Gulrajani
 et al. <span class="citation" data-cites="gulrajani_2017">[<a
 href="#ref-gulrajani_2017" role="doc-biblioref">20</a>]</span> propose
 to replace gradient clipping with gradient penalty to enforce a
 constraint on the critic such that its gradients with respect to the
 inputs are unit vectors. The critic loss is thus augmented with an
-additional term (see <a href="#eq:gan_gp">Eq 13</a>) where <span
+additional term (see <a href="#eq:gan_gp">Eq 14</a>) where <span
 class="math inline">\(\hat{x}\)</span> is sampled from a linear
 interpolation between real and fake samples to satisfy the critic’s
 Lipschitz constraint.</p>
 <p><span id="eq:gan_gp"><span class="math display">\[
 \lambda \; E_{\hat{x}} \; (||\nabla_{\hat{x}}D(\hat{x})||_2 - 1)^2
-\qquad{(13)}\]</span></span></p>
+\qquad{(14)}\]</span></span></p>
 <p><strong>MNIST Digit Image Generation:</strong> Let us reconsider the
 MNIST dataset and train a GAN to enable qualitative generation by
 providing a latent code to the generator. We first need to define the
@@ -2801,7 +2845,7 @@ q(x)\)</span>. The forward diffusion process consists of adding small
 and successive Gaussian noise to the initial data sample during <span
 class="math inline">\(T\)</span> steps. The chained noisy
 transformations produce <span class="math inline">\(x_1, \dots,
-x_T\)</span> samples (see <a href="#eq:ddm_froward">Eq 14</a>). The step
+x_T\)</span> samples (see <a href="#eq:ddm_froward">Eq 15</a>). The step
 size is given by a variance <span
 class="math inline">\(\beta\)</span>-scheduler <span
 class="math inline">\({\beta \in [0; 1]}_{t=1}^{T}\)</span>.</p>
@@ -2811,7 +2855,7 @@ q(x_t | x_{t - 1}) = \mathcal{N}(x_t; \sqrt{1 -  \beta_t} x_{t - 1},
 \beta_t I) \\
 q(x_{1:T} | x_0) = \prod_{t = 1}^{T} q(x_t | x_{t - 1})
 \end{aligned}
-\qquad{(14)}\]</span></span></p>
+\qquad{(15)}\]</span></span></p>
 <p>By adding noise to the input data in small enough steps, when <span
 class="math inline">\(T \rightarrow +\infty\)</span>, <span
 class="math inline">\(x_T\)</span> converge towards an isotropic
@@ -2832,7 +2876,7 @@ x_t &amp;= \sqrt{\alpha_t} x_{t - 1} + \sqrt{1 - \alpha_t}
     &amp;= \sqrt{\bar{\alpha_t}} x_{0} + \sqrt{1 - \bar{\alpha_t}}
 \epsilon_0
 \end{aligned}
-\qquad{(15)}\]</span></span></p>
+\qquad{(16)}\]</span></span></p>
 <p>where <span class="math inline">\(\epsilon_t \sim \mathcal{N}(0,
 I)\)</span> and <span class="math inline">\(\epsilon_{t-2}\)</span>
 results from merging two Gaussian distributions, <span
@@ -2844,7 +2888,7 @@ as follow:</p>
 <p><span id="eq:ddm_froward_xt"><span class="math display">\[
 x_t \sim q(x_t | x_0) = \mathcal{N}(x_T; \sqrt{\bar{\alpha_t}} x_0, (1 -
 \bar{\alpha}_t) I)
-\qquad{(16)}\]</span></span></p>
+\qquad{(17)}\]</span></span></p>
 <p><strong>Beta Schedule:</strong> <span
 class="math inline">\(\beta_t\)</span>, the variance parameter can be
 fixed to a constant or chosen using a schedule over <span
@@ -2895,7 +2939,7 @@ p_\theta(x_{t - 1} | x_t) = \mathcal{N}(x_{t - 1}; \mu_\theta(x_t, t),
 p_\theta(x_{0:T}) = p_\theta(x_T) \prod_{t = 1}^{T} p_\theta(x_{t - 1} |
 x_t)
 \end{aligned}
-\qquad{(17)}\]</span></span></p>
+\qquad{(18)}\]</span></span></p>
 <p>We can then optimize the negative log-likelihood of the training
 data. After a series of arrangements and simplifications, see the
 original paper <span class="citation" data-cites="ho_2020">[<a
@@ -2909,7 +2953,7 @@ L_T &amp;= D_{KL}(q(x_T | x_0) || p(x_T)) \\
 L_t &amp;= E_{q(x_t | x_0)} \; D_{KL}(q(x_{t- 1 } | x_t, x_0) ||
 p_\theta(x_{t - 1} | x_t))
 \end{aligned}
-\qquad{(18)}\]</span></span></p>
+\qquad{(19)}\]</span></span></p>
 <p>where <span class="math inline">\(L_0\)</span> can be seen as a
 reconstruction term, <span class="math inline">\(L_T\)</span> as a
 similarity between <span class="math inline">\(x_T\)</span>’s
@@ -2930,17 +2974,17 @@ x_0), \tilde{\beta_t} I) \\
 + (\sqrt{\bar{\alpha}_t} (1 - \bar{\alpha}_{t - 1})) x_t] / (1 -
 \bar{\alpha}_t)
 \end{aligned}
-\qquad{(19)}\]</span></span></p>
+\qquad{(20)}\]</span></span></p>
 <p>Using the reparametrization trick in <a
-href="#eq:ddm_froward_closed">Eq 15</a>, we can express <span
+href="#eq:ddm_froward_closed">Eq 16</a>, we can express <span
 class="math inline">\(x_0\)</span> using <span
 class="math inline">\(x_t\)</span> and <span
 class="math inline">\(\epsilon \sim \mathcal{N}(0, I)\)</span>:</p>
 <p><span id="eq:ddm_backward_x0"><span class="math display">\[
 x_0 = (x_t - \sqrt{1 - \bar{\alpha}}_t \epsilon) / \sqrt{\bar{\alpha}_t}
-\qquad{(20)}\]</span></span></p>
-<p>Injecting <a href="#eq:ddm_backward_x0">Eq 20</a> in <a
-href="#eq:ddm_backward_conditionned">Eq 19</a> allows us to express the
+\qquad{(21)}\]</span></span></p>
+<p>Injecting <a href="#eq:ddm_backward_x0">Eq 21</a> in <a
+href="#eq:ddm_backward_conditionned">Eq 20</a> allows us to express the
 target mean <span class="math inline">\(\tilde{\mu}_t\)</span> to only
 depend on <span class="math inline">\(x_t\)</span> and trained a NN to
 approximate the noise <span class="math inline">\(\epsilon_\theta(x_t,
@@ -2952,7 +2996,7 @@ t)\)</span>:</p>
 \tilde{\mu_\theta}_t(x_t) &amp;= (x_t - \frac{\beta_t}{\sqrt{1 -
 \bar{\alpha}}_t} \epsilon_\theta(x_t, t)) / \sqrt{\alpha_t}
 \end{aligned}
-\qquad{(21)}\]</span></span></p>
+\qquad{(22)}\]</span></span></p>
 <p>The <span class="math inline">\(L_t\)</span> denoising loss can thus
 be expressed as follow:</p>
 <p><span id="eq:ddm_backward_lt_rewrite"><span class="math display">\[
@@ -2963,7 +3007,7 @@ t)||_2^2} ||\tilde{\mu}_t - \mu_\theta(x_t, t)||_2^2] \\
 \bar{\alpha}_t) ||\Sigma_\theta(x_t, t)||_2^2} ||\epsilon_t -
 \epsilon_\theta(x_t, t)||_2^2]
 \end{aligned}
-\qquad{(22)}\]</span></span></p>
+\qquad{(23)}\]</span></span></p>
 <p>This tells us that the objective can be simplified to learning a
 noise model to predict the noise <span
 class="math inline">\(\epsilon\)</span> at timestep <span
@@ -2979,7 +3023,7 @@ L_t^{simple} &amp;= E_{x_0, t, \epsilon} [||\epsilon_t -
 x_t          &amp;= \sqrt{\bar{\alpha}_t} x_0 + \sqrt{1 -
 \bar{\alpha}_t} \epsilon
 \end{aligned}
-\qquad{(23)}\]</span></span></p>
+\qquad{(24)}\]</span></span></p>
 <p>Finally, when the model <span
 class="math inline">\(\epsilon_\theta\)</span> is trained, we just need
 to iteratively denoise the latent code <span class="math inline">\(z
@@ -2987,7 +3031,7 @@ to iteratively denoise the latent code <span class="math inline">\(z
 <p><span id="eq:ddm_backward_denoise"><span class="math display">\[
 x_{t - 1} = \frac{1}{\sqrt{\alpha_t}} (x_t - \frac{1 - \alpha_t}{\sqrt{1
 - \bar{\alpha}_t}} \epsilon\theta(x_t, t))
-\qquad{(24)}\]</span></span></p>
+\qquad{(25)}\]</span></span></p>
 <p><strong>MNIST Digit Image Generation:</strong> For the last time, let
 us reconsider the MNIST handwritten digit dataset and train a Denoising
 Diffusion Probabilistic Model (DDPM) to generate new data samples from
