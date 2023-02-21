@@ -790,7 +790,7 @@ This section focuses on visual applications of the attention mechanism only as t
 
 **Self-Attention:** Computing self-attention requires the creation of three vectors for each element of the sequence in latent space. For every element $x_i$, we create a query vector $q_i$, a key vector $k_i$, and a value vector $v_i$. Those vectors are obtained by multiplying the latent input vectors $x_i$ by trainable embedding weight matrices $W_q$, $W_k$, and $W_v$. The generated output embeddings are usually chosen to be smaller than the original input size to save computation.
 
-The query and key vectors are then combined using a dot product to compute a score $s_{i,j} = q_i \cdot k_j$ matching every query vector with every key. This score determines how much focus is put on the element at position $j$ in order to encode the element at position $i$. The scores are then scaled by dividing them by the square root of the key vectors dimensions $\sqrt{d_k}$ and normalizing them using a softmax so they add up to one and form probability vectors. This value describes how much each element attends to each other.
+The query and key vectors are then combined using a dot product to compute a score $s_{i,j} = q_i \cdot k_j$ matching every query vector with every key. This score determines how much focus is put on the element at position $j$ in order to encode the element at position $i$. The scores are then scaled by dividing them by the square root of the key vectors dimensions $\sqrt{d_k}$ and normalizing them using a softmax so they add up to one and form probability vectors. This value describes how much each element attends to the others.
 
 Finally, we apply and make the element attend to each other, by multiplying the softmax vectors with the value vectors and aggregating them with a sum. This final vector representing the new context for which attention is used can be propagated to the next layers of the +nn.
 
@@ -803,11 +803,15 @@ Z = softmax(\frac{Q \cdot K^T}{\sqrt{d_k}}) \cdot V
 \end{aligned}
 $$ {#eq:nn_sa_formula}
 
-One other adventage of using such a technique is explainability. We can explore the "reasoning" of the +nn by looking at the attention scores and observe how the sequence elements attend to each others.
+One other advantage of using such a technique is explainability. We can explore the "reasoning" of the +nn by looking at the attention scores and observing how the sequence elements attend to each other.
 
-**Multihead Self-Attention:** 
+**Multihead Self-Attention:** In their paper [@vaswani_2017], the authors further refine this notion of self-attention. Let us consider one self-attention module and call it an attention head. They propose to stack multiple attention heads and demonstrate improved performances. This notion enables models equipped with multi-head attention to possess an ensemble of query, key, and value subspaces with different representations. To optimize for parallelism every head computation is done at the same time by combining the weight matrices.
 
-**Visual Transformer:**
+**Positional Encoding:** There is however an issue. Contrary to [+cnn]{.plural} exploiting the spatially local correlation of information, self-attention does not encode the order of the vectors. To alleviate this problem, Vaswani et al. [@vaswani_2017] propose to add (concatenate) a vector to each embedding input. This vector is designed to follow a specific pattern learned by the model that will help encode the position of information along its flow in the network. This is called a positional encoding vector. Most positional encodings introduced by the community follow some kind of general Fourier pattern that can scale with the length of the sequence.
+
+**Transformers:** A Transformer architecture is defined by a succession of transformer blocks. Those blocks follow a similar pattern and are using tricks from previous work such as layer normalization [@ba_2016] and residual connections [@he_2016] to allow to train deeper networks with a large number of blocks. A block is made out of a multi-head self-attention layer, followed by a residual injection and a normalization layer followed by a feed-forward layer and another residual injection and normalization. The input embeddings are first augmented with positional encoding and go through every block one by one. This architecture is flexible and has first been presented as a sequence-to-sequence network with encoder blocks and decoder blocks.
+
+**Visual Transformers:**
 ...
 
 **MNIST Classifier:**
