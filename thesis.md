@@ -820,10 +820,136 @@ One other advantage of using such a technique is explainability. We can explore 
 
 ![$256 \times 256$ image processed into $32 \times 32$ patches with a no overlap. Each patch can be processed by a +cnn or a +mlp after flattening and their embedding used in a Transformer network which is thus called a [+vit]{.full}](./figures/core_nn_patches.svg){#fig:core_nn_patches}
 
-**Vision Transformers:** The success of the Transformer architecture [@vaswani_2017] in the +nlp community has pushed the +cv community to explore how one can use this kind of [+nn]{.plural} for vision tasks. It turns out that by expression images as sequences of patches, $n \times n$ image blocks (see @core_nn_patches), and embedding them, transformers can exceed the performance of a +cnn for classification [@dosovitskiy_2020], but also present emerging faculties resulting from the use of self-attention such as segmentation and saliency maps [@caron_2021]. This architecture is referred to as a +vit.
+**Vision Transformers:** The success of the Transformer architecture [@vaswani_2017] in the +nlp community has pushed the +cv community to explore how one can use this kind of [+nn]{.plural} for vision tasks. It turns out that by expressing images as sequences of patches, $n \times n$ image blocks (see @core_nn_patches), and embedding them, transformers can exceed the performance of a +cnn for classification [@dosovitskiy_2020], but also present emerging faculties resulting from the use of self-attention such as segmentation and saliency maps [@caron_2021]. This architecture is referred to as a +vit.
 
 **MNIST Classifier:**
 ...
+
+```python
+from torch.nn import (Linear, Module)
+
+import torch
+
+# Linear layer with no bias
+Lnb = lambda i, o: Linear(i, o, bias=False)
+
+# Multi-Head Attention Module
+class MultiHeadAttention(Module):
+    def __init__(
+        self,
+        emb_dim: int,
+        n_heads: int,
+        head_dim: int,
+    ) -> None:
+        super().__init__()
+        self.N = n_heads
+        self.H = head_dim
+        self.qkv = Lnb(emb_dim, 3 * n_heads * head_dim)
+        self.out = Lnb(n_heads * head_dim, emb_dim)
+        self.scale = head_dim ** -0.5
+
+    def forward(self, x: Tensor) -> Tensor:
+        B, S, _ = x.shape
+        qkv = self.qkv(x).chunk(3, dim=-1)
+        qkv = map(lambda x: x.reshape(B, S, self.N, self.H), qkv)
+        qkv = map(lambda x: x.permute(0, 2, 1, 3), qkv)
+        q, k, v = qkv
+        s = self.scale * (q @ k.transpose(-2, -1))
+        a = torch.softmax(s, dim=-1)
+        z = (a @ v).reshape(B, S, self.N * self.H)
+        return self.out(z)
+```
+
+```python
+from torch.nn import (ReLU, Sequential)
+
+class FeedForward(Sequential):
+    def __init__(self, emb_dim, h_dim: int) -> None:
+        super().__init__(
+            Lnb(emb_dim, h_dim), ReLU(),
+            Lnb(h_dim, emb_dim),
+        )
+```
+
+```python
+from torch.nn import LayerNorm
+
+class TransformerBlock(Module):
+    def __init__(
+            self,
+            emb_dim: int,
+            n_heads: int,
+            head_dim: int,
+            h_dim: int,
+        ) -> None:
+        super().__init__()
+        self.norm1 = LayerNorm(emb_dim, eps=1e-5)
+        self.mha = MultHeadAttention(emb_dim, n_heads, head_dim)
+        self.norm2 = LayerNorm(emb_dim, eps=1e-5)
+        self.ff = FeadForward(emb_dim, h_dim)
+
+    def forward(self, x: Tensor) -> Tensor:
+        x = self.mha(self.norm1(x)) + x
+        x = self.ff(self.norm2(x)) + x
+        return x
+```
+
+```python
+# Precompute Positional Encoding
+def pos_enc(emb_dim: int, max_len: int) -> Tensor:
+    dtype = torch.float32
+    pe = torch.zeros(max_len, emb_dim)
+    pos = torch.arange(0, max_len, dtype=dtype)[:, None]
+    denom = torch.arange(0, emb_dim, 2, dtype=dtype)
+    denom = denom * (-np.log(10_000.0) / emb_dim)
+    denom = torch.exp(denom)
+    pe[:, 0::2] = torch.sin(pos * denom)
+    pe[:, 1::2] = torch.cos(pos * denom)
+    return pe[None, :, :]
+
+# Positional Encoder
+class PositionalEncoder(Module):
+    def __init__(self, emb_dim: int, max_len: int) -> None:
+        super().__init__()
+        self.register_buffer("pe", pos_enc(emb_dim, max_len))
+
+    def forward(self, x: Tensor) -> Tensor:
+        return x + self.pe[:, :x.size(1)]
+```
+
+```python
+# Hyperparameters
+PS = 32  # Patch size
+E = 128  # Embedding dim
+N = 8    # Number of heads
+
+# ViT: Visition Transformer
+class VisionTransformer(Module):
+    def __init__(self) -> None:
+        super().__init__()
+        self.emb = Sequential(
+            Linear(P * P, E), ReLU(),
+            Linear(E, E),
+        )
+        self.pe = PositionalEncoder(E)
+        self.block = TransformerBlock(E, N, E // N, E)
+        self.head = Linear(E, 10)
+
+    def forward(self, x: Tensor) -> Tensor:
+        B, *_ = x.shape
+        x = x.unfold(2, P, P).unfold(3, P, P)
+        x = x.reshape(-1, P * P)
+        x = self.emb(x)
+        x = x.reshape(B, -1, E)
+        x = self.pe(x)
+        x = self.block(x)
+        x = x.mean(dim=1)
+        return self.head(x)
+```
+
+![[+vit]{.full} training history...](./figures/core_nn_vit_history.svg){#fig:core_nn_vit_history}
+
+![[+vit]{.full} multi-head attention maps...](./figures/core_nn_vit_mha.svg){#fig:core_nn_vit_mha}
 
 <!-- TODO: You are here -->
 
