@@ -820,10 +820,9 @@ One other advantage of using such a technique is explainability. We can explore 
 
 ![$256 \times 256$ image processed into $32 \times 32$ patches with a no overlap. Each patch can be processed by a +cnn or a +mlp after flattening and their embedding used in a Transformer network which is thus called a [+vit]{.full}](./figures/core_nn_patches.svg){#fig:core_nn_patches}
 
-**Vision Transformers:** The success of the Transformer architecture [@vaswani_2017] in the +nlp community has pushed the +cv community to explore how one can use this kind of [+nn]{.plural} for vision tasks. It turns out that by expressing images as sequences of patches, $n \times n$ image blocks (see @core_nn_patches), and embedding them, transformers can exceed the performance of a +cnn for classification [@dosovitskiy_2020], but also present emerging faculties resulting from the use of self-attention such as segmentation and saliency maps [@caron_2021]. This architecture is referred to as a +vit.
+**Vision Transformers:** The success of the Transformer architecture [@vaswani_2017] in the +nlp community has pushed the +cv community to explore how one can use this kind of [+nn]{.plural} for vision tasks. It turns out that by expressing images as sequences of patches, $n \times n$ image blocks (see @fig:core_nn_patches), and embedding them, transformers can exceed the performance of a +cnn for classification [@dosovitskiy_2020], but also present emerging faculties resulting from the use of self-attention such as segmentation and saliency maps [@caron_2021]. This architecture is referred to as a +vit.
 
-**MNIST Classifier:**
-...
+**MNIST Classifier:** Let us reconsider the +mnist classification toy example and train a +vit classifier. We first define the `MultiHeadAttention` module responsible for computing the attention maps and applying them to a sequence of image embedding patches. It is common practice to remove the bias from the linear projections (`Linear`) as the layer normalization (`LayerNorm`) already learn how to shift the distribution.
 
 ```python
 from torch.nn import (Linear, Module)
@@ -860,6 +859,8 @@ class MultiHeadAttention(Module):
         return self.out(z)
 ```
 
+The $q$, $k$, and $v$ projections are computed simultaneously using a single `Linear` module and splitted during the forward pass to recover the projection separately. We then implement the feed-forward module as a simple $2$-layers +mlp network. 
+
 ```python
 from torch.nn import (ReLU, Sequential)
 
@@ -870,6 +871,8 @@ class FeedForward(Sequential):
             Lnb(h_dim, emb_dim),
         )
 ```
+
+The Transformer block can then be implemented as a sequence of a layer normalization followed by a multi-head attention module, and another layer normalization followed by a feed-forward module. Residual connections are added at the end of both blocks.
 
 ```python
 from torch.nn import LayerNorm
@@ -894,6 +897,8 @@ class TransformerBlock(Module):
         return x
 ```
 
+The positional encoding Fourier features (see @fig:core_nn_posenc) can be precomputed (`pos_enc`) to save computation during inference. The `PositionalEncoder` is implemented as a module to store the positional encoding as a buffer that will receive gradients during training. An additional dimension is added to the positional encoding matrix to enable batch broadcasting when interacting with the incoming tensors.
+
 ```python
 # Precompute Positional Encoding
 def pos_enc(emb_dim: int, max_len: int) -> Tensor:
@@ -917,9 +922,11 @@ class PositionalEncoder(Module):
         return x + self.pe[:, :x.size(1)]
 ```
 
+We can finally group all the modules into a single one to build a simple +vit. The `VisionTransformer` module includes a patch embedding network, a simple $2$-layer projection +mlp, a positional encoder, a single transformer block responsible for computing and applying the multi-head self-attention mechanism, and a final classifier head, a single layer +nn. The patches are extracted from the image tensor making use of the `unfold` method on both the width and height axis of the input tensor. The final sequence of attended values resulting from the multi-head attention are averaged before being fed to the classifier head.
+
 ```python
 # Hyperparameters
-PS = 32  # Patch size
+P = 32   # Patch size
 E = 128  # Embedding dim
 N = 8    # Number of heads
 
@@ -947,11 +954,13 @@ class VisionTransformer(Module):
         return self.head(x)
 ```
 
-![[+vit]{.full} training history...](./figures/core_nn_vit_history.svg){#fig:core_nn_vit_history}
+The training history of the +vit network with a patch size of $32 \times 32$, an embedding dimension of $128$, and $8$ self-attention heads can be observed in @fig:core_nn_vit_history. The network has been trained for $10$ epochs using the standard Adam policy and a learning rate of $1e^{-2}$. This simple +vit achieve $98%$ accuracy on the +mnist test set. Results can be improved by replacing the +mlp patch embedding by a +cnn or by augmenting the network size and tweaking its hyperparameters.
 
-![[+vit]{.full} multi-head attention maps...](./figures/core_nn_vit_mha.svg){#fig:core_nn_vit_mha}
+![[+vit]{.full} training history. The +vit is trained to classifier the handwritten digit +mnist dataset for $10$ epochs. The train, validation, test loss (cross-entropy) and accuracy are shown. The model reaches a $98%$ accuracy on the test set.](./figures/core_nn_vit_history.svg){#fig:core_nn_vit_history}
 
-<!-- TODO: You are here -->
+As shown in @fig:core_nn_vit_mha, the attention heads learn an ensemble of different attention mappings. The attention maps can be observed using the output from the attention scores after the softmax and before being applied to the projected values called attention maps. The attention map is of size $B \times N \times S \times S$ where $B$ is the batch size, $N$ the number of attention heads, and $S$ the sequence length, in our case the total number of patches. 
+
+![Visualization of a +mnist trained [+vit]{.full} classifier multi-head attention maps. Each map corresponds to the attention map of a single head resulting from the multi-head self-attention computation.](./figures/core_nn_vit_mha.svg){#fig:core_nn_vit_mha}
 
 ### Generative Architectures {#sec:generative}
 
@@ -1600,6 +1609,8 @@ def sample(
 ![Selection of generated samples using a trained [+ddpm]{.full} noise model. The initial latent codes are reversed for $1,000$ steps.](./figures/core_gai_ddpm_latent_samples.svg){#fig:gai_ddpm_latent_samples}
 
 #### Large Language Models {#sec:llm}
+<!-- TODO: You are here -->
+
 \newpage{}
 
 ## Methodology {#ch:methodology}

@@ -2261,9 +2261,7 @@ href="#ref-vaswani_2017" role="doc-biblioref">72</a>]</span> in the NLP
 community has pushed the CV community to explore how one can use this
 kind of NNs for vision tasks. It turns out that by expressing images as
 sequences of patches, <span class="math inline">\(n \times n\)</span>
-image blocks (see <span class="citation"
-data-cites="core_nn_patches">[<a href="#ref-core_nn_patches"
-role="doc-biblioref"><strong>core_nn_patches?</strong></a>]</span>), and
+image blocks (see <a href="#fig:core_nn_patches">Fig 24</a>), and
 embedding them, transformers can exceed the performance of a CNN for
 classification <span class="citation" data-cites="dosovitskiy_2020">[<a
 href="#ref-dosovitskiy_2020" role="doc-biblioref">14</a>]</span>, but
@@ -2272,7 +2270,14 @@ such as segmentation and saliency maps <span class="citation"
 data-cites="caron_2021">[<a href="#ref-caron_2021"
 role="doc-biblioref">8</a>]</span>. This architecture is referred to as
 a ViT.</p>
-<p><strong>MNIST Classifier:</strong> …</p>
+<p><strong>MNIST Classifier:</strong> Let us reconsider the MNIST
+classification toy example and train a ViT classifier. We first define
+the <code>MultiHeadAttention</code> module responsible for computing the
+attention maps and applying them to a sequence of image embedding
+patches. It is common practice to remove the bias from the linear
+projections (<code>Linear</code>) as the layer normalization
+(<code>LayerNorm</code>) already learn how to shift the
+distribution.</p>
 <div class="sourceCode" id="cb10"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch.nn <span class="im">import</span> (Linear, Module)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -2306,6 +2311,13 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a h
 <span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>        a <span class="op">=</span> torch.softmax(s, dim<span class="op">=-</span><span class="dv">1</span>)</span>
 <span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>        z <span class="op">=</span> (a <span class="op">@</span> v).reshape(B, S, <span class="va">self</span>.N <span class="op">*</span> <span class="va">self</span>.H)</span>
 <span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.out(z)</span></code></pre></div>
+<p>The <span class="math inline">\(q\)</span>, <span
+class="math inline">\(k\)</span>, and <span
+class="math inline">\(v\)</span> projections are computed simultaneously
+using a single <code>Linear</code> module and splitted during the
+forward pass to recover the projection separately. We then implement the
+feed-forward module as a simple <span
+class="math inline">\(2\)</span>-layers MLP network.</p>
 <div class="sourceCode" id="cb11"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch.nn <span class="im">import</span> (ReLU, Sequential)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -2315,6 +2327,10 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a h
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>            Lnb(emb_dim, h_dim), ReLU(),</span>
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>            Lnb(h_dim, emb_dim),</span>
 <span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>        )</span></code></pre></div>
+<p>The Transformer block can then be implemented as a sequence of a
+layer normalization followed by a multi-head attention module, and
+another layer normalization followed by a feed-forward module. Residual
+connections are added at the end of both blocks.</p>
 <div class="sourceCode" id="cb12"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch.nn <span class="im">import</span> LayerNorm</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -2336,6 +2352,14 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a h
 <span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> <span class="va">self</span>.mha(<span class="va">self</span>.norm1(x)) <span class="op">+</span> x</span>
 <span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> <span class="va">self</span>.ff(<span class="va">self</span>.norm2(x)) <span class="op">+</span> x</span>
 <span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> x</span></code></pre></div>
+<p>The positional encoding Fourier features (see <a
+href="#fig:core_nn_posenc">Fig 22</a>) can be precomputed
+(<code>pos_enc</code>) to save computation during inference. The
+<code>PositionalEncoder</code> is implemented as a module to store the
+positional encoding as a buffer that will receive gradients during
+training. An additional dimension is added to the positional encoding
+matrix to enable batch broadcasting when interacting with the incoming
+tensors.</p>
 <div class="sourceCode" id="cb13"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Precompute Positional Encoding</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> pos_enc(emb_dim: <span class="bu">int</span>, max_len: <span class="bu">int</span>) <span class="op">-&gt;</span> Tensor:</span>
@@ -2357,9 +2381,20 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a h
 <span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, x: Tensor) <span class="op">-&gt;</span> Tensor:</span>
 <span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> x <span class="op">+</span> <span class="va">self</span>.pe[:, :x.size(<span class="dv">1</span>)]</span></code></pre></div>
+<p>We can finally group all the modules into a single one to build a
+simple ViT. The <code>VisionTransformer</code> module includes a patch
+embedding network, a simple <span class="math inline">\(2\)</span>-layer
+projection MLP, a positional encoder, a single transformer block
+responsible for computing and applying the multi-head self-attention
+mechanism, and a final classifier head, a single layer NN. The patches
+are extracted from the image tensor making use of the
+<code>unfold</code> method on both the width and height axis of the
+input tensor. The final sequence of attended values resulting from the
+multi-head attention are averaged before being fed to the classifier
+head.</p>
 <div class="sourceCode" id="cb14"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Hyperparameters</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>PS <span class="op">=</span> <span class="dv">32</span>  <span class="co"># Patch size</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> <span class="dv">32</span>   <span class="co"># Patch size</span></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>E <span class="op">=</span> <span class="dv">128</span>  <span class="co"># Embedding dim</span></span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> <span class="dv">8</span>    <span class="co"># Number of heads</span></span>
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
@@ -2385,19 +2420,45 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a h
 <span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> <span class="va">self</span>.block(x)</span>
 <span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> x.mean(dim<span class="op">=</span><span class="dv">1</span>)</span>
 <span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.head(x)</span></code></pre></div>
+<p>The training history of the ViT network with a patch size of <span
+class="math inline">\(32 \times 32\)</span>, an embedding dimension of
+<span class="math inline">\(128\)</span>, and <span
+class="math inline">\(8\)</span> self-attention heads can be observed in
+<a href="#fig:core_nn_vit_history">Fig 25</a>. The network has been
+trained for <span class="math inline">\(10\)</span> epochs using the
+standard Adam policy and a learning rate of <span
+class="math inline">\(1e^{-2}\)</span>. This simple ViT achieve <span
+class="math inline">\(98%\)</span> accuracy on the MNIST test set.
+Results can be improved by replacing the MLP patch embedding by a CNN or
+by augmenting the network size and tweaking its hyperparameters.</p>
 <figure id="fig:core_nn_vit_history">
 <img src="./figures/core_nn_vit_history.svg"
-alt="Vision Transformer (ViT) training history…" />
-<figcaption>Figure 25: Vision Transformer (ViT) training
-history…</figcaption>
+alt="Vision Transformer (ViT) training history. The ViT is trained to classifier the handwritten digit MNIST dataset for 10 epochs. The train, validation, test loss (cross-entropy) and accuracy are shown. The model reaches a 98% accuracy on the test set." />
+<figcaption>Figure 25: Vision Transformer (ViT) training history. The
+ViT is trained to classifier the handwritten digit MNIST dataset for
+<span class="math inline">\(10\)</span> epochs. The train, validation,
+test loss (cross-entropy) and accuracy are shown. The model reaches a
+<span class="math inline">\(98%\)</span> accuracy on the test
+set.</figcaption>
 </figure>
+<p>As shown in <a href="#fig:core_nn_vit_mha">Fig 26</a>, the attention
+heads learn an ensemble of different attention mappings. The attention
+maps can be observed using the output from the attention scores after
+the softmax and before being applied to the projected values called
+attention maps. The attention map is of size <span
+class="math inline">\(B \times N \times S \times S\)</span> where <span
+class="math inline">\(B\)</span> is the batch size, <span
+class="math inline">\(N\)</span> the number of attention heads, and
+<span class="math inline">\(S\)</span> the sequence length, in our case
+the total number of patches.</p>
 <figure id="fig:core_nn_vit_mha">
 <img src="./figures/core_nn_vit_mha.svg"
-alt="Vision Transformer (ViT) multi-head attention maps…" />
-<figcaption>Figure 26: Vision Transformer (ViT) multi-head attention
-maps…</figcaption>
+alt="Visualization of a MNIST trained Vision Transformer (ViT) classifier multi-head attention maps. Each map corresponds to the attention map of a single head resulting from the multi-head self-attention computation." />
+<figcaption>Figure 26: Visualization of a MNIST trained Vision
+Transformer (ViT) classifier multi-head attention maps. Each map
+corresponds to the attention map of a single head resulting from the
+multi-head self-attention computation.</figcaption>
 </figure>
-<!-- TODO: You are here -->
 <h3 id="sec:generative">Generative Architectures</h3>
 <p>In this section, we extend our Deep Learning (DL) architecture
 toolbox with generative AI architectures such as the Autoencoder (AE)
@@ -3512,7 +3573,7 @@ latent codes are reversed for <span class="math inline">\(1,000\)</span>
 steps.</figcaption>
 </figure>
 <h4 id="sec:llm">Large Language Models</h4>
-
+<!-- TODO: You are here -->
 <h2 id="ch:methodology">Methodology</h2>
 <h3 id="implementation">Implementation</h3>
 <h3 id="objective-evaluation">Objective Evaluation</h3>
