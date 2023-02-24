@@ -32,6 +32,9 @@ rights: © 2023 by Yliess Hati is licensed under CC BY 4.0
 keywords: [keyword]
 
 acronyms:
+    cs:
+        short: CS
+        long: Computer Science
     ai:
         short: AI
         long: Artificial Intelligence
@@ -159,6 +162,7 @@ acronyms:
 ## Aknowledgements {-}
 \newpage{}
 
+<!-- ===================== [START] PART CONTEXT ===================== -->
 # Context
 \newpage{}
 
@@ -1623,8 +1627,20 @@ The Deep Learning community has come up with a variety of +nn architectures spec
 Alternative semantic conditioning can be used such as feature vectors describing aspects of the data distribution, multiclass segmentation masks to control the positioning and aspect of the generated output, tags and more.
 
 **Natural Language Prompts:** Recently, natural language has become one of the defacto approaches for conditioning generative networks. Combine with the advances in language modeling with [+llm]{.full .plural} [@devlin_2018; @brown_2020; @openai_2023] and multimodal embedding alignment [clip], [+gan]{.plural} and [+ddm]{.plural} [@ramesh_2022; @rombach_2021] are trained to follow natural language instructions called prompts. The community is currently still learning how to engineer those prompts to enable fine-grained control of the generated outputs.
+
+### Summary
+
+[+dl]{.full} is one of the most active fields of [+cs]{.full}. It has evolved through a complex and controversial history and is now pervasive in our environments ranging from personal assistants, autonomous cars, medical aids, recommender systems, search engines, and more. The recent public success of generative +ai such as Dall-E [@openai_2023], Stable Diffusion [@rombach_2021], and Chat-GPT [@openai_2023] has put the research in creative tool building to the front of the scene. Those +ai tools enable the mass population to enhance its creative capabilities but also ring the bell in the artist's community concerning the ethical and societal impact of such tools often trained on proprietary data from which the rights are violated.
+
+This thesis explores the building of such tools and focuses on the training of conditional [+gan]{.plural .full} and [ddm]{.plural .full} for user-guided automatic lineart colorization.
+
 <!-- TODO: You are here -->
 
+\newpage{}
+<!-- ===================== [END] PART CONTEXT ===================== -->
+
+<!-- ===================== [START] PART CORE ===================== -->
+# Core
 \newpage{}
 
 ## Methodology {#ch:methodology}
@@ -1634,41 +1650,32 @@ Alternative semantic conditioning can be used such as feature vectors describing
 ### Reproducibility
 \newpage{}
 
-# Core
+## State of the Art {#ch:sota}
 \newpage{}
 
-## Contrib I (Find Catchy Explicit Name) {#ch:contrib-1}
-### State of the Art
+## PaintsTorch: a User-Guided Anime Lineart Colorization Tool with Double Generator Conditional Adversarial Network {#ch:contrib-1}
 ### Method
 ### Setup
 ### Results
 ### Summary
 \newpage{}
 
-## Contrib II (Find Catchy Explicit Name) {#ch:contrib-2}
-### State of the Art
+## StencitTorch: an Iterative and User-Guided Framework for Anime Lineart Colorization {#ch:contrib-2}
 ### Method
 ### Setup
 ### Results
 ### Summary
 \newpage{}
 
-## Contrib III (Find Catchy Explicit Name) {#ch:contrib-3}
-### State of the Art
+## StablePaint: a Conditional Denoising Diffusion Model for Iterative Anime Lineart Colorization {#ch:contrib-3}
 ### Method
 ### Setup
 ### Results
 ### Summary
 \newpage{}
+<!-- ===================== [END] PART CORE ===================== -->
 
-## Contrib IV (Find Catchy Explicit Name)  {#ch:contrib-4}
-### State of the Art
-### Method
-### Setup
-### Results
-### Summary
-\newpage{}
-
+<!-- ===================== [START] PART REFLECTION ===================== -->
 # Reflection
 \newpage{}
 
@@ -1677,5 +1684,6 @@ Alternative semantic conditioning can be used such as feature vectors describing
 
 ## Conclusion {#ch:conclusion}
 \newpage{}
+<!-- ===================== [END] PART REFLECTION ===================== -->
 
 ## References {-}
