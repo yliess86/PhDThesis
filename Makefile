@@ -37,10 +37,12 @@ html:
 
 pdf:
 	${PANDOC_PDF}
+
+booklet:
 	${BOOKLET_PDF}
 
 clean:
 	rm tmp-*
 
-build: progress html pdf clean
+build: progress html pdf booklet clean
 	echo "Build Done!\n"
