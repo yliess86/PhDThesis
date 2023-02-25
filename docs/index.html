@@ -401,6 +401,18 @@
   
   
   
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   <script
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
   type="text/javascript"></script>
@@ -448,6 +460,13 @@ Architectures</a></li>
 </ul></li>
 <li><a href="#core" id="toc-core">Core</a>
 <ul>
+<li><a href="#ch:sota" id="toc-ch:sota">Related Work</a>
+<ul>
+<li><a href="#sec:rel-classical" id="toc-sec:rel-classical">Classical
+Approaches</a></li>
+<li><a href="#sec:rel-deep" id="toc-sec:rel-deep">Deep Learning
+Approaches</a></li>
+</ul></li>
 <li><a href="#ch:methodology" id="toc-ch:methodology">Methodology</a>
 <ul>
 <li><a href="#implementation"
@@ -459,7 +478,6 @@ id="toc-subjective-evaluation">Subjective Evaluation</a></li>
 <li><a href="#reproducibility"
 id="toc-reproducibility">Reproducibility</a></li>
 </ul></li>
-<li><a href="#ch:sota" id="toc-ch:sota">State of the Art</a></li>
 <li><a href="#ch:contrib-1" id="toc-ch:contrib-1">PaintsTorch: a
 User-Guided Anime Lineart Colorization Tool with Double Generator
 Conditional Adversarial Network</a>
@@ -540,6 +558,10 @@ Feedback</li>
 <li><strong>ViT</strong>: Vision Transformer</li>
 <li><strong>WGAN</strong>: Wasserstein Generative Adversarial
 Network</li>
+<li><strong>cGAN</strong>: Conditional Generative Adversarial
+Network</li>
+<li><strong>cWGAN-GP</strong>: Conditional Wasserstein Generative
+Adversarial Network with Gradient Penalty</li>
 </ul>
 <h2 class="unnumbered" id="abstract">Abstract</h2>
 
@@ -557,13 +579,13 @@ Intelligence (AI) field’s ultimate goals is to empower computers with
 such human-like abilities, one of them being creativity, being able to
 produce something original and worthwhile <span class="citation"
 data-cites="mumford_2012">[<a href="#ref-mumford_2012"
-role="doc-biblioref">54</a>]</span>.</p>
+role="doc-biblioref">61</a>]</span>.</p>
 <p>Computational creativity is the field at the intersection of AI,
 cognitive psychology, philosophy, and art, which aims at understanding,
 simulating, replicating, or in some cases enhancing human creativity.
 One definition of computational creativity <span class="citation"
 data-cites="newell_1959">[<a href="#ref-newell_1959"
-role="doc-biblioref">55</a>]</span> is the ability to produce something
+role="doc-biblioref">62</a>]</span> is the ability to produce something
 that is novel and useful, demands that we reject common beliefs, results
 from intense motivation and persistence, or comes from clarifying a
 vague problem. Top-down approaches to this definition use a mix of
@@ -578,10 +600,10 @@ breakthroughs in the field of AI, more specifically in Deep Learning
 world, but also to interact with our environment using natural
 interactions such as speech and natural language. ANNs, once mocked by
 the AI community <span class="citation" data-cites="lecun_2019">[<a
-href="#ref-lecun_2019" role="doc-biblioref">42</a>]</span>, are now
+href="#ref-lecun_2019" role="doc-biblioref">47</a>]</span>, are now
 trainable using Gradient Descent (GD) <span class="citation"
 data-cites="rumelhart_1986">[<a href="#ref-rumelhart_1986"
-role="doc-biblioref">66</a>]</span> thanks to the massive availability
+role="doc-biblioref">76</a>]</span> thanks to the massive availability
 of data and the processing power of modern hardware accelerators such as
 Graphical Processing Units (GPU), Tensor Processing Units (TPU), and
 Neural Processing Units (NPU).</p>
@@ -589,15 +611,15 @@ Neural Processing Units (NPU).</p>
 gave rise to the field of generative NNs. Specialized DL architectures
 such as Variational Autoencoders (VAE) <span class="citation"
 data-cites="kingma_2013">[<a href="#ref-kingma_2013"
-role="doc-biblioref">39</a>]</span>, Generative Adversarial Networks
+role="doc-biblioref">44</a>]</span>, Generative Adversarial Networks
 (GAN) <span class="citation" data-cites="goodfellow_2014">[<a
-href="#ref-goodfellow_2014" role="doc-biblioref">21</a>]</span>,
+href="#ref-goodfellow_2014" role="doc-biblioref">25</a>]</span>,
 Denoising Diffusion Models (DDM) <span class="citation"
 data-cites="ho_2020">[<a href="#ref-ho_2020"
-role="doc-biblioref">29</a>]</span>, and Large Language Models (LLM)
+role="doc-biblioref">33</a>]</span>, and Large Language Models (LLM)
 <span class="citation" data-cites="vaswani_2017 brown_2020">[<a
 href="#ref-brown_2020" role="doc-biblioref">7</a>, <a
-href="#ref-vaswani_2017" role="doc-biblioref">74</a>]</span> are used to
+href="#ref-vaswani_2017" role="doc-biblioref">88</a>]</span> are used to
 generate artifacts such as text, audio, images, and videos of
 unprecedented quality and complexity.</p>
 <p>This dissertation aims at exploring how one could train and use
@@ -620,23 +642,23 @@ animation industry, where every frame of an animated product must be
 colored and shaded. This process is typically done using image editing
 software such as Photoshop <span class="citation"
 data-cites="photoshop">[<a href="#ref-photoshop"
-role="doc-biblioref">60</a>]</span>, Clip Studio PAINT <span
+role="doc-biblioref">70</a>]</span>, Clip Studio PAINT <span
 class="citation" data-cites="clipstudiopaint">[<a
-href="#ref-clipstudiopaint" role="doc-biblioref">11</a>]</span>, and
+href="#ref-clipstudiopaint" role="doc-biblioref">12</a>]</span>, and
 PaintMan <span class="citation" data-cites="paintman">[<a
-href="#ref-paintman" role="doc-biblioref">57</a>]</span>. Automating the
+href="#ref-paintman" role="doc-biblioref">64</a>]</span>. Automating the
 colorization process can greatly improve the workflow of these creative
 professionals and has the potential to lower the barrier for newcomers
 and amateurs. Such a system was integrated into Clip Studio PAINT <span
 class="citation" data-cites="clipstudiopaint">[<a
-href="#ref-clipstudiopaint" role="doc-biblioref">11</a>]</span>,
+href="#ref-clipstudiopaint" role="doc-biblioref">12</a>]</span>,
 demonstrating the growing significance of automatic colorization in the
 field.</p>
 <p>The most common digital illustration process can be broken down into
 four distinct stages: sketching, inking, coloring, and post-processing
 (see <a href="#fig:steps">Fig 1</a>). As demonstrated by the work of
 Kandinsky <span class="citation" data-cites="kandinsky_1977">[<a
-href="#ref-kandinsky_1977" role="doc-biblioref">35</a>]</span>, the
+href="#ref-kandinsky_1977" role="doc-biblioref">40</a>]</span>, the
 colorization process can greatly impact the overall meaning of a piece
 of art through the introduction of various color schemes, shading, and
 textures. These elements of the coloring process present significant
@@ -644,9 +666,9 @@ challenges for the Computer Vision (CV) task of automatic lineart
 colorization, particularly in comparison to its grayscale counterpart
 <span class="citation"
 data-cites="furusawa_2O17 hensman_2017 zhang_richard_2017">[<a
-href="#ref-furusawa_2O17" role="doc-biblioref">19</a>, <a
-href="#ref-hensman_2017" role="doc-biblioref">27</a>, <a
-href="#ref-zhang_richard_2017" role="doc-biblioref">79</a>]</span>.
+href="#ref-furusawa_2O17" role="doc-biblioref">22</a>, <a
+href="#ref-hensman_2017" role="doc-biblioref">31</a>, <a
+href="#ref-zhang_richard_2017" role="doc-biblioref">95</a>]</span>.
 Without the added semantic information provided by textures and shadows,
 inferring materials and 3D shapes from black and white linearts is
 difficult. They can only be deduced from silhouettes.</p>
@@ -659,29 +681,29 @@ gathering images from different types, mediums and styles. For those
 reasons, online scrapping and synthetic lineart extraction is the method
 of choice for many of the contributions in the field <span
 class="citation" data-cites="ci_2018 zhang_richard_2017">[<a
-href="#ref-ci_2018" role="doc-biblioref">10</a>, <a
-href="#ref-zhang_richard_2017" role="doc-biblioref">79</a>]</span>.</p>
+href="#ref-ci_2018" role="doc-biblioref">11</a>, <a
+href="#ref-zhang_richard_2017" role="doc-biblioref">95</a>]</span>.</p>
 <p>Previous works in automatic lineart colorization are based on the GAN
 <span class="citation" data-cites="goodfellow_2014">[<a
-href="#ref-goodfellow_2014" role="doc-biblioref">21</a>]</span>
+href="#ref-goodfellow_2014" role="doc-biblioref">25</a>]</span>
 architecture. They can generate unperfect but high-quality illustrations
 in a quasi realtime setting. They achieve user control and guidance via
 different means, color hints <span class="citation"
-data-cites="frans_2017 liu_2017 sangkloy_2016 paintschainer_2017 ci_2018">[<a
-href="#ref-ci_2018" role="doc-biblioref">10</a>, <a
-href="#ref-frans_2017" role="doc-biblioref">17</a>, <a
-href="#ref-liu_2017" role="doc-biblioref">47</a>, <a
-href="#ref-paintschainer_2017" role="doc-biblioref">59</a>, <a
-href="#ref-sangkloy_2016" role="doc-biblioref">69</a>]</span>, style
+data-cites="frans_2017 liu_2017 sangkloy_2016 paintschainer_2018 ci_2018">[<a
+href="#ref-ci_2018" role="doc-biblioref">11</a>, <a
+href="#ref-frans_2017" role="doc-biblioref">19</a>, <a
+href="#ref-liu_2017" role="doc-biblioref">53</a>, <a
+href="#ref-paintschainer_2018" role="doc-biblioref">65</a>, <a
+href="#ref-sangkloy_2016" role="doc-biblioref">79</a>]</span>, style
 transfer <span class="citation" data-cites="zhang_ji_2017">[<a
-href="#ref-zhang_ji_2017" role="doc-biblioref">78</a>]</span>, tagging
+href="#ref-zhang_ji_2017" role="doc-biblioref">93</a>]</span>, tagging
 <span class="citation" data-cites="kim_2019">[<a href="#ref-kim_2019"
-role="doc-biblioref">37</a>]</span>, and more recently natural language
+role="doc-biblioref">42</a>]</span>, and more recently natural language
 <span class="citation" data-cites="ho_2020">[<a href="#ref-ho_2020"
-role="doc-biblioref">29</a>]</span>. One common pattern in these methods
+role="doc-biblioref">33</a>]</span>. One common pattern in these methods
 is the use of a feature extractor such as Illustration2Vec <span
 class="citation" data-cites="saito_2015">[<a href="#ref-saito_2015"
-role="doc-biblioref">68</a>]</span> allowing to compensate for the lack
+role="doc-biblioref">78</a>]</span> allowing to compensate for the lack
 of semantic descriptors by injecting its feature vector into the
 models.</p>
 <h3 id="contributions">Contributions</h3>
@@ -703,16 +725,16 @@ his artwork.</p>
 <li>We present a recipe for curating datasets for the task of automatic
 lineart colorization <span class="citation"
 data-cites="hati_2019 hati_2023">[<a href="#ref-hati_2019"
-role="doc-biblioref">24</a>, <a href="#ref-hati_2023"
-role="doc-biblioref">25</a>]</span></li>
+role="doc-biblioref">28</a>, <a href="#ref-hati_2023"
+role="doc-biblioref">29</a>]</span></li>
 <li>We introduce three generative models:
 <ul>
 <li>PaintsTorch <span class="citation" data-cites="hati_2019">[<a
-href="#ref-hati_2019" role="doc-biblioref">24</a>]</span>, a double GAN
+href="#ref-hati_2019" role="doc-biblioref">28</a>]</span>, a double GAN
 generator that improved generation quality compared to previous work
 while allowing realtime interaction with the user.</li>
 <li>StencilTorch <span class="citation" data-cites="hati_2023">[<a
-href="#ref-hati_2023" role="doc-biblioref">25</a>]</span>, an upgrade
+href="#ref-hati_2023" role="doc-biblioref">29</a>]</span>, an upgrade
 upon PaintsTorch, shifting the colorization problem to in-painting
 allowing for human collaboration to emerge as a natural workflow where
 the input of a first pass becomes the potential input for a second.</li>
@@ -729,7 +751,7 @@ societal impact.</li>
 synthesis are raising important ethical and societal concerns,
 especially because of its availability and ease of use. Models such as
 Stable Diffusion <span class="citation" data-cites="rombach_2021">[<a
-href="#ref-rombach_2021" role="doc-biblioref">63</a>]</span> and more
+href="#ref-rombach_2021" role="doc-biblioref">73</a>]</span> and more
 recently Chat-GPT <span class="citation" data-cites="openai_2023">[<a
 href="#ref-openai_2023" role="doc-biblioref">9</a>]</span> are
 disturbing our common beliefs and relation with copyright, creativity,
@@ -748,7 +770,7 @@ discrimination. These models are trained on large amounts of data, and
 if the data is not diverse or representative enough, the model may
 perpetuate or even amplify existing biases. The Microsoft Tay Twitter
 bot <span class="citation" data-cites="wolf_2017">[<a
-href="#ref-wolf_2017" role="doc-biblioref">76</a>]</span> scandal is an
+href="#ref-wolf_2017" role="doc-biblioref">90</a>]</span> scandal is an
 outcome of such a phenomenon. This initially innocent chatbot has been
 easily turned into a racist bot perpetuating hate speech. The task was
 made easier because of the inherently biased dataset it was trained
@@ -774,15 +796,15 @@ non-experts, and serve as an introduction to the field.</p>
 href="#ch:contrib-4">7</a>) presents our contributions, some of which
 have previously been presented in <span class="citation"
 data-cites="hati_2019 hati_2023">[<a href="#ref-hati_2019"
-role="doc-biblioref">24</a>, <a href="#ref-hati_2023"
-role="doc-biblioref">25</a>]</span>. It introduces into detail our
+role="doc-biblioref">28</a>, <a href="#ref-hati_2023"
+role="doc-biblioref">29</a>]</span>. It introduces into detail our
 recipe for sourcing and curating consistent and qualitative datasets for
 automatic lineart colorization, PaintsTorch <span class="citation"
 data-cites="hati_2019">[<a href="#ref-hati_2019"
-role="doc-biblioref">24</a>]</span> our first double generator GAN
+role="doc-biblioref">28</a>]</span> our first double generator GAN
 conditioned on user strokes, StencilTorch <span class="citation"
 data-cites="hati_2023">[<a href="#ref-hati_2023"
-role="doc-biblioref">25</a>]</span> our in-painting reformulation
+role="doc-biblioref">29</a>]</span> our in-painting reformulation
 introducing the use of masks to allow the emergence of iterative
 workflow and collaboration with the machine, and finally StablePaint, an
 exploration of the use of DDM models for variations qualitative
@@ -823,7 +845,7 @@ straightforward story. The field had its success and failures. The term
 Artificial Intelligence (AI) has first been introduced in 1956 by John
 Mc Carthy and Marvin Lee Minsky at a workshop sponsored by Dartmouth
 College <span class="citation" data-cites="dartmouth_2006">[<a
-href="#ref-dartmouth_2006" role="doc-biblioref">51</a>]</span>,
+href="#ref-dartmouth_2006" role="doc-biblioref">58</a>]</span>,
 gathering about twenty researchers and intellectuals such as the
 renowned Claude Shannon (see <a href="#fig:dartmouth">Fig 3</a>). The
 field’s main questions were supposed to be solved in a short period.</p>
@@ -837,7 +859,7 @@ its early days to the current state of the field. For a more in-depth
 look at the history of modern AI, DL, we recommend “Quand la machine
 apprend” from Yann LeCun <span class="citation"
 data-cites="lecun_2019">[<a href="#ref-lecun_2019"
-role="doc-biblioref">42</a>]</span>.</p>
+role="doc-biblioref">47</a>]</span>.</p>
 <figure id="fig:dartmouth">
 <img src="./figures/boai_dartmouth.png"
 alt="Photography of seven of the Dartmouth workshop participants. From left to right: John McCarthy, Marvin Lee Minsky, Nathaniel Rochester, Claude Elwood Shannon, Ray Solomonoff, Trenchard More, and Oliver Gordon Selfridge. Credit: Margaret Minksy" />
@@ -850,7 +872,7 @@ More, and Oliver Gordon Selfridge. Credit: Margaret Minksy</figcaption>
 <p>The term Artificial Intelligence (AI) was first used at the 1956
 Dartmouth Workshop <span class="citation"
 data-cites="dartmouth_2006">[<a href="#ref-dartmouth_2006"
-role="doc-biblioref">51</a>]</span>, where John McCarthy proposed the
+role="doc-biblioref">58</a>]</span>, where John McCarthy proposed the
 idea of creating a machine that could learn from its mistakes and
 improve its performance over time. The twenty researchers and
 intellectuals present worked on topics such as the automatic computer,
@@ -864,14 +886,14 @@ programming, production rules, semantic nets and frames, knowledge-based
 systems, symbolic mathematics, automatons, automated provers, ontologies
 and other paradigms were at the core of symbolic AI <span
 class="citation" data-cites="russell_2016">[<a href="#ref-russell_2016"
-role="doc-biblioref">67</a>]</span>. This approach was based on the
+role="doc-biblioref">77</a>]</span>. This approach was based on the
 early work of Alan Turing and the development of functional languages
 such as the LISP by McCarthy and al. at MIT <span class="citation"
 data-cites="mccarthy_1978">[<a href="#ref-mccarthy_1978"
-role="doc-biblioref">50</a>]</span>.</p>
+role="doc-biblioref">57</a>]</span>.</p>
 <p>One significant contribution of this period was the Perceptron by
 Frank Rosenblatt <span class="citation" data-cites="rosenblatt_1958">[<a
-href="#ref-rosenblatt_1958" role="doc-biblioref">65</a>]</span>, a
+href="#ref-rosenblatt_1958" role="doc-biblioref">75</a>]</span>, a
 simplified biomimical model of a single neuron. This artificial neuron
 fires when the weighted sum of its input is above a predefined
 threshold. The weights, scalars attributed to the connection edges of
@@ -884,7 +906,7 @@ which uses a network of artificial neurons to process data. The
 Perceptron was met with much enthusiasm but was eventually criticized by
 Marvin L. Minsky and Seymour Papert <span class="citation"
 data-cites="minsky_1969">[<a href="#ref-minsky_1969"
-role="doc-biblioref">52</a>]</span>, who argued that it could not solve
+role="doc-biblioref">59</a>]</span>, who argued that it could not solve
 a simple XOR problem. The criticisms, as well as other issues, led to a
 period of disillusion in the field of AI, known as the “First AI
 Winter”. It was a time when AI research lost its momentum and funding
@@ -893,7 +915,7 @@ was not abundant anymore. This period lasted from 1973 to 1980.</p>
 AI</h4>
 <p>The eighties saw a resurgence of interest in AI. Expert systems <span
 class="citation" data-cites="jackson_1998">[<a href="#ref-jackson_1998"
-role="doc-biblioref">33</a>]</span> were the new hot AI topic. They are
+role="doc-biblioref">38</a>]</span> were the new hot AI topic. They are
 made of hierarchical and specialized ensembles of symbolic reasoning
 models and are used to solve complex problems. Symbolic AI continued to
 prosper as the dominant approach until the mid-nineties.</p>
@@ -902,10 +924,10 @@ search-based systems using depth-first-search, and genetic algorithms,
 requiring complex engineering and domain-specific knowledge from experts
 to work. It was also the time of the first cognitive architectures <span
 class="citation" data-cites="lieto_2021">[<a href="#ref-lieto_2021"
-role="doc-biblioref">45</a>]</span> inspired by advances in the field of
+role="doc-biblioref">50</a>]</span> inspired by advances in the field of
 neuroscience such as SOAR <span class="citation"
 data-cites="larid_2019">[<a href="#ref-larid_2019"
-role="doc-biblioref">41</a>]</span> and Adaptive Control of
+role="doc-biblioref">46</a>]</span> and Adaptive Control of
 Thought—Rational (ACT-R) <span class="citation"
 data-cites="john_1992">[<a href="#ref-john_1992"
 role="doc-biblioref">2</a>]</span> attempting at simulating the human
@@ -915,11 +937,11 @@ community at the time, some individuals are known for significant
 contributions that later would form the basis for modern NN
 architectures. It was the case for Kunihiko Fukushima and his
 NeoCognitron <span class="citation" data-cites="fukushima_1980">[<a
-href="#ref-fukushima_1980" role="doc-biblioref">18</a>]</span>, or David
+href="#ref-fukushima_1980" role="doc-biblioref">20</a>]</span>, or David
 E. Rumelhart et al. who introduced the most used learning procedure for
 training Multi-Layer Perceptrons (MLP), the backpropagation <span
 class="citation" data-cites="rumelhart_1986">[<a
-href="#ref-rumelhart_1986" role="doc-biblioref">66</a>]</span>.</p>
+href="#ref-rumelhart_1986" role="doc-biblioref">76</a>]</span>.</p>
 <h4 id="the-second-ai-winter">The Second AI Winter</h4>
 <p>Unfortunately, this period was also marked by a lack of progress
 because of the resource limitations of the time. Those algorithms
@@ -933,20 +955,20 @@ winter lasted from 1988 to early 2000.</p>
 indomitable individuals continued their work. During this period,
 Vladimir Vapnik et al. developed the Support Vector Machine (SVM) <span
 class="citation" data-cites="cortes_1995">[<a href="#ref-cortes_1995"
-role="doc-biblioref">12</a>]</span>, a robust non-probabilistic binary
+role="doc-biblioref">13</a>]</span>, a robust non-probabilistic binary
 linear classifier. The method has the advantage to generalize well even
 with small datasets. Sepp Hochreiter et al. introduced the Long
 Short-Term Memory (LSTM) for Recurrent Neural Networks (RNN) <span
 class="citation" data-cites="hochreiter_1997">[<a
-href="#ref-hochreiter_1997" role="doc-biblioref">30</a>]</span>, a
+href="#ref-hochreiter_1997" role="doc-biblioref">34</a>]</span>, a
 complex recurrent cell using gates to route the information flow and
 simulate long and short-term memory buffers. In 1989, Yann LeCun
 provided the first practical and industrial demonstration of
 backpropagation at Bell Labs with a Convolutional Neural Network (CNN)
 to read handwritten digits <span class="citation"
 data-cites="lecun_1989 lecun_1998">[<a href="#ref-lecun_1989"
-role="doc-biblioref">43</a>, <a href="#ref-lecun_1998"
-role="doc-biblioref">44</a>]</span> later used by the American postal
+role="doc-biblioref">48</a>, <a href="#ref-lecun_1998"
+role="doc-biblioref">49</a>]</span> later used by the American postal
 services to sort letters.</p>
 <figure id="fig:revolution">
 <img src="./figures/boai_revolution.svg"
@@ -964,26 +986,26 @@ abundant thanks to the internet and the rapid rise of search engines and
 social networks. It is the era of Big Data. NN were competing with SVM.
 In 2009 Fei-Fei Li and her group launched ImageNet <span
 class="citation" data-cites="deng_2009">[<a href="#ref-deng_2009"
-role="doc-biblioref">13</a>]</span>, a dataset assembling billions of
+role="doc-biblioref">14</a>]</span>, a dataset assembling billions of
 labeled images.</p>
 <p>By 2011, the speed of GPUs had increased significantly, making it
 possible to train CNNs without layer-by-layer pre-training. The rest of
 the story includes a succession of deep NN architectures including,
 AlexNet <span class="citation" data-cites="krizhevsky_2012">[<a
-href="#ref-krizhevsky_2012" role="doc-biblioref">40</a>]</span>, one of
+href="#ref-krizhevsky_2012" role="doc-biblioref">45</a>]</span>, one of
 the first award-winning deep CNN, ResNet <span class="citation"
 data-cites="he_2016">[<a href="#ref-he_2016"
-role="doc-biblioref">26</a>]</span>, introducing residual connections,
+role="doc-biblioref">30</a>]</span>, introducing residual connections,
 the Generative Adversarial Networks (GAN) <span class="citation"
 data-cites="goodfellow_2014">[<a href="#ref-goodfellow_2014"
-role="doc-biblioref">21</a>]</span>, a high fidelity and high-resolution
+role="doc-biblioref">25</a>]</span>, a high fidelity and high-resolution
 generative framework, attention mechanisms with the rise of the
 Transformer “Attention is all you Need” architecture <span
 class="citation" data-cites="vaswani_2017">[<a href="#ref-vaswani_2017"
-role="doc-biblioref">74</a>]</span> present in almost all modern DL
+role="doc-biblioref">88</a>]</span> present in almost all modern DL
 contributions, and more recently the Denoising Diffusion Model (DDM)
 <span class="citation" data-cites="ho_2020">[<a href="#ref-ho_2020"
-role="doc-biblioref">29</a>]</span>, the spiritual autoregressive
+role="doc-biblioref">33</a>]</span>, the spiritual autoregressive
 successor of the GAN.</p>
 <figure id="fig:milestones">
 <img src="./figures/boai_milestones.svg"
@@ -997,29 +1019,29 @@ href="#fig:milestones">Fig 5</a>). These milestones have been essential
 in advancing the field and enabling its applications within various
 sectors. One of the first notable milestones was AlphaGo from DeepMind
 in 2016 <span class="citation" data-cites="silver_2016">[<a
-href="#ref-silver_2016" role="doc-biblioref">71</a>]</span>, where an AI
+href="#ref-silver_2016" role="doc-biblioref">83</a>]</span>, where an AI
 system was able to beat the Korean world champion Lee Se Dol in the game
 of Go. AlphaGo is an illustration of the compression and pattern
 recognition capabilities of deep NN in combination with efficient search
 algorithms.</p>
 <p>In 2019, AlphStar <span class="citation"
 data-cites="vinyals_2019">[<a href="#ref-vinyals_2019"
-role="doc-biblioref">75</a>]</span> from DeepMind also was able to
+role="doc-biblioref">89</a>]</span> from DeepMind also was able to
 compete and defeat grandmasters in StarCraft the real-time strategy game
 of Blizzard. This demonstrated the capability of Deep Learning
 algorithms to achieve beyond human-level performance in real-time and
 long-term planification. In 2020, AlphaFold <span class="citation"
 data-cites="senior_2020">[<a href="#ref-senior_2020"
-role="doc-biblioref">70</a>]</span> improved the Protein Folding
+role="doc-biblioref">81</a>]</span> improved the Protein Folding
 competition by quite a margin, showing that DL could be used to help
 solve complex problems that have implications for medical research and
 drug discovery. In 2021 a follow-up model, AlphaFold 2 <span
 class="citation" data-cites="jumper_2021">[<a href="#ref-jumper_2021"
-role="doc-biblioref">34</a>]</span>, was presented as an impressive
+role="doc-biblioref">39</a>]</span>, was presented as an impressive
 successor of AlphaFold, showcasing further advances in this field.</p>
 <p>In 2021, Stable Diffusion <span class="citation"
 data-cites="rombach_2021">[<a href="#ref-rombach_2021"
-role="doc-biblioref">63</a>]</span> from Stability AI was released. This
+role="doc-biblioref">73</a>]</span> from Stability AI was released. This
 Latent DDM conditioned on text prompts allows to generate images of
 unprecedented quality and met unprecedented public reach. Finally,
 Chat-GPT <span class="citation" data-cites="openai_2023">[<a
@@ -1039,10 +1061,10 @@ understand this thesis dissertation. It introduces Neural Networks (NN)
 from first principles. A more detailed and complete introduction to the
 field can be found in “the Deep Learning book” by Ian Goodfellow et al
 <span class="citation" data-cites="goodfellow_2016">[<a
-href="#ref-goodfellow_2016" role="doc-biblioref">20</a>]</span> or in
+href="#ref-goodfellow_2016" role="doc-biblioref">24</a>]</span> or in
 “Dive into Deep Learning” by Aston Zhang et al. <span class="citation"
 data-cites="aston_zhang_2021">[<a href="#ref-aston_zhang_2021"
-role="doc-biblioref">77</a>]</span>.</p>
+role="doc-biblioref">92</a>]</span>.</p>
 <h4 id="supervised-learning">Supervised Learning</h4>
 <p>In Machine Learning (ML), problems are often formulated as
 data-driven learning tasks, where a computer is used to find a mapping
@@ -1295,7 +1317,7 @@ can improve <span class="math inline">\(\theta\)</span>. This algorithm
 is called GD. In practice, due to the very large size of the datasets
 (<span class="math inline">\(14,197,122\)</span> images for ImageNet
 <span class="citation" data-cites="deng_2009">[<a href="#ref-deng_2009"
-role="doc-biblioref">13</a>]</span>), the objective gradient is
+role="doc-biblioref">14</a>]</span>), the objective gradient is
 approximated using a small subset of the training data for each step
 referred to as a minibatch. This approximation of the GD is called
 Stochastic Gradient Descent (SGD) (see
@@ -1344,18 +1366,18 @@ class="math inline">\(\epsilon\)</span> on GD.</figcaption>
 literature contains abundant work on first order optimizer variants
 aiming for faster convergence such as SGD with Momentum <span
 class="citation" data-cites="qian_1999">[<a href="#ref-qian_1999"
-role="doc-biblioref">61</a>]</span>, Adagrad <span class="citation"
+role="doc-biblioref">71</a>]</span>, Adagrad <span class="citation"
 data-cites="duchi_2011">[<a href="#ref-duchi_2011"
-role="doc-biblioref">16</a>]</span>, RMSProp <span class="citation"
+role="doc-biblioref">17</a>]</span>, RMSProp <span class="citation"
 data-cites="hinton_lecture6a">[<a href="#ref-hinton_lecture6a"
-role="doc-biblioref">28</a>]</span>, Adam <span class="citation"
+role="doc-biblioref">32</a>]</span>, Adam <span class="citation"
 data-cites="kingma_2014">[<a href="#ref-kingma_2014"
-role="doc-biblioref">38</a>]</span>, and its correction AdamW <span
+role="doc-biblioref">43</a>]</span>, and its correction AdamW <span
 class="citation" data-cites="loshchilov_2017">[<a
-href="#ref-loshchilov_2017" role="doc-biblioref">48</a>]</span>. A toy
+href="#ref-loshchilov_2017" role="doc-biblioref">54</a>]</span>. A toy
 example is shown <a href="#fig:sgd_moments">Fig 10</a>.</p>
 <p>The Momentum update <span class="citation" data-cites="qian_1999">[<a
-href="#ref-qian_1999" role="doc-biblioref">61</a>]</span> introduces the
+href="#ref-qian_1999" role="doc-biblioref">71</a>]</span> introduces the
 use of a momentum inspired by physics’ first principles to favor small
 and consistent gradient directions. In this particular case, the
 momentum is represented by a variable <span
@@ -1367,7 +1389,7 @@ gradient direction instead of <span class="math inline">\(\nabla_\theta
 C(\theta)\)</span>.</p>
 <p>Other optimizers also make use of the second moment of the gradients.
 Adagrad <span class="citation" data-cites="duchi_2011">[<a
-href="#ref-duchi_2011" role="doc-biblioref">16</a>]</span> uses another
+href="#ref-duchi_2011" role="doc-biblioref">17</a>]</span> uses another
 variable <span class="math inline">\(r\)</span> to store the second
 moment <span class="math inline">\(r := r + \nabla_\theta C(\theta)
 \odot \nabla_\theta C(\theta)\)</span> and modulate the update rule
@@ -1376,14 +1398,14 @@ class="math inline">\(\frac{1}{\delta + \sqrt{r}} \odot \nabla_\theta
 C(\theta)\)</span> where <span class="math inline">\(\delta\)</span> is
 a small value to avoid division by zero. Similarly, RMSProp <span
 class="citation" data-cites="hinton_lecture6a">[<a
-href="#ref-hinton_lecture6a" role="doc-biblioref">28</a>]</span>
+href="#ref-hinton_lecture6a" role="doc-biblioref">32</a>]</span>
 maintains a running mean of the second moment <span
 class="math inline">\(r := \rho r + (1 - \rho) \nabla_\theta C(\theta)
 \odot \nabla_\theta C(\theta)\)</span>.</p>
 <p>Finally Adam <span class="citation" data-cites="kingma_2014">[<a
-href="#ref-kingma_2014" role="doc-biblioref">38</a>]</span>, and its
+href="#ref-kingma_2014" role="doc-biblioref">43</a>]</span>, and its
 correction AdamW <span class="citation" data-cites="loshchilov_2017">[<a
-href="#ref-loshchilov_2017" role="doc-biblioref">48</a>]</span>, are
+href="#ref-loshchilov_2017" role="doc-biblioref">54</a>]</span>, are
 applying both Momentum and RMSProp estimating the first and second
 moment to make parameters with large gradients take small steps and
 parameters with low gradients take larger ones. This has the advantage
@@ -1514,7 +1536,7 @@ reverse mode differentiation, can be applied.</p>
 <p>In modern DL frameworks <span class="citation"
 data-cites="pytorch tensorflow">[<a href="#ref-tensorflow"
 role="doc-biblioref">1</a>, <a href="#ref-pytorch"
-role="doc-biblioref">58</a>]</span>, the AD is centered on the
+role="doc-biblioref">68</a>]</span>, the AD is centered on the
 implementation of a Graph object with Nodes. Both entities possess a
 <code>forward()</code> and a <code>backward()</code> function. The
 forward pass calls the <code>forward()</code> function of each node of
@@ -1529,7 +1551,7 @@ NN operation chain.</p>
 of such a computation graph for backpropagation and AD engines adapted
 from Micrograd by Andrej Karpathy <span class="citation"
 data-cites="karpathy_micrograd">[<a href="#ref-karpathy_micrograd"
-role="doc-biblioref">36</a>]</span>. The Node class is responsible for
+role="doc-biblioref">41</a>]</span>. The Node class is responsible for
 storing the value, the chained gradient, and additional information to
 trace the graph for the backward pass.</p>
 <div class="sourceCode" id="cb1"><pre
@@ -1628,12 +1650,12 @@ Micrograd, and offer support for accelerated hardware such as Graphical
 Processing Units (GPU), Tensor Processing Units (TPU), and Neural
 Processing Units (NPU). In this dissertation, most examples are using
 the PyTorch <span class="citation" data-cites="pytorch">[<a
-href="#ref-pytorch" role="doc-biblioref">58</a>]</span> framework, a
+href="#ref-pytorch" role="doc-biblioref">68</a>]</span> framework, a
 Python Tensor library written in C++ and equipped with a powerful eager
 mode reverse AD engine.</p>
 <p><strong>Eager or Graph Execution:</strong> Modern DL frameworks such
 as PyTorch <span class="citation" data-cites="pytorch">[<a
-href="#ref-pytorch" role="doc-biblioref">58</a>]</span> and Tensorflow
+href="#ref-pytorch" role="doc-biblioref">68</a>]</span> and Tensorflow
 <span class="citation" data-cites="tensorflow">[<a
 href="#ref-tensorflow" role="doc-biblioref">1</a>]</span> now propose
 two execution modes. An eager mode, where the graph is built dynamically
@@ -1660,7 +1682,7 @@ called Neural Networks (NN).</p>
 <h4 id="sec:perceptron">Perceptron</h4>
 <p>The Perceptron, introduced by Frank Rosenblatt in 1958 <span
 class="citation" data-cites="rosenblatt_1958">[<a
-href="#ref-rosenblatt_1958" role="doc-biblioref">65</a>]</span>, is the
+href="#ref-rosenblatt_1958" role="doc-biblioref">75</a>]</span>, is the
 building block of Neural Networks (NN). It was introduced as a
 simplified model of the human neuron, containing three parts: dendrites
 handling incoming signals from other neurons, a soma with a nucleus
@@ -1703,7 +1725,7 @@ class="math inline">\(n\)</span> is the number of inputs, that can
 perform binary classification, separate two classes. However, as
 mentioned by Marvin L. Minsky and al. in their controversial book
 Perceptrons <span class="citation" data-cites="minsky_1969">[<a
-href="#ref-minsky_1969" role="doc-biblioref">52</a>]</span>, a
+href="#ref-minsky_1969" role="doc-biblioref">59</a>]</span>, a
 hyperplane regressor cannot solve a simple XOR problem (see <a
 href="#fig:xor">Fig 13</a>).</p>
 <figure id="fig:xor">
@@ -1723,7 +1745,7 @@ repeating matrix multiplications (linear transformations) and
 non-linearities the network is able to handle non-linear problems and
 act as a universal function approximator <span class="citation"
 data-cites="hornik_1989">[<a href="#ref-hornik_1989"
-role="doc-biblioref">31</a>]</span>. This arrangement of layered
+role="doc-biblioref">35</a>]</span>. This arrangement of layered
 perceptrons is called a Multi-Layer Perceptron (MLP) (see <a
 href="#fig:mlp">Fig 14</a>).</p>
 <figure id="fig:mlp" width="90%">
@@ -1763,7 +1785,7 @@ down to zero <span class="math inline">\(y \in [0;
 capabilities of MLPs is the handwritten digit classification challenge
 on the Modified National Institute of Standards and Technology (MNIST)
 dataset <span class="citation" data-cites="mnist">[<a href="#ref-mnist"
-role="doc-biblioref">73</a>]</span>. MNIST contains <span
+role="doc-biblioref">87</a>]</span>. MNIST contains <span
 class="math inline">\(60,000\)</span> training and <span
 class="math inline">\(10,000\)</span> test examples. It has been written
 by high school students and gather <span class="math inline">\(28 \times
@@ -2039,7 +2061,7 @@ This process is called finetuning and is less expensive and
 time-consuming than full training. One method for finetuning consists in
 removing the classification head of a pre-trained model such as VGG16
 <span class="citation" data-cites="simonyan_2014">[<a
-href="#ref-simonyan_2014" role="doc-biblioref">72</a>]</span> and
+href="#ref-simonyan_2014" role="doc-biblioref">84</a>]</span> and
 replacing it with a new one adapted to the number of classes required
 for the task. The pretrained weights are then frozen (not updated during
 training), and the new weights are trained following a standard
@@ -2125,17 +2147,17 @@ attention and has been the subject of implementation attempts, first in
 the field of Natural Language Processing (NLP) <span class="citation"
 data-cites="bahdanau_2014 luong_2015 vaswani_2017">[<a
 href="#ref-bahdanau_2014" role="doc-biblioref">5</a>, <a
-href="#ref-luong_2015" role="doc-biblioref">49</a>, <a
-href="#ref-vaswani_2017" role="doc-biblioref">74</a>]</span>, and later
+href="#ref-luong_2015" role="doc-biblioref">56</a>, <a
+href="#ref-vaswani_2017" role="doc-biblioref">88</a>]</span>, and later
 transposed to field of Computer Vision (CV) <span class="citation"
 data-cites="dosovitskiy_2020 caron_2021">[<a href="#ref-caron_2021"
 role="doc-biblioref">8</a>, <a href="#ref-dosovitskiy_2020"
-role="doc-biblioref">15</a>]</span>.</p>
+role="doc-biblioref">16</a>]</span>.</p>
 <p>This section focuses on visual applications of the attention
 mechanism only as this thesis is about image generation, and more
 specifically a particular type of attention that made the success of the
 modern Transformer <span class="citation" data-cites="vaswani_2017">[<a
-href="#ref-vaswani_2017" role="doc-biblioref">74</a>]</span>
+href="#ref-vaswani_2017" role="doc-biblioref">88</a>]</span>
 architecture called Self-Attention.</p>
 <p><strong>Self-Attention:</strong> Computing self-attention requires
 the creation of three vectors for each element of the sequence in latent
@@ -2180,7 +2202,7 @@ can explore the “reasoning” of the NN by looking at the attention scores
 and observing how the sequence elements attend to each other.</p>
 <p><strong>Multihead Self-Attention:</strong> In their paper <span
 class="citation" data-cites="vaswani_2017">[<a href="#ref-vaswani_2017"
-role="doc-biblioref">74</a>]</span>, the authors further refine this
+role="doc-biblioref">88</a>]</span>, the authors further refine this
 notion of self-attention. Let us consider one self-attention module and
 call it an attention head. They propose to stack multiple attention
 heads and demonstrate improved performances. This notion enables models
@@ -2204,7 +2226,7 @@ Contrary to CNNs exploiting the spatially local correlation of
 information, self-attention does not encode the order of the vectors. To
 alleviate this problem, Vaswani et al. <span class="citation"
 data-cites="vaswani_2017">[<a href="#ref-vaswani_2017"
-role="doc-biblioref">74</a>]</span> propose to add (concatenate) a
+role="doc-biblioref">88</a>]</span> propose to add (concatenate) a
 vector to each embedding input. This vector is designed to follow a
 specific pattern learned by the model that will help encode the position
 of information along its flow in the network. This is called a
@@ -2231,7 +2253,7 @@ similar pattern and are using tricks from previous work such as layer
 normalization <span class="citation" data-cites="ba_2016">[<a
 href="#ref-ba_2016" role="doc-biblioref">4</a>]</span> and residual
 connections <span class="citation" data-cites="he_2016">[<a
-href="#ref-he_2016" role="doc-biblioref">26</a>]</span> to allow to
+href="#ref-he_2016" role="doc-biblioref">30</a>]</span> to allow to
 train deeper networks with a large number of blocks. A block is made out
 of a multi-head self-attention layer, followed by a residual injection
 and a normalization layer followed by a feed-forward layer and another
@@ -2250,14 +2272,14 @@ network which is thus called a Vision Transformer (ViT)</figcaption>
 </figure>
 <p><strong>Vision Transformers:</strong> The success of the Transformer
 architecture <span class="citation" data-cites="vaswani_2017">[<a
-href="#ref-vaswani_2017" role="doc-biblioref">74</a>]</span> in the NLP
+href="#ref-vaswani_2017" role="doc-biblioref">88</a>]</span> in the NLP
 community has pushed the CV community to explore how one can use this
 kind of NNs for vision tasks. It turns out that by expressing images as
 sequences of patches, <span class="math inline">\(n \times n\)</span>
 image blocks (see <a href="#fig:core_nn_patches">Fig 24</a>), and
 embedding them, transformers can exceed the performance of a CNN for
 classification <span class="citation" data-cites="dosovitskiy_2020">[<a
-href="#ref-dosovitskiy_2020" role="doc-biblioref">15</a>]</span>, but
+href="#ref-dosovitskiy_2020" role="doc-biblioref">16</a>]</span>, but
 also present emerging faculties resulting from the use of self-attention
 such as segmentation and saliency maps <span class="citation"
 data-cites="caron_2021">[<a href="#ref-caron_2021"
@@ -2589,7 +2611,7 @@ the latent space. It is trained only for reconstruction and is thus
 subject to high overfitting resulting in a meaningless structural
 organization of the latent codes. The Variational Autoencoder (VAE)
 architecture <span class="citation" data-cites="kingma_2013">[<a
-href="#ref-kingma_2013" role="doc-biblioref">39</a>]</span> is one
+href="#ref-kingma_2013" role="doc-biblioref">44</a>]</span> is one
 answer to this issue. It can be viewed as a special AE hacked by adding
 a regularization objective enabling generation by exploring the learned
 and structured latent space (see <a href="#fig:gai_vae">Fig 31</a>).</p>
@@ -2723,7 +2745,7 @@ original input <span class="math inline">\(x\)</span>.</p>
 not differentiable. And we know that a NN needs to be differentiable to
 be optimized using SGD. To solve this problem, Kingma et al. <span
 class="citation" data-cites="kingma_2013">[<a href="#ref-kingma_2013"
-role="doc-biblioref">39</a>]</span> propose to use what they call a
+role="doc-biblioref">44</a>]</span> propose to use what they call a
 reparametrization trick. It consists in sampling a surrogate standard
 Gaussian distribution <span class="math inline">\(\epsilon \sim
 \mathcal{N}(0, I)\)</span> and scaling it by the output of the learned
@@ -2860,7 +2882,7 @@ space in a grid pattern.</figcaption>
 and generation, they suffer from quality degradation. The Generative
 Adversarial Network (GAN) architecture, introduced by Ian Goodfellow et
 al. <span class="citation" data-cites="goodfellow_2014">[<a
-href="#ref-goodfellow_2014" role="doc-biblioref">21</a>]</span>, is one
+href="#ref-goodfellow_2014" role="doc-biblioref">25</a>]</span>, is one
 answer to this problem. GANs can generate high-quality images in
 real-time settings.</p>
 <p><strong>Vanilla GAN:</strong> In its vanilla formulation, a GAN
@@ -2895,15 +2917,15 @@ training. It is also subject to mode collapse where the generator finds
 a simple solution fooling the discriminator and failing at generating
 diverse enough outputs. Solutions such as the hinge loss <span
 class="citation" data-cites="lim_2017">[<a href="#ref-lim_2017"
-role="doc-biblioref">46</a>]</span>, the Wasserstein distance <span
+role="doc-biblioref">51</a>]</span>, the Wasserstein distance <span
 class="citation" data-cites="arjovsky_2017">[<a
 href="#ref-arjovsky_2017" role="doc-biblioref">3</a>]</span>, gradient
 penalty <span class="citation" data-cites="ishaan_2017">[<a
-href="#ref-ishaan_2017" role="doc-biblioref">23</a>]</span>, the use of
+href="#ref-ishaan_2017" role="doc-biblioref">27</a>]</span>, the use of
 batch <span class="citation" data-cites="ioffe_2015">[<a
-href="#ref-ioffe_2015" role="doc-biblioref">32</a>]</span> and spectral
+href="#ref-ioffe_2015" role="doc-biblioref">37</a>]</span> and spectral
 <span class="citation" data-cites="miyato_2018">[<a
-href="#ref-miyato_2018" role="doc-biblioref">53</a>]</span>
+href="#ref-miyato_2018" role="doc-biblioref">60</a>]</span>
 normalization can be found in the literature.</p>
 <p><strong>Wasserstein GAN:</strong> The most famous improvement of the
 vanilla GAN is the Wasserstein Generative Adversarial Network (WGAN)
@@ -2924,7 +2946,7 @@ combined with gradient clipping to satisfy a Lipschitz constraint.</p>
 \qquad{(13)}\]</span></span></p>
 <p><strong>Gradient Penalty:</strong> In their contribution, Gulrajani
 et al. <span class="citation" data-cites="gulrajani_2017">[<a
-href="#ref-gulrajani_2017" role="doc-biblioref">22</a>]</span> propose
+href="#ref-gulrajani_2017" role="doc-biblioref">26</a>]</span> propose
 to replace gradient clipping with gradient penalty to enforce a
 constraint on the critic such that its gradients with respect to the
 inputs are unit vectors. The critic loss is thus augmented with an
@@ -3096,7 +3118,7 @@ framework of choice when approaching image generation tasks for
 real-time or near real-time applications with perceptual quality needs.
 However, a more recent proposal named Denoising Diffusion Model (DDM)
 <span class="citation" data-cites="ho_2020">[<a href="#ref-ho_2020"
-role="doc-biblioref">29</a>]</span> is currently challenging this
+role="doc-biblioref">33</a>]</span> is currently challenging this
 position. They allow for better quality generation and free user-guided
 controls such as in-paint, out-painting, super-resolution, and more at
 the cost of inference time, at least concerning its vanilla
@@ -3163,9 +3185,9 @@ fixed to a constant or chosen using a schedule over <span
 class="math inline">\(T\)</span> timesteps (see <a
 href="#fig:gai_ddpm_forward">Fig 37</a>). In the original paper <span
 class="citation" data-cites="ho_2020">[<a href="#ref-ho_2020"
-role="doc-biblioref">29</a>]</span> and follow-up contribution <span
+role="doc-biblioref">33</a>]</span> and follow-up contribution <span
 class="citation" data-cites="nichol_2021">[<a href="#ref-nichol_2021"
-role="doc-biblioref">56</a>]</span>, the authors propose a linear (<span
+role="doc-biblioref">63</a>]</span>, the authors propose a linear (<span
 class="math inline">\(\beta_1=1e^{-4}\)</span>, <span
 class="math inline">\(\beta_T=0.02\)</span>), a quadratic, and a cosine
 schedule. Their experiments show that the cosine schedule results are
@@ -3211,7 +3233,7 @@ x_t)
 <p>We can then optimize the negative log-likelihood of the training
 data. After a series of arrangements and simplifications, see the
 original paper <span class="citation" data-cites="ho_2020">[<a
-href="#ref-ho_2020" role="doc-biblioref">29</a>]</span> for full
+href="#ref-ho_2020" role="doc-biblioref">33</a>]</span> for full
 derivation, the objective can be written as follow:</p>
 <p><span id="eq:ddm_backward_elbo"><span class="math display">\[
 \begin{aligned}
@@ -3281,7 +3303,7 @@ noise model to predict the noise <span
 class="math inline">\(\epsilon\)</span> at timestep <span
 class="math inline">\(t\)</span>. Ho et al. <span class="citation"
 data-cites="ho_2020">[<a href="#ref-ho_2020"
-role="doc-biblioref">29</a>]</span> propose to further simplify the
+role="doc-biblioref">33</a>]</span> propose to further simplify the
 objective function <span class="math inline">\(L_t^{simple}\)</span> by
 removing the weighting term and making the variance fixed.</p>
 <p><span id="eq:ddm_backward_lt_simple"><span class="math display">\[
@@ -3463,7 +3485,7 @@ we implement a simple CNN. The network conditioning on the timestep
 simplicity. It is however required for a faithful implementation using a
 more common U-net architecture <span class="citation"
 data-cites="ronneberger_2015">[<a href="#ref-ronneberger_2015"
-role="doc-biblioref">64</a>]</span>.</p>
+role="doc-biblioref">74</a>]</span>.</p>
 <div class="sourceCode" id="cb34"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> OrderedDict</span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch.nn <span class="im">import</span> (BatchNorm2d, Conv2d, GELU, Module, Sequential)</span>
@@ -3569,11 +3591,11 @@ steps.</figcaption>
 <p>The Deep Learning community has come up with a variety of NN
 architectures specialized in new sample generation such as the VAE <span
 class="citation" data-cites="kingma_2013">[<a href="#ref-kingma_2013"
-role="doc-biblioref">39</a>]</span>, the GAN <span class="citation"
+role="doc-biblioref">44</a>]</span>, the GAN <span class="citation"
 data-cites="goodfellow_2014">[<a href="#ref-goodfellow_2014"
-role="doc-biblioref">21</a>]</span>, and DDM <span class="citation"
+role="doc-biblioref">25</a>]</span>, and DDM <span class="citation"
 data-cites="ho_2020">[<a href="#ref-ho_2020"
-role="doc-biblioref">29</a>]</span>. When trained on a specific dataset,
+role="doc-biblioref">33</a>]</span>. When trained on a specific dataset,
 they learn to reproduce the dataset distribution and generate unseen
 data. However, their vanilla formulations do not allow the final user to
 naturally control the output, let’s say pick the digit to generate by a
@@ -3627,11 +3649,11 @@ Language Models (LLM) <span class="citation"
 data-cites="devlin_2018 brown_2020 openai_2023">[<a
 href="#ref-brown_2020" role="doc-biblioref">7</a>, <a
 href="#ref-openai_2023" role="doc-biblioref">9</a>, <a
-href="#ref-devlin_2018" role="doc-biblioref">14</a>]</span> and
+href="#ref-devlin_2018" role="doc-biblioref">15</a>]</span> and
 multimodal embedding alignment [clip], GANs and DDMs <span
 class="citation" data-cites="ramesh_2022 rombach_2021">[<a
-href="#ref-ramesh_2022" role="doc-biblioref">62</a>, <a
-href="#ref-rombach_2021" role="doc-biblioref">63</a>]</span> are trained
+href="#ref-ramesh_2022" role="doc-biblioref">72</a>, <a
+href="#ref-rombach_2021" role="doc-biblioref">73</a>]</span> are trained
 to follow natural language instructions called prompts. The community is
 currently still learning how to engineer those prompts to enable
 fine-grained control of the generated outputs.</p>
@@ -3644,7 +3666,7 @@ engines, and more. The recent public success of generative AI such as
 Dall-E <span class="citation" data-cites="openai_2023">[<a
 href="#ref-openai_2023" role="doc-biblioref">9</a>]</span>, Stable
 Diffusion <span class="citation" data-cites="rombach_2021">[<a
-href="#ref-rombach_2021" role="doc-biblioref">63</a>]</span>, and
+href="#ref-rombach_2021" role="doc-biblioref">73</a>]</span>, and
 Chat-GPT <span class="citation" data-cites="openai_2023">[<a
 href="#ref-openai_2023" role="doc-biblioref">9</a>]</span> has put the
 research in creative tool building to the front of the scene. Those AI
@@ -3656,17 +3678,307 @@ which the rights are violated.</p>
 training of conditional Generative Adversarial Networks (GAN) and <span
 class="plural full">ddm</span> for user-guided automatic lineart
 colorization.</p>
-<!-- TODO: You are here -->
 <!-- ===================== [END] PART CONTEXT ===================== -->
 <!-- ===================== [START] PART CORE ===================== -->
 <h1 id="core">Core</h1>
+<h2 id="ch:sota">Related Work</h2>
+<p>In this chapter, we discuss related work for the task of automatic
+linear colorization. The related contributions can be divided into two
+categories, automatic methods (see
+Secs <strong>¿sec:automatic?</strong>,
+<strong>¿sec:userguided?</strong>) requiring no user intervention, and
+user-guided methods (see Secs <strong>¿sec:methods-guided?</strong>)
+adopting a human-in-the-loop system. Although classical methods are
+presented the state-of-the-art is now dominated by DL methods which are
+the focus of this thesis.</p>
+<h3 id="sec:rel-classical">Classical Approaches</h3>
+<p><strong><span class="citation" data-cites="wilkie_2020">[<a
+href="#ref-wilkie_2020" role="doc-biblioref">66</a>]</span> Wilkie et
+al.:</strong> In their work, Wilkie et al. introduced a
+Delaunay-triangulation-based algorithm for the interactive coloring of
+minimalist sketches. The aim is to reduce user intervention and make
+interaction as easy and natural as with the flood-fill algorithm while
+providing the ability to color regions with open contours. This is
+accomplished in two steps: 1) an automatic segmentation step that
+divides the input sketch into regions based on the underlying Delaunay
+structure, and 2) an interactive grouping of neighboring regions based
+on user input, which generates the final colored sketch. Results show
+that the method is as natural as a bucket fill tool and powerful enough
+to color minimalist sketches.</p>
+<p><strong><span class="citation" data-cites="parakkat_2022">[<a
+href="#ref-parakkat_2022" role="doc-biblioref">67</a>]</span> Parakkat
+et al.:</strong> In their paper, Parakkat et al. introduced a
+Delaunay-triangulation-based algorithm for the interactive coloring of
+minimalist sketches. The aim is to reduce user intervention and make
+interaction as easy and natural as with the flood-fill algorithm while
+providing the ability to color regions with open contours. This is
+accomplished in two steps: 1) an automatic segmentation step that
+divides the input sketch into regions based on the underlying Delaunay
+structure, and 2) an interactive grouping of neighboring regions based
+on user input, which generates the final colored sketch. Results show
+that the method is as natural as a bucket fill tool and powerful enough
+to color minimalist sketches.</p>
+<h3 id="sec:rel-deep">Deep Learning Approaches</h3>
+<h4 id="automatic-colorization">Automatic Colorization</h4>
+<p><strong><span class="citation" data-cites="iizuka_2016">[<a
+href="#ref-iizuka_2016" role="doc-biblioref">36</a>]</span> Iizuka et
+al.:</strong> In their paper, Iizuka et al. present a novel technique to
+automatically colorize grayscale images using both global priors and
+local image features. The proposed method uses a CNN to fuse local
+information and global priors, which are computed using the entire
+image. The entire framework is trained in an end-to-end fashion and is
+capable of processing images of any resolution. The model is trained on
+an existing scene classification database to learn discriminative global
+priors. A user study is conducted to validate the proposed method and it
+is shown to outperform the state-of-the-art. Extensive experiments on
+different types of images demonstrate the realistic colorizations of the
+proposed method.</p>
+<p><strong><span class="citation" data-cites="yoo_2019">[<a
+href="#ref-yoo_2019" role="doc-biblioref">91</a>]</span> Yoo et
+al.:</strong> In their work, Yoo et al. present a novel memory-augmented
+colorization model called MemoPainter that is capable of producing
+high-quality colorization with limited training data. It can capture
+rare instances and successfully colorize them. Furthermore, a novel
+threshold triplet loss is proposed to enable unsupervised training of
+memory networks without the need for class labels. Experiments show that
+the model is superior in both few-shot and one-shot colorization
+tasks.</p>
+<p><strong><span class="citation" data-cites="su_2020">[<a
+href="#ref-su_2020" role="doc-biblioref">85</a>]</span> Su et
+al.:</strong> Su et al. present a method for instance-aware image
+colorization that leverages an object detector to obtain cropped object
+images and a colorization network to extract object-level features. The
+network fuses the object-level and image-level features to predict the
+final colors, and the entire model is learned from a large-scale
+dataset. Experimental results show that this model outperforms existing
+methods and achieves state-of-the-art results.</p>
+<p><strong><span class="citation" data-cites="zhang_2018">[<a
+href="#ref-zhang_2018" role="doc-biblioref">94</a>]</span> Zhang et
+al.:</strong> In their paper, Zhang et al. propose a semi-automatic
+learning-based framework to colorize sketches with proper color,
+texture, and gradient. It divides the task into two stages: (1) a
+drafting stage where the model guesses color regions and splashes a
+variety of colors over the sketch, and (2) a refinement stage where the
+model detects unnatural colors and artifacts and tries to refine the
+result. An interactive software was developed to evaluate the model,
+which allows users to iteratively edit and refine the colorization. An
+extensive user study was conducted to evaluate the learning model and
+the interactive system, and results showed that it outperforms existing
+techniques and industrial applications in terms of visual quality, user
+control, user experience, and other metrics.</p>
+<p><strong><span class="citation" data-cites="liu_2017">[<a
+href="#ref-liu_2017" role="doc-biblioref">53</a>]</span> Liu et
+al.:</strong> Liu et al. investigate the sketch-to-image synthesis
+problem using Conditional Generative Adversarial Network (cGAN). To
+solve this problem, the auto-painter model is proposed, which is capable
+of automatically generating compatible colors for a sketch, as well as
+allowing users to indicate preferred colors. Experimental results on two
+sketch datasets demonstrate the effectiveness of the auto-painter model
+compared to existing image-to-image methods.</p>
+<p><strong><span class="citation" data-cites="frans_2017">[<a
+href="#ref-frans_2017" role="doc-biblioref">19</a>]</span> Frans et
+al.:</strong> In their contribution, Frans et al. propose a solution to
+automatically colorize raw line art by leveraging two networks in
+tandem. The first network is a color prediction network based solely on
+outlines, while the second network is a shading network conditioned on
+both outlines and a color scheme. Processing methods are used to limit
+information passed in the color scheme, which improves generalization.
+Finally, the research demonstrates natural-looking results when
+colorizing outlines from scratch, as well as from a messy, user-defined
+color scheme.</p>
+<h4 id="examplar-based">Examplar-Based</h4>
+<p><strong><span class="citation" data-cites="hensman_2017">[<a
+href="#ref-hensman_2017" role="doc-biblioref">31</a>]</span> Hensman et
+al.:</strong> In their contribution, Hensman et al. propose an approach
+to colorizing manga using a Conditional Generative Adversarial Network
+(cGAN), which requires only a single colorized reference image for
+training, rather than hundreds or thousands of images. Additionally, a
+method of segmentation and color correction is proposed to improve the
+resolution and clarity of the output. The final results are sharp, clear
+and in high resolution, and stay true to the character’s original color
+scheme.</p>
+<p><strong><span class="citation" data-cites="furusawa_2017">[<a
+href="#ref-furusawa_2017" role="doc-biblioref">21</a>]</span> Furusawa
+et al.:</strong> Furusawa et al. developed Comicolorization, a
+semi-automatic colorization system for manga images, allowing users to
+generate a plausible color version of a manga page with the same color
+for the same character across multiple panels. The system utilizes color
+features extracted from reference images to help colorize the target
+character, employing adversarial loss to encourage the effect of the
+color features. The system also provides users with the option to
+interactively revise the colorization result. This is the first work to
+address the colorization of an entire manga title, making it possible to
+colorize the entire manga using desired colors for each panel.</p>
+<h4 id="style-transfer">Style-Transfer</h4>
+<p><strong><span class="citation" data-cites="shi_2020">[<a
+href="#ref-shi_2020" role="doc-biblioref">82</a>]</span> Shi et
+al.:</strong> In their contribution, Shi et al. propose a deep
+architecture for automatically coloring line art videos according to the
+colors of reference images. The architecture consists of a color
+transform network and a temporal constraint network. The color transform
+network utilizes non-local similarity matching to determine the region
+correspondences between the target and reference images, and also
+incorporates Adaptive Instance Normalization (AdaIN) to ensure global
+color style consistency. The temporal constraint network learns the
+spatiotemporal features through 3D convolution to ensure temporal
+consistency of the target image and the reference image. Experiments
+show that this method achieves the best performance on line art video
+coloring compared to other state-of-the-art methods.</p>
+<h4 id="tags">Tags</h4>
+<p><strong><span class="citation" data-cites="kim_2019">[<a
+href="#ref-kim_2019" role="doc-biblioref">42</a>]</span> Kim et
+al.:</strong> In their paper, Kim et al. proposed Tag2Pix, a line art
+colorization method using a GAN approach to produce a quality colored
+image from a grayscale line art and color tag information. It consists
+of a generator network with convolutional layers for transforming the
+input line art, a pre-trained semantic extraction network, and an
+encoder for input color information. The discriminator is based on an
+auxiliary classifier GAN to classify the tag information and the
+genuineness. A novel two-step training method is proposed where the
+generator and discriminator first learn the notion of object and shape
+and then, based on that, learn colorization. The effectiveness of the
+proposed method is demonstrated through quantitative and qualitative
+evaluations.</p>
+<h4 id="natural-language-prompt">Natural Language Prompt</h4>
+<p><strong><span class="citation" data-cites="zou_2019">[<a
+href="#ref-zou_2019" role="doc-biblioref">96</a>]</span> Zou et
+al.:</strong> In their work, Zou et al. present a language-based system
+for interactive colorization of scene sketches. The system is built upon
+NNs trained on a large dataset of scene sketches and cartoon-style color
+images with text descriptions. Given a scene sketch, the system allows
+users to interactively localize and colorize specific foreground object
+instances with language-based instructions. The effectiveness of the
+approach is demonstrated through comprehensive experiments and
+generalization user studies. The authors envision a combination of the
+language-based interface with a traditional scribble-based interface for
+a multimodal colorization system.</p>
+<p><strong><span class="citation" data-cites="chen_2018">[<a
+href="#ref-chen_2018" role="doc-biblioref">10</a>]</span> Chen et
+al.:</strong> Chen et al. investigate the Language-Based Image Editing
+(LBIE) problem where a source image is to be edited based on a natural
+language description. A generic modeling framework is proposed for two
+sub-tasks of LBIE, specifically language-based image segmentation and
+image colorization. This framework is based on recurrent attentive
+models to fuse image and language features, and a termination gate is
+used to determine how much information to extrapolate from the text
+description. The effectiveness of the framework is evaluated on three
+datasets: a synthetic CoSaL dataset to evaluate end-to-end performance,
+ReferIt dataset for image segmentation, and the Oxford-102 Flowers
+dataset for colorization.</p>
+<h4 id="color-hints">Color Hints</h4>
+<p><strong><span class="citation" data-cites="kautz_2007">[<a
+href="#ref-kautz_2007" role="doc-biblioref">55</a>]</span> Kautz et
+al.:</strong> In their contribution, Kautz et al. present an interactive
+system for colorizing natural images of complex scenes. The system
+separates the colorization procedure into two stages: Color labeling and
+Color mapping. Color labeling groups similar pixels into coherent
+regions based on a new algorithm that incorporates intensity-continuity
+and texture-similarity constraints. The Color mapping stage assigns
+colors to a few pixels in each region. An intuitive user interface is
+designed to allow users to label, color and modify the results. The
+system is demonstrated to produce vivid colorization effects with only a
+modest amount of user input.</p>
+<p><strong><span class="citation" data-cites="sykora_2009">[<a
+href="#ref-sykora_2009" role="doc-biblioref">86</a>]</span> Sykora et
+al.:</strong> Sykora et al. introduced LazyBrush, a novel interactive
+painting tool that is both simple and flexible. It is designed to
+address the needs of professional ink-and-paint illustrators and offers
+comparable or even less manual effort than previous custom-tailored
+approaches. LazyBrush is not sensitive to imprecise placement of color
+strokes and is incorporated into an optimization framework based on a
+Potts energy model with several interesting theoretical properties. It
+is demonstrated to be a useful tool in practical scenarios such as the
+ink-and-paint production pipeline.</p>
+<p><strong><span class="citation" data-cites="petalicapaint_2023">[<a
+href="#ref-petalicapaint_2023" role="doc-biblioref">69</a>]</span>
+Petalica Paint:</strong> Petalica Paint, previously called PaintsChainer
+<span class="citation" data-cites="paintschainer_2023">[<a
+href="#ref-paintschainer_2023"
+role="doc-biblioref"><strong>paintschainer_2023?</strong></a>]</span>,
+is a line drawing colorizer built with Chainer. It uses a U-net-based
+CNN trained to semi-automatically colorize sketches. The network is
+conditioned on user-provided color stokes and can interpret the user
+intent in the generated colored illustration. This is one of the first
+publicly available and web-based deployed models which contributed to
+its success.</p>
+<p><strong><span class="citation" data-cites="gangnet_1994">[<a
+href="#ref-gangnet_1994" role="doc-biblioref">23</a>]</span> Gagnet et
+al.:</strong> Gagnet et al. presents a gap-closing method for cel
+coloring in computer-assisted cartoon animation. It is based on
+connected component analysis inside square stamps that are located near
+potential gaps. This method is used to automatically close the regions
+defined by freehand strokes.</p>
+<p><strong><span class="citation" data-cites="sasaki_2017">[<a
+href="#ref-sasaki_2017" role="doc-biblioref">80</a>]</span> Sasaki et
+al.:</strong> In their paper, Sasaki et al. propose a novel data-driven
+approach for automatically detecting and completing gaps in line
+drawings without the need for user input. The proposed method is based
+on a CNN which can learn the necessary heuristics for realistic line
+completion from a dataset of line drawings. The results of the proposed
+method are evaluated qualitatively and quantitatively and are shown to
+significantly outperform the state-of-the-art.</p>
+<p><strong><span class="citation" data-cites="liu_2019">[<a
+href="#ref-liu_2019" role="doc-biblioref">52</a>]</span> Liu et
+al.:</strong> In their contribution, SketchGAN, Liu et al. propose a new
+GAN based approach for jointly completing and recognizing incomplete
+hand-drawn sketches. The proposed method consists of a cascade
+Encode-Decoder network to complete the input sketch iteratively and an
+auxiliary sketch recognition task to recognize the completed sketch.
+Experiments on the Sketchy database benchmark show that the proposed
+joint learning approach outperforms the state-of-the-art methods in
+sketch completion and recognition tasks. Further experiments on several
+sketch-based applications validate the performance of the proposed
+method.</p>
+<p><strong><span class="citation" data-cites="beck_2018">[<a
+href="#ref-beck_2018" role="doc-biblioref">18</a>]</span> Beck et
+al.:</strong> Beck et al. present a novel algorithm for semi-supervised
+colorization of line-art images. The algorithm involves two steps: 1) a
+geometric analysis of the stroke contours and their closing by
+splines/segments, and 2) a colorization step based on the filling of the
+corresponding connected components. The algorithm offers a fast and
+efficient colorization of line-art images with a similar quality as
+previous state-of-the-art algorithms, but with a lower algorithmic
+complexity, allowing for more user interactivity.</p>
+<p><strong><span class="citation" data-cites="zhang_richard_2017">[<a
+href="#ref-zhang_richard_2017" role="doc-biblioref">95</a>]</span> Zhang
+et al.:</strong> Zhang et al. propose a DL based approach to user-guided
+image colorization. The system employs a Convolutional Neural Network to
+map a grayscale image and sparse user “hints” to produce realistic
+colorization. The network combines low-level cues with semantics learned
+from a large-scale data set, and is capable of producing real-time
+colorization. The system also provides users with likely colors to guide
+them in efficient input selection. Furthermore, the framework can
+incorporate other user hints to the desired colorization, showing an
+application to color histogram transfer.</p>
+<p><strong><span class="citation" data-cites="ci_2018">[<a
+href="#ref-ci_2018" role="doc-biblioref">11</a>]</span> Ci et
+al.:</strong> Ci et al. propose a novel deep cGAN for the challenging
+task of scribble-based anime line art colorization. The proposed model
+integrates the framework with Conditional Wasserstein Generative
+Adversarial Network with Gradient Penalty (cWGAN-GP) criteria and
+perceptual loss to generate more natural and realistic images.
+Additionally, a local features network is introduced to increase the
+generalization capability over “in the wild” line arts. To support the
+model, two datasets providing high-quality illustrations and authentic
+line arts are collected. The results demonstrate that the proposed
+approach produces more realistic and precise images than other
+methods.</p>
+<p><strong><span class="citation" data-cites="sangkloy_2016">[<a
+href="#ref-sangkloy_2016" role="doc-biblioref">79</a>]</span> Sangkloy
+et al.:</strong> In their work, Sangkloy et al. propose a deep
+adversarial image synthesis architecture that is conditioned on sketched
+boundaries and sparse color strokes to generate realistic cars,
+bedrooms, or faces. This architecture is capable of generating
+convincing images that satisfy both the color and the sketch constraints
+of the user in real-time. It also allows for user-guided colorization of
+grayscale images. This architecture is more realistic, diverse, and
+controllable than other recent works on sketch to image synthesis.</p>
+<!-- TODO: Here -->
 <h2 id="ch:methodology">Methodology</h2>
 <h3 id="implementation">Implementation</h3>
 <h3 id="objective-evaluation">Objective Evaluation</h3>
 <h3 id="subjective-evaluation">Subjective Evaluation</h3>
 <h3 id="reproducibility">Reproducibility</h3>
-
-<h2 id="ch:sota">State of the Art</h2>
 
 <h2 id="ch:contrib-1">PaintsTorch: a User-Guided Anime Lineart
 Colorization Tool with Double Generator Conditional Adversarial
@@ -3761,8 +4073,15 @@ dialogue: 2023. <a
 href="https://openai.com/blog/chatgpt/"><em>https://openai.com/blog/chatgpt/</em></a>.
 Accessed: 2023-01-26.</div>
 </div>
-<div id="ref-ci_2018" class="csl-entry" role="listitem">
+<div id="ref-chen_2018" class="csl-entry" role="listitem">
 <div class="csl-left-margin">[10] </div><div
+class="csl-right-inline">Chen, J., Shen, Y., Gao, J., Liu, J. and Liu,
+X. 2018. Language-based image editing with recurrent attentive models.
+<em>Proceedings of the IEEE conference on computer vision and pattern
+recognition</em> (2018), 8721–8729.</div>
+</div>
+<div id="ref-ci_2018" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[11] </div><div
 class="csl-right-inline">Ci, Y., Ma, X., Wang, Z., Li, H. and Luo, Z.
 2018. <a href="https://doi.org/10.1145/3240508.3240661">User-guided deep
 anime line art colorization with conditional adversarial networks</a>.
@@ -3770,20 +4089,20 @@ anime line art colorization with conditional adversarial networks</a>.
 multimedia</em> (New York, NY, USA, 2018), 1536–1544.</div>
 </div>
 <div id="ref-clipstudiopaint" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[11] </div><div
+<div class="csl-left-margin">[12] </div><div
 class="csl-right-inline">Clip studio PAINT: <a
 href="https://www.clipstudio.net/"><em>https://www.clipstudio.net/</em></a>.
 Accessed: 2023-01-26.</div>
 </div>
 <div id="ref-cortes_1995" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[12] </div><div
+<div class="csl-left-margin">[13] </div><div
 class="csl-right-inline">Cortes, C. and Vapnik, V. 1995. Support-vector
 networks. <em>Machine Learning</em>. 20, 3 (Sep. 1995), 273–297.
 DOI:https://doi.org/<a
 href="https://doi.org/10.1007/BF00994018">10.1007/BF00994018</a>.</div>
 </div>
 <div id="ref-deng_2009" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[13] </div><div
+<div class="csl-left-margin">[14] </div><div
 class="csl-right-inline">Deng, J., Dong, W., Socher, R., Li, L.-J., Li,
 K. and Fei-Fei, L. 2009. <a
 href="https://doi.org/10.1109/CVPR.2009.5206848">ImageNet: A large-scale
@@ -3791,14 +4110,14 @@ hierarchical image database</a>. <em>2009 IEEE conference on computer
 vision and pattern recognition</em> (2009), 248–255.</div>
 </div>
 <div id="ref-devlin_2018" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[14] </div><div
+<div class="csl-left-margin">[15] </div><div
 class="csl-right-inline">Devlin, J., Chang, M.-W., Lee, K. and
 Toutanova, K. 2018. Bert: Pre-training of deep bidirectional
 transformers for language understanding. <em>arXiv preprint
 arXiv:1810.04805</em>. (2018).</div>
 </div>
 <div id="ref-dosovitskiy_2020" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[15] </div><div
+<div class="csl-left-margin">[16] </div><div
 class="csl-right-inline">Dosovitskiy, A., Beyer, L., Kolesnikov, A.,
 Weissenborn, D., Zhai, X., Unterthiner, T., Dehghani, M., Minderer, M.,
 Heigold, G., Gelly, S., et al. 2020. An image is worth 16x16 words:
@@ -3806,42 +4125,62 @@ Transformers for image recognition at scale. <em>arXiv preprint
 arXiv:2010.11929</em>. (2020).</div>
 </div>
 <div id="ref-duchi_2011" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[16] </div><div
+<div class="csl-left-margin">[17] </div><div
 class="csl-right-inline">Duchi, J., Hazan, E. and Singer, Y. 2011. <a
 href="http://jmlr.org/papers/v12/duchi11a.html">Adaptive subgradient
 methods for online learning and stochastic optimization</a>. <em>Journal
 of Machine Learning Research</em>. 12, 61 (2011), 2121–2159.</div>
 </div>
+<div id="ref-beck_2018" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[18] </div><div
+class="csl-right-inline">Fourey, S., Tschumperlé, D. and Revoy, D. 2018.
+<a href="https://doi.org/10.2312/vmv.20181247">A fast and efficient
+semi-guided algorithm for flat coloring line-arts</a>. <em>Vision,
+modeling and visualization</em> (2018).</div>
+</div>
 <div id="ref-frans_2017" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[17] </div><div
+<div class="csl-left-margin">[19] </div><div
 class="csl-right-inline">Frans, K. 2017. <a
 href="http://arxiv.org/abs/1704.08834">Outline colorization through
 tandem adversarial networks</a>. <em>CoRR</em>. abs/1704.08834,
 (2017).</div>
 </div>
 <div id="ref-fukushima_1980" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[18] </div><div
+<div class="csl-left-margin">[20] </div><div
 class="csl-right-inline">Fukushima, K. 1980. Neocognitron: A
 self-organizing neural network model for a mechanism of pattern
 recognition unaffected by shift in position. <em>Biological
 Cybernetics</em>. 36, 4 (Apr. 1980), 193–202. DOI:https://doi.org/<a
 href="https://doi.org/10.1007/BF00344251">10.1007/BF00344251</a>.</div>
 </div>
-<div id="ref-furusawa_2O17" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[19] </div><div
+<div id="ref-furusawa_2017" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[21] </div><div
 class="csl-right-inline">Furusawa, C., Hiroshiba, K., Ogaki, K. and
 Odagiri, Y. 2017. <a
 href="https://doi.org/10.1145/3145749.3149430">Comicolorization:
 Semi-automatic manga colorization</a>. <em>SIGGRAPH asia 2017 technical
 briefs</em> (New York, NY, USA, 2017).</div>
 </div>
+<div id="ref-furusawa_2O17" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[22] </div><div
+class="csl-right-inline">Furusawa, C., Hiroshiba, K., Ogaki, K. and
+Odagiri, Y. 2017. <a
+href="https://doi.org/10.1145/3145749.3149430">Comicolorization:
+Semi-automatic manga colorization</a>. <em>SIGGRAPH asia 2017 technical
+briefs</em> (New York, NY, USA, 2017).</div>
+</div>
+<div id="ref-gangnet_1994" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[23] </div><div
+class="csl-right-inline">Gangnet, M., Thong, J.-M.V. and Fekete, J.-D.
+1994. Automatic gap closing for freehand drawing. (1994).</div>
+</div>
 <div id="ref-goodfellow_2016" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[20] </div><div
+<div class="csl-left-margin">[24] </div><div
 class="csl-right-inline">Goodfellow, I.J., Bengio, Y. and Courville, A.
 2016. <em>Deep learning</em>. MIT Press.</div>
 </div>
 <div id="ref-goodfellow_2014" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[21] </div><div
+<div class="csl-left-margin">[25] </div><div
 class="csl-right-inline">Goodfellow, I., Pouget-Abadie, J., Mirza, M.,
 Xu, B., Warde-Farley, D., Ozair, S., Courville, A. and Bengio, Y. 2014.
 <a
@@ -3850,7 +4189,7 @@ adversarial nets</a>. <em>Advances in neural information processing
 systems</em> (2014).</div>
 </div>
 <div id="ref-gulrajani_2017" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[22] </div><div
+<div class="csl-left-margin">[26] </div><div
 class="csl-right-inline">Gulrajani, I., Ahmed, F., Arjovsky, M.,
 Dumoulin, V. and Courville, A.C. 2017. <a
 href="https://proceedings.neurips.cc/paper/2017/file/892c3b1c6dccd52936e27cbd0ff683d6-Paper.pdf">Improved
@@ -3858,7 +4197,7 @@ training of wasserstein GANs</a>. <em>Advances in neural information
 processing systems</em> (2017).</div>
 </div>
 <div id="ref-ishaan_2017" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[23] </div><div
+<div class="csl-left-margin">[27] </div><div
 class="csl-right-inline">Gulrajani, I., Ahmed, F., Arjovsky, M.,
 Dumoulin, V. and Courville, A.C. 2017. <a
 href="https://proceedings.neurips.cc/paper/2017/file/892c3b1c6dccd52936e27cbd0ff683d6-Paper.pdf">Improved
@@ -3866,7 +4205,7 @@ training of wasserstein GANs</a>. <em>Advances in neural information
 processing systems</em> (2017).</div>
 </div>
 <div id="ref-hati_2019" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[24] </div><div
+<div class="csl-left-margin">[28] </div><div
 class="csl-right-inline">Hati, Y., Jouet, G., Rousseaux, F. and Duhart,
 C. 2019. <a href="https://doi.org/10.1145/3359998.3369401">PaintsTorch:
 A user-guided anime line art colorization tool with double generator
@@ -3874,55 +4213,63 @@ conditional adversarial network</a>. <em>European conference on visual
 media production</em> (New York, NY, USA, 2019).</div>
 </div>
 <div id="ref-hati_2023" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[25] </div><div
+<div class="csl-left-margin">[29] </div><div
 class="csl-right-inline">Hati, Y., Thevenin, V., Nolot, F., Rousseaux,
 F. and Duhart, C. 2023. StencilTorch: An iterative and user-guided
 framework for anime lineart colorization. <em>Image and vision
 computing</em> (Cham, 2023), 1–17.</div>
 </div>
 <div id="ref-he_2016" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[26] </div><div
+<div class="csl-left-margin">[30] </div><div
 class="csl-right-inline">He, K., Zhang, X., Ren, S. and Sun, J. 2016.
 Deep residual learning for image recognition. <em>Proceedings of the
 IEEE conference on computer vision and pattern recognition</em> (2016),
 770–778.</div>
 </div>
 <div id="ref-hensman_2017" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[27] </div><div
-class="csl-right-inline">Hensman, P. and Aizawa, K. 2017. <a
-href="https://doi.org/10.1109/ICDAR.2017.295">cGAN-based manga
-colorization using a single training image</a>. <em>2017 14th IAPR
+<div class="csl-left-margin">[31] </div><div
+class="csl-right-inline">Hensman, P. and Aizawa, K. 2017. cGAN-based
+manga colorization using a single training image. <em>2017 14th IAPR
 international conference on document analysis and recognition
-(ICDAR)</em> (Los Alamitos, CA, USA, Nov. 2017), 72–77.</div>
+(ICDAR)</em> (2017), 72–77.</div>
 </div>
 <div id="ref-hinton_lecture6a" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[28] </div><div
+<div class="csl-left-margin">[32] </div><div
 class="csl-right-inline">Hinton, G., Srivastava, N. and Swersky, K.
 Neural networks for machine learning: Overview of mini-batch gradient
 descent.</div>
 </div>
 <div id="ref-ho_2020" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[29] </div><div
+<div class="csl-left-margin">[33] </div><div
 class="csl-right-inline">Ho, J., Jain, A. and Abbeel, P. 2020. Denoising
 diffusion probabilistic models. <em>Advances in Neural Information
 Processing Systems</em>. 33, (2020), 6840–6851.</div>
 </div>
 <div id="ref-hochreiter_1997" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[30] </div><div
-class="csl-right-inline">Hochreiter, S. and Schmidhuber, J. 1997.
-<span>Long Short-Term Memory</span>. <em>Neural Computation</em>. 9, 8
-(Nov. 1997), 1735–1780. DOI:https://doi.org/<a
+<div class="csl-left-margin">[34] </div><div
+class="csl-right-inline">Hochreiter, S. and Schmidhuber, J. 1997. Long
+short-term memory. <em>Neural Computation</em>. 9, 8 (Nov. 1997),
+1735–1780. DOI:https://doi.org/<a
 href="https://doi.org/10.1162/neco.1997.9.8.1735">10.1162/neco.1997.9.8.1735</a>.</div>
 </div>
 <div id="ref-hornik_1989" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[31] </div><div
+<div class="csl-left-margin">[35] </div><div
 class="csl-right-inline">Hornik, K., Stinchcombe, M. and White, H. 1989.
 Multilayer feedforward networks are universal approximators. <em>Neural
 Networks</em>. 2, 5 (1989), 359–366. DOI:https://doi.org/<a
 href="https://doi.org/10.1016/0893-6080(89)90020-8">10.1016/0893-6080(89)90020-8</a>.</div>
 </div>
+<div id="ref-iizuka_2016" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[36] </div><div
+class="csl-right-inline">Iizuka, S., Simo-Serra, E. and Ishikawa, H.
+2016. Let there be color!: Joint end-to-end learning of global and local
+image priors for automatic image colorization with simultaneous
+classification. <em>ACM Transactions on Graphics</em>. 35, 4 (Jul.
+2016). DOI:https://doi.org/<a
+href="https://doi.org/10.1145/2897824.2925974">10.1145/2897824.2925974</a>.</div>
+</div>
 <div id="ref-ioffe_2015" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[32] </div><div
+<div class="csl-left-margin">[37] </div><div
 class="csl-right-inline">Ioffe, S. and Szegedy, C. 2015. <a
 href="https://proceedings.mlr.press/v37/ioffe15.html">Batch
 normalization: Accelerating deep network training by reducing internal
@@ -3931,49 +4278,48 @@ conference on machine learning</em> (Lille, France, 2015),
 448–456.</div>
 </div>
 <div id="ref-jackson_1998" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[33] </div><div
+<div class="csl-left-margin">[38] </div><div
 class="csl-right-inline">Jackson, P. 1998. <em>Introduction to expert
 systems</em>. Addison-Wesley Longman Publishing Co., Inc.</div>
 </div>
 <div id="ref-jumper_2021" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[34] </div><div
+<div class="csl-left-margin">[39] </div><div
 class="csl-right-inline">Jumper, J. et al. 2021. Highly accurate protein
 structure prediction with AlphaFold. <em>Nature</em>. 596, 7873 (Aug.
 2021), 583–589. DOI:https://doi.org/<a
 href="https://doi.org/10.1038/s41586-021-03819-2">10.1038/s41586-021-03819-2</a>.</div>
 </div>
 <div id="ref-kandinsky_1977" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[35] </div><div
+<div class="csl-left-margin">[40] </div><div
 class="csl-right-inline">Kandinsky, W. and Sadleir, M. 1977.
 <em>Concerning the spiritual in art</em>. Dover Publications.</div>
 </div>
 <div id="ref-karpathy_micrograd" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[36] </div><div
+<div class="csl-left-margin">[41] </div><div
 class="csl-right-inline">Karpathy, A. 2020. <a
-href="https://github.com/karpathy/micrograd"><span>Micrograd</span></a>.</div>
+href="https://github.com/karpathy/micrograd">Micrograd</a>.</div>
 </div>
 <div id="ref-kim_2019" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[37] </div><div
+<div class="csl-left-margin">[42] </div><div
 class="csl-right-inline">Kim, H., Jhoo, H.Y., Park, E. and Yoo, S. 2019.
-<a href="https://doi.org/10.1109/ICCV.2019.00915">Tag2Pix: Line art
-colorization using text tag with SECat and changing loss</a>. <em>2019
-IEEE/CVF international conference on computer vision (ICCV)</em> (2019),
-9055–9064.</div>
+Tag2pix: Line art colorization using text tag with secat and changing
+loss. <em>Proceedings of the IEEE/CVF international conference on
+computer vision</em> (2019), 9056–9065.</div>
 </div>
 <div id="ref-kingma_2014" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[38] </div><div
+<div class="csl-left-margin">[43] </div><div
 class="csl-right-inline">Kingma, D.P. and Ba, J. 2014. Adam: A method
 for stochastic optimization. <em>arXiv preprint arXiv:1412.6980</em>.
 (2014).</div>
 </div>
 <div id="ref-kingma_2013" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[39] </div><div
+<div class="csl-left-margin">[44] </div><div
 class="csl-right-inline">Kingma, D.P. and Welling, M. 2013.
 Auto-encoding variational bayes. <em>arXiv preprint
 arXiv:1312.6114</em>. (2013).</div>
 </div>
 <div id="ref-krizhevsky_2012" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[40] </div><div
+<div class="csl-left-margin">[45] </div><div
 class="csl-right-inline">Krizhevsky, A., Sutskever, I. and Hinton, G.E.
 2012. <a
 href="https://proceedings.neurips.cc/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf">ImageNet
@@ -3981,28 +4327,27 @@ classification with deep convolutional neural networks</a>. <em>Advances
 in neural information processing systems</em> (2012).</div>
 </div>
 <div id="ref-larid_2019" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[41] </div><div
+<div class="csl-left-margin">[46] </div><div
 class="csl-right-inline">Laird, J.E. 2019. <em>The soar cognitive
 architecture</em>. The MIT Press.</div>
 </div>
 <div id="ref-lecun_2019" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[42] </div><div class="csl-right-inline">Le
+<div class="csl-left-margin">[47] </div><div class="csl-right-inline">Le
 Cun, Y. 2019. <em><a
-href="https://www.odilejacob.fr/catalogue/sciences-humaines/questions-de-societe/quand-la-machine-apprend_9782738149312.php">Quand
+href="https://www.odilejacob.fr/catalogue/sciences-humaines/questions-de-societe/quand-la-machine-apprend\_9782738149312.php">Quand
 la machine apprend: La r<span>é</span>volution des neurones artificiels
 et de l’apprentissage profond</a></em>. Odile Jacob.</div>
 </div>
 <div id="ref-lecun_1989" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[43] </div><div
+<div class="csl-left-margin">[48] </div><div
 class="csl-right-inline">LeCun, Y., Boser, B., Denker, J.S., Henderson,
-D., Howard, R.E., Hubbard, W. and Jackel, L.D. 1989. <span
-class="nocase">Backpropagation Applied to Handwritten Zip Code
-Recognition</span>. <em>Neural Computation</em>. 1, 4 (Dec. 1989),
-541–551. DOI:https://doi.org/<a
+D., Howard, R.E., Hubbard, W. and Jackel, L.D. 1989. Backpropagation
+applied to handwritten zip code recognition. <em>Neural
+Computation</em>. 1, 4 (Dec. 1989), 541–551. DOI:https://doi.org/<a
 href="https://doi.org/10.1162/neco.1989.1.4.541">10.1162/neco.1989.1.4.541</a>.</div>
 </div>
 <div id="ref-lecun_1998" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[44] </div><div
+<div class="csl-left-margin">[49] </div><div
 class="csl-right-inline">Lecun, Y., Bottou, L., Bengio, Y. and Haffner,
 P. 1998. Gradient-based learning applied to document recognition.
 <em>Proceedings of the IEEE</em>. 86, 11 (1998), 2278–2324.
@@ -4010,18 +4355,26 @@ DOI:https://doi.org/<a
 href="https://doi.org/10.1109/5.726791">10.1109/5.726791</a>.</div>
 </div>
 <div id="ref-lieto_2021" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[45] </div><div
+<div class="csl-left-margin">[50] </div><div
 class="csl-right-inline">Lieto, A. 2021. <em><a
 href="https://doi.org/10.4324/9781315460536">Cognitive design for
 artificial minds (1st ed.)</a></em>. Routledge.</div>
 </div>
 <div id="ref-lim_2017" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[46] </div><div
+<div class="csl-left-margin">[51] </div><div
 class="csl-right-inline">Lim, J.H. and Ye, J.C. 2017. Geometric gan.
 <em>arXiv preprint arXiv:1705.02894</em>. (2017).</div>
 </div>
+<div id="ref-liu_2019" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[52] </div><div
+class="csl-right-inline">Liu, F., Deng, X., Lai, Y.-K., Liu, Y.-J., Ma,
+C. and Wang, H. 2019. SketchGAN: Joint sketch completion and recognition
+with generative adversarial network. <em>Proceedings of the IEEE/CVF
+conference on computer vision and pattern recognition (CVPR)</em>
+(2019).</div>
+</div>
 <div id="ref-liu_2017" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[47] </div><div
+<div class="csl-left-margin">[53] </div><div
 class="csl-right-inline">Liu, Y., Qin, Z., Wan, T. and Luo, Z. 2018.
 Auto-painter: Cartoon image generation from sketch by using conditional
 wasserstein generative adversarial networks. <em>Neurocomputing</em>.
@@ -4029,26 +4382,33 @@ wasserstein generative adversarial networks. <em>Neurocomputing</em>.
 href="https://doi.org/10.1016/j.neucom.2018.05.045">10.1016/j.neucom.2018.05.045</a>.</div>
 </div>
 <div id="ref-loshchilov_2017" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[48] </div><div
+<div class="csl-left-margin">[54] </div><div
 class="csl-right-inline">Loshchilov, I. and Hutter, F. 2017. Decoupled
 weight decay regularization. <em>arXiv preprint arXiv:1711.05101</em>.
 (2017).</div>
 </div>
+<div id="ref-kautz_2007" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[55] </div><div
+class="csl-right-inline">Luan, Q., Wen, F., Cohen-Or, D., Liang, L., Xu,
+Y.-Q. and Shum, H.-Y. 2007. <a
+href="https://doi.org/10.2312/EGWR/EGSR07/309-320">Natural image
+colorization</a>. <em>Rendering techniques</em> (2007).</div>
+</div>
 <div id="ref-luong_2015" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[49] </div><div
+<div class="csl-left-margin">[56] </div><div
 class="csl-right-inline">Luong, M.-T., Pham, H. and Manning, C.D. 2015.
 Effective approaches to attention-based neural machine translation.
 <em>arXiv preprint arXiv:1508.04025</em>. (2015).</div>
 </div>
 <div id="ref-mccarthy_1978" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[50] </div><div
+<div class="csl-left-margin">[57] </div><div
 class="csl-right-inline">McCarthy, J. 1978. <a
 href="https://doi.org/10.1145/800025.1198360">History of LISP</a>.
 <em>History of programming languages</em>. Association for Computing
 Machinery. 173–185.</div>
 </div>
 <div id="ref-dartmouth_2006" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[51] </div><div
+<div class="csl-left-margin">[58] </div><div
 class="csl-right-inline">McCarthy, J., Minsky, M.L., Rochester, N. and
 Shannon, C.E. 2006. A proposal for the dartmouth summer research project
 on artificial intelligence, august 31, 1955. <em>AI Magazine</em>. 27, 4
@@ -4056,83 +4416,106 @@ on artificial intelligence, august 31, 1955. <em>AI Magazine</em>. 27, 4
 href="https://doi.org/10.1609/aimag.v27i4.1904">10.1609/aimag.v27i4.1904</a>.</div>
 </div>
 <div id="ref-minsky_1969" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[52] </div><div
+<div class="csl-left-margin">[59] </div><div
 class="csl-right-inline">Minsky, M. and Papert, S. 1969.
 <em>Perceptrons: An introduction to computational geometry</em>. MIT
 Press.</div>
 </div>
 <div id="ref-miyato_2018" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[53] </div><div
+<div class="csl-left-margin">[60] </div><div
 class="csl-right-inline">Miyato, T., Kataoka, T., Koyama, M. and
 Yoshida, Y. 2018. Spectral normalization for generative adversarial
 networks. <em>arXiv preprint arXiv:1802.05957</em>. (2018).</div>
 </div>
 <div id="ref-mumford_2012" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[54] </div><div
+<div class="csl-left-margin">[61] </div><div
 class="csl-right-inline">Mumford, M., Medeiros, K. and Partlow, P. 2012.
 Creative thinking: Processes, strategies, and knowledge. <em>The Journal
 of Creative Behavior</em>. 46, (Mar. 2012). DOI:https://doi.org/<a
 href="https://doi.org/10.1002/jocb.003">10.1002/jocb.003</a>.</div>
 </div>
 <div id="ref-newell_1959" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[55] </div><div
+<div class="csl-left-margin">[62] </div><div
 class="csl-right-inline">Newell, A., Shaw, J.C. and Simon, H.A. 1959.
 <em><a href="https://doi.org/10.1037/13117-003">The processes of
 creative thinking</a></em>. RAND Corporation.</div>
 </div>
 <div id="ref-nichol_2021" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[56] </div><div
+<div class="csl-left-margin">[63] </div><div
 class="csl-right-inline">Nichol, A.Q. and Dhariwal, P. 2021. Improved
 denoising diffusion probabilistic models. <em>International conference
 on machine learning</em> (2021), 8162–8171.</div>
 </div>
 <div id="ref-paintman" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[57] </div><div
+<div class="csl-left-margin">[64] </div><div
 class="csl-right-inline">Paintman: <a
 href="http://www.retasstudio.net/products/paintman/"><em>http://www.retasstudio.net/products/paintman/</em></a>.
 Accessed: 2023-01-26.</div>
 </div>
+<div id="ref-paintschainer_2018" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[65] </div><div
+class="csl-right-inline">Paints chainer: 2018. <a
+href="https://github.com/pfnet/PaintsChainer"><em>https://github.com/pfnet/PaintsChainer</em></a>.
+Accessed: 2023-02-25.</div>
+</div>
+<div id="ref-wilkie_2020" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[66] </div><div
+class="csl-right-inline">Parakkat, A.D., Madipally, P., Gowtham, H.H.
+and Cani, M.-P. 2020. <a
+href="https://doi.org/10.2312/egs.20201024">Interactive flat coloring of
+minimalist neat sketches</a>. <em>Eurographics 2020 - short papers</em>
+(2020).</div>
+</div>
+<div id="ref-parakkat_2022" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[67] </div><div
+class="csl-right-inline">Parakkat, A.D., Memari, P. and Cani, M.-P.
+2022. Delaunay painting: Perceptual image colouring from raster contours
+with gaps. <em>Computer Graphics Forum</em>. 41, 6 (2022), 166–181.
+DOI:https://doi.org/<a
+href="https://doi.org/10.1111/cgf.14517">https://doi.org/10.1111/cgf.14517</a>.</div>
+</div>
 <div id="ref-pytorch" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[58] </div><div
+<div class="csl-left-margin">[68] </div><div
 class="csl-right-inline">Paszke, A. et al. 2019. PyTorch: An imperative
 style, high-performance deep learning library. <em>Proceedings of the
 33rd international conference on neural information processing
 systems</em>. Curran Associates Inc.</div>
 </div>
-<div id="ref-paintschainer_2017" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[59] </div><div
-class="csl-right-inline">Pelica paint: 2017. <a
-href="https://petalica-paint.pixiv.dev/index_en.html"><em>https://petalica-paint.pixiv.dev/index_en.html</em></a>.
-Accessed: 2023-01-26.</div>
+<div id="ref-petalicapaint_2023" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[69] </div><div
+class="csl-right-inline">Petalica paint: AI-powered automatic
+colorization: 2023. <a
+href="https://petalica.com/index\_en.html"><em>https://petalica.com/index\_en.html</em></a>.
+Accessed: 2023-02-25.</div>
 </div>
 <div id="ref-photoshop" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[60] </div><div
+<div class="csl-left-margin">[70] </div><div
 class="csl-right-inline">Photoshop: <a
 href="https://www.adobe.com/products/photoshop.html"><em>https://www.adobe.com/products/photoshop.html</em></a>.
 Accessed: 2023-01-26.</div>
 </div>
 <div id="ref-qian_1999" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[61] </div><div
+<div class="csl-left-margin">[71] </div><div
 class="csl-right-inline">Qian, N. 1999. On the momentum term in gradient
 descent learning algorithms. <em>Neural Networks</em>. 12, 1 (1999),
 145–151. DOI:https://doi.org/<a
 href="https://doi.org/10.1016/S0893-6080(98)00116-6">10.1016/S0893-6080(98)00116-6</a>.</div>
 </div>
 <div id="ref-ramesh_2022" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[62] </div><div
+<div class="csl-left-margin">[72] </div><div
 class="csl-right-inline">Ramesh, A., Dhariwal, P., Nichol, A., Chu, C.
 and Chen, M. 2022. Hierarchical text-conditional image generation with
 clip latents. <em>arXiv preprint arXiv:2204.06125</em>. (2022).</div>
 </div>
 <div id="ref-rombach_2021" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[63] </div><div
+<div class="csl-left-margin">[73] </div><div
 class="csl-right-inline">Rombach, R., Blattmann, A., Lorenz, D., Esser,
 P. and Ommer, B. 2021. <a
 href="https://arxiv.org/abs/2112.10752">High-resolution image synthesis
 with latent diffusion models</a>.</div>
 </div>
 <div id="ref-ronneberger_2015" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[64] </div><div
+<div class="csl-left-margin">[74] </div><div
 class="csl-right-inline">Ronneberger, O., Fischer, P. and Brox, T. 2015.
 U-net: Convolutional networks for biomedical image segmentation.
 <em>Medical image computing and computer-assisted intervention–MICCAI
@@ -4140,34 +4523,34 @@ U-net: Convolutional networks for biomedical image segmentation.
 proceedings, part III 18</em> (2015), 234–241.</div>
 </div>
 <div id="ref-rosenblatt_1958" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[65] </div><div
-class="csl-right-inline">Rosenblatt, F. 1958. <span class="nocase">The
-perceptron: A probabilistic model for information storage and
-organization in the brain.</span> <em>Psychological Review</em>. 65, 6
-(1958), 386–408. DOI:https://doi.org/<a
+<div class="csl-left-margin">[75] </div><div
+class="csl-right-inline">Rosenblatt, F. 1958. The perceptron: A
+probabilistic model for information storage and organization in the
+brain. <em>Psychological Review</em>. 65, 6 (1958), 386–408.
+DOI:https://doi.org/<a
 href="https://doi.org/10.1037/h0042519">10.1037/h0042519</a>.</div>
 </div>
 <div id="ref-rumelhart_1986" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[66] </div><div
+<div class="csl-left-margin">[76] </div><div
 class="csl-right-inline">Rumelhart, D.E., Hinton, G.E. and Williams,
 R.J. 1986. Learning representations by back-propagating errors.
 <em>Nature</em>. 323, 6088 (Oct. 1986), 533–536. DOI:https://doi.org/<a
 href="https://doi.org/10.1038/323533a0">10.1038/323533a0</a>.</div>
 </div>
 <div id="ref-russell_2016" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[67] </div><div
+<div class="csl-left-margin">[77] </div><div
 class="csl-right-inline">Russell, S.J. and Norvig, P. 2009.
 <em>Artificial intelligence: A modern approach</em>. Pearson.</div>
 </div>
 <div id="ref-saito_2015" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[68] </div><div
+<div class="csl-left-margin">[78] </div><div
 class="csl-right-inline">Saito, M. and Matsui, Y. 2015. <a
 href="https://doi.org/10.1145/2820903.2820907">Illustration2Vec: A
 semantic vector representation of illustrations</a>. <em>SIGGRAPH asia
 2015 technical briefs</em> (New York, NY, USA, 2015), 5:1–5:4.</div>
 </div>
 <div id="ref-sangkloy_2016" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[69] </div><div
+<div class="csl-left-margin">[79] </div><div
 class="csl-right-inline">Sangkloy, P., Lu, J., Fang, C., Yu, F. and
 Hays, J. 2017. <a
 href="https://doi.org/10.1109/CVPR.2017.723">Scribbler: Controlling deep
@@ -4175,75 +4558,126 @@ image synthesis with sketch and color</a>. <em>2017 <span>IEEE</span>
 conference on computer vision and pattern recognition, <span>CVPR</span>
 2017, honolulu, HI, USA, july 21-26, 2017</em> (2017), 6836–6845.</div>
 </div>
+<div id="ref-sasaki_2017" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[80] </div><div
+class="csl-right-inline">Sasaki, K., Iizuka, S., Simo-Serra, E. and
+Ishikawa, H. 2017. <a href="https://doi.org/10.1109/CVPR.2017.611">Joint
+gap detection and inpainting of line drawings</a>. <em>2017 IEEE
+conference on computer vision and pattern recognition (CVPR)</em>
+(2017), 5768–5776.</div>
+</div>
 <div id="ref-senior_2020" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[70] </div><div
+<div class="csl-left-margin">[81] </div><div
 class="csl-right-inline">Senior, A.W. et al. 2020. Improved protein
 structure prediction using potentials from deep learning.
 <em>Nature</em>. 577, 7792 (Jan. 2020), 706–710. DOI:https://doi.org/<a
 href="https://doi.org/10.1038/s41586-019-1923-7">10.1038/s41586-019-1923-7</a>.</div>
 </div>
+<div id="ref-shi_2020" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[82] </div><div
+class="csl-right-inline">Shi, M., Zhang, J.-Q., Chen, S.-Y., Gao, L.,
+Lai, Y.-K. and Zhang, F.-L. 2020. Deep line art video colorization with
+a few references. <em>arXiv preprint arXiv:2003.10685</em>.
+(2020).</div>
+</div>
 <div id="ref-silver_2016" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[71] </div><div
+<div class="csl-left-margin">[83] </div><div
 class="csl-right-inline">Silver, D. et al. 2016. Mastering the game of
 go with deep neural networks and tree search. <em>Nature</em>. 529, 7587
 (Jan. 2016), 484–489. DOI:https://doi.org/<a
 href="https://doi.org/10.1038/nature16961">10.1038/nature16961</a>.</div>
 </div>
 <div id="ref-simonyan_2014" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[72] </div><div
+<div class="csl-left-margin">[84] </div><div
 class="csl-right-inline">Simonyan, K. and Zisserman, A. 2014. Very deep
 convolutional networks for large-scale image recognition. <em>arXiv
 preprint arXiv:1409.1556</em>. (2014).</div>
 </div>
+<div id="ref-su_2020" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[85] </div><div
+class="csl-right-inline">Su, J.-W., Chu, H.-K. and Huang, J.-B. 2020.
+Instance-aware image colorization. <em>Proceedings of the IEEE/CVF
+conference on computer vision and pattern recognition</em> (2020),
+7968–7977.</div>
+</div>
+<div id="ref-sykora_2009" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[86] </div><div
+class="csl-right-inline">Sykora, D., Dingliana, J. and Collins, S. 2009.
+LazyBrush: Flexible painting tool for hand-drawn cartoons. <em>Computer
+Graphics Forum</em>. 28, 2 (2009), 599–608. DOI:https://doi.org/<a
+href="https://doi.org/10.1111/j.1467-8659.2009.01400.x">https://doi.org/10.1111/j.1467-8659.2009.01400.x</a>.</div>
+</div>
 <div id="ref-mnist" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[73] </div><div
+<div class="csl-left-margin">[87] </div><div
 class="csl-right-inline">The MNIST database: <a
 href="http://yann.lecun.com/exdb/mnist/"><em>http://yann.lecun.com/exdb/mnist/</em></a>.
 Accessed: 2023-02-07.</div>
 </div>
 <div id="ref-vaswani_2017" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[74] </div><div
+<div class="csl-left-margin">[88] </div><div
 class="csl-right-inline">Vaswani, A., Shazeer, N., Parmar, N.,
 Uszkoreit, J., Jones, L., Gomez, A.N., Kaiser, Ł. and Polosukhin, I.
 2017. Attention is all you need. <em>Advances in neural information
 processing systems</em>. 30, (2017).</div>
 </div>
 <div id="ref-vinyals_2019" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[75] </div><div
+<div class="csl-left-margin">[89] </div><div
 class="csl-right-inline">Vinyals, O. et al. 2019. Grandmaster level in
 StarCraft II using multi-agent reinforcement learning. <em>Nature</em>.
 575, 7782 (Nov. 2019), 350–354. DOI:https://doi.org/<a
 href="https://doi.org/10.1038/s41586-019-1724-z">10.1038/s41586-019-1724-z</a>.</div>
 </div>
 <div id="ref-wolf_2017" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[76] </div><div
+<div class="csl-left-margin">[90] </div><div
 class="csl-right-inline">Wolf, M.J., Miller, K. and Grodzinsky, F.S.
 2017. Why we should have seen that coming: Comments on microsoft’s tay
 "experiment," and wider implications. <em>SIGCAS Comput. Soc.</em> 47, 3
 (Sep. 2017), 54–64. DOI:https://doi.org/<a
 href="https://doi.org/10.1145/3144592.3144598">10.1145/3144592.3144598</a>.</div>
 </div>
+<div id="ref-yoo_2019" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[91] </div><div
+class="csl-right-inline">Yoo, S., Bahng, H., Chung, S., Lee, J., Chang,
+J. and Choo, J. 2019. Coloring with limited data: Few-shot colorization
+via memory augmented networks. <em>Proceedings of the IEEE/CVF
+conference on computer vision and pattern recognition (CVPR)</em>
+(2019).</div>
+</div>
 <div id="ref-aston_zhang_2021" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[77] </div><div
+<div class="csl-left-margin">[92] </div><div
 class="csl-right-inline">Zhang, A., Lipton, Z.C., Li, M. and Smola, A.J.
 2021. Dive into deep learning. <em>arXiv preprint arXiv:2106.11342</em>.
 (2021).</div>
 </div>
 <div id="ref-zhang_ji_2017" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[78] </div><div
+<div class="csl-left-margin">[93] </div><div
 class="csl-right-inline">Zhang, L., Ji, Y., Lin, X. and Liu, C. 2017. <a
 href="https://doi.org/10.1109/ACPR.2017.61">Style transfer for anime
 sketches with enhanced residual u-net and auxiliary classifier GAN</a>.
 <em>2017 4th IAPR asian conference on pattern recognition (ACPR)</em>
 (2017), 506–511.</div>
 </div>
+<div id="ref-zhang_2018" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[94] </div><div
+class="csl-right-inline">Zhang, L., Li, C., Wong, T.-T., Ji, Y. and Liu,
+C. 2018. Two-stage sketch colorization. <em>ACM Trans. Graph.</em> 37, 6
+(Dec. 2018). DOI:https://doi.org/<a
+href="https://doi.org/10.1145/3272127.3275090">10.1145/3272127.3275090</a>.</div>
+</div>
 <div id="ref-zhang_richard_2017" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[79] </div><div
+<div class="csl-left-margin">[95] </div><div
 class="csl-right-inline">Zhang, R., Zhu, J.-Y., Isola, P., Geng, X.,
 Lin, A.S., Yu, T. and Efros, A.A. 2017. Real-time user-guided image
 colorization with learned deep priors. <em>ACM Trans. Graph.</em> 36, 4
 (Jul. 2017). DOI:https://doi.org/<a
 href="https://doi.org/10.1145/3072959.3073703">10.1145/3072959.3073703</a>.</div>
+</div>
+<div id="ref-zou_2019" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[96] </div><div
+class="csl-right-inline">Zou, C., Mo, H., Gao, C., Du, R. and Fu, H.
+2019. Language-based colorization of scene sketches. <em>ACM Trans.
+Graph.</em> 38, 6 (Nov. 2019). DOI:https://doi.org/<a
+href="https://doi.org/10.1145/3355089.3356561">10.1145/3355089.3356561</a>.</div>
 </div>
 </div>
 </body>
