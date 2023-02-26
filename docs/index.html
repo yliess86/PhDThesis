@@ -462,10 +462,11 @@ Architectures</a></li>
 <ul>
 <li><a href="#ch:sota" id="toc-ch:sota">Related Work</a>
 <ul>
-<li><a href="#sec:rel-classical" id="toc-sec:rel-classical">Classical
+<li><a href="#sec:rel-algo" id="toc-sec:rel-algo">Algorithmic
 Approaches</a></li>
 <li><a href="#sec:rel-deep" id="toc-sec:rel-deep">Deep Learning
 Approaches</a></li>
+<li><a href="#summary-1" id="toc-summary-1">Summary</a></li>
 </ul></li>
 <li><a href="#ch:methodology" id="toc-ch:methodology">Methodology</a>
 <ul>
@@ -485,7 +486,7 @@ Conditional Adversarial Network</a>
 <li><a href="#method" id="toc-method">Method</a></li>
 <li><a href="#setup" id="toc-setup">Setup</a></li>
 <li><a href="#results" id="toc-results">Results</a></li>
-<li><a href="#summary-1" id="toc-summary-1">Summary</a></li>
+<li><a href="#summary-2" id="toc-summary-2">Summary</a></li>
 </ul></li>
 <li><a href="#ch:contrib-2" id="toc-ch:contrib-2">StencitTorch: an
 Iterative and User-Guided Framework for Anime Lineart Colorization</a>
@@ -493,7 +494,7 @@ Iterative and User-Guided Framework for Anime Lineart Colorization</a>
 <li><a href="#method-1" id="toc-method-1">Method</a></li>
 <li><a href="#setup-1" id="toc-setup-1">Setup</a></li>
 <li><a href="#results-1" id="toc-results-1">Results</a></li>
-<li><a href="#summary-2" id="toc-summary-2">Summary</a></li>
+<li><a href="#summary-3" id="toc-summary-3">Summary</a></li>
 </ul></li>
 <li><a href="#ch:contrib-3" id="toc-ch:contrib-3">StablePaint: a
 Conditional Denoising Diffusion Model for Iterative Anime Lineart
@@ -502,7 +503,7 @@ Colorization</a>
 <li><a href="#method-2" id="toc-method-2">Method</a></li>
 <li><a href="#setup-2" id="toc-setup-2">Setup</a></li>
 <li><a href="#results-2" id="toc-results-2">Results</a></li>
-<li><a href="#summary-3" id="toc-summary-3">Summary</a></li>
+<li><a href="#summary-4" id="toc-summary-4">Summary</a></li>
 </ul></li>
 </ul></li>
 <li><a href="#reflection" id="toc-reflection">Reflection</a>
@@ -3691,216 +3692,32 @@ user-guided methods (see Secs <strong>¿sec:methods-guided?</strong>)
 adopting a human-in-the-loop system. Although classical methods are
 presented the state-of-the-art is now dominated by DL methods which are
 the focus of this thesis.</p>
-<h3 id="sec:rel-classical">Classical Approaches</h3>
-<p><strong><span class="citation" data-cites="wilkie_2020">[<a
-href="#ref-wilkie_2020" role="doc-biblioref">66</a>]</span> Wilkie et
-al.:</strong> In their work, Wilkie et al. introduced a
-Delaunay-triangulation-based algorithm for the interactive coloring of
-minimalist sketches. The aim is to reduce user intervention and make
-interaction as easy and natural as with the flood-fill algorithm while
-providing the ability to color regions with open contours. This is
-accomplished in two steps: 1) an automatic segmentation step that
-divides the input sketch into regions based on the underlying Delaunay
-structure, and 2) an interactive grouping of neighboring regions based
-on user input, which generates the final colored sketch. Results show
-that the method is as natural as a bucket fill tool and powerful enough
-to color minimalist sketches.</p>
-<p><strong><span class="citation" data-cites="parakkat_2022">[<a
-href="#ref-parakkat_2022" role="doc-biblioref">67</a>]</span> Parakkat
-et al.:</strong> In their paper, Parakkat et al. introduced a
-Delaunay-triangulation-based algorithm for the interactive coloring of
-minimalist sketches. The aim is to reduce user intervention and make
-interaction as easy and natural as with the flood-fill algorithm while
-providing the ability to color regions with open contours. This is
-accomplished in two steps: 1) an automatic segmentation step that
-divides the input sketch into regions based on the underlying Delaunay
-structure, and 2) an interactive grouping of neighboring regions based
-on user input, which generates the final colored sketch. Results show
-that the method is as natural as a bucket fill tool and powerful enough
-to color minimalist sketches.</p>
-<h3 id="sec:rel-deep">Deep Learning Approaches</h3>
-<h4 id="automatic-colorization">Automatic Colorization</h4>
-<p><strong><span class="citation" data-cites="iizuka_2016">[<a
-href="#ref-iizuka_2016" role="doc-biblioref">36</a>]</span> Iizuka et
-al.:</strong> In their paper, Iizuka et al. present a novel technique to
-automatically colorize grayscale images using both global priors and
-local image features. The proposed method uses a CNN to fuse local
-information and global priors, which are computed using the entire
-image. The entire framework is trained in an end-to-end fashion and is
-capable of processing images of any resolution. The model is trained on
-an existing scene classification database to learn discriminative global
-priors. A user study is conducted to validate the proposed method and it
-is shown to outperform the state-of-the-art. Extensive experiments on
-different types of images demonstrate the realistic colorizations of the
-proposed method.</p>
-<p><strong><span class="citation" data-cites="yoo_2019">[<a
-href="#ref-yoo_2019" role="doc-biblioref">91</a>]</span> Yoo et
-al.:</strong> In their work, Yoo et al. present a novel memory-augmented
-colorization model called MemoPainter that is capable of producing
-high-quality colorization with limited training data. It can capture
-rare instances and successfully colorize them. Furthermore, a novel
-threshold triplet loss is proposed to enable unsupervised training of
-memory networks without the need for class labels. Experiments show that
-the model is superior in both few-shot and one-shot colorization
-tasks.</p>
-<p><strong><span class="citation" data-cites="su_2020">[<a
-href="#ref-su_2020" role="doc-biblioref">85</a>]</span> Su et
-al.:</strong> Su et al. present a method for instance-aware image
-colorization that leverages an object detector to obtain cropped object
-images and a colorization network to extract object-level features. The
-network fuses the object-level and image-level features to predict the
-final colors, and the entire model is learned from a large-scale
-dataset. Experimental results show that this model outperforms existing
-methods and achieves state-of-the-art results.</p>
-<p><strong><span class="citation" data-cites="zhang_2018">[<a
-href="#ref-zhang_2018" role="doc-biblioref">94</a>]</span> Zhang et
-al.:</strong> In their paper, Zhang et al. propose a semi-automatic
-learning-based framework to colorize sketches with proper color,
-texture, and gradient. It divides the task into two stages: (1) a
-drafting stage where the model guesses color regions and splashes a
-variety of colors over the sketch, and (2) a refinement stage where the
-model detects unnatural colors and artifacts and tries to refine the
-result. An interactive software was developed to evaluate the model,
-which allows users to iteratively edit and refine the colorization. An
-extensive user study was conducted to evaluate the learning model and
-the interactive system, and results showed that it outperforms existing
-techniques and industrial applications in terms of visual quality, user
-control, user experience, and other metrics.</p>
-<p><strong><span class="citation" data-cites="liu_2017">[<a
-href="#ref-liu_2017" role="doc-biblioref">53</a>]</span> Liu et
-al.:</strong> Liu et al. investigate the sketch-to-image synthesis
-problem using Conditional Generative Adversarial Network (cGAN). To
-solve this problem, the auto-painter model is proposed, which is capable
-of automatically generating compatible colors for a sketch, as well as
-allowing users to indicate preferred colors. Experimental results on two
-sketch datasets demonstrate the effectiveness of the auto-painter model
-compared to existing image-to-image methods.</p>
-<p><strong><span class="citation" data-cites="frans_2017">[<a
-href="#ref-frans_2017" role="doc-biblioref">19</a>]</span> Frans et
-al.:</strong> In their contribution, Frans et al. propose a solution to
-automatically colorize raw line art by leveraging two networks in
-tandem. The first network is a color prediction network based solely on
-outlines, while the second network is a shading network conditioned on
-both outlines and a color scheme. Processing methods are used to limit
-information passed in the color scheme, which improves generalization.
-Finally, the research demonstrates natural-looking results when
-colorizing outlines from scratch, as well as from a messy, user-defined
-color scheme.</p>
-<h4 id="examplar-based">Examplar-Based</h4>
-<p><strong><span class="citation" data-cites="hensman_2017">[<a
-href="#ref-hensman_2017" role="doc-biblioref">31</a>]</span> Hensman et
-al.:</strong> In their contribution, Hensman et al. propose an approach
-to colorizing manga using a Conditional Generative Adversarial Network
-(cGAN), which requires only a single colorized reference image for
-training, rather than hundreds or thousands of images. Additionally, a
-method of segmentation and color correction is proposed to improve the
-resolution and clarity of the output. The final results are sharp, clear
-and in high resolution, and stay true to the character’s original color
-scheme.</p>
-<p><strong><span class="citation" data-cites="furusawa_2017">[<a
-href="#ref-furusawa_2017" role="doc-biblioref">21</a>]</span> Furusawa
-et al.:</strong> Furusawa et al. developed Comicolorization, a
-semi-automatic colorization system for manga images, allowing users to
-generate a plausible color version of a manga page with the same color
-for the same character across multiple panels. The system utilizes color
-features extracted from reference images to help colorize the target
-character, employing adversarial loss to encourage the effect of the
-color features. The system also provides users with the option to
-interactively revise the colorization result. This is the first work to
-address the colorization of an entire manga title, making it possible to
-colorize the entire manga using desired colors for each panel.</p>
-<h4 id="style-transfer">Style-Transfer</h4>
-<p><strong><span class="citation" data-cites="shi_2020">[<a
-href="#ref-shi_2020" role="doc-biblioref">82</a>]</span> Shi et
-al.:</strong> In their contribution, Shi et al. propose a deep
-architecture for automatically coloring line art videos according to the
-colors of reference images. The architecture consists of a color
-transform network and a temporal constraint network. The color transform
-network utilizes non-local similarity matching to determine the region
-correspondences between the target and reference images, and also
-incorporates Adaptive Instance Normalization (AdaIN) to ensure global
-color style consistency. The temporal constraint network learns the
-spatiotemporal features through 3D convolution to ensure temporal
-consistency of the target image and the reference image. Experiments
-show that this method achieves the best performance on line art video
-coloring compared to other state-of-the-art methods.</p>
-<h4 id="tags">Tags</h4>
-<p><strong><span class="citation" data-cites="kim_2019">[<a
-href="#ref-kim_2019" role="doc-biblioref">42</a>]</span> Kim et
-al.:</strong> In their paper, Kim et al. proposed Tag2Pix, a line art
-colorization method using a GAN approach to produce a quality colored
-image from a grayscale line art and color tag information. It consists
-of a generator network with convolutional layers for transforming the
-input line art, a pre-trained semantic extraction network, and an
-encoder for input color information. The discriminator is based on an
-auxiliary classifier GAN to classify the tag information and the
-genuineness. A novel two-step training method is proposed where the
-generator and discriminator first learn the notion of object and shape
-and then, based on that, learn colorization. The effectiveness of the
-proposed method is demonstrated through quantitative and qualitative
-evaluations.</p>
-<h4 id="natural-language-prompt">Natural Language Prompt</h4>
-<p><strong><span class="citation" data-cites="zou_2019">[<a
-href="#ref-zou_2019" role="doc-biblioref">96</a>]</span> Zou et
-al.:</strong> In their work, Zou et al. present a language-based system
-for interactive colorization of scene sketches. The system is built upon
-NNs trained on a large dataset of scene sketches and cartoon-style color
-images with text descriptions. Given a scene sketch, the system allows
-users to interactively localize and colorize specific foreground object
-instances with language-based instructions. The effectiveness of the
-approach is demonstrated through comprehensive experiments and
-generalization user studies. The authors envision a combination of the
-language-based interface with a traditional scribble-based interface for
-a multimodal colorization system.</p>
-<p><strong><span class="citation" data-cites="chen_2018">[<a
-href="#ref-chen_2018" role="doc-biblioref">10</a>]</span> Chen et
-al.:</strong> Chen et al. investigate the Language-Based Image Editing
-(LBIE) problem where a source image is to be edited based on a natural
-language description. A generic modeling framework is proposed for two
-sub-tasks of LBIE, specifically language-based image segmentation and
-image colorization. This framework is based on recurrent attentive
-models to fuse image and language features, and a termination gate is
-used to determine how much information to extrapolate from the text
-description. The effectiveness of the framework is evaluated on three
-datasets: a synthetic CoSaL dataset to evaluate end-to-end performance,
-ReferIt dataset for image segmentation, and the Oxford-102 Flowers
-dataset for colorization.</p>
-<h4 id="color-hints">Color Hints</h4>
-<p><strong><span class="citation" data-cites="kautz_2007">[<a
-href="#ref-kautz_2007" role="doc-biblioref">55</a>]</span> Kautz et
-al.:</strong> In their contribution, Kautz et al. present an interactive
-system for colorizing natural images of complex scenes. The system
-separates the colorization procedure into two stages: Color labeling and
-Color mapping. Color labeling groups similar pixels into coherent
-regions based on a new algorithm that incorporates intensity-continuity
-and texture-similarity constraints. The Color mapping stage assigns
-colors to a few pixels in each region. An intuitive user interface is
-designed to allow users to label, color and modify the results. The
-system is demonstrated to produce vivid colorization effects with only a
-modest amount of user input.</p>
-<p><strong><span class="citation" data-cites="sykora_2009">[<a
-href="#ref-sykora_2009" role="doc-biblioref">86</a>]</span> Sykora et
-al.:</strong> Sykora et al. introduced LazyBrush, a novel interactive
-painting tool that is both simple and flexible. It is designed to
-address the needs of professional ink-and-paint illustrators and offers
-comparable or even less manual effort than previous custom-tailored
-approaches. LazyBrush is not sensitive to imprecise placement of color
-strokes and is incorporated into an optimization framework based on a
-Potts energy model with several interesting theoretical properties. It
-is demonstrated to be a useful tool in practical scenarios such as the
-ink-and-paint production pipeline.</p>
-<p><strong><span class="citation" data-cites="petalicapaint_2023">[<a
-href="#ref-petalicapaint_2023" role="doc-biblioref">69</a>]</span>
-Petalica Paint:</strong> Petalica Paint, previously called PaintsChainer
-<span class="citation" data-cites="paintschainer_2023">[<a
-href="#ref-paintschainer_2023"
-role="doc-biblioref"><strong>paintschainer_2023?</strong></a>]</span>,
-is a line drawing colorizer built with Chainer. It uses a U-net-based
-CNN trained to semi-automatically colorize sketches. The network is
-conditioned on user-provided color stokes and can interpret the user
-intent in the generated colored illustration. This is one of the first
-publicly available and web-based deployed models which contributed to
-its success.</p>
+<h3 id="sec:rel-algo">Algorithmic Approaches</h3>
+<!-- TODO: Intro -->
+<h4 id="delaunay-triangulation">Delaunay-Triangulation</h4>
+<p>Delaunay-triangulation is used by Wilkie et al. <span
+class="citation" data-cites="wilkie_2020">[<a href="#ref-wilkie_2020"
+role="doc-biblioref">66</a>]</span> and Parakkat et al. <span
+class="citation" data-cites="parakkat_2022">[<a
+href="#ref-parakkat_2022" role="doc-biblioref">67</a>]</span> to enable
+controlled flat colorization of sketches that can contain unclosed
+regions making it robust to variations in the input sketches contrary to
+early work requiring the use of external tools to close them <span
+class="citation" data-cites="gangnet_1994 sasaki_2017 liu_2019">[<a
+href="#ref-gangnet_1994" role="doc-biblioref">23</a>, <a
+href="#ref-liu_2019" role="doc-biblioref">52</a>, <a
+href="#ref-sasaki_2017" role="doc-biblioref">80</a>]</span> some being
+ML driven <span class="citation" data-cites="sasaki_2017 liu_2019">[<a
+href="#ref-liu_2019" role="doc-biblioref">52</a>, <a
+href="#ref-sasaki_2017" role="doc-biblioref">80</a>]</span>. While such
+approaches do not provide lighting nor texture information to the
+generated colored illustration, they can be used to initialize others
+similar to the work of Frans et al. <span class="citation"
+data-cites="frans_2017">[<a href="#ref-frans_2017"
+role="doc-biblioref">19</a>]</span> although they use a DL approach.
+They can also be used to build color-filling helper tools which are
+handy for the animation industry where every frame of the show has to be
+colored consistently.</p>
 <p><strong><span class="citation" data-cites="gangnet_1994">[<a
 href="#ref-gangnet_1994" role="doc-biblioref">23</a>]</span> Gagnet et
 al.:</strong> Gagnet et al. presents a gap-closing method for cel
@@ -3929,6 +3746,44 @@ joint learning approach outperforms the state-of-the-art methods in
 sketch completion and recognition tasks. Further experiments on several
 sketch-based applications validate the performance of the proposed
 method.</p>
+<p><strong><span class="citation" data-cites="wilkie_2020">[<a
+href="#ref-wilkie_2020" role="doc-biblioref">66</a>]</span> Wilkie et
+al.:</strong> In their work, Wilkie et al. introduced a
+Delaunay-triangulation-based algorithm for interactive colorizations of
+minimalist sketches. The aim is to reduce user intervention and make
+interaction as easy and natural as with the flood-fill algorithm while
+providing the ability to color regions with open contours. This is
+accomplished in two steps: 1) an automatic segmentation step that
+divides the input sketch into regions based on the underlying Delaunay
+structure, and 2) an interactive grouping of neighboring regions based
+on user input, which generates the final colored sketch. Results show
+that the method is as natural as a bucket fill tool and powerful enough
+to color minimalist sketches.</p>
+<p><strong><span class="citation" data-cites="parakkat_2022">[<a
+href="#ref-parakkat_2022" role="doc-biblioref">67</a>]</span> Parakkat
+et al.:</strong> In their paper, Parakkat et al. introduced Delaunay
+Painting, a novel and easy-to-use method for flat-coloring contour
+sketches with gaps. It starts by creating a Delaunay triangulation of
+the input contours and then proceeds to iteratively fill triangles with
+the appropriate colors based on dynamic flow calculations and energy
+minimization of contour curves. Additionally, a color diffusion
+framework is used to automate the coloring of small internal regions.
+The method is robust and enables any coloring strategy regardless of the
+order of interactions. It has applications in medical imaging and sketch
+segmentation.</p>
+<h4 id="assistive-completion">Assistive Completion</h4>
+<!-- TODO: Explain -->
+<p><strong><span class="citation" data-cites="sykora_2009">[<a
+href="#ref-sykora_2009" role="doc-biblioref">86</a>]</span> Sykora et
+al.:</strong> Sykora et al. introduced LazyBrush, a novel interactive
+painting tool that is both simple and flexible. It is designed to
+address the needs of professional ink-and-paint illustrators and offers
+comparable or even less manual effort than previous custom-tailored
+approaches. LazyBrush is not sensitive to the imprecise placement of
+color strokes and is incorporated into an optimization framework based
+on a Potts energy model with several interesting theoretical properties.
+It is demonstrated to be a useful tool in practical scenarios such as
+the ink-and-paint production pipeline.</p>
 <p><strong><span class="citation" data-cites="beck_2018">[<a
 href="#ref-beck_2018" role="doc-biblioref">18</a>]</span> Beck et
 al.:</strong> Beck et al. present a novel algorithm for semi-supervised
@@ -3939,6 +3794,281 @@ corresponding connected components. The algorithm offers a fast and
 efficient colorization of line-art images with a similar quality as
 previous state-of-the-art algorithms, but with a lower algorithmic
 complexity, allowing for more user interactivity.</p>
+<h3 id="sec:rel-deep">Deep Learning Approaches</h3>
+<!-- TODO: Intro -->
+<h4 id="full-automatic-colorization">Full-Automatic Colorization</h4>
+<p>The first category of Deep Learning (DL) techniques applied to the
+task of automatic colorization <span class="citation"
+data-cites="iizuka_2016 liu_2017 frans_2017 zhang_2018 yoo_2019 su_2020">[<a
+href="#ref-frans_2017" role="doc-biblioref">19</a>, <a
+href="#ref-iizuka_2016" role="doc-biblioref">36</a>, <a
+href="#ref-liu_2017" role="doc-biblioref">53</a>, <a href="#ref-su_2020"
+role="doc-biblioref">85</a>, <a href="#ref-yoo_2019"
+role="doc-biblioref">91</a>, <a href="#ref-zhang_2018"
+role="doc-biblioref">94</a>]</span> does not propose any user
+conditioning input. They instead provide an automatic method for the
+task resulting in common sense coloring learned from their respective
+training datasets. While initial work and improvements focused on
+grayscale image colorization <span class="citation"
+data-cites="iizuka_2016 su_2020 yoo_2019">[<a href="#ref-iizuka_2016"
+role="doc-biblioref">36</a>, <a href="#ref-su_2020"
+role="doc-biblioref">85</a>, <a href="#ref-yoo_2019"
+role="doc-biblioref">91</a>]</span> others are extending this work to
+lineart or sketch colorization <span class="citation"
+data-cites="liu_2017 frans_2017 zhang_2018">[<a href="#ref-frans_2017"
+role="doc-biblioref">19</a>, <a href="#ref-liu_2017"
+role="doc-biblioref">53</a>, <a href="#ref-zhang_2018"
+role="doc-biblioref">94</a>]</span> which is considered more difficult
+by the CV standards as black and white linearts do not provide any
+semantic visual information such as texture and shadow. The introduction
+of the DL learning frameworks in the task of automatic colorization
+enables end-to-end models to color sketches from scratch and output
+generated colored illustrations with inferred colors, textures and
+lighting.</p>
+<p><strong><span class="citation" data-cites="iizuka_2016">[<a
+href="#ref-iizuka_2016" role="doc-biblioref">36</a>]</span> Iizuka et
+al.:</strong> In their paper, Iizuka et al. present a novel technique to
+automatically colorize grayscale images using both global priors and
+local image features. The proposed method uses a CNN to fuse local
+information and global priors, which are computed using the entire
+image. The entire framework is trained in an end-to-end fashion and is
+capable of processing images of any resolution. The model is trained on
+an existing scene classification database to learn discriminative global
+priors. A user study is conducted to validate the proposed method and it
+is shown to outperform the state-of-the-art. Extensive experiments on
+different types of images demonstrate the realistic colorizations of the
+proposed method.</p>
+<p><strong><span class="citation" data-cites="liu_2017">[<a
+href="#ref-liu_2017" role="doc-biblioref">53</a>]</span> Liu et
+al.:</strong> Liu et al. investigate the sketch-to-image synthesis
+problem using Conditional Generative Adversarial Network (cGAN). To
+solve this problem, the auto-painter model is proposed, which is capable
+of automatically generating compatible colors for a sketch, as well as
+allowing users to indicate preferred colors. Experimental results on two
+sketch datasets demonstrate the effectiveness of the auto-painter model
+compared to existing image-to-image methods.</p>
+<p><strong><span class="citation" data-cites="frans_2017">[<a
+href="#ref-frans_2017" role="doc-biblioref">19</a>]</span> Frans et
+al.:</strong> In their contribution, Frans et al. propose a solution to
+automatically colorize raw line art by leveraging two networks in
+tandem. The first network is a color prediction network based solely on
+outlines, while the second network is a shading network conditioned on
+both outlines and a color scheme. Processing methods are used to limit
+information passed in the color scheme, which improves generalization.
+Finally, the research demonstrates natural-looking results when
+colorizing outlines from scratch, as well as from a messy, user-defined
+color scheme.</p>
+<p><strong><span class="citation" data-cites="zhang_2018">[<a
+href="#ref-zhang_2018" role="doc-biblioref">94</a>]</span> Zhang et
+al.:</strong> In their paper, Zhang et al. propose a semi-automatic
+learning-based framework to colorize sketches with proper color,
+texture, and gradient. It divides the task into two stages: (1) a
+drafting stage where the model guesses color regions and splashes a
+variety of colors over the sketch, and (2) a refinement stage where the
+model detects unnatural colors and artifacts and tries to refine the
+result. An interactive software was developed to evaluate the model,
+which allows users to iteratively edit and refine the colorization. An
+extensive user study was conducted to evaluate the learning model and
+the interactive system, and results showed that it outperforms existing
+techniques and industrial applications in terms of visual quality, user
+control, user experience, and other metrics.</p>
+<p><strong><span class="citation" data-cites="yoo_2019">[<a
+href="#ref-yoo_2019" role="doc-biblioref">91</a>]</span> Yoo et
+al.:</strong> In their work, Yoo et al. present a novel memory-augmented
+colorization model called MemoPainter that is capable of producing
+high-quality colorization with limited training data. It can capture
+rare instances and successfully colorize them. Furthermore, a novel
+threshold triplet loss is proposed to enable unsupervised training of
+memory networks without the need for class labels. Experiments show that
+the model is superior in both few-shot and one-shot colorization
+tasks.</p>
+<p><strong><span class="citation" data-cites="su_2020">[<a
+href="#ref-su_2020" role="doc-biblioref">85</a>]</span> Su et
+al.:</strong> Su et al. present a method for instance-aware image
+colorization that leverages an object detector to obtain cropped object
+images and a colorization network to extract object-level features. The
+network fuses the object-level and image-level features to predict the
+final colors, and the entire model is learned from a large-scale
+dataset. Experimental results show that this model outperforms existing
+methods and achieves state-of-the-art results.</p>
+<h4 id="example-based">Example-Based</h4>
+<p>Another category of network conditioning for the task of automatic
+lineart colorization is the use of examples <span class="citation"
+data-cites="hensman_2017 furusawa_2017 zhang_ji_2017 shi_2020">[<a
+href="#ref-furusawa_2017" role="doc-biblioref">21</a>, <a
+href="#ref-hensman_2017" role="doc-biblioref">31</a>, <a
+href="#ref-shi_2020" role="doc-biblioref">82</a>, <a
+href="#ref-zhang_ji_2017" role="doc-biblioref">93</a>]</span>. Examples
+can be used to generate small datasets from which a network can be
+trained to replicate and learn the colors from <span class="citation"
+data-cites="hensman_2017 furusawa_2017">[<a href="#ref-furusawa_2017"
+role="doc-biblioref">21</a>, <a href="#ref-hensman_2017"
+role="doc-biblioref">31</a>]</span> but also as stylistic targets <span
+class="citation" data-cites="zhang_ji_2017 shi_2020">[<a
+href="#ref-shi_2020" role="doc-biblioref">82</a>, <a
+href="#ref-zhang_ji_2017" role="doc-biblioref">93</a>]</span>. The style
+and content of the example image can be extracted using a pretrained NN
+and the style transferred to the target lineart. The method has been
+extended to allow the colorization of consistently animated frames <span
+class="citation" data-cites="shi_2020">[<a href="#ref-shi_2020"
+role="doc-biblioref">82</a>]</span>.</p>
+<p><strong><span class="citation" data-cites="hensman_2017">[<a
+href="#ref-hensman_2017" role="doc-biblioref">31</a>]</span> Hensman et
+al.:</strong> In their contribution, Hensman et al. propose an approach
+to colorizing manga using a Conditional Generative Adversarial Network
+(cGAN), which requires only a single colorized reference image for
+training, rather than hundreds or thousands of images. Additionally, a
+method of segmentation and color correction is proposed to improve the
+resolution and clarity of the output. The final results are sharp, clear
+and in high resolution, and stay true to the character’s original color
+scheme.</p>
+<p><strong><span class="citation" data-cites="furusawa_2017">[<a
+href="#ref-furusawa_2017" role="doc-biblioref">21</a>]</span> Furusawa
+et al.:</strong> Furusawa et al. developed Comicolorization, a
+semi-automatic colorization system for manga images, allowing users to
+generate a plausible color version of a manga page with the same color
+for the same character across multiple panels. The system utilizes color
+features extracted from reference images to help colorize the target
+character, employing adversarial loss to encourage the effect of the
+color features. The system also provides users with the option to
+interactively revise the colorization result. This is the first work to
+address the colorization of an entire manga title, making it possible to
+colorize the entire manga using desired colors for each panel.</p>
+<p><strong><span class="citation" data-cites="zhang_ji_2017">[<a
+href="#ref-zhang_ji_2017" role="doc-biblioref">93</a>]</span> Zhang et
+al.:</strong> Zhang et al. use neural style transfer to automatically
+synthesize credible paintings from content and style images. However,
+when attempting to apply a painting’s style to an anime sketch, these
+methods fail to accurately transfer the style. their paper proposes a
+method which combines a residual U-net and an auxiliary classifier GAN
+to effectively apply the style to the sketch while maintaining quality
+and colorization. The process is both automatic and fast.</p>
+<p><strong><span class="citation" data-cites="shi_2020">[<a
+href="#ref-shi_2020" role="doc-biblioref">82</a>]</span> Shi et
+al.:</strong> In their contribution, Shi et al. propose a deep
+architecture for automatically coloring line art videos according to the
+colors of reference images. The architecture consists of a color
+transform network and a temporal constraint network. The color transform
+network utilizes non-local similarity matching to determine the region
+correspondences between the target and reference images, and also
+incorporates Adaptive Instance Normalization (AdaIN) to ensure global
+color style consistency. The temporal constraint network learns the
+spatiotemporal features through 3D convolution to ensure temporal
+consistency of the target image and the reference image. Experiments
+show that this method achieves the best performance on line art video
+coloring compared to other state-of-the-art methods.</p>
+<h4 id="tags">Tags</h4>
+<p>Another method, closer to the use of natural language description, is
+the use of tags (labels) [kim_2019]. Tags can be obtained from online
+illustration galleries and used for training of both classifiers and
+generative architectures. Their final use is however limited to the set
+of tags made available during training.</p>
+<p><strong><span class="citation" data-cites="kim_2019">[<a
+href="#ref-kim_2019" role="doc-biblioref">42</a>]</span> Kim et
+al.:</strong> In their paper, Kim et al. proposed Tag2Pix, a line art
+colorization method using a GAN approach to produce a quality colored
+image from a grayscale line art and color tag information. It consists
+of a generator network with convolutional layers for transforming the
+input line art, a pre-trained semantic extraction network, and an
+encoder for input color information. The discriminator is based on an
+auxiliary classifier GAN to classify the tag information and the
+genuineness. A novel two-step training method is proposed where the
+generator and discriminator first learn the notion of object and shape
+and then, based on that, learn colorization. The effectiveness of the
+proposed method is demonstrated through quantitative and qualitative
+evaluations.</p>
+<h4 id="natural-language-prompt">Natural Language Prompt</h4>
+<p>One of the most natural ways of describing one’s intent is the use of
+natural language. Natural language can be compressed into meaningful
+latent code sequences and used as a conditional signal to train
+conditional generative models for the task of automatic colorization
+<span class="citation" data-cites="zou_2019 chen_2018">[<a
+href="#ref-chen_2018" role="doc-biblioref">10</a>, <a
+href="#ref-zou_2019" role="doc-biblioref">96</a>]</span>. While language
+can serve as a useful descriptor and add priors to the NN, it is hard to
+produce a colored illustration representing the full extent of the user
+intent. For example, positioning is hard. This issue can, however, be
+solved by combination with other conditioning means such as
+user-provided color strokes <span class="citation"
+data-cites="zou_2019">[<a href="#ref-zou_2019"
+role="doc-biblioref">96</a>]</span>.</p>
+<p><strong><span class="citation" data-cites="chen_2018">[<a
+href="#ref-chen_2018" role="doc-biblioref">10</a>]</span> Chen et
+al.:</strong> Chen et al. investigate the Language-Based Image Editing
+(LBIE) problem where a source image is to be edited based on a natural
+language description. A generic modeling framework is proposed for two
+sub-tasks of LBIE, specifically language-based image segmentation and
+image colorization. This framework is based on recurrent attentive
+models to fuse image and language features, and a termination gate is
+used to determine how much information to extrapolate from the text
+description. The effectiveness of the framework is evaluated on three
+datasets: a synthetic CoSaL dataset to evaluate end-to-end performance,
+ReferIt dataset for image segmentation, and the Oxford-102 Flowers
+dataset for colorization.</p>
+<p><strong><span class="citation" data-cites="zou_2019">[<a
+href="#ref-zou_2019" role="doc-biblioref">96</a>]</span> Zou et
+al.:</strong> In their work, Zou et al. present a language-based system
+for interactive colorization of scene sketches. The system is built upon
+NNs trained on a large dataset of scene sketches and cartoon-style color
+images with text descriptions. Given a scene sketch, the system allows
+users to interactively localize and colorize specific foreground object
+instances with language-based instructions. The effectiveness of the
+approach is demonstrated through comprehensive experiments and
+generalization user studies. The authors envision a combination of the
+language-based interface with a traditional scribble-based interface for
+a multimodal colorization system.</p>
+<h4 id="color-hints">Color Hints</h4>
+<p>Finally, generative models trained for automatic colorization can be
+conditioned on user-provided color strokes or scribble lines <span
+class="citation"
+data-cites="kautz_2007 zhang_richard_2017 petalicapaint_2023 paintschainer_2018 ci_2018">[<a
+href="#ref-ci_2018" role="doc-biblioref">11</a>, <a
+href="#ref-kautz_2007" role="doc-biblioref">55</a>, <a
+href="#ref-paintschainer_2018" role="doc-biblioref">65</a>, <a
+href="#ref-petalicapaint_2023" role="doc-biblioref">69</a>, <a
+href="#ref-zhang_richard_2017" role="doc-biblioref">95</a>]</span>. They
+are probably one of the most natural means of expressing the artist or
+end user intent for colorization because of its resemblance to the
+natural coloring workflow. Whether it is digital or manual painting, we
+are used to applying color using successive and organized scribbles.
+Contrary to natural language prompts, they have the power to be
+precisely indicate positioning intent. Stroke hints have first been
+introduced in the DL approaches for user-guided grayscale colorization
+<span class="citation"
+data-cites="kautz_2007 sangkloy_2016 zhang_richard_2017">[<a
+href="#ref-kautz_2007" role="doc-biblioref">55</a>, <a
+href="#ref-sangkloy_2016" role="doc-biblioref">79</a>, <a
+href="#ref-zhang_richard_2017" role="doc-biblioref">95</a>]</span> and
+then translated to lineart colorization <span class="citation"
+data-cites="petalicapaint_2023 paintschainer_2018 ci_2018">[<a
+href="#ref-ci_2018" role="doc-biblioref">11</a>, <a
+href="#ref-paintschainer_2018" role="doc-biblioref">65</a>, <a
+href="#ref-petalicapaint_2023" role="doc-biblioref">69</a>]</span>
+taking inspiration from early work <span class="citation"
+data-cites="sykora_2009">[<a href="#ref-sykora_2009"
+role="doc-biblioref">86</a>]</span>.</p>
+<p><strong><span class="citation" data-cites="kautz_2007">[<a
+href="#ref-kautz_2007" role="doc-biblioref">55</a>]</span> Kautz et
+al.:</strong> In their contribution, Kautz et al. present an interactive
+system for colorizing natural images of complex scenes. The system
+separates the colorization procedure into two stages: Color labeling and
+Color mapping. Color labeling groups similar pixels into coherent
+regions based on a new algorithm that incorporates intensity-continuity
+and texture-similarity constraints. The Color mapping stage assigns
+colors to a few pixels in each region. An intuitive user interface is
+designed to allow users to label, color and modify the results. The
+system is demonstrated to produce vivid colorization effects with only a
+modest amount of user input.</p>
+<p><strong><span class="citation" data-cites="sangkloy_2016">[<a
+href="#ref-sangkloy_2016" role="doc-biblioref">79</a>]</span> Sangkloy
+et al.:</strong> In their work, Sangkloy et al. propose a deep
+adversarial image synthesis architecture that is conditioned on sketched
+boundaries and sparse color strokes to generate realistic cars,
+bedrooms, or faces. This architecture is capable of generating
+convincing images that satisfy both the color and the sketch constraints
+of the user in real-time. It also allows for user-guided colorization of
+grayscale images. This architecture is more realistic, diverse, and
+controllable than other recent works on sketch to image synthesis.</p>
 <p><strong><span class="citation" data-cites="zhang_richard_2017">[<a
 href="#ref-zhang_richard_2017" role="doc-biblioref">95</a>]</span> Zhang
 et al.:</strong> Zhang et al. propose a DL based approach to user-guided
@@ -3950,6 +4080,17 @@ colorization. The system also provides users with likely colors to guide
 them in efficient input selection. Furthermore, the framework can
 incorporate other user hints to the desired colorization, showing an
 application to color histogram transfer.</p>
+<p><strong><span class="citation" data-cites="petalicapaint_2023">[<a
+href="#ref-petalicapaint_2023" role="doc-biblioref">69</a>]</span>
+Petalica Paint:</strong> Petalica Paint, previously called PaintsChainer
+<span class="citation" data-cites="paintschainer_2018">[<a
+href="#ref-paintschainer_2018" role="doc-biblioref">65</a>]</span>, is a
+line drawing colorizer built with Chainer. It uses a U-net-based CNN
+trained to semi-automatically colorize sketches. The network is
+conditioned on user-provided color stokes and can interpret the user
+intent in the generated colored illustration. This is one of the first
+publicly available and web-based deployed models which contributed to
+its success.</p>
 <p><strong><span class="citation" data-cites="ci_2018">[<a
 href="#ref-ci_2018" role="doc-biblioref">11</a>]</span> Ci et
 al.:</strong> Ci et al. propose a novel deep cGAN for the challenging
@@ -3963,16 +4104,8 @@ model, two datasets providing high-quality illustrations and authentic
 line arts are collected. The results demonstrate that the proposed
 approach produces more realistic and precise images than other
 methods.</p>
-<p><strong><span class="citation" data-cites="sangkloy_2016">[<a
-href="#ref-sangkloy_2016" role="doc-biblioref">79</a>]</span> Sangkloy
-et al.:</strong> In their work, Sangkloy et al. propose a deep
-adversarial image synthesis architecture that is conditioned on sketched
-boundaries and sparse color strokes to generate realistic cars,
-bedrooms, or faces. This architecture is capable of generating
-convincing images that satisfy both the color and the sketch constraints
-of the user in real-time. It also allows for user-guided colorization of
-grayscale images. This architecture is more realistic, diverse, and
-controllable than other recent works on sketch to image synthesis.</p>
+<h3 id="summary-1">Summary</h3>
+<!-- TODO: Summary + Critics -->
 <!-- TODO: Here -->
 <h2 id="ch:methodology">Methodology</h2>
 <h3 id="implementation">Implementation</h3>
@@ -3986,21 +4119,21 @@ Network</h2>
 <h3 id="method">Method</h3>
 <h3 id="setup">Setup</h3>
 <h3 id="results">Results</h3>
-<h3 id="summary-1">Summary</h3>
+<h3 id="summary-2">Summary</h3>
 
 <h2 id="ch:contrib-2">StencitTorch: an Iterative and User-Guided
 Framework for Anime Lineart Colorization</h2>
 <h3 id="method-1">Method</h3>
 <h3 id="setup-1">Setup</h3>
 <h3 id="results-1">Results</h3>
-<h3 id="summary-2">Summary</h3>
+<h3 id="summary-3">Summary</h3>
 
 <h2 id="ch:contrib-3">StablePaint: a Conditional Denoising Diffusion
 Model for Iterative Anime Lineart Colorization</h2>
 <h3 id="method-2">Method</h3>
 <h3 id="setup-2">Setup</h3>
 <h3 id="results-2">Results</h3>
-<h3 id="summary-3">Summary</h3>
+<h3 id="summary-4">Summary</h3>
 <!-- ===================== [END] PART CORE ===================== -->
 <!-- ===================== [START] PART REFLECTION ===================== -->
 <h1 id="reflection">Reflection</h1>
