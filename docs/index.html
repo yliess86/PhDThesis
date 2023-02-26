@@ -3684,16 +3684,17 @@ colorization.</p>
 <h1 id="core">Core</h1>
 <h2 id="ch:sota">Related Work</h2>
 <p>In this chapter, we discuss related work for the task of automatic
-linear colorization. The related contributions can be divided into two
-categories, automatic methods (see
-Secs <strong>¿sec:automatic?</strong>,
-<strong>¿sec:userguided?</strong>) requiring no user intervention, and
-user-guided methods (see Secs <strong>¿sec:methods-guided?</strong>)
-adopting a human-in-the-loop system. Although classical methods are
-presented the state-of-the-art is now dominated by DL methods which are
-the focus of this thesis.</p>
+colorization. The related contributions can be divided into two
+categories of methods, classical algorithmic methods (see <a
+href="#sec:rel-algo">Sec 3.1.1</a>) offering tools for flat colorization
+mostly based on contour filling, and more recently Deep Learning
+(DL)-based methods (see <a href="#sec:rel-deep">Sec 3.1.2</a>) enabling
+end-to-end methods to color illustrations with inferred semantic,
+lighting, and texture information. DL techniques offer unprecedented
+means for model conditioning ranging from example-based, tags and
+labels, natural language prompts and color hints in the form of natural
+scribble lines or strokes.</p>
 <h3 id="sec:rel-algo">Algorithmic Approaches</h3>
-<!-- TODO: Intro -->
 <h4 id="delaunay-triangulation">Delaunay-Triangulation</h4>
 <p>Delaunay-triangulation is used by Wilkie et al. <span
 class="citation" data-cites="wilkie_2020">[<a href="#ref-wilkie_2020"
@@ -3746,6 +3747,20 @@ joint learning approach outperforms the state-of-the-art methods in
 sketch completion and recognition tasks. Further experiments on several
 sketch-based applications validate the performance of the proposed
 method.</p>
+<figure id="fig:core_rel_delaunay">
+<img src="./figures/core_rel_delaunay.png"
+alt="Delaunay-triangulation for lineart and sketch segmentation-based flat colorization [66, 67]. Top is work from Wilkie et al. [66] and bottom from Parakkat et al. [67]." />
+<figcaption>Figure 43: Delaunay-triangulation for lineart and sketch
+segmentation-based flat colorization <span class="citation"
+data-cites="wilkie_2020 parakkat_2022">[<a href="#ref-wilkie_2020"
+role="doc-biblioref">66</a>, <a href="#ref-parakkat_2022"
+role="doc-biblioref">67</a>]</span>. Top is work from Wilkie et al.
+<span class="citation" data-cites="wilkie_2020">[<a
+href="#ref-wilkie_2020" role="doc-biblioref">66</a>]</span> and bottom
+from Parakkat et al. <span class="citation"
+data-cites="parakkat_2022">[<a href="#ref-parakkat_2022"
+role="doc-biblioref">67</a>]</span>.</figcaption>
+</figure>
 <p><strong><span class="citation" data-cites="wilkie_2020">[<a
 href="#ref-wilkie_2020" role="doc-biblioref">66</a>]</span> Wilkie et
 al.:</strong> In their work, Wilkie et al. introduced a
@@ -3772,7 +3787,24 @@ The method is robust and enables any coloring strategy regardless of the
 order of interactions. It has applications in medical imaging and sketch
 segmentation.</p>
 <h4 id="assistive-completion">Assistive Completion</h4>
-<!-- TODO: Explain -->
+<p>The literature also explored building assistive completion tools
+<span class="citation" data-cites="sykora_2009 beck_2018">[<a
+href="#ref-beck_2018" role="doc-biblioref">18</a>, <a
+href="#ref-sykora_2009" role="doc-biblioref">86</a>]</span> for helping
+in filling flat color areas, closing gaps in sketches, and more. While
+they propose to enhance the natural workflow of digital painting, they
+only focus on flat colorization and do not provide the mean of
+specifying lighting and textures.</p>
+<figure id="fig:core_rel_lazybrush">
+<img src="./figures/core_rel_lazybrush.png"
+alt="Flat colorization from Sykora et al. [86]. The color intents are loosely defined by the end-user using color strokes. The algorithm can generate quality colorization even with imprecise stroke positioning." />
+<figcaption>Figure 44: Flat colorization from Sykora et al. <span
+class="citation" data-cites="sykora_2009">[<a href="#ref-sykora_2009"
+role="doc-biblioref">86</a>]</span>. The color intents are loosely
+defined by the end-user using color strokes. The algorithm can generate
+quality colorization even with imprecise stroke
+positioning.</figcaption>
+</figure>
 <p><strong><span class="citation" data-cites="sykora_2009">[<a
 href="#ref-sykora_2009" role="doc-biblioref">86</a>]</span> Sykora et
 al.:</strong> Sykora et al. introduced LazyBrush, a novel interactive
@@ -3795,17 +3827,15 @@ efficient colorization of line-art images with a similar quality as
 previous state-of-the-art algorithms, but with a lower algorithmic
 complexity, allowing for more user interactivity.</p>
 <h3 id="sec:rel-deep">Deep Learning Approaches</h3>
-<!-- TODO: Intro -->
 <h4 id="full-automatic-colorization">Full-Automatic Colorization</h4>
 <p>The first category of Deep Learning (DL) techniques applied to the
 task of automatic colorization <span class="citation"
-data-cites="iizuka_2016 liu_2017 frans_2017 zhang_2018 yoo_2019 su_2020">[<a
+data-cites="iizuka_2016 liu_2017 frans_2017 yoo_2019 su_2020">[<a
 href="#ref-frans_2017" role="doc-biblioref">19</a>, <a
 href="#ref-iizuka_2016" role="doc-biblioref">36</a>, <a
 href="#ref-liu_2017" role="doc-biblioref">53</a>, <a href="#ref-su_2020"
 role="doc-biblioref">85</a>, <a href="#ref-yoo_2019"
-role="doc-biblioref">91</a>, <a href="#ref-zhang_2018"
-role="doc-biblioref">94</a>]</span> does not propose any user
+role="doc-biblioref">91</a>]</span> does not propose any user
 conditioning input. They instead provide an automatic method for the
 task resulting in common sense coloring learned from their respective
 training datasets. While initial work and improvements focused on
@@ -3815,16 +3845,24 @@ role="doc-biblioref">36</a>, <a href="#ref-su_2020"
 role="doc-biblioref">85</a>, <a href="#ref-yoo_2019"
 role="doc-biblioref">91</a>]</span> others are extending this work to
 lineart or sketch colorization <span class="citation"
-data-cites="liu_2017 frans_2017 zhang_2018">[<a href="#ref-frans_2017"
+data-cites="liu_2017 frans_2017">[<a href="#ref-frans_2017"
 role="doc-biblioref">19</a>, <a href="#ref-liu_2017"
-role="doc-biblioref">53</a>, <a href="#ref-zhang_2018"
-role="doc-biblioref">94</a>]</span> which is considered more difficult
+role="doc-biblioref">53</a>]</span> which is considered more difficult
 by the CV standards as black and white linearts do not provide any
 semantic visual information such as texture and shadow. The introduction
 of the DL learning frameworks in the task of automatic colorization
 enables end-to-end models to color sketches from scratch and output
 generated colored illustrations with inferred colors, textures and
 lighting.</p>
+<figure id="fig:core_rel_auto_grayscale">
+<img src="./figures/core_rel_auto_grayscale.png"
+alt="Automatic colorization of grayscale images from Iizuka et al. [36]. Grayscale images are on the top and their respective generated colored versions bottom." />
+<figcaption>Figure 45: Automatic colorization of grayscale images from
+Iizuka et al. <span class="citation" data-cites="iizuka_2016">[<a
+href="#ref-iizuka_2016" role="doc-biblioref">36</a>]</span>. Grayscale
+images are on the top and their respective generated colored versions
+bottom.</figcaption>
+</figure>
 <p><strong><span class="citation" data-cites="iizuka_2016">[<a
 href="#ref-iizuka_2016" role="doc-biblioref">36</a>]</span> Iizuka et
 al.:</strong> In their paper, Iizuka et al. present a novel technique to
@@ -3847,6 +3885,15 @@ of automatically generating compatible colors for a sketch, as well as
 allowing users to indicate preferred colors. Experimental results on two
 sketch datasets demonstrate the effectiveness of the auto-painter model
 compared to existing image-to-image methods.</p>
+<figure id="fig:core_rel_auto_lineart">
+<img src="./figures/core_rel_auto_lineart.png"
+alt="Two-stage anime lineart colorization from Frans et al. [19]. The linearts are on the top and the final and second stage colorization bottom." />
+<figcaption>Figure 46: Two-stage anime lineart colorization from Frans
+et al. <span class="citation" data-cites="frans_2017">[<a
+href="#ref-frans_2017" role="doc-biblioref">19</a>]</span>. The linearts
+are on the top and the final and second stage colorization
+bottom.</figcaption>
+</figure>
 <p><strong><span class="citation" data-cites="frans_2017">[<a
 href="#ref-frans_2017" role="doc-biblioref">19</a>]</span> Frans et
 al.:</strong> In their contribution, Frans et al. propose a solution to
@@ -3858,20 +3905,6 @@ information passed in the color scheme, which improves generalization.
 Finally, the research demonstrates natural-looking results when
 colorizing outlines from scratch, as well as from a messy, user-defined
 color scheme.</p>
-<p><strong><span class="citation" data-cites="zhang_2018">[<a
-href="#ref-zhang_2018" role="doc-biblioref">94</a>]</span> Zhang et
-al.:</strong> In their paper, Zhang et al. propose a semi-automatic
-learning-based framework to colorize sketches with proper color,
-texture, and gradient. It divides the task into two stages: (1) a
-drafting stage where the model guesses color regions and splashes a
-variety of colors over the sketch, and (2) a refinement stage where the
-model detects unnatural colors and artifacts and tries to refine the
-result. An interactive software was developed to evaluate the model,
-which allows users to iteratively edit and refine the colorization. An
-extensive user study was conducted to evaluate the learning model and
-the interactive system, and results showed that it outperforms existing
-techniques and industrial applications in terms of visual quality, user
-control, user experience, and other metrics.</p>
 <p><strong><span class="citation" data-cites="yoo_2019">[<a
 href="#ref-yoo_2019" role="doc-biblioref">91</a>]</span> Yoo et
 al.:</strong> In their work, Yoo et al. present a novel memory-augmented
@@ -3934,6 +3967,15 @@ color features. The system also provides users with the option to
 interactively revise the colorization result. This is the first work to
 address the colorization of an entire manga title, making it possible to
 colorize the entire manga using desired colors for each panel.</p>
+<figure id="fig:core_rel_styletransfer">
+<img src="./figures/core_rel_styletransfer.png"
+alt="Style transfer-based colorization from Zhang et al. [93]. The three examples contain the input lineart top left, the style target bottom left, and the resulting output on the right." />
+<figcaption>Figure 47: Style transfer-based colorization from Zhang et
+al. <span class="citation" data-cites="zhang_ji_2017">[<a
+href="#ref-zhang_ji_2017" role="doc-biblioref">93</a>]</span>. The three
+examples contain the input lineart top left, the style target bottom
+left, and the resulting output on the right.</figcaption>
+</figure>
 <p><strong><span class="citation" data-cites="zhang_ji_2017">[<a
 href="#ref-zhang_ji_2017" role="doc-biblioref">93</a>]</span> Zhang et
 al.:</strong> Zhang et al. use neural style transfer to automatically
@@ -3963,6 +4005,15 @@ the use of tags (labels) [kim_2019]. Tags can be obtained from online
 illustration galleries and used for training of both classifiers and
 generative architectures. Their final use is however limited to the set
 of tags made available during training.</p>
+<figure id="fig:core_rel_tags">
+<img src="./figures/core_rel_tags.png"
+alt="Tag-based colorization sampled from Kim et al. [42]. The examples illustrate the ability to control the generated illustration output given a lineart and tags describing the end-user intent." />
+<figcaption>Figure 48: Tag-based colorization sampled from Kim et al.
+<span class="citation" data-cites="kim_2019">[<a href="#ref-kim_2019"
+role="doc-biblioref">42</a>]</span>. The examples illustrate the ability
+to control the generated illustration output given a lineart and tags
+describing the end-user intent.</figcaption>
+</figure>
 <p><strong><span class="citation" data-cites="kim_2019">[<a
 href="#ref-kim_2019" role="doc-biblioref">42</a>]</span> Kim et
 al.:</strong> In their paper, Kim et al. proposed Tag2Pix, a line art
@@ -4005,6 +4056,15 @@ description. The effectiveness of the framework is evaluated on three
 datasets: a synthetic CoSaL dataset to evaluate end-to-end performance,
 ReferIt dataset for image segmentation, and the Oxford-102 Flowers
 dataset for colorization.</p>
+<figure id="fig:core_rel_prompt">
+<img src="./figures/core_rel_prompt.png"
+alt="Natural language prompts colorization from Zou et al. [96]. Their model can capture the user intent from natural language prompts and apply it to the given lineart." />
+<figcaption>Figure 49: Natural language prompts colorization from Zou et
+al. <span class="citation" data-cites="zou_2019">[<a
+href="#ref-zou_2019" role="doc-biblioref">96</a>]</span>. Their model
+can capture the user intent from natural language prompts and apply it
+to the given lineart.</figcaption>
+</figure>
 <p><strong><span class="citation" data-cites="zou_2019">[<a
 href="#ref-zou_2019" role="doc-biblioref">96</a>]</span> Zou et
 al.:</strong> In their work, Zou et al. present a language-based system
@@ -4021,11 +4081,12 @@ a multimodal colorization system.</p>
 <p>Finally, generative models trained for automatic colorization can be
 conditioned on user-provided color strokes or scribble lines <span
 class="citation"
-data-cites="kautz_2007 zhang_richard_2017 petalicapaint_2023 paintschainer_2018 ci_2018">[<a
+data-cites="kautz_2007 zhang_richard_2017 zhang_2018 petalicapaint_2023 paintschainer_2018 ci_2018">[<a
 href="#ref-ci_2018" role="doc-biblioref">11</a>, <a
 href="#ref-kautz_2007" role="doc-biblioref">55</a>, <a
 href="#ref-paintschainer_2018" role="doc-biblioref">65</a>, <a
 href="#ref-petalicapaint_2023" role="doc-biblioref">69</a>, <a
+href="#ref-zhang_2018" role="doc-biblioref">94</a>, <a
 href="#ref-zhang_richard_2017" role="doc-biblioref">95</a>]</span>. They
 are probably one of the most natural means of expressing the artist or
 end user intent for colorization because of its resemblance to the
@@ -4040,11 +4101,12 @@ href="#ref-kautz_2007" role="doc-biblioref">55</a>, <a
 href="#ref-sangkloy_2016" role="doc-biblioref">79</a>, <a
 href="#ref-zhang_richard_2017" role="doc-biblioref">95</a>]</span> and
 then translated to lineart colorization <span class="citation"
-data-cites="petalicapaint_2023 paintschainer_2018 ci_2018">[<a
+data-cites="zhang_2018 petalicapaint_2023 paintschainer_2018 ci_2018">[<a
 href="#ref-ci_2018" role="doc-biblioref">11</a>, <a
 href="#ref-paintschainer_2018" role="doc-biblioref">65</a>, <a
-href="#ref-petalicapaint_2023" role="doc-biblioref">69</a>]</span>
-taking inspiration from early work <span class="citation"
+href="#ref-petalicapaint_2023" role="doc-biblioref">69</a>, <a
+href="#ref-zhang_2018" role="doc-biblioref">94</a>]</span> taking
+inspiration from early work <span class="citation"
 data-cites="sykora_2009">[<a href="#ref-sykora_2009"
 role="doc-biblioref">86</a>]</span>.</p>
 <p><strong><span class="citation" data-cites="kautz_2007">[<a
@@ -4069,6 +4131,17 @@ convincing images that satisfy both the color and the sketch constraints
 of the user in real-time. It also allows for user-guided colorization of
 grayscale images. This architecture is more realistic, diverse, and
 controllable than other recent works on sketch to image synthesis.</p>
+<figure id="fig:core_rel_strokes_grayscale">
+<img src="./figures/core_rel_strokes_grayscale.png"
+alt="User-guided grayscale image colorization using colored strokes as the conditioning signal used to vehiculate the user intent from Zhang et al. [95]. This conditioning in addition to the deep learned priors enables qualitative and real-time colorization." />
+<figcaption>Figure 50: User-guided grayscale image colorization using
+colored strokes as the conditioning signal used to vehiculate the user
+intent from Zhang et al. <span class="citation"
+data-cites="zhang_richard_2017">[<a href="#ref-zhang_richard_2017"
+role="doc-biblioref">95</a>]</span>. This conditioning in addition to
+the deep learned priors enables qualitative and real-time
+colorization.</figcaption>
+</figure>
 <p><strong><span class="citation" data-cites="zhang_richard_2017">[<a
 href="#ref-zhang_richard_2017" role="doc-biblioref">95</a>]</span> Zhang
 et al.:</strong> Zhang et al. propose a DL based approach to user-guided
@@ -4080,6 +4153,20 @@ colorization. The system also provides users with likely colors to guide
 them in efficient input selection. Furthermore, the framework can
 incorporate other user hints to the desired colorization, showing an
 application to color histogram transfer.</p>
+<p><strong><span class="citation" data-cites="zhang_2018">[<a
+href="#ref-zhang_2018" role="doc-biblioref">94</a>]</span> Zhang et
+al.:</strong> In their paper, Zhang et al. propose a semi-automatic
+learning-based framework to colorize sketches with proper color,
+texture, and gradient. It divides the task into two stages: (1) a
+drafting stage where the model guesses color regions and splashes a
+variety of colors over the sketch, and (2) a refinement stage where the
+model detects unnatural colors and artifacts and tries to refine the
+result. An interactive software was developed to evaluate the model,
+which allows users to iteratively edit and refine the colorization. An
+extensive user study was conducted to evaluate the learning model and
+the interactive system, and results showed that it outperforms existing
+techniques and industrial applications in terms of visual quality, user
+control, user experience, and other metrics.</p>
 <p><strong><span class="citation" data-cites="petalicapaint_2023">[<a
 href="#ref-petalicapaint_2023" role="doc-biblioref">69</a>]</span>
 Petalica Paint:</strong> Petalica Paint, previously called PaintsChainer
@@ -4091,6 +4178,16 @@ conditioned on user-provided color stokes and can interpret the user
 intent in the generated colored illustration. This is one of the first
 publicly available and web-based deployed models which contributed to
 its success.</p>
+<figure id="fig:core_rel_strokes_lineart">
+<img src="./figures/core_rel_strokes_lineart.png"
+alt="User-guided anime lineart colorization using colored strokes as the conditioning signal used to vehiculate the user intent from Ci et al. [11]. This conditioning in addition to the deep learned priors enables qualitative and real-time colorization." />
+<figcaption>Figure 51: User-guided anime lineart colorization using
+colored strokes as the conditioning signal used to vehiculate the user
+intent from Ci et al. <span class="citation" data-cites="ci_2018">[<a
+href="#ref-ci_2018" role="doc-biblioref">11</a>]</span>. This
+conditioning in addition to the deep learned priors enables qualitative
+and real-time colorization.</figcaption>
+</figure>
 <p><strong><span class="citation" data-cites="ci_2018">[<a
 href="#ref-ci_2018" role="doc-biblioref">11</a>]</span> Ci et
 al.:</strong> Ci et al. propose a novel deep cGAN for the challenging
