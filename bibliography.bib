@@ -110,6 +110,25 @@
 	abstract = {Thesupport-vector network is a new learning machine for two-group classification problems. The machine conceptually implements the following idea: input vectors are non-linearly mapped to a very high-dimension feature space. In this feature space a linear decision surface is constructed. Special properties of the decision surface ensures high generalization ability of the learning machine. The idea behind the support-vector network was previously implemented for the restricted case where the training data can be separated without errors. We here extend this result to non-separable training data.},
 }
 
+@inproceedings{danboo_region_2020,
+	title = {DanbooRegion: An Illustration Region Dataset},
+	author = {Lvmin Zhang and Yi JI and Chunping Liu},
+	year = {2020},
+	booktitle = {European Conference on Computer Vision (ECCV)},
+}
+
+@misc{danbooru_2020,
+	title = {Danbooru2020: A Large-Scale Crowdsourced and Tagged Anime Illustration Dataset},
+	author = {Anonymous and Danbooru community and Gwern Branwen},
+	year = {2021},
+	month = {January},
+	url = {https://gwern.net/Danbooru2020},
+	note = {Accessed: DATE},
+	howpublished = {\url{https://gwern.net/Danbooru2020}},
+	type = {dataset},
+	timestamp = {2021-01-12},
+}
+
 @article{dartmouth_2006,
 	title = {A Proposal for the Dartmouth Summer Research Project on Artificial Intelligence, August 31, 1955},
 	author = {McCarthy, John and Minsky, Marvin L. and Rochester, Nathaniel and Shannon, Claude E.},
@@ -268,19 +287,20 @@
 
 @inproceedings{hati_2019,
 	title = {PaintsTorch: A User-Guided Anime Line Art Colorization Tool with Double Generator Conditional Adversarial Network},
-	author = {Hati, Yliess and Jouet, Gregor and Rousseaux, Francis and Duhart, Clement},
+	author = {HATI, Yliess and JOUET, GREGOR and ROUSSEAUX, FRANCIS and DUHART, Clement},
 	year = {2019},
-	booktitle = {European Conference on Visual Media Production},
+	booktitle = {Proceedings of the 16th ACM SIGGRAPH European Conference on Visual Media Production},
 	location = {London, United Kingdom},
 	publisher = {Association for Computing Machinery},
 	address = {New York, NY, USA},
 	series = {CVMP '19},
 	doi = {10.1145/3359998.3369401},
 	isbn = {9781450370035},
+	url = {https://doi.org/10.1145/3359998.3369401},
 	abstract = {The lack of information provided by line arts makes user guided-colorization a challenging task for computer vision. Recent contributions from the deep learning community based on Generative Adversarial Network (GAN) have shown incredible results compared to previous techniques. These methods employ user input color hints as a way to condition the network. The current state of the art has shown the ability to generalize and generate realistic and precise colorization by introducing a custom dataset and a new model with its training pipeline. Nevertheless, their approach relies on randomly sampled pixels as color hints for training. Thus, in this contribution, we introduce a stroke simulation based approach for hint generation, making the model more robust to messy inputs. We also propose a new cleaner dataset, and explore the use of a double generator GAN to improve visual fidelity.},
 	articleno = {5},
 	numpages = {10},
-	keywords = {user-guided colorization, deep learning, datasets, neural networks, generative adversarial network},
+	keywords = {neural networks, datasets, user-guided colorization, deep learning, generative adversarial network},
 }
 
 @inproceedings{hati_2023,
@@ -1092,4 +1112,20 @@
 	articleno = {233},
 	numpages = {16},
 	keywords = {deep neural networks, image segmentation, scene sketch, language-based editing, sketch colorization},
+}
+
+@article{winnermoller_2012,
+title = {XDoG: An eXtended difference-of-Gaussians compendium including advanced image stylization},
+journal = {Computers & Graphics},
+volume = {36},
+number = {6},
+pages = {740-753},
+year = {2012},
+note = {2011 Joint Symposium on Computational Aesthetics (CAe), Non-Photorealistic Animation and Rendering (NPAR), and Sketch-Based Interfaces and Modeling (SBIM)},
+issn = {0097-8493},
+doi = {https://doi.org/10.1016/j.cag.2012.03.004},
+url = {https://www.sciencedirect.com/science/article/pii/S009784931200043X},
+author = {Holger Winnemöller and Jan Eric Kyprianidis and Sven C. Olsen},
+keywords = {Cartoon effects, Difference-of-Gaussians, Edge detector, Hatching, Negative edges, Threshold, Sketch, Woodcut},
+abstract = {Recent extensions to the standard difference-of-Gaussians (DoG) edge detection operator have rendered it less susceptible to noise and increased its aesthetic appeal. Despite these advances, the technical subtleties and stylistic potential of the DoG operator are often overlooked. This paper offers a detailed review of the DoG operator and its extensions, highlighting useful relationships to other image processing techniques. It also presents many new results spanning a variety of styles, including pencil-shading, pastel, hatching, and woodcut. Additionally, we demonstrate a range of subtle artistic effects, such as ghosting, speed-lines, negative edges, indication, and abstraction, all of which are obtained using an extended DoG formulation, or slight modifications thereof. In all cases, the visual quality achieved by the extended DoG operator is comparable to or better than those of systems dedicated to a single style.}
 }
