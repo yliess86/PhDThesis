@@ -164,6 +164,12 @@ acronyms:
     xdog:
         short: xDoG
         long: extended Difference of Gaussians
+    fid:
+        short: FID
+        long: Fréchet Inception Distance
+    mos:
+        short: MOS
+        long: Mean Opinion Score
 ---
 
 \newpage{}
@@ -1780,7 +1786,7 @@ The challenge of anime lineart colorization faces a lack of available datasets w
 
 Currently, there are few public datasets available for the community [@danbooru_2020; @danboo_region_2020], the content of which is not uniform in terms of perceptual quality, image nature (e.g. comics pages, photos), and contains illustrations from different artists with varied skill levels and styles (see @fig:meta_danboruu_samples). To address this, we have curated a custom dataset.
 
-Our dataset contains $21, 930$ scrapped anime-like illustrations for training and $3,545$ for testing. Moreover, it is manually filtered to ensure a consistent perceptive quality across the samples and to remove inappropriate (e.g. gore, mature, and sexual) content. In our work PaintsTorch [@hati_2019], we highlight the importance of the dataset quality for the generation process.
+Our dataset contains $21,930$ scrapped anime-like illustrations for training and $3,545$ for testing. Moreover, it is manually filtered to ensure a consistent perceptive quality across the samples and to remove inappropriate (e.g. gore, mature, and sexual) content. In our work PaintsTorch [@hati_2019], we highlight the importance of the dataset quality for the generation process.
 
 It is essential to note that any dataset [@danbooru_2020; @danboo_region_2020] used for the challenge of anime-like line art colorization is biased. The drawings are mainly of female characters with visible skin, a reflection of the anime subculture and communities from which they are drawn. This may account for the overall salmon watercolor tone attributed to the illustrations produced by current works.
 
@@ -1796,30 +1802,64 @@ Using different initial parameters for +xdog, and different thresholding techniq
 
 The images scrapped online for curating our dataset do belong to their original authors. They are not used for any commercial applications not distributed to the public but are used for educational and research purposes only based on the faire use policy. We thus share our method for curating such a dataset and would advise any commercial implementation to curate their own illustrations by employing artists or compensating for the usage of their intellectual property.
 
+### Evaluation {#sec:eval}
+
+The methods presented in this thesis dissertation are evaluated and trained on our custom dataset containing illustrations scrapped from the web and filtered manually, $21,930$ for training, and $3,545$ for test. The images are resized to $512$ on their smallest side and randomly cropped to $512 \times 512$ during training, and center cropped only at test time.
+
+The measure of perceptual quality is an entire research domain. The +gan literature reports the use of both objective and subjective metrics. The objective metrics offer a non-refutable measure of perceptual quality and are often based on pre-trained image [+nn]{.plural}. They however are hard to interpret. A small variation in those metrics cool hide a big change in quality. The subjective metrics are used to overcome those issues and require performing a user-study. This section discusses the metrics used in this thesis. 
+
+### Objective Evaluation {#sec:objective-eval}
+
+In this dissertation, we measure the perceptual quality of a generated colored illustration using the +fid [@heusel_2017] (see @fig:met_fid). This metric is based on the feature learned by an ImageNet pre-trained +nn such as InceptionNet [@szegedy_2015]. We measure the similarity of a given pair of fake and real images by comparing them in feature space.
+
+Instead of assessing images by their individual pixels (like what the $L_2$ norm does), the +fid compares the average and variation of the deepest layer in Inception v3 [@szegedy_2016]. These layers are closer to output neurons focusing on object representation. Consequently, they imitate the way humans judge similarities between images. The +FID between two distributions $r$, $f$ is:
+
+$$
+D_F(r, f) = \sqrt{\underset{\gamma \in \Gamma(r, f)}{inf} \int ||x - y||_2^2 d\gamma(x, y)}
+$$ {#eq:fid}
+
+where $\Gamma(r, f)$ is the set of all couplings of $r$ and $f$, theur Wasserstein distance. When modeling the data distribution of two datasets by two multivariate Gaussians $\mathcal{N}(\mu_r, \Sigma_r)$, and $\mathcal{N}(\mu_f, \Sigma_f)$, this expression is solvable in closed-form:
+
+$$
+D_F(\mathcal{N}_r, \mathcal{N}_f)^2 = ||\mu_r - \mu_f||_2^2 + tr(\Sigma_r + \Sigma_f - 2 (\Sigma_r^{\frac{1}{2}} \cdot \Sigma_f \cdot \Sigma_r^{\frac{1}{2}})^{\frac{1}{2}})
+$$ {#eq:fid_gauss}
+
+The +fid between real images (extracted from training data) and fake images (generated) can thus be computed by sampling pairs of those $(X_r, X_f)$, computing their inception features $(f(X_r), f(X_f))$, feating two multivariate Gaussians $(\mathcal{N}_r, \mathcal{N}_f)$, and computing their similarity $D_F(\mathcal{N}_r, \mathcal{N}_f)$ using the formula shown in @eq:fid_gauss.
+
+![[+fid]{.full} measured between an input image and altered versions. Noise injection is shown on the left and blurring on the right. The more alteration there is to the original image, the further the +fid grows away from $0$. Credit [https://images.all4ed.org/](https://images.all4ed.org/)](./figures/met_fid.svg){#fig:met_fid}
+
+#### Subjective Evaluation {#sec:subjective-eval}
+
+Art is however a subjective matter. Depending on the cultural, societal, and economical background of individuals, one may have a different perspective on a given piece of art in comparison to another. For this reason, a subjective evaluation of automatic lineart colorization methods must be conducted. In this thesis with perform subjective evaluation using the standard +mos approach where one has to rate images for their colorization quality without knowing the method used to generate them from $1$ to $5$ (see @eq:mos). A score of $1$ means the colorization is bad, and $5$ excellent. Studies in human perception tests have shown that +mos is not a linear metric and that people tend to avoid giving extremums such as $1$ and $5$. An +mos value of $4$ is thus considered good enough as a target.
+
+$$
+MOS = \sum_{i=1}^{N} \frac{R_i}{N}, \; R_i \in {1; 2; 3; 4; 5}
+$$ {#eq:mos}
+
+Our +mos study included $46$ individuals from $16$ to $30$ years old, with $26%$ women and $35%$ experience in drawing, colorization or a related subject. The study consisted in showing $20$ illustrations randomly sampled from our custom test set and colorized using different methods and conditioned with their corresponding color hint method. The results of the study are discussed in later chapters when presenting our methods PaintsTorch [@hati_2019] (see @sec:contrib-1), and StencilTorch [@hati_2023] (see @sec:contrib-2).
+
+### Implementation {#sec:implementation}
+
 <!-- TODO: Here -->
 
-### Evaluation {#sec:eval}
-### Objective Evaluation {#sec:objective-eval}
-#### Subjective Evaluation {#sec:subjective-eval}
-### Implementation {#sec:implementation}
 ### Reproducibility {#sec:reproducibility}
 \newpage{}
 
-## PaintsTorch: a User-Guided Anime Lineart Colorization Tool with Double Generator Conditional Adversarial Network {#ch:contrib-1}
+## PaintsTorch: a User-Guided Anime Lineart Colorization Tool with Double Generator Conditional Adversarial Network {#sec:contrib-1}
 ### Method
 ### Setup
 ### Results
 ### Summary
 \newpage{}
 
-## StencitTorch: an Iterative and User-Guided Framework for Anime Lineart Colorization {#ch:contrib-2}
+## StencitTorch: an Iterative and User-Guided Framework for Anime Lineart Colorization {#sec:contrib-2}
 ### Method
 ### Setup
 ### Results
 ### Summary
 \newpage{}
 
-## StablePaint: a Conditional Denoising Diffusion Model for Iterative Anime Lineart Colorization {#ch:contrib-3}
+## StablePaint: a Conditional Denoising Diffusion Model for Iterative Anime Lineart Colorization {#sec:contrib-3}
 ### Method
 ### Setup
 ### Results
