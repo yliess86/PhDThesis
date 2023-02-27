@@ -158,6 +158,12 @@ acronyms:
     kld:
         short: KL-Divergence
         long: Kullback-Leibler Divergence
+    dog:
+        short: DoG
+        long: Difference of Gaussians
+    xdog:
+        short: xDoG
+        long: extended Difference of Gaussians
 ---
 
 \newpage{}
@@ -1744,7 +1750,7 @@ Finally, generative models trained for automatic colorization can be conditioned
 
 ![User-guided grayscale image colorization using colored strokes as the conditioning signal used to vehiculate the user intent from Zhang et al. [@zhang_richard_2017]. This conditioning in addition to the deep learned priors enables qualitative and real-time colorization.](./figures/core_rel_strokes_grayscale.png){#fig:core_rel_strokes_grayscale}
 
-**[@zhang_richard_2017] Zhang et al.:** Zhang et al. propose a +dl based approach to user-guided image colorization. The system employs a Convolutional Neural Network to map a grayscale image and sparse user "hints" to produce realistic colorization. The network combines low-level cues with semantics learned from a large-scale data set, and is capable of producing real-time colorization. The system also provides users with likely colors to guide them in efficient input selection. Furthermore, the framework can incorporate other user hints to the desired colorization, showing an application to color histogram transfer.
+**[@zhang_richard_2017] Zhang et al.:** Zhang et al. propose a +dl based approach to user-guided image colorization. The system employs a +cnn to map a grayscale image and sparse user "hints" to produce realistic colorization. The network combines low-level cues with semantics learned from a large-scale data set, and is capable of producing real-time colorization. The system also provides users with likely colors to guide them in efficient input selection. Furthermore, the framework can incorporate other user hints to the desired colorization, showing an application to color histogram transfer.
 
 **[@zhang_2018] Zhang et al.:** In their paper, Zhang et al. propose a semi-automatic learning-based framework to colorize sketches with proper color, texture, and gradient. It divides the task into two stages: (1) a drafting stage where the model guesses color regions and splashes a variety of colors over the sketch, and (2) a refinement stage where the model detects unnatural colors and artifacts and tries to refine the result. An interactive software was developed to evaluate the model, which allows users to iteratively edit and refine the colorization. An extensive user study was conducted to evaluate the learning model and the interactive system, and results showed that it outperforms existing techniques and industrial applications in terms of visual quality, user control, user experience, and other metrics.
 
@@ -1756,19 +1762,47 @@ Finally, generative models trained for automatic colorization can be conditioned
 
 ### Summary
 
-The task of semi-automatic lineart colorization is currently dominated by the +dl community. Their offer unprecedented image quality for generated colored illustrations from single input lineart with various means of control among which scribble lines and color strokes are the most popular although current trends tend to move towards the use of natural language prompts. While such advances are undeniably better in terms of perceptual quality and variability, they presents limitations. +gan approaches, most of them, are still subject to visual artifacts and are biased towards the color of the used dataset, mostly pastel colors because of the omnipresence of apparent skin in the majority of the images. Additionally, the end-user is involved in the creation process only once, at the beginning when producing the initial prompts or color hints.
+The task of semi-automatic lineart colorization is currently dominated by the +dl community. Their offer unprecedented image quality for generated colored illustrations from single input lineart with various means of control among which scribble lines and color strokes are the most popular although current trends tend to move towards the use of natural language prompts. While such advances are undeniably better in terms of perceptual quality and variability, they present limitations. +gan approaches, most of them, are still subject to visual artifacts and are biased towards the color of the used dataset, mostly pastel colors because of the omnipresence of apparent skin in the majority of the images. Additionally, the end-user is involved in the creation process only once, at the beginning when producing the initial prompts or color hints.
 
 In this thesis, we explore how one can improve the current quality of the generated images, remove artifacts, how to give the control back to the end-user and best transcribe its colorization intent, and finally explore the use of the +ddm architecture to further increase the generation quality but also add the ability to perform variation exploration as +ddm models offer more qualitative interpolation in comparison to [+gan]{.plural}.
-
-<!-- TODO: Here -->
 
 \newpage{}
 
 ## Methodology {#ch:methodology}
-### Implementation
-### Objective Evaluation
-### Subjective Evaluation
-### Reproducibility
+
+In this chapter, we discuss the methodology used throughout this thesis dissertation. The dataset curation is described in @sec:dataset-curation, the objective evaluation process in @sec:objective-eval, the subjective evaluation in @sec:subjective-eval, the implementation details in @sec:implementation, and the reproducibility in @sec:reproducibility.
+
+### Dataset Curation {#sec:dataset-curation}
+
+The challenge of anime lineart colorization faces a lack of available datasets with perceptive qualitative content. To acquire corresponding pairs of lineart and illustrations, online scraping and synthetic lineart extraction are the methods used by the majority of the contributions in the literature [@ci_2018; @zhang_richard_2017; @petalicapaint_2023; @paintschainer_2018].
+
+![Randomly sample illustrations extracted from the Danbooru dataset [@danbooru_2020]. The dataset is mixing styles, quality, and image nature such as comic pages, photos, illustrations, and more.](./figures/meta_danboruu_samples.png){#fig:meta_danboruu_samples}
+
+Currently, there are few public datasets available for the community [@danbooru_2020; @danboo_region_2020], the content of which is not uniform in terms of perceptual quality, image nature (e.g. comics pages, photos), and contains illustrations from different artists with varied skill levels and styles (see @fig:meta_danboruu_samples). To address this, we have curated a custom dataset.
+
+Our dataset contains $21, 930$ scrapped anime-like illustrations for training and $3,545$ for testing. Moreover, it is manually filtered to ensure a consistent perceptive quality across the samples and to remove inappropriate (e.g. gore, mature, and sexual) content. In our work PaintsTorch [@hati_2019], we highlight the importance of the dataset quality for the generation process.
+
+It is essential to note that any dataset [@danbooru_2020; @danboo_region_2020] used for the challenge of anime-like line art colorization is biased. The drawings are mainly of female characters with visible skin, a reflection of the anime subculture and communities from which they are drawn. This may account for the overall salmon watercolor tone attributed to the illustrations produced by current works.
+
+#### Synthetic Lineart
+
+The lack of lineart and illustration pairs can be overcome using synthetic generation. Previous work [@ci_2018] proposed to use +xdog [@winnermoller_2012], an extended edge detector derived from +dog that is less susceptible to noise and can produce qualitative synthetic linearts from colored images, or photographs (see @fig:met_xdog).
+
+![[+xdog]{.full} applied to a colored photo using different parametrizations to illustrate output variations in the lines. The source image is on the left and the four synthetic lineart variations are on the right. Credit [https://images.all4ed.org/](https://images.all4ed.org/).](./figures/met_xdog.svg){#fig:met_xdog}
+
+Using different initial parameters for +xdog, and different thresholding techniques, we are able to generate a variety of plausible binarized linearts from original colored illustrations.
+
+#### Copyright Policy
+
+The images scrapped online for curating our dataset do belong to their original authors. They are not used for any commercial applications not distributed to the public but are used for educational and research purposes only based on the faire use policy. We thus share our method for curating such a dataset and would advise any commercial implementation to curate their own illustrations by employing artists or compensating for the usage of their intellectual property.
+
+<!-- TODO: Here -->
+
+### Evaluation {#sec:eval}
+### Objective Evaluation {#sec:objective-eval}
+#### Subjective Evaluation {#sec:subjective-eval}
+### Implementation {#sec:implementation}
+### Reproducibility {#sec:reproducibility}
 \newpage{}
 
 ## PaintsTorch: a User-Guided Anime Lineart Colorization Tool with Double Generator Conditional Adversarial Network {#ch:contrib-1}
