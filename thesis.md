@@ -187,7 +187,7 @@ acronyms:
 # Context
 \newpage{}
 
-## Introduction {#ch:introduction}
+## Introduction {#sec:introduction}
 
 Humans possess the ability to perceive and understand the world allowing us to accomplish a wide range of complex tasks through the combination of visual recognition, scene understanding, and communication. The ability to quickly and accurately extract information from a single image is a testament to the complexity and sophistication of the human brain and is often taken for granted. One of the +ai field's ultimate goals is to empower computers with such human-like abilities, one of them being creativity, being able to produce something original and worthwhile [@mumford_2012]. 
 
@@ -238,17 +238,17 @@ In this work, we are committed to addressing and raising awareness for these con
 
 ### Outline
 
-The first part of this thesis (chapters [1](#ch:introduction)-[3](#ch:methodology)) provides context to the recent advances in generative +ai and introduces the +cv task of user-guided automatic lineart colorization, its challenges, and our contributions to the field. It then provides additional background, from +dl first principles to current architectures used in modern generative +nn, and introduces the methodology used throughout the entire document. This part should be accessible to the majority, experts and non-experts, and serve as an introduction to the field.
+The first part of this thesis (chapters [1](#sec:introduction)-[3](#sec:methodology)) provides context to the recent advances in generative +ai and introduces the +cv task of user-guided automatic lineart colorization, its challenges, and our contributions to the field. It then provides additional background, from +dl first principles to current architectures used in modern generative +nn, and introduces the methodology used throughout the entire document. This part should be accessible to the majority, experts and non-experts, and serve as an introduction to the field.
 
-The second part (chapters [4](#ch:contrib-1)-[7](#ch:contrib-4)) presents our contributions, some of which have previously been presented in [@hati_2019; @hati_2023]. It introduces into detail our recipe for sourcing and curating consistent and qualitative datasets for automatic lineart colorization, PaintsTorch [@hati_2019] our first double generator +gan conditioned on user strokes, StencilTorch [@hati_2023] our in-painting reformulation introducing the use of masks to allow the emergence of iterative workflow and collaboration with the machine, and finally StablePaint, an exploration of the use of +ddm models for variations qualitative exploration.
+The second part (chapters [4](#sec:contrib-1)-[7](#sec:contrib-4)) presents our contributions, some of which have previously been presented in [@hati_2019; @hati_2023]. It introduces into detail our recipe for sourcing and curating consistent and qualitative datasets for automatic lineart colorization, PaintsTorch [@hati_2019] our first double generator +gan conditioned on user strokes, StencilTorch [@hati_2023] our in-painting reformulation introducing the use of masks to allow the emergence of iterative workflow and collaboration with the machine, and finally StablePaint, an exploration of the use of +ddm models for variations qualitative exploration.
 
-The third and final part (chapters [7](#ch:ethdical-and-societal-impact)-[8](#ch:conclusion)) offers a detailed reflection on this thesis's contributions and more generally about the field of generative +ai ethical and societal impact, identifies the remaining challenges and discusses future work.
+The third and final part (chapters [7](#sec:ethdical-and-societal-impact)-[8](#sec:conclusion)) offers a detailed reflection on this thesis's contributions and more generally about the field of generative +ai ethical and societal impact, identifies the remaining challenges and discusses future work.
 
 The code base for the experiments and contributions is publicly available on GitHub at [https://github.com/yliess86](https://github.com/yliess86).
 
 \newpage{}
 
-## Background {#ch:background}
+## Background {#sec:background}
 
 This chapter introduces the reader to the field of [+dl]{.full} from first principles to the current architectures used in modern generative +ai. The first section (section [1](#sec:history)) presents a brief history of +ai to ground this technical dissertation into its historical context. The following sections (sections [2](#sec:core)-[4](#sec:attention)) are discussing the first principles of modern +dl from the early Perceptron to more modern frameworks such as [+llm]{.full .plural}.
 
@@ -1662,7 +1662,7 @@ This thesis explores the building of such tools and focuses on the training of c
 # Core
 \newpage{}
 
-## Related Work {#ch:sota}
+## Related Work {#sec:sota}
 
 In this chapter, we discuss related work for the task of automatic colorization. The related contributions can be divided into two categories of methods, classical algorithmic methods (see @sec:rel-algo) offering tools for flat colorization mostly based on contour filling, and more recently [+dl]{.full}-based methods (see @sec:rel-deep) enabling end-to-end methods to color illustrations with inferred semantic, lighting, and texture information. +dl techniques offer unprecedented means for model conditioning ranging from example-based, tags and labels, natural language prompts and color hints in the form of natural scribble lines or strokes.
 
@@ -1774,7 +1774,7 @@ In this thesis, we explore how one can improve the current quality of the genera
 
 \newpage{}
 
-## Methodology {#ch:methodology}
+## Methodology {#sec:methodology}
 
 In this chapter, we discuss the methodology used throughout this thesis dissertation. The dataset curation is described in @sec:dataset-curation, the objective evaluation process in @sec:objective-eval, the subjective evaluation in @sec:subjective-eval, the implementation details in @sec:implementation, and the reproducibility in @sec:reproducibility.
 
@@ -1838,13 +1838,23 @@ $$ {#eq:mos}
 
 Our +mos study included $46$ individuals from $16$ to $30$ years old, with $26%$ women and $35%$ experience in drawing, colorization or a related subject. The study consisted in showing $20$ illustrations randomly sampled from our custom test set and colorized using different methods and conditioned with their corresponding color hint method. The results of the study are discussed in later chapters when presenting our methods PaintsTorch [@hati_2019] (see @sec:contrib-1), and StencilTorch [@hati_2023] (see @sec:contrib-2).
 
-### Implementation {#sec:implementation}
-
-<!-- TODO: Here -->
-
 ### Reproducibility {#sec:reproducibility}
+
+For reproducibility and transparency, the implementation frameworks and the devices used for measurement are discussed in this section. As a reminder, the weights of our models and our custom datasets are not shared for copyright policies for which the reasons are further discussed in a specific chapter at this end of this document (see @sec:ethical-and-societal-impact).
+
+#### Implementation {#sec:implementation}
+
+The code for this thesis' projects are all available on GitHub at [https://github.com/yliess86](https://github.com/yliess86). Training, exploration, and testing codes are written in Python as it has been designated as the +dl language of choice by the community. Web application demos have been written in pure HTML and Javascript.
+
+The neural networks presented in this work are implemented using the PyTorch library [@pytorch], one of the most used [+ad]{.full} framework with out-of-the-box support for +dl accelerators. When required to export the trained models for building web demos, the models are exported for TensorFlowJS [@smilkov_2019] using the ONNX intermediate and universal converter [@bai_2019].
+
+#### Measurements {#sec:measurements}
+
+All experimentations have been made possible thanks to the use of a custom made Computer equipped with an AMD® Ryzen 9 5900x $12$-core processor and $24$-threads processor, $32$ GB of DDR4 RAM, and a Nvidia GeForce RTX 3090 +gpu with 24 GB of dedicated v-RAM. The final training, scaling, and hyperparameter tuning of our models have been performed on a DGX1-station from Nvidia equipped with an Intel Xeon E5-2698 $20$-core processor, $512$ GB of DDR4 RAM, and four V100 GPUs with $32$ GB of v-RAM each.
+
 \newpage{}
 
+<!-- TODO: Here -->
 ## PaintsTorch: a User-Guided Anime Lineart Colorization Tool with Double Generator Conditional Adversarial Network {#sec:contrib-1}
 ### Method
 ### Setup
@@ -1871,10 +1881,10 @@ Our +mos study included $46$ individuals from $16$ to $30$ years old, with $26%$
 # Reflection
 \newpage{}
 
-## Ethical and Societal Impact {#ch:ethical-and-societal-impact}
+## Ethical and Societal Impact {#sec:ethical-and-societal-impact}
 \newpage{}
 
-## Conclusion {#ch:conclusion}
+## Conclusion {#sec:conclusion}
 \newpage{}
 <!-- ===================== [END] PART REFLECTION ===================== -->
 
