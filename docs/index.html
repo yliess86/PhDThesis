@@ -4198,11 +4198,30 @@ perceptual loss to generate more natural and realistic images.
 Additionally, a local features network is introduced to increase the
 generalization capability over “in the wild” line arts. To support the
 model, two datasets providing high-quality illustrations and authentic
-line arts are collected. The results demonstrate that the proposed
+linearts are collected. The results demonstrate that the proposed
 approach produces more realistic and precise images than other
 methods.</p>
 <h3 id="summary-1">Summary</h3>
-<!-- TODO: Summary + Critics -->
+<p>The task of semi-automatic lineart colorization is currently
+dominated by the DL community. Their offer unprecedented image quality
+for generated colored illustrations from single input lineart with
+various means of control among which scribble lines and color strokes
+are the most popular although current trends tend to move towards the
+use of natural language prompts. While such advances are undeniably
+better in terms of perceptual quality and variability, they presents
+limitations. GAN approaches, most of them, are still subject to visual
+artifacts and are biased towards the color of the used dataset, mostly
+pastel colors because of the omnipresence of apparent skin in the
+majority of the images. Additionally, the end-user is involved in the
+creation process only once, at the beginning when producing the initial
+prompts or color hints.</p>
+<p>In this thesis, we explore how one can improve the current quality of
+the generated images, remove artifacts, how to give the control back to
+the end-user and best transcribe its colorization intent, and finally
+explore the use of the DDM architecture to further increase the
+generation quality but also add the ability to perform variation
+exploration as DDM models offer more qualitative interpolation in
+comparison to GANs.</p>
 <!-- TODO: Here -->
 <h2 id="ch:methodology">Methodology</h2>
 <h3 id="implementation">Implementation</h3>
