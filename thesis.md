@@ -170,9 +170,15 @@ acronyms:
     fid:
         short: FID
         long: Fréchet Inception Distance
+    lpips:
+        short: LPIPS
+        long: Learned Perceptual Image Patch Similarity
     mos:
         short: MOS
         long: Mean Opinion Score
+    psnr:
+        short: PSNR
+        long: Peak Signal-to-Noise Ratio
 ---
 
 \newpage{}
@@ -1938,14 +1944,104 @@ The data flow used to compute the losses is summarized in @fig:core_pt_flow.
 
 #### Training {#sec:pt_train}
 
-
-<!-- TODO: Here -->
+The model is trained end-to-end using the Adam optimizer [@kingma_2014] with a learning rate of $\epsilon = 1e^{-4}$, $\beta_1 = 0.5$, and $\beta_2 = 0.9$. We first optimize for one step for the critic network $C$, then the first generator $G_1$, and finally the second generator $G_2$. PaintsTorch is trained for $100$ epochs on our custom dataset.
 
 ### Results
-#### Evaluation
-#### Limitations
+
+In this section we present the objective and subjective evaluations (see @sec:core_pt_reval), perform a qualitative visual analysis of the strengh and limitations of our contribution (see @sec:core_pt_limits).
+
+#### Evaluation {#sec:core_pt_reval}
+
+Our model PaintsTorch is evaluated using subjective metrics, and objective metrics against state-of-the-art methods [@zhang_2018; @paintschainer_2018; @ci_2018] on our $3,545$ curated test set centerd cropped to $512 \times 512$ images.
+
+**Baseline:** We evaluate PaintsTorch against previous work: PaintsChainer Zhang et al. [@zhang_2018], PaintsChainer [@paintschainer_2018], and Ci et al. [@ci_2018] who has made their code available and thus helped in the reproduction of their work. 
+
+**Objective Evaluation:** Contrary to previous work on [+gan]{.plural} and as stated by Ci et al. [@ci_2018], we do not evaluate the +psnr which does not asses joint statistics between the target and generated colored illustrations.
+
+We instead evaulate the [+fid]{.full} of our generated illustration against the targets. The +fid measures the intra-class dropping, diversity, and quality. A small value means that the two distributions compared are similar. The results of the +fid evaluation are shown in @tbl:core_pt_fid. Our model PaintsTorch outperform previous work with and without hint conditioning. 
+
+-------------------------------------------------------
+Model                  No Hints       Hints        Mean
+------------------ ------------ ----------- -----------
+*FID* $\downarrow$            -           -           -
+
+Zhang et al.             134.06      274.87      204.47
+
+PaintsChainer             54.97       99.63       77.30
+
+Ci et al.                 52.48       96.22       74.35
+
+PaintsTorch           **51.54**   **95.71**   **73.63**
+-------------------------------------------------------
+
+Table: [+fid]{.full} benchmark comparing our work PaintsTorch against previous from Zhang et al. [@zhang_2018], PaintsChainer [@paintschainer_2018], and Ci et al. [@ci_2018]. Two configurations are used, no hints, and hints to evaluate the models in both conditions. {#tbl:core_pt_fid}
+
+We additionally evaluate our work on a second feature-based metric, +lpips measuring the similarity of two images in feature space using different winodw sizes and the features of an ImageNet [deng_2009] pretrained network such as VGG [simonyan_2014]. The results shown in @tbl:core_pt_lpips shows that our model is able to compete with previous work and produces relatively better results with no hints.
+
+-----------------------------------------------------
+Model                  No Hints      Hints       Mean
+-------------------- ---------- ---------- ----------
+*LPIPS* $\downarrow$          -          -          -
+
+Zhang et al.               0.28   **0.46**   **0.37**
+
+PaintsChainer              0.28       0.71       0.50
+
+Ci et al.                  0.23       0.62       0.43
+
+PaintsTorch            **0.18**       0.59       0.39
+-----------------------------------------------------
+
+Table: [+lpips]{.full} benchmark comparing our work PaintsTorch against previous from Zhang et al. [@zhang_2018], PaintsChainer [@paintschainer_2018], and Ci et al. [@ci_2018]. Two configurations are used, no hints, and hints to evaluate the models in both conditions. {#tbl:core_pt_lpips}
+
+**Subjective Evaluation:** As stated in the methodology chapter (see @sec:methodology) a subjective evaluation is required due to the nature of the task we are trying to solve. We thus perform a +mos using the population of study described earlier (see @sec:methodology). The results (see @tbl:core_pt_mos) show that our model PaintsTorch produces colored images with better perceptual qualities.
+
+--------------------------------------------------------------------------
+Model             MOS $\uparrow$    STD $\uparrow$    p-value $\downarrow$
+-------------- ----------------- ----------------- -----------------------
+Zhang et al.               1.79               0.51           6.04$e^{-23}$
+
+PaintsChainer              2.18               0.56           7.72$e^{-18}$
+
+Ci et al.                  2.83               0.67           9.84$e^{-08}$
+
+PaintsTorch            **3.05**           **0.42**       **9.15$e^{-09}$**
+--------------------------------------------------------------------------
+
+Table: [+mos]{.full} benchmark comparing our work PaintsTorch against previous from Zhang et al. [@zhang_2018], PaintsChainer [@paintschainer_2018], and Ci et al. [@ci_2018]. The $t$-test $p$-values for the mean is provided for every comparison. {#tbl:core_pt_mos}
+
+#### Visual Qualities
+
+![Comparison of PaintsChainer [@paintschainer_2018] on top and our contribution PaintsTorch bottom. The comparison shows that our method is more robust to variable colored strokes leading to less bleeding, and an overall better look in the generatoed output.](./figures/core_pt_comparison.png){#fig:core_pt_comparison}
+
+The differences in our approach PaintsTorch results in visible improvements in comparison to previous work. Our work is more robust to messy inputs. The examples shown in @fig:core_pt_comparison shows the benefits of the introduction of the use of synthetic color scribbles during training in opposition to the previously used random pixel activations. Thanks to this change, PaintsTorch is less prone to color bleeding, is able to fill color better and produces clean gradients as shown in @fig:core_pt_bleeding.  
+
+![Comparison of previous work from Ci et al. [@ci_2018] on top and our contribution PaintsTorch bottom using a toy lineart coloring example. Our model is more robust to messy colored strokes, is more consistent with color filling and gradients.](./figures/core_pt_bleeding.png){#fig:core_pt_bleeding}
+
+Samples generated using our method are shown in @fig:core_pt_samples. PaintsTorch can generate qualitative colored illustration from a single lineart, and a hint map filled with colored strokes representing the intent of its user. The hints are localized and mostly reflected in the final output.
+
+![Samples of colored illustration generated with PaintsTorch. For each illustration, lineart is one the right, the hint map in the middle, and the generated illustration on the right. The hint maps' strokes have been produced by hand.](./figures/core_pt_samples.jpeg){#fig:core_pt_samples}
+
+#### Application {#sec:core_pt_application}
+
+A custom web application has been built to explore the use of PaintsTorch as a tool inspired by modern digital drawing worflows. A screenshot of the application is shown @fig:core_pt_app. The model first trained using the PyTorch framework is then exported to TensorFlowJS using the intermediate and universal ONNX format. This allows us to serve the web application as a standalone static web page and make use of the +gpu from a web browser to allow for real-time interaction with our model PaintsTorch. The application propose to interact with the model by first providing a lineart using the file tool bar available on the right side, populate the hint map using a brush and tool options made available on the left side tool bar as well as seeing the resulting generated colored illustration in realtime and save it using the file icons.
+
+Our model PaintsTorch integrates naturally into the modern digital illustration production workflow as it uses similar tools and can be futher inhanced using the user favorite pipeline. An example of such workflow is shown in @fig:core_pt_workflow.
+
+![The figure is a screenshot of our web application. The model, PaintsTorch, is exported using the ONNX framework for TesnorflowJS and deployed in the browser as a standalone static page. The web app is built to follow the digital drawing tools and aesthetic enabling the use of different tools on the left-side bar such as a brush with various sizes, a color picker and color wheel, a drawing canvas and a result canvas. The generated output can be saved using the file menu on the right-side bar. ](./figures/core_pt_app.jpeg){#fig:core_pt_app}
+
+![Illustration of a natural workflow using PaintsTorch as a bootstrapping tool for producing high quality illustration. Starting left, the first image is the lineart, next is the hint map, then the generated colored illustration, then corrections and adjustement is added by the artist, and further refined in the final image.](./figures/core_pt_workflow.png){#fig:core_pt_workflow}
+
+#### Limitations {#sec:core_pt_limits}
+
+While PaintsTorch allow the creation of qualitative colored illustration with minimal work, our approache presents limitations. Our model is still subject to the generation of visual artificats that needs to be cleaned by the end-user for proper use. They tend to appear more when the hint map is dense and contains highly saturated colors as shown in @fig:core_pt_artifacts. The model is also limited by the dataset used for training. A cleaner and more varied dataset would certainly result in even better outputs as our minimal quality filtering already shows in comparison to the used of unfiltered data from previous contributions.
+
+![The illustration shows the appearance of artifacts when our model PaintsTorch is used with highly saturated and dense colored strokes.](./figures/core_pt_artifacts.png){#fig:core_pt_artifacts}
 
 ### Summary
+
+...
+<!-- TODO: Here -->
 \newpage{}
 
 ## StencitTorch {#sec:contrib-2}
