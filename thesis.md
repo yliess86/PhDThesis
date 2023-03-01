@@ -1904,6 +1904,8 @@ In PaintsTorch, we introduce a second generator $G_2$ responsible for the recons
 
 The objective functions optimized by PaintsTorch are the one of a +cwgan with an additional term for the second generator being a simple +mse between the regenerated lineart and the input one.
 
+![PaintsTorch [+cwgan]{.full} data flow schematic.](./figures/core_pt_flow.svg){#fig:core_pt_flow}
+
 The generator loss is a combination of three components: a content loss, an adversarial one, and a reconstruction one:
 
 $$L_G = \lambda_{adv} \cdot L_{adv} + L_{cont} + L_{recon}$$ {#eq:pt_generator_loss}
@@ -1932,9 +1934,12 @@ The gradient penalty is used to ensure that the critic network $C$ satisfy a $1$
 
 $$L_{gp} = \lambda_{gp} \cdot E_{\hat{y}} [(\nabla_{\hat{y}} C(\hat{y}, F_1(x)) - 1)^2] + \epsilon_{drift} \cdot E_{y} [C(y, F_1(x))^2]$$ {#eq:pt_critic_loss_gradient_penalty}
 
-<!-- TODO: Here -->
+The data flow used to compute the losses is summarized in @fig:core_pt_flow.
 
 #### Training {#sec:pt_train}
+
+
+<!-- TODO: Here -->
 
 ### Results
 #### Evaluation
