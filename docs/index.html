@@ -4652,6 +4652,12 @@ class="math inline">\(G_1\)</span>.</p>
 <p>The objective functions optimized by PaintsTorch are the one of a
 cWGAN with an additional term for the second generator being a simple
 MSE between the regenerated lineart and the input one.</p>
+<figure id="fig:core_pt_flow">
+<img src="./figures/core_pt_flow.svg"
+alt="PaintsTorch Conditional Wasserstein Generative Adversarial Network (cWGAN) data flow schematic." />
+<figcaption>Figure 58: PaintsTorch Conditional Wasserstein Generative
+Adversarial Network (cWGAN) data flow schematic.</figcaption>
+</figure>
 <p>The generator loss is a combination of three components: a content
 loss, an adversarial one, and a reconstruction one:</p>
 <p><span id="eq:pt_generator_loss"><span class="math display">\[L_G =
@@ -4717,8 +4723,10 @@ and <span class="math inline">\(\epsilon_{drift} = 1e^{-3}\)</span>:</p>
 class="math display">\[L_{gp} = \lambda_{gp} \cdot E_{\hat{y}}
 [(\nabla_{\hat{y}} C(\hat{y}, F_1(x)) - 1)^2] + \epsilon_{drift} \cdot
 E_{y} [C(y, F_1(x))^2]\qquad{(35)}\]</span></span></p>
-<!-- TODO: Here -->
+<p>The data flow used to compute the losses is summarized in <a
+href="#fig:core_pt_flow">Fig 58</a>.</p>
 <h4 id="sec:pt_train">Training</h4>
+<!-- TODO: Here -->
 <h3 id="results">Results</h3>
 <h4 id="evaluation">Evaluation</h4>
 <h4 id="limitations">Limitations</h4>
