@@ -433,6 +433,14 @@
   
   
   
+  
+  
+  
+  
+  
+  
+  
+  
   <script
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
   type="text/javascript"></script>
@@ -553,6 +561,8 @@ Abbreviations</h2>
 <li><strong>GPU</strong>: Graphical Processing Unit</li>
 <li><strong>KL-Divergence</strong>: Kullback-Leibler Divergence</li>
 <li><strong>LLM</strong>: Large Language Model</li>
+<li><strong>LPIPS</strong>: Learned Perceptual Image Patch
+Similarity</li>
 <li><strong>LSTM</strong>: Long Short-Term Memory</li>
 <li><strong>ML</strong>: Machine Learning</li>
 <li><strong>MLP</strong>: Multi-Layer Perceptron</li>
@@ -563,6 +573,7 @@ Technology</li>
 <li><strong>NLP</strong>: Natural Language Processing</li>
 <li><strong>NN</strong>: Neural Network</li>
 <li><strong>NPU</strong>: Neural Processing Unit</li>
+<li><strong>PSNR</strong>: Peak Signal-to-Noise Ratio</li>
 <li><strong>RLHF</strong>: Reinforcement Learning from Human
 Feedback</li>
 <li><strong>RNN</strong>: Recurrent Neural Network</li>
@@ -4726,12 +4737,357 @@ E_{y} [C(y, F_1(x))^2]\qquad{(35)}\]</span></span></p>
 <p>The data flow used to compute the losses is summarized in <a
 href="#fig:core_pt_flow">Fig 58</a>.</p>
 <h4 id="sec:pt_train">Training</h4>
-<!-- TODO: Here -->
+<p>The model is trained end-to-end using the Adam optimizer <span
+class="citation" data-cites="kingma_2014">[<a href="#ref-kingma_2014"
+role="doc-biblioref">48</a>]</span> with a learning rate of <span
+class="math inline">\(\epsilon = 1e^{-4}\)</span>, <span
+class="math inline">\(\beta_1 = 0.5\)</span>, and <span
+class="math inline">\(\beta_2 = 0.9\)</span>. We first optimize for one
+step for the critic network <span class="math inline">\(C\)</span>, then
+the first generator <span class="math inline">\(G_1\)</span>, and
+finally the second generator <span class="math inline">\(G_2\)</span>.
+PaintsTorch is trained for <span class="math inline">\(100\)</span>
+epochs on our custom dataset.</p>
 <h3 id="results">Results</h3>
-<h4 id="evaluation">Evaluation</h4>
-<h4 id="limitations">Limitations</h4>
+<p>In this section we present the objective and subjective evaluations
+(see <a href="#sec:core_pt_reval">Sec 3.3.2.1</a>), perform a
+qualitative visual analysis of the strengh and limitations of our
+contribution (see <a href="#sec:core_pt_limits">Sec 3.3.2.4</a>).</p>
+<h4 id="sec:core_pt_reval">Evaluation</h4>
+<p>Our model PaintsTorch is evaluated using subjective metrics, and
+objective metrics against state-of-the-art methods <span
+class="citation" data-cites="zhang_2018 paintschainer_2018 ci_2018">[<a
+href="#ref-ci_2018" role="doc-biblioref">14</a>, <a
+href="#ref-paintschainer_2018" role="doc-biblioref">71</a>, <a
+href="#ref-zhang_2018" role="doc-biblioref">105</a>]</span> on our <span
+class="math inline">\(3,545\)</span> curated test set centerd cropped to
+<span class="math inline">\(512 \times 512\)</span> images.</p>
+<p><strong>Baseline:</strong> We evaluate PaintsTorch against previous
+work: PaintsChainer Zhang et al. <span class="citation"
+data-cites="zhang_2018">[<a href="#ref-zhang_2018"
+role="doc-biblioref">105</a>]</span>, PaintsChainer <span
+class="citation" data-cites="paintschainer_2018">[<a
+href="#ref-paintschainer_2018" role="doc-biblioref">71</a>]</span>, and
+Ci et al. <span class="citation" data-cites="ci_2018">[<a
+href="#ref-ci_2018" role="doc-biblioref">14</a>]</span> who has made
+their code available and thus helped in the reproduction of their
+work.</p>
+<p><strong>Objective Evaluation:</strong> Contrary to previous work on
+GANs and as stated by Ci et al. <span class="citation"
+data-cites="ci_2018">[<a href="#ref-ci_2018"
+role="doc-biblioref">14</a>]</span>, we do not evaluate the Peak
+Signal-to-Noise Ratio (PSNR) which does not asses joint statistics
+between the target and generated colored illustrations.</p>
+<p>We instead evaulate the Fréchet Inception Distance (FID) of our
+generated illustration against the targets. The FID measures the
+intra-class dropping, diversity, and quality. A small value means that
+the two distributions compared are similar. The results of the FID
+evaluation are shown in <a href="#tbl:core_pt_fid">Tbl 1</a>. Our model
+PaintsTorch outperform previous work with and without hint
+conditioning.</p>
+<div id="tbl:core_pt_fid">
+<table style="width:78%;">
+<caption>Table 1: Fréchet Inception Distance (FID) benchmark comparing
+our work PaintsTorch against previous from Zhang et al. <span
+class="citation" data-cites="zhang_2018">[<a href="#ref-zhang_2018"
+role="doc-biblioref">105</a>]</span>, PaintsChainer <span
+class="citation" data-cites="paintschainer_2018">[<a
+href="#ref-paintschainer_2018" role="doc-biblioref">71</a>]</span>, and
+Ci et al. <span class="citation" data-cites="ci_2018">[<a
+href="#ref-ci_2018" role="doc-biblioref">14</a>]</span>. Two
+configurations are used, no hints, and hints to evaluate the models in
+both conditions.</caption>
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 18%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Model</th>
+<th style="text-align: right;">No Hints</th>
+<th style="text-align: right;">Hints</th>
+<th style="text-align: right;">Mean</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><em>FID</em> <span
+class="math inline">\(\downarrow\)</span></td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">-</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Zhang et al.</td>
+<td style="text-align: right;">134.06</td>
+<td style="text-align: right;">274.87</td>
+<td style="text-align: right;">204.47</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PaintsChainer</td>
+<td style="text-align: right;">54.97</td>
+<td style="text-align: right;">99.63</td>
+<td style="text-align: right;">77.30</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ci et al.</td>
+<td style="text-align: right;">52.48</td>
+<td style="text-align: right;">96.22</td>
+<td style="text-align: right;">74.35</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PaintsTorch</td>
+<td style="text-align: right;"><strong>51.54</strong></td>
+<td style="text-align: right;"><strong>95.71</strong></td>
+<td style="text-align: right;"><strong>73.63</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>We additionally evaluate our work on a second feature-based metric,
+Learned Perceptual Image Patch Similarity (LPIPS) measuring the
+similarity of two images in feature space using different winodw sizes
+and the features of an ImageNet [deng_2009] pretrained network such as
+VGG [simonyan_2014]. The results shown in <a
+href="#tbl:core_pt_lpips">Tbl 2</a> shows that our model is able to
+compete with previous work and produces relatively better results with
+no hints.</p>
+<div id="tbl:core_pt_lpips">
+<table style="width:75%;">
+<caption>Table 2: Learned Perceptual Image Patch Similarity (LPIPS)
+benchmark comparing our work PaintsTorch against previous from Zhang et
+al. <span class="citation" data-cites="zhang_2018">[<a
+href="#ref-zhang_2018" role="doc-biblioref">105</a>]</span>,
+PaintsChainer <span class="citation" data-cites="paintschainer_2018">[<a
+href="#ref-paintschainer_2018" role="doc-biblioref">71</a>]</span>, and
+Ci et al. <span class="citation" data-cites="ci_2018">[<a
+href="#ref-ci_2018" role="doc-biblioref">14</a>]</span>. Two
+configurations are used, no hints, and hints to evaluate the models in
+both conditions.</caption>
+<colgroup>
+<col style="width: 29%" />
+<col style="width: 15%" />
+<col style="width: 15%" />
+<col style="width: 15%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Model</th>
+<th style="text-align: right;">No Hints</th>
+<th style="text-align: right;">Hints</th>
+<th style="text-align: right;">Mean</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><em>LPIPS</em> <span
+class="math inline">\(\downarrow\)</span></td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">-</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Zhang et al.</td>
+<td style="text-align: right;">0.28</td>
+<td style="text-align: right;"><strong>0.46</strong></td>
+<td style="text-align: right;"><strong>0.37</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PaintsChainer</td>
+<td style="text-align: right;">0.28</td>
+<td style="text-align: right;">0.71</td>
+<td style="text-align: right;">0.50</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ci et al.</td>
+<td style="text-align: right;">0.23</td>
+<td style="text-align: right;">0.62</td>
+<td style="text-align: right;">0.43</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PaintsTorch</td>
+<td style="text-align: right;"><strong>0.18</strong></td>
+<td style="text-align: right;">0.59</td>
+<td style="text-align: right;">0.39</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Subjective Evaluation:</strong> As stated in the methodology
+chapter (see <a href="#sec:methodology">Sec 3.2</a>) a subjective
+evaluation is required due to the nature of the task we are trying to
+solve. We thus perform a MOS using the population of study described
+earlier (see <a href="#sec:methodology">Sec 3.2</a>). The results (see
+<a href="#tbl:core_pt_mos">Tbl 3</a>) show that our model PaintsTorch
+produces colored images with better perceptual qualities.</p>
+<div id="tbl:core_pt_mos">
+<table>
+<caption>Table 3: Mean Opinion Score (MOS) benchmark comparing our work
+PaintsTorch against previous from Zhang et al. <span class="citation"
+data-cites="zhang_2018">[<a href="#ref-zhang_2018"
+role="doc-biblioref">105</a>]</span>, PaintsChainer <span
+class="citation" data-cites="paintschainer_2018">[<a
+href="#ref-paintschainer_2018" role="doc-biblioref">71</a>]</span>, and
+Ci et al. <span class="citation" data-cites="ci_2018">[<a
+href="#ref-ci_2018" role="doc-biblioref">14</a>]</span>. The <span
+class="math inline">\(t\)</span>-test <span
+class="math inline">\(p\)</span>-values for the mean is provided for
+every comparison.</caption>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 24%" />
+<col style="width: 24%" />
+<col style="width: 32%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Model</th>
+<th style="text-align: right;">MOS <span
+class="math inline">\(\uparrow\)</span></th>
+<th style="text-align: right;">STD <span
+class="math inline">\(\uparrow\)</span></th>
+<th style="text-align: right;">p-value <span
+class="math inline">\(\downarrow\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Zhang et al.</td>
+<td style="text-align: right;">1.79</td>
+<td style="text-align: right;">0.51</td>
+<td style="text-align: right;">6.04<span
+class="math inline">\(e^{-23}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PaintsChainer</td>
+<td style="text-align: right;">2.18</td>
+<td style="text-align: right;">0.56</td>
+<td style="text-align: right;">7.72<span
+class="math inline">\(e^{-18}\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ci et al.</td>
+<td style="text-align: right;">2.83</td>
+<td style="text-align: right;">0.67</td>
+<td style="text-align: right;">9.84<span
+class="math inline">\(e^{-08}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PaintsTorch</td>
+<td style="text-align: right;"><strong>3.05</strong></td>
+<td style="text-align: right;"><strong>0.42</strong></td>
+<td style="text-align: right;"><strong>9.15<span
+class="math inline">\(e^{-09}\)</span></strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="visual-qualities">Visual Qualities</h4>
+<figure id="fig:core_pt_comparison">
+<img src="./figures/core_pt_comparison.png"
+alt="Comparison of PaintsChainer [71] on top and our contribution PaintsTorch bottom. The comparison shows that our method is more robust to variable colored strokes leading to less bleeding, and an overall better look in the generatoed output." />
+<figcaption>Figure 59: Comparison of PaintsChainer <span
+class="citation" data-cites="paintschainer_2018">[<a
+href="#ref-paintschainer_2018" role="doc-biblioref">71</a>]</span> on
+top and our contribution PaintsTorch bottom. The comparison shows that
+our method is more robust to variable colored strokes leading to less
+bleeding, and an overall better look in the generatoed
+output.</figcaption>
+</figure>
+<p>The differences in our approach PaintsTorch results in visible
+improvements in comparison to previous work. Our work is more robust to
+messy inputs. The examples shown in <a
+href="#fig:core_pt_comparison">Fig 59</a> shows the benefits of the
+introduction of the use of synthetic color scribbles during training in
+opposition to the previously used random pixel activations. Thanks to
+this change, PaintsTorch is less prone to color bleeding, is able to
+fill color better and produces clean gradients as shown in <a
+href="#fig:core_pt_bleeding">Fig 60</a>.</p>
+<figure id="fig:core_pt_bleeding">
+<img src="./figures/core_pt_bleeding.png"
+alt="Comparison of previous work from Ci et al. [14] on top and our contribution PaintsTorch bottom using a toy lineart coloring example. Our model is more robust to messy colored strokes, is more consistent with color filling and gradients." />
+<figcaption>Figure 60: Comparison of previous work from Ci et al. <span
+class="citation" data-cites="ci_2018">[<a href="#ref-ci_2018"
+role="doc-biblioref">14</a>]</span> on top and our contribution
+PaintsTorch bottom using a toy lineart coloring example. Our model is
+more robust to messy colored strokes, is more consistent with color
+filling and gradients.</figcaption>
+</figure>
+<p>Samples generated using our method are shown in <a
+href="#fig:core_pt_samples">Fig 61</a>. PaintsTorch can generate
+qualitative colored illustration from a single lineart, and a hint map
+filled with colored strokes representing the intent of its user. The
+hints are localized and mostly reflected in the final output.</p>
+<figure id="fig:core_pt_samples">
+<img src="./figures/core_pt_samples.jpeg"
+alt="Samples of colored illustration generated with PaintsTorch. For each illustration, lineart is one the right, the hint map in the middle, and the generated illustration on the right. The hint maps’ strokes have been produced by hand." />
+<figcaption>Figure 61: Samples of colored illustration generated with
+PaintsTorch. For each illustration, lineart is one the right, the hint
+map in the middle, and the generated illustration on the right. The hint
+maps’ strokes have been produced by hand.</figcaption>
+</figure>
+<h4 id="sec:core_pt_application">Application</h4>
+<p>A custom web application has been built to explore the use of
+PaintsTorch as a tool inspired by modern digital drawing worflows. A
+screenshot of the application is shown <a
+href="#fig:core_pt_app">Fig 62</a>. The model first trained using the
+PyTorch framework is then exported to TensorFlowJS using the
+intermediate and universal ONNX format. This allows us to serve the web
+application as a standalone static web page and make use of the GPU from
+a web browser to allow for real-time interaction with our model
+PaintsTorch. The application propose to interact with the model by first
+providing a lineart using the file tool bar available on the right side,
+populate the hint map using a brush and tool options made available on
+the left side tool bar as well as seeing the resulting generated colored
+illustration in realtime and save it using the file icons.</p>
+<p>Our model PaintsTorch integrates naturally into the modern digital
+illustration production workflow as it uses similar tools and can be
+futher inhanced using the user favorite pipeline. An example of such
+workflow is shown in <a href="#fig:core_pt_workflow">Fig 63</a>.</p>
+<figure id="fig:core_pt_app">
+<img src="./figures/core_pt_app.jpeg"
+alt="The figure is a screenshot of our web application. The model, PaintsTorch, is exported using the ONNX framework for TesnorflowJS and deployed in the browser as a standalone static page. The web app is built to follow the digital drawing tools and aesthetic enabling the use of different tools on the left-side bar such as a brush with various sizes, a color picker and color wheel, a drawing canvas and a result canvas. The generated output can be saved using the file menu on the right-side bar." />
+<figcaption>Figure 62: The figure is a screenshot of our web
+application. The model, PaintsTorch, is exported using the ONNX
+framework for TesnorflowJS and deployed in the browser as a standalone
+static page. The web app is built to follow the digital drawing tools
+and aesthetic enabling the use of different tools on the left-side bar
+such as a brush with various sizes, a color picker and color wheel, a
+drawing canvas and a result canvas. The generated output can be saved
+using the file menu on the right-side bar.</figcaption>
+</figure>
+<figure id="fig:core_pt_workflow">
+<img src="./figures/core_pt_workflow.png"
+alt="Illustration of a natural workflow using PaintsTorch as a bootstrapping tool for producing high quality illustration. Starting left, the first image is the lineart, next is the hint map, then the generated colored illustration, then corrections and adjustement is added by the artist, and further refined in the final image." />
+<figcaption>Figure 63: Illustration of a natural workflow using
+PaintsTorch as a bootstrapping tool for producing high quality
+illustration. Starting left, the first image is the lineart, next is the
+hint map, then the generated colored illustration, then corrections and
+adjustement is added by the artist, and further refined in the final
+image.</figcaption>
+</figure>
+<h4 id="sec:core_pt_limits">Limitations</h4>
+<p>While PaintsTorch allow the creation of qualitative colored
+illustration with minimal work, our approache presents limitations. Our
+model is still subject to the generation of visual artificats that needs
+to be cleaned by the end-user for proper use. They tend to appear more
+when the hint map is dense and contains highly saturated colors as shown
+in <a href="#fig:core_pt_artifacts">Fig 64</a>. The model is also
+limited by the dataset used for training. A cleaner and more varied
+dataset would certainly result in even better outputs as our minimal
+quality filtering already shows in comparison to the used of unfiltered
+data from previous contributions.</p>
+<figure id="fig:core_pt_artifacts">
+<img src="./figures/core_pt_artifacts.png"
+alt="The illustration shows the appearance of artifacts when our model PaintsTorch is used with highly saturated and dense colored strokes." />
+<figcaption>Figure 64: The illustration shows the appearance of
+artifacts when our model PaintsTorch is used with highly saturated and
+dense colored strokes.</figcaption>
+</figure>
 <h3 id="summary-2">Summary</h3>
-
+<p>… <!-- TODO: Here --> </p>
 <h2 id="sec:contrib-2">StencitTorch</h2>
 <h3 id="method-1">Method</h3>
 <h3 id="setup">Setup</h3>
