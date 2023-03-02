@@ -2086,22 +2086,140 @@ To this end, we trained a ResNet [@he_2016] mode to regress displacement maps fr
 
 #### Model Architecture {#sec:st_arch}
 
-![Architecture ...](./figures/core_st_architecture.svg){#fig:core_st_architecture}
+![StencilTorch [+wgangp]{.full} architecture schematic.](./figures/core_st_architecture.svg){#fig:core_st_architecture}
+
+The model architecture of StencilTorch is similar to PaintsTorch [@hati_2019] at the exception that the cycle consistency lineart generator is removed and replaced by a guide network (see @fig:core_st_architecture). As we reformulate the task of automatic colorization as in-painting, we found the this second generator is not required and does not bring additional value to StencilTorch.
+
+We however introduce a secondary network which is a copy of the +wgangp decoder section of the generator inspired by previous work from Zhang et al. [@zhang_ji_2017]. This secondary network is activated during training only and is trained to reconstruct the simplified illustration using the latent code provided by the encoder section of the generator. By introducing this network to StencilTorch we aim at helping the rest of the generator to produce disantangled inner representations and thus improved the final output colored illustration.
 
 #### Objective Functions {#sec:st_losses}
+
+Similarly to PaintsTorch [@hati_2019], StencilTorch is trained end-to-end following the [+wgangp]{.full} objectives described in @sec:pt_losses with minimal changes, the reconstruction loss is replaced by a guidance signal:
+
+$$
+\begin{aligned}
+L_G = \lambda_{adv} \cdot L_{adv} + L_{cont} + L_{guided} \\
+L_C = L_{w} + L_{gp}
+\end{aligned}
+$$ {#eq:core_st_objectives}
+
+where:
+
+$$
+L_{guided} = \frac{1}{chw} ||\hat{s} - s||_2^2
+$$ {#eq:core_st_guide}
+
+with $\hat{s}$ being the reconstructed simplified illustration described in the data generation pipeline, and $s$ beign the simplified illustration. We later found that this loss should be weighted down as being easier to optimize in comparison to the adversarial and content losses resulting in the lack of lighting and texture generate by StencilTorch when the network is asked to color an entire lineart in one pass.
+
 #### Training  {#sec:st_train}
 
-<!-- TODO: Here -->
+The model is trained end-to-end using the Adam optimizer with a learning rate $\epsilon = 1e^{-4}$ and beta parameters $\beta_1 = 0.5$ and $\beta_2 = 0.9$. They are trained for $40$ epochs using a batch size of $32$ on each of the four [+gpu]{.plural} during $24$ hours straight.
 
 ### Results
-#### Evaluation
+
+In this section we present the objective and subjective evaluations (see @sec:sec:core_st_eval), perform a qualitative visual analysis of the strengh and limitations of our contribution (see @sec:sec_core_st_limit).
+
+#### Evaluation {#sec:core_st_eval}
+
+Our model StencilTorch is evaluated using subjective metrics, and objective metrics against state-of-the-art methods [@zhang_2018; @paintschainer_2018; @ci_2018; @hati_2019] on our $3,545$ curated test set centerd cropped to $512 \times 512$ images.
+
+**Baseline:** We evaluate StencilTorch against previous work: PaintsChainer Zhang et al. [@zhang_2018], PaintsChainer [@paintschainer_2018], Ci et al. [@ci_2018] who has made their code available and thus helped in the reproduction of their work, and our previous contribution PaintsTorch [@hati_2019]. 
+
+**Objective Evaluation:**  We evaulate the [+fid]{.full} of our generated illustration against the targets. The +fid measures the intra-class dropping, diversity, and quality. A small value means that the two distributions compared are similar. The results of the +fid evaluation are shown in @tbl:core_st_fid. Our model StencilTorch outperform previous work with various amount of hint conditioning.
+
+---------------------------------------------------------------------
+Model                  No Hints       Hints    Full Hints        Mean
+------------------ ------------ ----------- ------------- -----------
+*FID* $\downarrow$            -           -             -           -
+
+Zhang et al.             134.06      274.87        242.58      245.33
+
+PaintsChainer             54.97       99.63        112.16       93.02
+
+Ci et al.                 52.48       96.22        106.73       85.14
+
+PaintsTorch               51.54       95.71         98.37       81.87
+
+StencilTorch          **51.16**       94.40        106.05   **81.63**
+
+StencilTorch + G          85.00   **91.60**     **93.80**       89.98
+---------------------------------------------------------------------
+
+Table: [+fid]{.full} benchmark comparing our work StencilTorch against previous from Zhang et al. [@zhang_2018], PaintsChainer [@paintschainer_2018], Ci et al. [@ci_2018] and our previous work PaintsTorch [@hati_2019]. Three configurations are used, no hints, hints, and full hint where the simplified illustration is used as hints to evaluate the models in all conditions. The "+G" mention is our model StencilTorch with the additional guide network. {#tbl:core_st_fid}
+
+We additionally evaluate our work on a second feature-based metric, +lpips measuring the similarity of two images in feature space using different winodw sizes and the features of an ImageNet [@deng_2009] pretrained network such as VGG [@simonyan_2014]. The results shown in @tbl:core_st_lpips shows that our model is able to compete with previous work and produces relatively better results with no hints.
+
+-------------------------------------------------------------------------
+Model                      No Hints       Hints    Full Hints        Mean
+---------------------- ------------ ----------- ------------- -----------
+*LPIPS* $\downarrow$              -           -             -           -
+
+Zhang et al.                   0.28    **0.46**      **0.26**    **0.37**
+
+PaintsChainer                  0.28        0.71          0.60        0.54
+
+Ci et al.                      0.23        0.62          0.59        0.48
+
+PaintsTorch                    0.18        0.59          0.56        0.44
+
+StencilTorch               **0.16**        0.51          0.58        0.40
+
+StencilTorch + G               0.31        0.50          0.58        0.46
+-------------------------------------------------------------------------
+
+Table: [+lpips]{.full} benchmark comparing our work StencilTorch against previous from Zhang et al. [@zhang_2018], PaintsChainer [@paintschainer_2018], Ci et al. [@ci_2018] and our previous work PaintsTorch [@hati_2019]. Three configurations are used, no hints, hints, and full hint where the simplified illustration is used as hints to evaluate the models in all conditions. The "+G" mention is our model StencilTorch with the additional guide network. {#tbl:core_st_lpips}
+
+**Subjective Evaluation:** As stated in the methodology chapter (see @sec:methodology) a subjective evaluation is required due to the nature of the task we are trying to solve. We thus perform a +mos using the population of study described earlier (see @sec:methodology). The results (see @tbl:core_st_mos) show that our model StencilTorch produces colored images with better perceptual qualities in most cases.
+
+--------------------------------------------------------------------------
+Model             MOS $\uparrow$    STD $\uparrow$    p-value $\downarrow$
+-------------- ----------------- ----------------- -----------------------
+Zhang et al.               1.79               0.51           6.04$e^{-23}$
+
+PaintsChainer              2.18               0.56           7.72$e^{-18}$
+
+Ci et al.                  2.83               0.67           9.84$e^{-08}$
+
+PaintsTorch                3.05               0.42       **9.15$e^{-09}$**
+
+StencilTorch           **3.71**           **0.28**                        
+--------------------------------------------------------------------------
+
+Table: [+mos]{.full} benchmark comparing our work StencilTorch against previous from Zhang et al. [@zhang_2018], PaintsChainer [@paintschainer_2018], Ci et al. [@ci_2018] and our previous work PaintsTorch [@hati_2019]. The $t$-test $p$-values for the mean is provided for every comparison. {#tbl:core_st_mos}
+
+#### Visual Qualities
+
+![Samples mosaic of input and output pairs generated using one pass with StencilTorch. In every cell of the mosaic, the lineart, the mask, and the hint map are shown in the bottom, and the generated colored illustration on top.](./figures/core_st_samples.png){#fig:core_st_samples}
+
+Our model StencilTorch is able to generate useful and consistent colored illustrations from linearts, color hints, and masks. Samples generated by our methods are shown in @fig:core_st_samples. The use of masks allow the user to specify the region of the image he wants to color and ensure there is no bleeding outside of the delimited zone.
+
 #### Emerging Workflow
+
+As shown in the @fig:core_st_workflow diagram, natural iterative workflows emerges from the interaction of user with our framework. The end-user can use StencilTorch to initiate a first colord illustration and then reuse the generated image as an input for a second pass with another mask and different hints. The user also has the possiblity to refine the produced illustration using its own digital art workflow and style and in-paint missing parts using StencilTorch. The model can use the information already present and given by the user outside of the mask to complete the reste of the illutration while following the lighting and style provided by the user. This operations can be repeteat indefinitely and allow to explore the colorization design space in an interactive fashion by collaborating with the machine.
+
 #### Application
-#### Limitations
+
+Similarly to PaintsTorch [@hati_2019], we export our model from PyTorch to TensorFlowJS using the ONNX universal framework and deploy the model in a custom static and standalone web application. The web application allow the user to import a lineart, create a mask, hints maps with scribble colored lines, and visualize the resulting generated illustration in realtime making use of the +gpu from the web browser. A screnshot of the application is shown in @fig:core_st_teaser.
+
+#### Limitations {#sec:sec_core_st_limit}
+
+![Comparison of StencilTorch, PaintsTorch [@hati_2019], and PaintsChainer [@paintschainer_2018] from left to right given the same lineart and hint map. This one pass generation shows the limitation of our work. When not used with in-painting, StencilTorch tends to generate flat colorization although no artifacts is visible in comparison with the others.](./figures/core_st_comparison.png){#fig:core_st_comparison}
+
+While our model StencilTorch produces qualitative and useful colored illustrations from linearts and conditioning inputs, our model tends to generate flat illustrations without depth and is lacking shadow and texture espacially when used in a one-pass fashion. Our model has been design to work iteratively with in-painting and work best in this situation. A comparison of a one pass coloring process is shown in @fig:core_st_comparison.
+
+![The figure shows the implication of the stroke density in the ability for our model StencilTorch to produce qualitative illustrations from a lineart, a mask and the hint map. The lineart is shown top left and the mask bottom left. The stroke desnity is increased from left to right with the hint map bottom and the generated illustration on top. The final top right image has been improved by an artist base on the last generated image.](./figures/core_st_minhints.png){#fig:core_st_minhints}
+
+The model is also sensible to the desnity of stroke used. A miniaml amount of user-inputs needs to be provided for the model to generate useful outputs as shown in @fig:core_st_minhints.
 
 ### Summary
+
+Our contribution StencilTorch [@hati_2023] addresses the need for +ai-driven tools that naturraly integrates into the artist workflow allowing fast prototyping and iterative collaboration with the machine. While current approaches have focused on imporving the generation quality of user-guided +gan architectures, we explored the use of in-painting to enable natural emerging iterative workflows. The output of our model can be used as the input of a second pass. We demonstrate that in particular settings where the in-painting capabilities of our model shines, our approach is able to generate qualitative colored illustrations for the task of automatic lineart clorization.
+
+While our approach finds its use in collaborative colorization, its still suffers from a lack of depth in the output during a first pass where the model is ask to color the entire lineart. This is certainly due to the introduction of the guide network. Recovering flat colorization is easier than coloring the lineart with shadow and texture. The model would certainly perform better in this context if the guidance component of the generator loss is pushed down in comparison to the other terms.
+
 \newpage{}
 
+<!-- TODO: Here -->
 ## StablePaint {#sec:contrib-3}
 ### Method
 ### Setup
