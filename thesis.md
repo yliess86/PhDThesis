@@ -1877,10 +1877,11 @@ In this work, PaintsTorch [@hati_2019], our contributions are the following:
 - A new synthetic stroke generation scheme that is closer to the one used during inference and provided by the end-user
 - We explore the use of a second generator network to enforce that the colorization learned is linked to the lineart
 - A qualitative and quantitative evaluation comparing our work to previous contributions
+- An interactive web application allowing users to naturally interact with our model. 
 
 ### Method
 
-This section discusses the data generation pipeline used in PaintsTorch [@hati_2019] (see @sec:pt_synth), the +cwgan U-net-based model architecture (see @sec:pt_arch), the objective functions that aimed to optimize (see @sec:pt_losses), and the training regime (see @sec:pt_train).
+This section discusses the data generation pipeline used in PaintsTorch [@hati_2019] (see @sec:pt_synth), the +cwgan U-net-based model architecture (see @sec:pt_arch), the objective functions we aim to optimize (see @sec:pt_losses), and the training regime (see @sec:pt_train).
 
 #### Synthetic Inputs {#sec:pt_synth}
 
@@ -2054,14 +2055,38 @@ PaintsTorch is able to generate high quality colored illustrations given a linea
 
 ### Introduction
 
-This chapter discusses our work on StencilTorch [@hati_2023], an iterative and user-guided framework for anime lineart colorization. Previous work [@zhang_2018; @paintschainer_2018; @petalicapaint_2023; @ci_2018; @hati_2019] introduced the use of +cwgangp and have demonstrated unprecendant lineart colorization capabilities guided by user strokes and conditionned on a local feature extractor called Illustration2Vec [@saito_2015] to compensate for the lack of semantic information provided by a black and white lineart with no lighting nor texture.
+This chapter discusses our work on StencilTorch [@hati_2023], an iterative and user-guided framework for anime lineart colorization (see @fig:core_st_teaser). Previous work [@zhang_2018; @paintschainer_2018; @petalicapaint_2023; @ci_2018; @hati_2019] introduced the use of +cwgangp and have demonstrated unprecendant lineart colorization capabilities guided by user strokes and conditionned on a local feature extractor called Illustration2Vec [@saito_2015] to compensate for the lack of semantic information provided by a black and white lineart with no lighting nor texture.
 
-Previous methods consist of a one-step process where the user is involved one time only, at the beginning of the process when asked to provide a hint map populated with colored bursh strokes. This type of pipeline is limited and is not ideal in the context of creation where th artist needs to iterate and explore its design space. In this work, we propose to give the power back to the user by formulating the task of automatic lineart colorization as a human-in-the-loop process where the end-user collaborates with the machine to produce the final colored illustration. 
-<!-- TODO: Here -->
+Previous methods consist of a one-step process where the user is involved one time only, at the beginning of the process when asked to provide a hint map populated with colored bursh strokes. This type of pipeline is limited and is not ideal in the context of creation where th artist needs to iterate and explore its design space. In this work, we propose to give the power back to the user by formulating the task of automatic lineart colorization as a human-in-the-loop process where the end-user collaborates with the machine to produce the final colored illustration.
+
+![The schematic illustrate StencilTorch workflows enabled by the in-painting forimation of the automatic linear colorization task. The artist is able to explores a potential colorization for its lineart on the left, and explore an alternative colorization on the right after introducing additional shading and lighting manually.](./figures/core_st_workflow.png){#fig:core_st_workflow}
+
+Our framework, StencilTorch [@hati_2023], is motivated by human workflows and is a follow-up to our previous contribution PaintsTorch [@hati_2019]. We train a +cwgangp to generate colored illustrations for a given lineart by conditionning the model on local features, synthetic color hints produced by simulated strokes, and an additional mask describing the area of the image to color. We thus reformulate our task as an in-painting problem. This shift allows the emergence of iterative and collaborative workflows between the user and the machine where the output of a first step can become the input of a second. An example of interaction with the system is shown in @fig:core_st_workflow.
+
+In this work, StencilTorch [@hati_2023], our contributions are the following:
+
+- We present a new synthetic pipeline for generating colored strokes from prepeprocessed illustrations from which the texture, and lighting information are removed. This processed uses semantic color segmentation and aims at producing better hints for training.
+- StencilTorch, a +cwgangp trained to produce illustrations from a given lineart, a local semantic feature vector, a colored hint map, and a mask enabling emergent collaborative workflows. We additionally guide the training with a guide network to help recovering flat colorization in the early layers of the network. 
+- We evaluate our method against previous work using both objective and subjective evaluation metrics.
+- An interactive web application allowing users to naturally interact with our model by providing a linear, drawing scribble colored lines and a mask.
 
 ### Method
-### Setup
+
+This section discusses the data generation pipeline used in StencilTorch [@hati_2023] (see @sec:st_synthetic), the [+cwgangp]{.full} (see @sec:st_arch) model architecture and its guide network, the objective functions we aim to optimize (see @sec:st_losses); and the training regime (see @sec:st_train).
+
+#### Synthetic Inputs {#sec:st_synthetic}
+#### Model Architecture {#sec:st_arch}
+#### Objective Functions {#sec:st_losses}
+#### Training  {#sec:st_train}
+
+<!-- TODO: Here -->
+
 ### Results
+#### Evaluation
+#### Emerging Workflow
+#### Application
+#### Limitations
+
 ### Summary
 \newpage{}
 
