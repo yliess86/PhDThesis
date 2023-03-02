@@ -2014,7 +2014,7 @@ Table: [+mos]{.full} benchmark comparing our work PaintsTorch against previous f
 
 ![Comparison of PaintsChainer [@paintschainer_2018] on top and our contribution PaintsTorch bottom. The comparison shows that our method is more robust to variable colored strokes leading to less bleeding, and an overall better look in the generatoed output.](./figures/core_pt_comparison.png){#fig:core_pt_comparison}
 
-The differences in our approach PaintsTorch results in visible improvements in comparison to previous work. Our work is more robust to messy inputs. The examples shown in @fig:core_pt_comparison shows the benefits of the introduction of the use of synthetic color scribbles during training in opposition to the previously used random pixel activations. Thanks to this change, PaintsTorch is less prone to color bleeding, is able to fill color better and produces clean gradients as shown in @fig:core_pt_bleeding.  
+The differences in our approach PaintsTorch results in visible improvements in comparison to previous work. Our work is more robust to messy inputs. The examples shown in @fig:core_pt_comparison shows the benefits of the introduction of the use of synthetic color scribbles during training in opposition to the previously used random pixel activations. Thanks to this change, PaintsTorch is less prone to color bleeding, is able to fill color better and produces clean gradients as shown in @fig:core_pt_bleeding.
 
 ![Comparison of previous work from Ci et al. [@ci_2018] on top and our contribution PaintsTorch bottom using a toy lineart coloring example. Our model is more robust to messy colored strokes, is more consistent with color filling and gradients.](./figures/core_pt_bleeding.png){#fig:core_pt_bleeding}
 
@@ -2030,7 +2030,7 @@ Our model PaintsTorch integrates naturally into the modern digital illustration 
 
 ![The figure is a screenshot of our web application. The model, PaintsTorch, is exported using the ONNX framework for TesnorflowJS and deployed in the browser as a standalone static page. The web app is built to follow the digital drawing tools and aesthetic enabling the use of different tools on the left-side bar such as a brush with various sizes, a color picker and color wheel, a drawing canvas and a result canvas. The generated output can be saved using the file menu on the right-side bar. ](./figures/core_pt_app.jpeg){#fig:core_pt_app}
 
-![Illustration of a natural workflow using PaintsTorch as a bootstrapping tool for producing high quality illustration. Starting left, the first image is the lineart, next is the hint map, then the generated colored illustration, then corrections and adjustement is added by the artist, and further refined in the final image.](./figures/core_pt_workflow.png){#fig:core_pt_workflow}
+![Illustration of a natural workflow using PaintsTorch as a bootstrapping tool for producing high quality illustration. Starting left, the first image is the lineart, next the hint map, then the generated illustration, then corrections and adjustement added by the artist, and further refined in the final image.](./figures/core_pt_workflow.png){#fig:core_pt_workflow}
 
 #### Limitations {#sec:core_pt_limits}
 
@@ -2040,11 +2040,14 @@ While PaintsTorch allow the creation of qualitative colored illustration with mi
 
 ### Summary
 
-...
-<!-- TODO: Here -->
+User-guided lineart colorization is a challenging task for +cv. Previous work introduced the use of the +gan architecture and shows that +dl methods yield better results than previous methods. In this work, PaintsTorch [@hati_2019], we porpose three changes to the setup proposed by Ci et al. [@ci_2018] and demonstrate their impact through an objective and subjective evaluation. We first introduce the use of simulated strokes as a replacement for the usual random pixel activation scheme porposed by previous work. This change positively impact the interaction with the model by making it robust to messy input strokes and improve the overall quality of the produced illustrations. Our second contribution is the use of a custom high resolution dataset filtered with a qualitative objective. In our paper PaintsTorch [@hati_2019], we demonstrate the impact of the data quality on the objective metrics. Our third contribution is the exploration of the use of a second generator producing synthetic lineart from the generated illustration from the first generation to enforce a cycle consistency signal.
+
+PaintsTorch is able to generate high quality colored illustrations given a lineart and a coarse hint map made of user-defined color strokes. However, our model is still subject to visual artificats, especially when provided with highly saturated and dense colored strokes. Is also struggles at representing the user intent when hinting for small details in the lineart.
+
 \newpage{}
 
 ## StencitTorch {#sec:contrib-2}
+<!-- TODO: Here -->
 ### Method
 ### Setup
 ### Results

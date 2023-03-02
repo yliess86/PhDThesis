@@ -5060,12 +5060,12 @@ using the file menu on the right-side bar.</figcaption>
 </figure>
 <figure id="fig:core_pt_workflow">
 <img src="./figures/core_pt_workflow.png"
-alt="Illustration of a natural workflow using PaintsTorch as a bootstrapping tool for producing high quality illustration. Starting left, the first image is the lineart, next is the hint map, then the generated colored illustration, then corrections and adjustement is added by the artist, and further refined in the final image." />
+alt="Illustration of a natural workflow using PaintsTorch as a bootstrapping tool for producing high quality illustration. Starting left, the first image is the lineart, next the hint map, then the generated illustration, then corrections and adjustement added by the artist, and further refined in the final image." />
 <figcaption>Figure 63: Illustration of a natural workflow using
 PaintsTorch as a bootstrapping tool for producing high quality
-illustration. Starting left, the first image is the lineart, next is the
-hint map, then the generated colored illustration, then corrections and
-adjustement is added by the artist, and further refined in the final
+illustration. Starting left, the first image is the lineart, next the
+hint map, then the generated illustration, then corrections and
+adjustement added by the artist, and further refined in the final
 image.</figcaption>
 </figure>
 <h4 id="sec:core_pt_limits">Limitations</h4>
@@ -5087,8 +5087,35 @@ artifacts when our model PaintsTorch is used with highly saturated and
 dense colored strokes.</figcaption>
 </figure>
 <h3 id="summary-2">Summary</h3>
-<p>… <!-- TODO: Here --> </p>
+<p>User-guided lineart colorization is a challenging task for CV.
+Previous work introduced the use of the GAN architecture and shows that
+DL methods yield better results than previous methods. In this work,
+PaintsTorch <span class="citation" data-cites="hati_2019">[<a
+href="#ref-hati_2019" role="doc-biblioref">31</a>]</span>, we porpose
+three changes to the setup proposed by Ci et al. <span class="citation"
+data-cites="ci_2018">[<a href="#ref-ci_2018"
+role="doc-biblioref">14</a>]</span> and demonstrate their impact through
+an objective and subjective evaluation. We first introduce the use of
+simulated strokes as a replacement for the usual random pixel activation
+scheme porposed by previous work. This change positively impact the
+interaction with the model by making it robust to messy input strokes
+and improve the overall quality of the produced illustrations. Our
+second contribution is the use of a custom high resolution dataset
+filtered with a qualitative objective. In our paper PaintsTorch <span
+class="citation" data-cites="hati_2019">[<a href="#ref-hati_2019"
+role="doc-biblioref">31</a>]</span>, we demonstrate the impact of the
+data quality on the objective metrics. Our third contribution is the
+exploration of the use of a second generator producing synthetic lineart
+from the generated illustration from the first generation to enforce a
+cycle consistency signal.</p>
+<p>PaintsTorch is able to generate high quality colored illustrations
+given a lineart and a coarse hint map made of user-defined color
+strokes. However, our model is still subject to visual artificats,
+especially when provided with highly saturated and dense colored
+strokes. Is also struggles at representing the user intent when hinting
+for small details in the lineart.</p>
 <h2 id="sec:contrib-2">StencitTorch</h2>
+<!-- TODO: Here -->
 <h3 id="method-1">Method</h3>
 <h3 id="setup">Setup</h3>
 <h3 id="results-1">Results</h3>
