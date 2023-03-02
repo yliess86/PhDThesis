@@ -5269,19 +5269,457 @@ original illustration. The mask and color hints inputs are then
 generated from this simplified version of the input illustration.</p>
 <h4 id="sec:st_arch">Model Architecture</h4>
 <figure id="fig:core_st_architecture">
-<img src="./figures/core_st_architecture.svg" alt="Architecture …" />
-<figcaption>Figure 68: Architecture …</figcaption>
+<img src="./figures/core_st_architecture.svg"
+alt="StencilTorch Wasserstein Generative Adversarial Network with Gradient Penalty (WGAN-GP) architecture schematic." />
+<figcaption>Figure 68: StencilTorch Wasserstein Generative Adversarial
+Network with Gradient Penalty (WGAN-GP) architecture
+schematic.</figcaption>
 </figure>
+<p>The model architecture of StencilTorch is similar to PaintsTorch
+<span class="citation" data-cites="hati_2019">[<a href="#ref-hati_2019"
+role="doc-biblioref">31</a>]</span> at the exception that the cycle
+consistency lineart generator is removed and replaced by a guide network
+(see <a href="#fig:core_st_architecture">Fig 68</a>). As we reformulate
+the task of automatic colorization as in-painting, we found the this
+second generator is not required and does not bring additional value to
+StencilTorch.</p>
+<p>We however introduce a secondary network which is a copy of the
+WGAN-GP decoder section of the generator inspired by previous work from
+Zhang et al. <span class="citation" data-cites="zhang_ji_2017">[<a
+href="#ref-zhang_ji_2017" role="doc-biblioref">103</a>]</span>. This
+secondary network is activated during training only and is trained to
+reconstruct the simplified illustration using the latent code provided
+by the encoder section of the generator. By introducing this network to
+StencilTorch we aim at helping the rest of the generator to produce
+disantangled inner representations and thus improved the final output
+colored illustration.</p>
 <h4 id="sec:st_losses">Objective Functions</h4>
+<p>Similarly to PaintsTorch <span class="citation"
+data-cites="hati_2019">[<a href="#ref-hati_2019"
+role="doc-biblioref">31</a>]</span>, StencilTorch is trained end-to-end
+following the Wasserstein Generative Adversarial Network with Gradient
+Penalty (WGAN-GP) objectives described in <a
+href="#sec:pt_losses">Sec 3.3.2.3</a> with minimal changes, the
+reconstruction loss is replaced by a guidance signal:</p>
+<p><span id="eq:core_st_objectives"><span class="math display">\[
+\begin{aligned}
+L_G = \lambda_{adv} \cdot L_{adv} + L_{cont} + L_{guided} \\
+L_C = L_{w} + L_{gp}
+\end{aligned}
+\qquad{(36)}\]</span></span></p>
+<p>where:</p>
+<p><span id="eq:core_st_guide"><span class="math display">\[
+L_{guided} = \frac{1}{chw} ||\hat{s} - s||_2^2
+\qquad{(37)}\]</span></span></p>
+<p>with <span class="math inline">\(\hat{s}\)</span> being the
+reconstructed simplified illustration described in the data generation
+pipeline, and <span class="math inline">\(s\)</span> beign the
+simplified illustration. We later found that this loss should be
+weighted down as being easier to optimize in comparison to the
+adversarial and content losses resulting in the lack of lighting and
+texture generate by StencilTorch when the network is asked to color an
+entire lineart in one pass.</p>
 <h4 id="sec:st_train">Training</h4>
-<!-- TODO: Here -->
+<p>The model is trained end-to-end using the Adam optimizer with a
+learning rate <span class="math inline">\(\epsilon = 1e^{-4}\)</span>
+and beta parameters <span class="math inline">\(\beta_1 = 0.5\)</span>
+and <span class="math inline">\(\beta_2 = 0.9\)</span>. They are trained
+for <span class="math inline">\(40\)</span> epochs using a batch size of
+<span class="math inline">\(32\)</span> on each of the four GPUs during
+<span class="math inline">\(24\)</span> hours straight.</p>
 <h3 id="results-1">Results</h3>
-<h4 id="evaluation">Evaluation</h4>
+<p>In this section we present the objective and subjective evaluations
+(see Sec <strong>¿sec:sec:core_st_eval?</strong>), perform a qualitative
+visual analysis of the strengh and limitations of our contribution (see
+<a href="#sec:sec_core_st_limit">Sec 3.4.3.5</a>).</p>
+<h4 id="sec:core_st_eval">Evaluation</h4>
+<p>Our model StencilTorch is evaluated using subjective metrics, and
+objective metrics against state-of-the-art methods <span
+class="citation"
+data-cites="zhang_2018 paintschainer_2018 ci_2018 hati_2019">[<a
+href="#ref-ci_2018" role="doc-biblioref">14</a>, <a
+href="#ref-hati_2019" role="doc-biblioref">31</a>, <a
+href="#ref-paintschainer_2018" role="doc-biblioref">71</a>, <a
+href="#ref-zhang_2018" role="doc-biblioref">105</a>]</span> on our <span
+class="math inline">\(3,545\)</span> curated test set centerd cropped to
+<span class="math inline">\(512 \times 512\)</span> images.</p>
+<p><strong>Baseline:</strong> We evaluate StencilTorch against previous
+work: PaintsChainer Zhang et al. <span class="citation"
+data-cites="zhang_2018">[<a href="#ref-zhang_2018"
+role="doc-biblioref">105</a>]</span>, PaintsChainer <span
+class="citation" data-cites="paintschainer_2018">[<a
+href="#ref-paintschainer_2018" role="doc-biblioref">71</a>]</span>, Ci
+et al. <span class="citation" data-cites="ci_2018">[<a
+href="#ref-ci_2018" role="doc-biblioref">14</a>]</span> who has made
+their code available and thus helped in the reproduction of their work,
+and our previous contribution PaintsTorch <span class="citation"
+data-cites="hati_2019">[<a href="#ref-hati_2019"
+role="doc-biblioref">31</a>]</span>.</p>
+<p><strong>Objective Evaluation:</strong> We evaulate the Fréchet
+Inception Distance (FID) of our generated illustration against the
+targets. The FID measures the intra-class dropping, diversity, and
+quality. A small value means that the two distributions compared are
+similar. The results of the FID evaluation are shown in <a
+href="#tbl:core_st_fid">Tbl 4</a>. Our model StencilTorch outperform
+previous work with various amount of hint conditioning.</p>
+<div id="tbl:core_st_fid">
+<table style="width:100%;">
+<caption>Table 4: Fréchet Inception Distance (FID) benchmark comparing
+our work StencilTorch against previous from Zhang et al. <span
+class="citation" data-cites="zhang_2018">[<a href="#ref-zhang_2018"
+role="doc-biblioref">105</a>]</span>, PaintsChainer <span
+class="citation" data-cites="paintschainer_2018">[<a
+href="#ref-paintschainer_2018" role="doc-biblioref">71</a>]</span>, Ci
+et al. <span class="citation" data-cites="ci_2018">[<a
+href="#ref-ci_2018" role="doc-biblioref">14</a>]</span> and our previous
+work PaintsTorch <span class="citation" data-cites="hati_2019">[<a
+href="#ref-hati_2019" role="doc-biblioref">31</a>]</span>. Three
+configurations are used, no hints, hints, and full hint where the
+simplified illustration is used as hints to evaluate the models in all
+conditions. The “+G” mention is our model StencilTorch with the
+additional guide network.</caption>
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 18%" />
+<col style="width: 16%" />
+<col style="width: 19%" />
+<col style="width: 19%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Model</th>
+<th style="text-align: right;">No Hints</th>
+<th style="text-align: right;">Hints</th>
+<th style="text-align: right;">Full Hints</th>
+<th style="text-align: right;">Mean</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><em>FID</em> <span
+class="math inline">\(\downarrow\)</span></td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">-</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Zhang et al.</td>
+<td style="text-align: right;">134.06</td>
+<td style="text-align: right;">274.87</td>
+<td style="text-align: right;">242.58</td>
+<td style="text-align: right;">245.33</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PaintsChainer</td>
+<td style="text-align: right;">54.97</td>
+<td style="text-align: right;">99.63</td>
+<td style="text-align: right;">112.16</td>
+<td style="text-align: right;">93.02</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ci et al.</td>
+<td style="text-align: right;">52.48</td>
+<td style="text-align: right;">96.22</td>
+<td style="text-align: right;">106.73</td>
+<td style="text-align: right;">85.14</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PaintsTorch</td>
+<td style="text-align: right;">51.54</td>
+<td style="text-align: right;">95.71</td>
+<td style="text-align: right;">98.37</td>
+<td style="text-align: right;">81.87</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">StencilTorch</td>
+<td style="text-align: right;"><strong>51.16</strong></td>
+<td style="text-align: right;">94.40</td>
+<td style="text-align: right;">106.05</td>
+<td style="text-align: right;"><strong>81.63</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">StencilTorch + G</td>
+<td style="text-align: right;">85.00</td>
+<td style="text-align: right;"><strong>91.60</strong></td>
+<td style="text-align: right;"><strong>93.80</strong></td>
+<td style="text-align: right;">89.98</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>We additionally evaluate our work on a second feature-based metric,
+LPIPS measuring the similarity of two images in feature space using
+different winodw sizes and the features of an ImageNet <span
+class="citation" data-cites="deng_2009">[<a href="#ref-deng_2009"
+role="doc-biblioref">17</a>]</span> pretrained network such as VGG <span
+class="citation" data-cites="simonyan_2014">[<a
+href="#ref-simonyan_2014" role="doc-biblioref">90</a>]</span>. The
+results shown in <a href="#tbl:core_st_lpips">Tbl 5</a> shows that our
+model is able to compete with previous work and produces relatively
+better results with no hints.</p>
+<div id="tbl:core_st_lpips">
+<table>
+<caption>Table 5: Learned Perceptual Image Patch Similarity (LPIPS)
+benchmark comparing our work StencilTorch against previous from Zhang et
+al. <span class="citation" data-cites="zhang_2018">[<a
+href="#ref-zhang_2018" role="doc-biblioref">105</a>]</span>,
+PaintsChainer <span class="citation" data-cites="paintschainer_2018">[<a
+href="#ref-paintschainer_2018" role="doc-biblioref">71</a>]</span>, Ci
+et al. <span class="citation" data-cites="ci_2018">[<a
+href="#ref-ci_2018" role="doc-biblioref">14</a>]</span> and our previous
+work PaintsTorch <span class="citation" data-cites="hati_2019">[<a
+href="#ref-hati_2019" role="doc-biblioref">31</a>]</span>. Three
+configurations are used, no hints, hints, and full hint where the
+simplified illustration is used as hints to evaluate the models in all
+conditions. The “+G” mention is our model StencilTorch with the
+additional guide network.</caption>
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 17%" />
+<col style="width: 15%" />
+<col style="width: 18%" />
+<col style="width: 18%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Model</th>
+<th style="text-align: right;">No Hints</th>
+<th style="text-align: right;">Hints</th>
+<th style="text-align: right;">Full Hints</th>
+<th style="text-align: right;">Mean</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><em>LPIPS</em> <span
+class="math inline">\(\downarrow\)</span></td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">-</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Zhang et al.</td>
+<td style="text-align: right;">0.28</td>
+<td style="text-align: right;"><strong>0.46</strong></td>
+<td style="text-align: right;"><strong>0.26</strong></td>
+<td style="text-align: right;"><strong>0.37</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PaintsChainer</td>
+<td style="text-align: right;">0.28</td>
+<td style="text-align: right;">0.71</td>
+<td style="text-align: right;">0.60</td>
+<td style="text-align: right;">0.54</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ci et al.</td>
+<td style="text-align: right;">0.23</td>
+<td style="text-align: right;">0.62</td>
+<td style="text-align: right;">0.59</td>
+<td style="text-align: right;">0.48</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PaintsTorch</td>
+<td style="text-align: right;">0.18</td>
+<td style="text-align: right;">0.59</td>
+<td style="text-align: right;">0.56</td>
+<td style="text-align: right;">0.44</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">StencilTorch</td>
+<td style="text-align: right;"><strong>0.16</strong></td>
+<td style="text-align: right;">0.51</td>
+<td style="text-align: right;">0.58</td>
+<td style="text-align: right;">0.40</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">StencilTorch + G</td>
+<td style="text-align: right;">0.31</td>
+<td style="text-align: right;">0.50</td>
+<td style="text-align: right;">0.58</td>
+<td style="text-align: right;">0.46</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Subjective Evaluation:</strong> As stated in the methodology
+chapter (see <a href="#sec:methodology">Sec 3.2</a>) a subjective
+evaluation is required due to the nature of the task we are trying to
+solve. We thus perform a MOS using the population of study described
+earlier (see <a href="#sec:methodology">Sec 3.2</a>). The results (see
+<a href="#tbl:core_st_mos">Tbl 6</a>) show that our model StencilTorch
+produces colored images with better perceptual qualities in most
+cases.</p>
+<div id="tbl:core_st_mos">
+<table>
+<caption>Table 6: Mean Opinion Score (MOS) benchmark comparing our work
+StencilTorch against previous from Zhang et al. <span class="citation"
+data-cites="zhang_2018">[<a href="#ref-zhang_2018"
+role="doc-biblioref">105</a>]</span>, PaintsChainer <span
+class="citation" data-cites="paintschainer_2018">[<a
+href="#ref-paintschainer_2018" role="doc-biblioref">71</a>]</span>, Ci
+et al. <span class="citation" data-cites="ci_2018">[<a
+href="#ref-ci_2018" role="doc-biblioref">14</a>]</span> and our previous
+work PaintsTorch <span class="citation" data-cites="hati_2019">[<a
+href="#ref-hati_2019" role="doc-biblioref">31</a>]</span>. The <span
+class="math inline">\(t\)</span>-test <span
+class="math inline">\(p\)</span>-values for the mean is provided for
+every comparison.</caption>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 24%" />
+<col style="width: 24%" />
+<col style="width: 32%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Model</th>
+<th style="text-align: right;">MOS <span
+class="math inline">\(\uparrow\)</span></th>
+<th style="text-align: right;">STD <span
+class="math inline">\(\uparrow\)</span></th>
+<th style="text-align: right;">p-value <span
+class="math inline">\(\downarrow\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Zhang et al.</td>
+<td style="text-align: right;">1.79</td>
+<td style="text-align: right;">0.51</td>
+<td style="text-align: right;">6.04<span
+class="math inline">\(e^{-23}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PaintsChainer</td>
+<td style="text-align: right;">2.18</td>
+<td style="text-align: right;">0.56</td>
+<td style="text-align: right;">7.72<span
+class="math inline">\(e^{-18}\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ci et al.</td>
+<td style="text-align: right;">2.83</td>
+<td style="text-align: right;">0.67</td>
+<td style="text-align: right;">9.84<span
+class="math inline">\(e^{-08}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PaintsTorch</td>
+<td style="text-align: right;">3.05</td>
+<td style="text-align: right;">0.42</td>
+<td style="text-align: right;"><strong>9.15<span
+class="math inline">\(e^{-09}\)</span></strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">StencilTorch</td>
+<td style="text-align: right;"><strong>3.71</strong></td>
+<td style="text-align: right;"><strong>0.28</strong></td>
+<td style="text-align: right;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="visual-qualities-1">Visual Qualities</h4>
+<figure id="fig:core_st_samples">
+<img src="./figures/core_st_samples.png"
+alt="Samples mosaic of input and output pairs generated using one pass with StencilTorch. In every cell of the mosaic, the lineart, the mask, and the hint map are shown in the bottom, and the generated colored illustration on top." />
+<figcaption>Figure 69: Samples mosaic of input and output pairs
+generated using one pass with StencilTorch. In every cell of the mosaic,
+the lineart, the mask, and the hint map are shown in the bottom, and the
+generated colored illustration on top.</figcaption>
+</figure>
+<p>Our model StencilTorch is able to generate useful and consistent
+colored illustrations from linearts, color hints, and masks. Samples
+generated by our methods are shown in <a
+href="#fig:core_st_samples">Fig 69</a>. The use of masks allow the user
+to specify the region of the image he wants to color and ensure there is
+no bleeding outside of the delimited zone.</p>
 <h4 id="emerging-workflow">Emerging Workflow</h4>
+<p>As shown in the <a href="#fig:core_st_workflow">Fig 66</a> diagram,
+natural iterative workflows emerges from the interaction of user with
+our framework. The end-user can use StencilTorch to initiate a first
+colord illustration and then reuse the generated image as an input for a
+second pass with another mask and different hints. The user also has the
+possiblity to refine the produced illustration using its own digital art
+workflow and style and in-paint missing parts using StencilTorch. The
+model can use the information already present and given by the user
+outside of the mask to complete the reste of the illutration while
+following the lighting and style provided by the user. This operations
+can be repeteat indefinitely and allow to explore the colorization
+design space in an interactive fashion by collaborating with the
+machine.</p>
 <h4 id="application">Application</h4>
-<h4 id="limitations">Limitations</h4>
+<p>Similarly to PaintsTorch <span class="citation"
+data-cites="hati_2019">[<a href="#ref-hati_2019"
+role="doc-biblioref">31</a>]</span>, we export our model from PyTorch to
+TensorFlowJS using the ONNX universal framework and deploy the model in
+a custom static and standalone web application. The web application
+allow the user to import a lineart, create a mask, hints maps with
+scribble colored lines, and visualize the resulting generated
+illustration in realtime making use of the GPU from the web browser. A
+screnshot of the application is shown in <a
+href="#fig:core_st_teaser">Fig 65</a>.</p>
+<h4 id="sec:sec_core_st_limit">Limitations</h4>
+<figure id="fig:core_st_comparison">
+<img src="./figures/core_st_comparison.png"
+alt="Comparison of StencilTorch, PaintsTorch [31], and PaintsChainer [71] from left to right given the same lineart and hint map. This one pass generation shows the limitation of our work. When not used with in-painting, StencilTorch tends to generate flat colorization although no artifacts is visible in comparison with the others." />
+<figcaption>Figure 70: Comparison of StencilTorch, PaintsTorch <span
+class="citation" data-cites="hati_2019">[<a href="#ref-hati_2019"
+role="doc-biblioref">31</a>]</span>, and PaintsChainer <span
+class="citation" data-cites="paintschainer_2018">[<a
+href="#ref-paintschainer_2018" role="doc-biblioref">71</a>]</span> from
+left to right given the same lineart and hint map. This one pass
+generation shows the limitation of our work. When not used with
+in-painting, StencilTorch tends to generate flat colorization although
+no artifacts is visible in comparison with the others.</figcaption>
+</figure>
+<p>While our model StencilTorch produces qualitative and useful colored
+illustrations from linearts and conditioning inputs, our model tends to
+generate flat illustrations without depth and is lacking shadow and
+texture espacially when used in a one-pass fashion. Our model has been
+design to work iteratively with in-painting and work best in this
+situation. A comparison of a one pass coloring process is shown in <a
+href="#fig:core_st_comparison">Fig 70</a>.</p>
+<figure id="fig:core_st_minhints">
+<img src="./figures/core_st_minhints.png"
+alt="The figure shows the implication of the stroke density in the ability for our model StencilTorch to produce qualitative illustrations from a lineart, a mask and the hint map. The lineart is shown top left and the mask bottom left. The stroke desnity is increased from left to right with the hint map bottom and the generated illustration on top. The final top right image has been improved by an artist base on the last generated image." />
+<figcaption>Figure 71: The figure shows the implication of the stroke
+density in the ability for our model StencilTorch to produce qualitative
+illustrations from a lineart, a mask and the hint map. The lineart is
+shown top left and the mask bottom left. The stroke desnity is increased
+from left to right with the hint map bottom and the generated
+illustration on top. The final top right image has been improved by an
+artist base on the last generated image.</figcaption>
+</figure>
+<p>The model is also sensible to the desnity of stroke used. A miniaml
+amount of user-inputs needs to be provided for the model to generate
+useful outputs as shown in <a
+href="#fig:core_st_minhints">Fig 71</a>.</p>
 <h3 id="summary-3">Summary</h3>
-
+<p>Our contribution StencilTorch <span class="citation"
+data-cites="hati_2023">[<a href="#ref-hati_2023"
+role="doc-biblioref">32</a>]</span> addresses the need for AI-driven
+tools that naturraly integrates into the artist workflow allowing fast
+prototyping and iterative collaboration with the machine. While current
+approaches have focused on imporving the generation quality of
+user-guided GAN architectures, we explored the use of in-painting to
+enable natural emerging iterative workflows. The output of our model can
+be used as the input of a second pass. We demonstrate that in particular
+settings where the in-painting capabilities of our model shines, our
+approach is able to generate qualitative colored illustrations for the
+task of automatic lineart clorization.</p>
+<p>While our approach finds its use in collaborative colorization, its
+still suffers from a lack of depth in the output during a first pass
+where the model is ask to color the entire lineart. This is certainly
+due to the introduction of the guide network. Recovering flat
+colorization is easier than coloring the lineart with shadow and
+texture. The model would certainly perform better in this context if the
+guidance component of the generator loss is pushed down in comparison to
+the other terms.</p>
+<!-- TODO: Here -->
 <h2 id="sec:contrib-3">StablePaint</h2>
 <h3 id="method-2">Method</h3>
 <h3 id="setup">Setup</h3>
