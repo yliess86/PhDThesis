@@ -2075,7 +2075,19 @@ In this work, StencilTorch [@hati_2023], our contributions are the following:
 This section discusses the data generation pipeline used in StencilTorch [@hati_2023] (see @sec:st_synthetic), the [+cwgangp]{.full} (see @sec:st_arch) model architecture and its guide network, the objective functions we aim to optimize (see @sec:st_losses); and the training regime (see @sec:st_train).
 
 #### Synthetic Inputs {#sec:st_synthetic}
+
+One of the challenges for the task of automatic lineart colorization is the lack of qualitative public datasets. In our previous work on PaintsTorch [@hati_2019] we demonstrate the importance of the quality of the dataset and its impact on the overall perceptual quality of the images produced by the generative models. We thus resused our custom curated filtered dataset and employed a similar data transformation pipeline with additional improvements explained in @fig:core_st_pipeline.
+
+![StencilTorch synthetic input generation process diagram. The illustration sampled form our custom dataset is first transformeed into a synthetic lineart using the +xdog method. The same illustration is simplified to partially remove texture and shadow information using a semantic color segmentation network, color quantization, and $k$-means to further reduce th number of colors present in the image. The selection mask and the color strokes are then generated from this simplified segmented illustration. Finally, a composite input is aggregated for inpainting where the black region of the mask contains the original illustration, and the white region, the synthetic lineart to be colorized.](./figures/core_st_pipeline.png){#fig:core_st_pipeline}
+
+Randomly sampling color strokes from the input illustration means that the similated random strokes capture the variation of color present in the image containing shadow, lighting, texture and more. However, based on our previous observations from interactons with our previous work PaintsTorch [@hati_2019], the end-user tend to specify mid-tone colors whithout thinking about lighting as they expect the model to handle that aspect. In that regarde, we developped a new preprocessing pipeline for the illustration enabling the extraction and generation of color scribbles with limited shadow and texture information.
+
+To this end, we trained a ResNet [@he_2016] mode to regress displacement maps from colored illustrations on the DabooRegion dataset [@danboo_region_2020]. The displacement map is robust to noise and allows us to extract unique color sections. We further assign each region to its median color, further reduce the number of colors using color quantization and further refine them down to $25$ colors using $k$-means clustering. This number has empirically be selected to avoid sacrificing too much details from the original illustration. The mask and color hints inputs are then generated from this simplified version of the input illustration.
+
 #### Model Architecture {#sec:st_arch}
+
+![Architecture ...](./figures/core_st_architecture.svg){#fig:core_st_architecture}
+
 #### Objective Functions {#sec:st_losses}
 #### Training  {#sec:st_train}
 
