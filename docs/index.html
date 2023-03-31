@@ -526,9 +526,11 @@ id="toc-introduction-1">Introduction</a></li>
 </ul></li>
 <li><a href="#sec:contrib-3" id="toc-sec:contrib-3">StablePaint</a>
 <ul>
+<li><a href="#introduction-2"
+id="toc-introduction-2">Introduction</a></li>
 <li><a href="#method-2" id="toc-method-2">Method</a></li>
-<li><a href="#setup" id="toc-setup">Setup</a></li>
-<li><a href="#results-2" id="toc-results-2">Results</a></li>
+<li><a href="#intermediate-results"
+id="toc-intermediate-results">Intermediate Results</a></li>
 <li><a href="#summary-4" id="toc-summary-4">Summary</a></li>
 </ul></li>
 </ul></li>
@@ -5740,9 +5742,59 @@ guidance component of the generator loss is pushed down in comparison to
 the other terms.</p>
 <!-- TODO: Here -->
 <h2 id="sec:contrib-3">StablePaint</h2>
+<h3 id="introduction-2">Introduction</h3>
 <h3 id="method-2">Method</h3>
-<h3 id="setup">Setup</h3>
-<h3 id="results-2">Results</h3>
+<h4 id="synthetic-inputs">Synthetic Inputs</h4>
+<h4 id="model-architecture">Model Architecture</h4>
+<h4 id="objective-functions">Objective Functions</h4>
+<h4 id="training">Training</h4>
+<h3 id="intermediate-results">Intermediate Results</h3>
+<figure id="fig:stablepaint_illustration_autoencoder">
+<img src="./figures/stablepaint_illustration_autoencoder.png"
+alt="The figure shows sample illustrations from our training set on the top row and their reconstruction using our illustration autoencoder. The illustration autoencoder is trained until saturation and is able to encode and decode the original signal with almost no perceptible difference." />
+<figcaption>Figure 72: The figure shows sample illustrations from our
+training set on the top row and their reconstruction using our
+illustration autoencoder. The illustration autoencoder is trained until
+saturation and is able to encode and decode the original signal with
+almost no perceptible difference.</figcaption>
+</figure>
+<figure id="fig:stablepaint_lineart_autoencoder">
+<img src="./figures/stablepaint_lineart_autoencoder.png"
+alt="The figure shows sample illustrations from our training set on the top row and their reconstruction using our context autoencoder. The decoder is shared with our illustration autoencoder and is pretrained. The context encoder is trained until saturation and tries to project the given lineart and corresponding hints to a latent code that matches the illustration one when encoded with the illustration encoder." />
+<figcaption>Figure 73: The figure shows sample illustrations from our
+training set on the top row and their reconstruction using our context
+autoencoder. The decoder is shared with our illustration autoencoder and
+is pretrained. The context encoder is trained until saturation and tries
+to project the given lineart and corresponding hints to a latent code
+that matches the illustration one when encoded with the illustration
+encoder.</figcaption>
+</figure>
+<figure id="fig:stablepaint_latent_noise_samples">
+<img src="./figures/stablepaint_latent_noise_samples.png"
+alt="The figure shows samples from our model StablePaint. The samples are generated starting from corrupted colored images from our training set. The corruption level is at 75% for the first two rows, 50% for the second row, 25% for the third row and 12.5% for the last one (top to bottom). The noise model can recover the altered signal to a certain extent by being conditioned on a lineart and color hints." />
+<figcaption>Figure 74: The figure shows samples from our model
+StablePaint. The samples are generated starting from corrupted colored
+images from our training set. The corruption level is at 75% for the
+first two rows, 50% for the second row, 25% for the third row and 12.5%
+for the last one (top to bottom). The noise model can recover the
+altered signal to a certain extent by being conditioned on a lineart and
+color hints.</figcaption>
+</figure>
+<figure id="fig:stablepaint_demo_corruption" width="75%">
+<img src="./figures/stablepaint_demo_corruption.png" style="width:75.0%"
+alt="The figure illustrate an example of input and output pair and the generation of colored illustrations using our model StablePaint. The noise model of Stable Paint is conditioning on the inputs and the initial noise is initialized from corrupted versions of latent representations of the inputs obtained using our pretrained context autoencoder. Various levels of corruption are applied to serve as the initial noise used by our diffusion process. The top row shows the result without any corruption, then 25%, 50%, 75%, and 100% corruption. Different runs with different noise corruption seeds are shown in the 4 columns. The input lineart and hints are shown at the very top.”" />
+<figcaption>Figure 75: The figure illustrate an example of input and
+output pair and the generation of colored illustrations using our model
+StablePaint. The noise model of Stable Paint is conditioning on the
+inputs and the initial noise is initialized from corrupted versions of
+latent representations of the inputs obtained using our pretrained
+context autoencoder. Various levels of corruption are applied to serve
+as the initial noise used by our diffusion process. The top row shows
+the result without any corruption, then 25%, 50%, 75%, and 100%
+corruption. Different runs with different noise corruption seeds are
+shown in the 4 columns. The input lineart and hints are shown at the
+very top.”</figcaption>
+</figure>
 <h3 id="summary-4">Summary</h3>
 <!-- ===================== [END] PART CORE ===================== -->
 <!-- ===================== [START] PART REFLECTION ===================== -->
@@ -5764,7 +5816,7 @@ text, images, audio, and videos from natural language prompts.</p>
 <figure id="fig:ref_artstation_cancel_ai">
 <img src="./figures/ref_artstation_cancel_ai.png"
 alt="Screenshot of the website Artstation used by artists to professionally expose their work. A quick exploration shows the appearance of anti AI pictures expressing the concerns of artists from AI companies exploiting their artwork for training their models for profit." />
-<figcaption>Figure 72: Screenshot of the website Artstation used by
+<figcaption>Figure 76: Screenshot of the website Artstation used by
 artists to professionally expose their work. A quick exploration shows
 the appearance of anti AI pictures expressing the concerns of artists
 from AI companies exploiting their artwork for training their models for
@@ -5777,7 +5829,7 @@ challenges questioning ethics and its impact on our society. Its use is
 seen as controversial by most of the artist communities. While some may
 see generative AI as a tool that enables increase creativity potential
 and productivity others consider it as a Damocles sword, a threat for
-their job (see <a href="#fig:ref_artstation_cancel_ai">Fig 72</a>).</p>
+their job (see <a href="#fig:ref_artstation_cancel_ai">Fig 76</a>).</p>
 <p>This chapter discusses the benefits of generative AI models, their
 ethical concerns and their impact on our society but also their
 limitations and the need for regulations and guidelines.</p>
@@ -5793,7 +5845,7 @@ design.</p>
 <figure id="fig:ref_midjourney">
 <img src="./figures/ref_midjourney.png"
 alt="Sample from Midjourney’s generative AI using the prompt “the year 1203, the crowned Byzantine emperor watches as Venetian ships sail into the harbor of Constantinople, view over his shoulder, dramatic, photorealistic, details –ar 2:1”." />
-<figcaption>Figure 73: Sample from Midjourney’s generative AI using the
+<figcaption>Figure 77: Sample from Midjourney’s generative AI using the
 prompt “the year 1203, the crowned Byzantine emperor watches as Venetian
 ships sail into the harbor of Constantinople, view over his shoulder,
 dramatic, photorealistic, details –ar 2:1”.</figcaption>
@@ -5802,8 +5854,8 @@ dramatic, photorealistic, details –ar 2:1”.</figcaption>
 their democratization. They enable individuals with no background in
 creative arts, to express their creativity and generate artistic pieces
 with natural interactions without requiring specific technical knowledge
-(see Figs <a href="#fig:ref_midjourney">73</a>, <a
-href="#fig:ref_hp">74</a>). It lowers down the barrier for newcomers and
+(see Figs <a href="#fig:ref_midjourney">77</a>, <a
+href="#fig:ref_hp">78</a>). It lowers down the barrier for newcomers and
 lowers the cost of production. This aspect is especially important for
 independent and small studios that do not have the means of big
 production companies.</p>
@@ -5833,7 +5885,7 @@ animators.</li>
 <figure id="fig:ref_hp">
 <img src="./figures/ref_hp.png"
 alt="Portrait generated using various image generative AI models with a simplified description of the character Harry Potter from J.K. Rowling: “young boy portrait, lighting bolt scar on the forehead, thin face, black hair, green eyes, round black glasses held, black robe cape, magic castle in the background, trending in art station, 4k”. The models are having trouble with details such as the scar." />
-<figcaption>Figure 74: Portrait generated using various image generative
+<figcaption>Figure 78: Portrait generated using various image generative
 AI models with a simplified description of the character Harry Potter
 from J.K. Rowling: “young boy portrait, lighting bolt scar on the
 forehead, thin face, black hair, green eyes, round black glasses held,
@@ -5860,11 +5912,11 @@ role="doc-biblioref">10</a>]</span> in their work on extracting training
 data from diffusion models. Users can also replicate the style of
 artists without their consent nor credit. This is extremely problematic
 as it constitutes an art identity steal (see <a
-href="#fig:ref_steal">Fig 75</a>).</p>
+href="#fig:ref_steal">Fig 79</a>).</p>
 <figure id="fig:ref_steal">
 <img src="./figures/ref_steal.jpg"
 alt="Artwork by Hollie Mengert (left) vs. images generated with Stable Diffusion DreamBooth in her style (right). Credit: Andy BAIO from waxy.org." />
-<figcaption>Figure 75: Artwork by Hollie Mengert (left) vs. images
+<figcaption>Figure 79: Artwork by Hollie Mengert (left) vs. images
 generated with Stable Diffusion DreamBooth in her style (right). Credit:
 Andy BAIO from waxy.org.</figcaption>
 </figure>
@@ -5896,11 +5948,11 @@ on huge image datasets affected by bias, misrepresentation, and sensible
 content. For example, some models still struggle at generating hands,
 feet, or coherent images. The produced output may require multiple
 trials, and modifications, and often cannot be used in their raw
-versions (see <a href="#fig:ref_feet_hands">Fig 76</a>).</p>
+versions (see <a href="#fig:ref_feet_hands">Fig 80</a>).</p>
 <figure id="fig:ref_feet_hands">
 <img src="./figures/ref_feet_hands.png"
 alt="Feet and hands generated by StableDiffusion [80]." />
-<figcaption>Figure 76: Feet and hands generated by StableDiffusion <span
+<figcaption>Figure 80: Feet and hands generated by StableDiffusion <span
 class="citation" data-cites="rombach_2021">[<a href="#ref-rombach_2021"
 role="doc-biblioref">80</a>]</span>.</figcaption>
 </figure>

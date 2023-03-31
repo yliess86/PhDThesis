@@ -2224,9 +2224,25 @@ While our approach finds its use in collaborative colorization, its still suffer
 
 <!-- TODO: Here -->
 ## StablePaint {#sec:contrib-3}
+
+
+
+### Introduction
 ### Method
-### Setup
-### Results
+#### Synthetic Inputs
+#### Model Architecture
+#### Objective Functions
+#### Training
+### Intermediate Results
+
+![The figure shows sample illustrations from our training set on the top row and their reconstruction using our illustration autoencoder. The illustration autoencoder is trained until saturation and is able to encode and decode the original signal with almost no perceptible difference.](./figures/stablepaint_illustration_autoencoder.png){#fig:stablepaint_illustration_autoencoder}
+
+![The figure shows sample illustrations from our training set on the top row and their reconstruction using our context autoencoder. The decoder is shared with our illustration autoencoder and is pretrained. The context encoder is trained until saturation and tries to project the given lineart and corresponding hints to a latent code that matches the illustration one when encoded with the illustration encoder.](./figures/stablepaint_lineart_autoencoder.png){#fig:stablepaint_lineart_autoencoder}
+
+![The figure shows samples from our model StablePaint. The samples are generated starting from corrupted colored images from our training set. The corruption level is at 75% for the first two rows, 50% for the second row, 25% for the third row and 12.5% for the last one (top to bottom). The noise model can recover the altered signal to a certain extent by being conditioned on a lineart and color hints.](./figures/stablepaint_latent_noise_samples.png){#fig:stablepaint_latent_noise_samples}
+
+![The figure illustrate an example of input and output pair and the generation of colored illustrations using our model StablePaint. The noise model of Stable Paint is conditioning on the inputs and the initial noise is initialized from corrupted versions of latent representations of the inputs obtained using our pretrained context autoencoder. Various levels of corruption are applied to serve as the initial noise used by our diffusion process. The top row shows the result without any corruption, then 25%, 50%, 75%, and 100% corruption. Different runs with different noise corruption seeds are shown in the 4 columns. The input lineart and hints are shown at the very top."](./figures/stablepaint_demo_corruption.png){#fig:stablepaint_demo_corruption width=75%}
+
 ### Summary
 \newpage{}
 <!-- ===================== [END] PART CORE ===================== -->
