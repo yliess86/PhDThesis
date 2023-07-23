@@ -38,7 +38,7 @@ RE_WORDS     = python -c "import re; ${PY_README_R}; ${PY_README_F}.write(re.sub
 all: build
 
 dev:
-	echo ${FILENAME}.md | entr -r make pdf
+	echo ${FILENAME}.md | entr -r make html
 
 progress:
 	${RE_PAGES}

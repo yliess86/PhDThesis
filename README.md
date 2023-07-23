@@ -1,6 +1,6 @@
 <p align="center">
     <h1>PhD Thesis</h1>
-    <img alt="progress-pages" src="https://progress-bar.dev/90?title=108/120 Pages" />
+    <img alt="progress-pages" src="https://progress-bar.dev/88?title=106/120 Pages" />
     <img alt="progress-words" src="https://progress-bar.dev/42?title=29361/60000 Words" />
 </p>
 
