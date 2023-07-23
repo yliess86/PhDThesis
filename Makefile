@@ -11,6 +11,9 @@ PANDOC       = pandoc
 PANDOC_PDF   = ${PANDOC} ${OPTIONS} ${FILENAME}.md -o docs/${FILENAME}.pdf
 PANDOC_HTML  = ${PANDOC} ${OPTIONS} --mathjax ${FILENAME}.md -o docs/index.html
 
+GS           = gs
+GS_PDF       = ${GS} -dNOPAUSE -dQUIET -dBATCH -dPDFSETTINGS=/ebook -sdocs/${FILENAME}.pdf docs/${FILENAME}.pdf
+
 BOOKLET      = pdfbook2
 BOOKLET_PDF  = ${BOOKLET} docs/${FILENAME}.pdf
 
@@ -22,17 +25,23 @@ WORD_TOTAL   = 60000
 WORD_COUNT  := $(shell pdftotext -layout docs/${FILENAME}.pdf - | wc -w | tr -d ' ')
 WORD_PROG   := $(shell python -c "print(int(${WORD_COUNT} / ${WORD_TOTAL} * 100))")
 
-SED          = gsed
-RGEX_PAGES   = 's+[0-9]*\?title=[0-9]*\/[0-9]* Pages+${PAGE_PROG}?title=${PAGE_COUNT}/${PAGE_TOTAL} Pages+g'
-RGEX_WORDS   = 's+[0-9]*\?title=[0-9]*\/[0-9]* Words+${WORD_PROG}?title=${WORD_COUNT}/${WORD_TOTAL} Words+g'
+RGX_SRC      = (https\:\/\/progress\-bar\.dev\/)(([0-9]{0,})\?title=([0-9]{0,})\/([0-9]{0,}))
+RGX_PAGES    = ${RGX_SRC} Pages
+RGX_WORDS    = ${RGX_SRC} Words
+RPL_PAGES    = https://progress-bar.dev/${PAGE_PROG}?title=${PAGE_COUNT}/${PAGE_TOTAL} Pages
+RPL_WORDS    = https://progress-bar.dev/${WORD_PROG}?title=${WORD_COUNT}/${WORD_TOTAL} Words
+PY_README_R  = r = open('README.md', 'r').read()
+PY_README_F  = f = open('README.md', 'w')
+RE_PAGES     = python -c "import re; ${PY_README_R}; ${PY_README_F}.write(re.sub(r'${RGX_PAGES}', '${RPL_PAGES}', r))"
+RE_WORDS     = python -c "import re; ${PY_README_R}; ${PY_README_F}.write(re.sub(r'${RGX_WORDS}', '${RPL_WORDS}', r))"
 
 all: build
 
 dev:
-	echo ${FILENAME}.md | entr -r make pdf clean
+	echo ${FILENAME}.md | entr -r make pdf
 
 progress:
-	${SED} -i -e ${RGEX_PAGES} -e ${RGEX_WORDS} README.md
+	${RE_PAGES}
 
 html:
 	cp -r figures docs/
@@ -40,12 +49,11 @@ html:
 
 pdf:
 	${PANDOC_PDF}
+	${GS_PDF}
 
 booklet:
 	${BOOKLET_PDF}
-
-clean:
 	rm -f tmp-*
 
-build: progress html pdf booklet clean
+build: progress html pdf booklet
 	echo "Build Done!\n"

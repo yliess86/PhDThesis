@@ -1,7 +1,7 @@
 <p align="center">
     <h1>PhD Thesis</h1>
-    <img alt="progress-pages" src="https://progress-bar.dev/81?101?101?101?108?108?108?108?108?90?90?90?91?91?90?90?90?90?90?title=108/120 Pages" />
-    <img alt="progress-words" src="https://progress-bar.dev/56?49?49?49?49?49?49?49?49?49?49?49?49?49?48?48?48?48?48?title=29357/60000 Words" />
+    <img alt="progress-pages" src="https://progress-bar.dev/90?title=108/120 Pages" />
+    <img alt="progress-words" src="https://progress-bar.dev/42?title=29361/60000 Words" />
 </p>
 
 This repository contains the source code and the compiled versions of my Ph.D. Thesis.
@@ -32,6 +32,7 @@ This repository contains the source code and the compiled versions of my Ph.D. T
     - Install entr: `sudo apt install entr`
     - Install exiftool: `sudo apt install exiftool`
     - Install librsvg: `sudo apt install librsvg2-bin`
+    - Install ghostscript: `sudo apt install ghostscript`
 
 - Launch a **Dev Session**:
     - Launch in terminal: `make dev`
