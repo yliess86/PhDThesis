@@ -17,11 +17,11 @@ GS_PDF       = ${GS} -dNOPAUSE -dQUIET -dBATCH -dPDFSETTINGS=/ebook -sdocs/${FIL
 BOOKLET      = pdfbook2
 BOOKLET_PDF  = ${BOOKLET} docs/${FILENAME}.pdf
 
-PAGE_TOTAL   = 120
+PAGE_TOTAL   = 100
 PAGE_COUNT  := $(shell exiftool -T -PageCount -s3 -ext pdf docs/${FILENAME}.pdf | tr -d ' ')
 PAGE_PROG   := $(shell python -c "print(int(${PAGE_COUNT} / ${PAGE_TOTAL} * 100))")
 
-WORD_TOTAL   = 60000
+WORD_TOTAL   = 40000
 WORD_COUNT  := $(shell pdftotext -layout docs/${FILENAME}.pdf - | wc -w | tr -d ' ')
 WORD_PROG   := $(shell python -c "print(int(${WORD_COUNT} / ${WORD_TOTAL} * 100))")
 
@@ -42,6 +42,7 @@ dev:
 
 progress:
 	${RE_PAGES}
+	${RE_WORDS}
 
 html:
 	cp -r figures docs/

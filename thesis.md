@@ -104,6 +104,9 @@ acronyms:
     ddim:
         short: DDIM
         long: Denoising Diffusion Implicit Model
+    ldm:
+        short: LDM
+        long: Latent Diffusion Model
     vit:
         short: ViT
         long: Vision Transformer
@@ -617,13 +620,13 @@ Finally, generative models trained for automatic colorization can be conditioned
 
 ## Generative Neural Networks for Image Generation {#sec:III.3}
 
-This section discusses the various architectures introduced in the +dl litterature for image generation with a strong focus on those used by the related work of the previous section (section @section:III.2) and how to condition them on user inputs. 
+This section discusses the various architectures introduced in the +dl litterature for image generation with a strong focus on those used by the related work of the previous section (section @sec:III.2) and how to condition them on user inputs. 
 
 The architectures discussed are the [+ae]{.full} (see @sec:ae), the [+vae]{.full} (see @sec:vae), the [+gan]{.full} (see @sec:gan), the [+ddm]{.full} (see @sec:ddm), and [+llm]{.full .plural} (see @sec:llm).
 
 This section does not only discuss the technical details of those architectures but also compares them on three criteria, generation inference speed, generation variance, and generation quality and complexity.
 
-Similarly to the theoretical background chapter (chapter @section:II), the [+mnist]{.full} dataset is used for illustrative purposes.
+Similarly to the theoretical background chapter (chapter @sec:II), the [+mnist]{.full} dataset is used for illustrative purposes.
 
 ### Autoencoders {#sec:III.3.1}
 
@@ -927,15 +930,25 @@ In this thesis, we explore how one can improve the current quality of the genera
 <!-- ===================== [START] PART CONTRIBUTIONS ===================== -->
 # Contributions in Automatic Lineart Colorization {#sec:IV}
 
+This chapter discusses the main contributions of this thesis dissertation in relation to the related work presented in the previous chapter (see @sec:III).
+
+Section @sec:IV.1 presents a recipe for generating clean datasets for the task of automatic colorization based on a synthetic pipeline [@hati_2019; @hati_2023]. The linearts and color hint maps are generated from original illustrations scrapped online and manually filtered for their perceptieve quality and consistancy. The same pipeline is used with minor modification throuhought the three approaches proposed in sections @sec:IV.2, @sec:IV.3, and @sec:IV.4.
+
+Section @sec:IV.2 introduces PaintsTorch [@hati_2019]; a double +gan generator that improves generation quality compared to previous work while allowing realtime interaction with the end user. It demonstrates the impact and the necessity of cleaner and specialized datasets, but also introduces a double generator to enforce consistency in the lineart and help the network untangle its internal representation. The resulting colorizations are more consistent, robust, and visually pleasing in comparison to previous methods.
+
+Section @sec:IV.3 presents StencilTorch [@hati_2023], an upgrade of PaintsTorch, shifting the colorization problem to in-painting with masks allowing for human-machine collaboration to emerge as a natural workflow where the input of a first pass becomes a potential input for a second.
+
+Section @sec:IV.4 discusses an unfished follow up work to PaintsTorch and StencilTorch called StablePaint. StablePaint is an exploration of the use of [+ddm]{.plural} for automatic lineart colorization. It sacrifises inference speed for flexibility and quality. Those type of models natively enable workflows such as colorization, in-painting, out-painting, the creation of variations of the same artwork, and eliminates the need for an external feature extractor. The challenge resides in the model conditionning. This section ends with a presentation of a more recent work ControlNet from Zhang et al. [@zhang_2023] which successfully solved this exploration.
+
 ## Method and Implementation {#sec:IV.1}
 
-In this chapter, we discuss the methodology used throughout this thesis dissertation. The dataset curation is described in @sec:dataset-curation, the objective evaluation process in @sec:objective-eval, the subjective evaluation in @sec:subjective-eval, the implementation details in @sec:implementation, and the reproducibility in @sec:reproducibility.
+In this section, we discuss the methodology used throughout this thesis dissertation @sec;IV.1.1. The dataset curation is described in @sec:IV.1.2, the objective evaluation process in @sec:IV.1.4.1, the subjective evaluation in @sec:IV.1.4.2, the implementation details and the reproducibility in @sec:IV.1.5.
 
 ### Synthetic Dataset Pipeline {#sec:IV.1.1}
 
 The challenge of anime lineart colorization faces a lack of available datasets with perceptive qualitative content. To acquire corresponding pairs of lineart and illustrations, online scraping and synthetic lineart extraction are the methods used by the majority of the contributions in the literature [@ci_2018; @zhang_richard_2017; @petalicapaint_2023; @paintschainer_2018].
 
-![Randomly sample illustrations extracted from the Danbooru dataset [@danbooru_2020]. The dataset is mixing styles, quality, and image nature such as comic pages, photos, illustrations, and more.](./figures/meta_danboruu_samples.png){#fig:meta_danboruu_samples}
+![Random sample illustrations extracted from the Danbooru dataset [@danbooru_2020]. The dataset is mixing styles, quality, and image nature such as comic pages, photos, illustrations, and more.](./figures/meta_danboruu_samples.png){#fig:meta_danboruu_samples}
 
 Currently, there are few public datasets available for the community [@danbooru_2020; @danboo_region_2020], the content of which is not uniform in terms of perceptual quality, image nature (e.g. comics pages, photos), and contains illustrations from different artists with varied skill levels and styles (see @fig:meta_danboruu_samples). To address this, we have curated a custom dataset.
 
@@ -989,7 +1002,7 @@ $$
 MOS = \sum_{i=1}^{N} \frac{R_i}{N}, \; R_i \in \{1; 2; 3; 4; 5\}
 $$ {#eq:mos}
 
-Our +mos study included $46$ individuals from $16$ to $30$ years old, with $26$% women and $35$% experience in drawing, colorization or a related subject. The study consisted in showing $20$ illustrations randomly sampled from our custom test set and colorized using different methods and conditioned with their corresponding color hint method. The results of the study are discussed in later chapters when presenting our methods PaintsTorch [@hati_2019] (see @sec:contrib-1), and StencilTorch [@hati_2023] (see @sec:contrib-2).
+Our +mos study included $46$ individuals from $16$ to $30$ years old, with $26$% women and $35$% experience in drawing, colorization or a related subject. The study consisted in showing $20$ illustrations randomly sampled from our custom test set and colorized using different methods and conditioned with their corresponding color hint method. The results of the study are discussed in later sections when presenting our methods PaintsTorch [@hati_2019] (see @sec:contrib-1), and StencilTorch [@hati_2023] (see @sec:contrib-2).
 
 ### Reproducibility {#sec:IV.1.5}
 
@@ -1005,19 +1018,17 @@ The neural networks presented in this work are implemented using the PyTorch lib
 
 All experimentations have been made possible thanks to the use of a custom made Computer equipped with an AMD® Ryzen 9 5900x $12$-core processor and $24$-threads processor, $32$ GB of DDR4 RAM, and a Nvidia GeForce RTX 3090 +gpu with 24 GB of dedicated v-RAM. The final training, scaling, and hyperparameter tuning of our models have been performed on a DGX1-station from Nvidia equipped with an Intel Xeon E5-2698 $20$-core processor, $512$ GB of DDR4 RAM, and four V100 GPUs with $32$ GB of v-RAM each.
 
-\newpage{}
-
-## PaintsTorch: User-Guided Lineart Colorization {#sec:IV.2}
+## PaintsTorch: User-Guidance {#sec:IV.2}
 
 ![User-guided colorization using color stroke conditioning generated by our method PaintsTorch. The input lineart and color stroke hint are shown on the left, and the generated colored illustration on the right.](./figures/core_pt_teaser.png){#fig:core_pt_teaser}
 
 ### Introduction {#sec:IV.2.1}
 
-This chapter discusses our work on PaintsTorch [@hati_2019], a user-guided anime lineart colorization tool with double [+cgan]{.full .plural} (see @fig:core_pt_teaser). While the introduction of the +gan architecture @goodfellow_2014 allowed the generation of unprecedented quality illustration and intent conditioning [@zhang_2018; @petalicapaint_2023; @paintschainer_2018; @ci_2018], they still suffer from visual artifacts, color bleeding, and struggle with hint positioning.
+This section discusses our work on PaintsTorch [@hati_2019], a user-guided anime lineart colorization tool with double [+cgan]{.full .plural} (see @fig:core_pt_teaser). While the introduction of the +gan architecture @goodfellow_2014 allowed the generation of unprecedented quality illustration and intent conditioning [@zhang_2018; @petalicapaint_2023; @paintschainer_2018; @ci_2018], they still suffer from visual artifacts, color bleeding, and struggle with hint positioning.
 
 In this work, PaintsTorch [@hati_2019], our contributions are the following:
 
-- The introduction of a stricter dataset curation pipeline introduced in the previous chapter on methodology (see @sec:methodology)
+- The introduction of a stricter dataset curation pipeline introduced in the previous chapter on methodology (see @sec:IV.1)
 - A new synthetic stroke generation scheme that is closer to the one used during inference and provided by the end-user
 - We explore the use of a second generator network to enforce that the colorization learned is linked to the lineart
 - A qualitative and quantitative evaluation comparing our work to previous contributions
@@ -1025,7 +1036,7 @@ In this work, PaintsTorch [@hati_2019], our contributions are the following:
 
 ### Method {#sec:IV.2.2}
 
-This section discusses the data generation pipeline used in PaintsTorch [@hati_2019] (see @sec:pt_synth), the +cwgan U-net-based model architecture (see @sec:pt_arch), the objective functions we aim to optimize (see @sec:pt_losses), and the training regime (see @sec:pt_train).
+This section discusses the data generation pipeline used in PaintsTorch [@hati_2019] (see @sec:IV.2.2.1), the +cwgan U-net-based model architecture (see @sec:IV.2.2.2), the objective functions we aim to optimize (see @sec:IV.2.2.3), and the training regime (see @sec:IV.2.2.4).
 
 #### Synthetic Inputs {#sec:IV.2.2.1}
 
@@ -1191,15 +1202,13 @@ User-guided lineart colorization is a challenging task for +cv. Previous work in
 
 PaintsTorch is able to generate high quality colored illustrations given a lineart and a coarse hint map made of user-defined color strokes. However, our model is still subject to visual artificats, especially when provided with highly saturated and dense colored strokes. Is also struggles at representing the user intent when hinting for small details in the lineart.
 
-\newpage{}
-
-## StencitTorch: Human-Machine Colaboration Summary {#sec:IV.3}
+## StencitTorch: Human-Machine Colaboration {#sec:IV.3}
 
 ![The figure is a screenshot of our model StencilTorch [@hati_2023] deployed in a digital drawing web applicaton on top, and a photo of a user interacting with the application bottom. The left canavs is used to provide a mask, the middle canavas the colored strokes hint map, and the right canvas displayes the result illustration generated by the model.](./figures/core_st_teaser.png){#fig:core_st_teaser}
 
 ### Introduction {#sec:IV.3.1}
 
-This chapter discusses our work on StencilTorch [@hati_2023], an iterative and user-guided framework for anime lineart colorization (see @fig:core_st_teaser). Previous work [@zhang_2018; @paintschainer_2018; @petalicapaint_2023; @ci_2018; @hati_2019] introduced the use of +cwgangp and have demonstrated unprecendant lineart colorization capabilities guided by user strokes and conditionned on a local feature extractor called Illustration2Vec [@saito_2015] to compensate for the lack of semantic information provided by a black and white lineart with no lighting nor texture.
+This section discusses our work on StencilTorch [@hati_2023], an iterative and user-guided framework for anime lineart colorization (see @fig:core_st_teaser). Previous work [@zhang_2018; @paintschainer_2018; @petalicapaint_2023; @ci_2018; @hati_2019] introduced the use of +cwgangp and have demonstrated unprecendant lineart colorization capabilities guided by user strokes and conditionned on a local feature extractor called Illustration2Vec [@saito_2015] to compensate for the lack of semantic information provided by a black and white lineart with no lighting nor texture.
 
 Previous methods consist of a one-step process where the user is involved one time only, at the beginning of the process when asked to provide a hint map populated with colored bursh strokes. This type of pipeline is limited and is not ideal in the context of creation where th artist needs to iterate and explore its design space. In this work, we propose to give the power back to the user by formulating the task of automatic lineart colorization as a human-in-the-loop process where the end-user collaborates with the machine to produce the final colored illustration.
 
@@ -1216,7 +1225,7 @@ In this work, StencilTorch [@hati_2023], our contributions are the following:
 
 ### Method {#sec:IV.3.2}
 
-This section discusses the data generation pipeline used in StencilTorch [@hati_2023] (see @sec:st_synthetic), the [+cwgangp]{.full} (see @sec:st_arch) model architecture and its guide network, the objective functions we aim to optimize (see @sec:st_losses); and the training regime (see @sec:st_train).
+This section discusses the data generation pipeline used in StencilTorch [@hati_2023] (see @sec:IV.3.2.1), the [+cwgangp]{.full} (see @sec:IV.3.2.2) model architecture and its guide network, the objective functions we aim to optimize (see @sec:IV.3.2.3), and the training regime (see @sec:IV.3.2.4).
 
 #### Synthetic Inputs {#sec:IV.3.2.1}
 
@@ -1361,30 +1370,119 @@ Our contribution StencilTorch [@hati_2023] addresses the need for +ai-driven too
 
 While our approach finds its use in collaborative colorization, its still suffers from a lack of depth in the output during a first pass where the model is asked to color the entire lineart. This is certainly due to the introduction of the guide network. Recovering flat colorization is easier than coloring the lineart with shadow and texture. The model would certainly perform better in this context if the guidance component of the generator loss is pushed down in comparison to the other terms.
 
-\newpage{}
-
 <!-- TODO: Here -->
-## StablePaint: Conditional Denoising Diffusion {#sec:IV.4}
+## StablePaint: Conditional DDM {#sec:IV.4}
+
+<!-- Section @sec:IV.4 discusses an unfished follow up work to PaintsTorch and StencilTorch called StablePaint. StablePaint is an exploration of the use of [+ddm]{.plural} for automatic lineart colorization. It sacrifises inference speed for flexibility and quality. Those type of models natively enable workflows such as colorization, in-painting, out-painting, the creation of variations of the same artwork, and eliminates the need for an external feature extractor. The challenge resides in the model conditionning. This section ends with a presentation of a more recent work ControlNet from Zhang et al. [@zhang_2023] which successfully solved this exploration. -->
+
+<!-- - Train a DDM why ?
+    - Better results than GAN
+    - Unseen Data of unprecedent quality
+- What and whats best ?
+    - Autoregressive => Quality
+    - In Painting + Out Painting + Variation for "Free"
+    - VAE in pixel space => no more external feature extractor
+- Limitations
+    - Slower than a GAN
+    - Towards fast DDM => Stable Diffusion => Distilled ... etc
+    - Interpolation is < GAN
+- How
+    - Train VAE in pixel space
+    - Train DDM on Latent Codes
+    - Condition both networks on Lineart and Hints -->
 
 ### Introduction {#sec:IV.4.1}
+
+This section discusses our on going work on StablePaint, a [+ddm]{.full} for user-guided and iterative lineart colorization. The results shown in this section are unfinished and will remain as such. A recent work from Zhang et al. [@zhang_2023] called ControlNet solved the purpose of this exploration and is now use by the community as the defacto standard to solve the task of semi-automatic lineart colorization. We however explain the intent of our approach in order to build an understanding of Zhang et al.'s recent contribution.
+
+While our previous contributions in automatic lineart colorization, PaintsTorch [@hati_2019], and StencilTorch [@hati_2023] focused on improving the quality of the generated colored illustration and capturing the user intent with first color strokes only, and then a combination of color strokes and masks enabling iterative human-machine worflows, the +ddm architecture family offers a potential for improving both objectives with a single end-to-end solution.
+
+[+gan]{.plural} [@goodfellow_2014] has been the standard for image generation since it 2014. While this type of architecture is able to produce qualitative images that resemble the training distribution in real time settings and produces smooth interpolable latent spaces, they are hard to train, they require tons of data, they are hard to stabalize and are prone to mode collapse because of their dual networks and objectives.
+
+This is not the case for [+ddm]{.plural} [@ho_2020]. This type of autoregressive model currently outperforms [+gan]{.plural}. The results are more consistent with the training distribution, more varied, and the models are easier to train, more stable. As explained in section @sec:III.3, a +ddm is trained to successively denoise a noisy image. By playing with the intensity of the initial noise, or by masking certain part of the image, a trained +ddm can be used for both, complete generation, variation generation, in-painting, and out-painting.
+
+The limitations of this architectures are the inference cost, because of the number of autoregressive steps, in comparison to a one step +gan. Their latent space is not as smooth as a +gan and thus is not as well suited for image interpolation.
+
+Our exploration StablePaint uses a variant of the +ddm architecture called a +ldm. The +ldm is easier to train being smaller. The litterature shows successful attemps at conditionning +ddm and +ldm models with text [@rombach_2021]. It is however harder to condition a +ldm with images such as linearts, and colored strokes. StablePaint is an attempt at solving this issue.
+
+In this work StablePaint, our contributions are:
+- An improvement of the synthetic color stroke map generation inspired by our previous work on PaintsTorch [@hati_2019] and StencilTorch [@hati_2023].
+- An exploration on how to condition a +ldm for automatic colorization while leveraging the inherent benefits of the architecture used.
+- An explenation of ControlNet, the community adopted solution from Zhang et al. [zhang_2023].
+
 ### Method {#sec:IV.4.2}
+
+This section discusses our dataset generation pipeline (@sec:IV.4.2.1) our approach to the conditioning of a +ldm for the task of automatic lineart colorization (sec:IV.4.2.2), the training objectives of our model (sec:IV.4.2.3), and its training regime (sec:IV.4.2.4).
+
 #### Synthetic Inputs {#sec:IV.4.2.1}
+
+Training a model for the task of automatic lineart colorization requires building a input pairs, illustrations and their corresponding lineart, and, for user-guidance, colored stroke maps. Similarly to our previous work on PaintsTorch [@hati_2019] and StencilTorch [@hati_2023], we employ a synthetic generation pipeline following our own guidelines.
+
+The lineart are synthetically generated using +xdog [@winnermoller_2012]. The color hints are generated using the StencilTorch [@hati_2023] pipeline consisting in building color regions that are then quantized in order to limit the number of color choices for the strokes to a bare minimum.
+
+![The figure shows sample illustrations from our training set on top, and smoothed versions going down with increasing smoothing intensity using $l0$-smoothing](./figures/stablepaint_l0_smoothing.png){#fig:stablepaint_l0_smoothing}
+
+We additionaly enhance the pipeline by adding a $l0$-smoothing [@xu_2011] pass before the generation of the colored regions from which the synthetic strokes are generated. A sample of the resulting smoothing effect is shown @fig:stablepaint_l0_smoothing with different smoothing factors. This step helps reducing the impact of lighting in the strokes color selection to best reflect the final use where the users tends to pick neutral colors, that are not impacted by light, mid tones.
+
 #### Model Architecture {#sec:IV.4.2.2}
-#### Objective Functions {#sec:IV.4.2.3}
-#### Training {#sec:IV.4.2.4}
-### Intermediate Results {#sec:IV.4.3}
-### Current Approach {#sec:IV.4.4}
+
+The StablePaint model architecture is built on top of the vanilla +ldm [@rombach_2021]. It consists of a [+vae]{.full} variant trained to compress images into latent codes in image space. In our case, the +vae is a simple +cnn with a mix of resnet blocks, attention blocks, and swish activations. The encoder compresses an input image of size (512 $\times$ 512), into latent codes mean and log variance of size (32 $\times$ 32) with $4$ latent dimensions. The decoders samples the latent code and decompresses it in a reverse fashion to recover the original input (see @fig:stablepaint_illustration_autoencoder).
 
 ![The figure shows sample illustrations from our training set on the top row and their reconstruction using our illustration autoencoder. The illustration autoencoder is trained until saturation and is able to encode and decode the original signal with almost no perceptible difference.](./figures/stablepaint_illustration_autoencoder.png){#fig:stablepaint_illustration_autoencoder}
 
+We choosed to train a second +vae sharing the decoder with the first one. We thus train only the encoder of the second model to recover latent codes that are similar to the colored images starting from a combination of lineart and color hint maps. The objective is to make the process of mapping color stroke conditionned linearts to latent codes that will be mapped to latent codes resulting in colored illustrations when decoded (see @fig:stablepaint_lineart_autoencoder).
+
 ![The figure shows sample illustrations from our training set on the top row and their reconstruction using our context autoencoder. The decoder is shared with our illustration autoencoder and is pretrained. The context encoder is trained until saturation and tries to project the given lineart and corresponding hints to a latent code that matches the illustration one when encoded with the illustration encoder.](./figures/stablepaint_lineart_autoencoder.png){#fig:stablepaint_lineart_autoencoder}
+
+The third component of our model is the +ddm portion of the +ldm pipeline. We train a +ddm to recover noisy latent codes. Making the +ddm work at the latent space depth allows us to reduce its size and complexity due to the smaller size of latent codes in comparison to the input illustrations. We additionally condition the +ddm model on lineart and color hints. The model used for the +ddm is a UNet architecture made out of residual bloack, spatial transformer blocks with attention and cross-attention. It is an adaptation of the text conditionning proposed by Rombach et al. [@rombach_2021] adapted to image conditionning.
+
+During inference, a noisy latent code is constructed by input a lineart and a corresponding color hint map into our second +vae encoder. The obtained latent code is then augmented with noise with a controlled weight to allow the user to control the fidelity of the output in relation to the input. This noisy version of the latent code is finally denoised using the +ddm in an autoregressive fashion for $1,000$ steps, and is finally decoded using our shared +vae decoder.
+
+#### Objective Functions {#sec:IV.4.2.3}
+
+Inspired by VQ-GAN from Esser et al. [@esser_2021], the +vae are trained to optimize an adverserial loss, and a perceptual loss on top of the standard +vae objectives. This technique mixes the advances from the +gan litterature and additionaly enforce a perceptual organization of the latent codes.
+
+Both our [+vae]{.plural} are trained to minimize the following objective:
+$$
+L = L_{vae}(x, \hat{x}) + D_{KL} + \lambda \; L_{\text{GAN}}(\hat{x})
+$$ {#eq:sp_vae_loss}
+
+where the +vae loss $L_{vae}(x, \hat{x})$ is a mix of the standard reconstruction loss and the +lpips perceptual similarity loss:
+
+$$
+L_{vae}(x, \hat{x}) = L_{\text{rec}}(x, \hat{x}) + LPIPS(x, \hat{x})
+$$ {#eq:sp_nll}
+
+The reconstruction loss $L_{\text{rec}}$ is the $L_1$ loss: $L_{\text{rec}} = |x - \hat{x}|$.
+
+An adaptive weight $\lambda$ with $\delta = 1e^{-6}$ is introduced to balance the +gan and the +vae objectives for equal contributions.
+
+$$
+\lambda = \frac{\nabla_{L_G} [\mathcal{L_{\text{rec}}}]}{\nabla_{L_G} [\mathcal{L_{\text{GAN}}}] + \delta}
+$$ {#eq:sp_adaptive_weight}
+
+A discriminator similar to the encoder is trained for the adversarial signal using the hinge objective discussed in section $sec:III.3$.
+
+#### Training {#sec:IV.4.2.4}
+
+The [+vae]{.plural} are trained end-to-end using the Adam optimizer with a decaying learning rate $\epsilon$ starting at $1e^{-3}$, ending at $1e^{-4}$ and beta parameters $\beta_1 = 0.9$ and $\beta_2 = 0.95$. They are trained for $10,000$ steps using a batch size of $32$.
+
+The +ddm is then trained with similar parameters for $100,000$ steps except for the learning rates which are smaller by a factor of ten.
+
+### Intermediate Results {#sec:IV.4.3}
 
 ![The figure shows samples from our model StablePaint. The samples are generated starting from corrupted colored images from our training set. The corruption level is at 75% for the first two rows, 50% for the second row, 25% for the third row and 12.5% for the last one (top to bottom). The noise model can recover the altered signal to a certain extent by being conditioned on a lineart and color hints.](./figures/stablepaint_latent_noise_samples.png){#fig:stablepaint_latent_noise_samples}
 
 ![The figure illustrate an example of input and output pair and the generation of colored illustrations using our model StablePaint. The noise model of Stable Paint is conditioning on the inputs and the initial noise is initialized from corrupted versions of latent representations of the inputs obtained using our pretrained context autoencoder. Various levels of corruption are applied to serve as the initial noise used by our diffusion process. The top row shows the result without any corruption, then 25%, 50%, 75%, and 100% corruption. Different runs with different noise corruption seeds are shown in the 4 columns. The input lineart and hints are shown at the very top."](./figures/stablepaint_demo_corruption.png){#fig:stablepaint_demo_corruption width=75%}
 
+Our approach is not successful. It is having trouble generating colored illustrations outside of the training data. While the model is able to capture some of the colors provided by the conditionning, it cannot generate plausible content when the noise factor is high. Samples are shown in @fig:stablepaint_latent_noise_samples and @fig:stablepaint_demo_corruption.
+
+We did not conduct further investigations and iterations as a follow up work was introduced by Zhang et al. [@zhang_2023] and was immediatly adopted by the community. Their approach, simple and elegant, is described in the next section (see @sec:IV.4.4).
+
+### Current Approach {#sec:IV.4.4}
+
 ### Summary {#sec:IV.4.5}
-\newpage{}
+
 <!-- ===================== [END] PART CONTRIBUTIONS ===================== -->
 
 <!-- ===================== [START] PART CONCLUSION ===================== -->
