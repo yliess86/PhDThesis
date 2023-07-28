@@ -1002,7 +1002,7 @@ $$
 MOS = \sum_{i=1}^{N} \frac{R_i}{N}, \; R_i \in \{1; 2; 3; 4; 5\}
 $$ {#eq:mos}
 
-Our +mos study included $46$ individuals from $16$ to $30$ years old, with $26$% women and $35$% experience in drawing, colorization or a related subject. The study consisted in showing $20$ illustrations randomly sampled from our custom test set and colorized using different methods and conditioned with their corresponding color hint method. The results of the study are discussed in later sections when presenting our methods PaintsTorch [@hati_2019] (see @sec:contrib-1), and StencilTorch [@hati_2023] (see @sec:contrib-2).
+Our +mos study included $46$ individuals from $16$ to $30$ years old, with $26$% women and $35$% experience in drawing, colorization or a related subject. The study consisted in showing $20$ illustrations randomly sampled from our custom test set and colorized using different methods and conditioned with their corresponding color hint method. The results of the study are discussed in later sections when presenting our methods PaintsTorch [@hati_2019] (see @sec:IV.2), and StencilTorch [@hati_2023] (see @sec:IV.3).
 
 ### Reproducibility {#sec:IV.1.5}
 
@@ -1106,7 +1106,7 @@ The model is trained end-to-end using the Adam optimizer [@kingma_2014] with a l
 
 ### Results {#sec:IV.2.3}
 
-In this section we present the objective and subjective evaluations (see @sec:core_pt_reval), perform a qualitative visual analysis of the strengh and limitations of our contribution (see @sec:core_pt_limits).
+In this section we present the objective and subjective evaluations (see @sec:IV.2.3.1), perform a qualitative visual analysis of the strengh and limitations of our contribution (see @sec:IV.2.3.4).
 
 #### Evaluation {#sec:IV.2.3.1}
 
@@ -1152,7 +1152,7 @@ PaintsTorch            **0.18**       0.59       0.39
 
 Table: [+lpips]{.full} benchmark comparing our work PaintsTorch against previous from Zhang et al. [@zhang_2018], PaintsChainer [@paintschainer_2018], and Ci et al. [@ci_2018]. Two configurations are used, no hints, and hints to evaluate the models in both conditions. {#tbl:core_pt_lpips}
 
-**Subjective Evaluation:** As stated in the methodology chapter (see @sec:methodology) a subjective evaluation is required due to the nature of the task we are trying to solve. We thus perform a +mos using the population of study described earlier (see @sec:methodology). The results (see @tbl:core_pt_mos) show that our model PaintsTorch produces colored images with better perceptual qualities.
+**Subjective Evaluation:** As stated in the methodology section (see @sec:IV.1.2.1) a subjective evaluation is required due to the nature of the task we are trying to solve. We thus perform a +mos using the population of study described earlier (see @sec:IV.1.2.2). The results (see @tbl:core_pt_mos) show that our model PaintsTorch produces colored images with better perceptual qualities.
 
 --------------------------------------------------------------------------
 Model             MOS $\uparrow$    STD $\uparrow$    p-value $\downarrow$
@@ -1247,7 +1247,7 @@ We however introduce a secondary network which is a copy of the +wgangp decoder 
 
 #### Objective Functions {#sec:IV.3.2.3}
 
-Similarly to PaintsTorch [@hati_2019], StencilTorch is trained end-to-end following the [+wgangp]{.full} objectives described in @sec:pt_losses with minimal changes, the reconstruction loss is replaced by a guidance signal:
+Similarly to PaintsTorch [@hati_2019], StencilTorch is trained end-to-end following the [+wgangp]{.full} objectives described in @sec:III.3.3 with minimal changes, the reconstruction loss is replaced by a guidance signal:
 
 $$
 \begin{aligned}
@@ -1270,7 +1270,7 @@ The model is trained end-to-end using the Adam optimizer with a learning rate $\
 
 ### Results {#sec:IV.3.3}
 
-In this section we present the objective and subjective evaluations (see @sec:sec:core_st_eval), perform a qualitative visual analysis of the strengh and limitations of our contribution (see @sec:sec_core_st_limit).
+In this section we present the objective and subjective evaluations (see @sec:IV.3.3.1), perform a qualitative visual analysis of the strengh and limitations of our contribution (see @sec:IV.3.3.5).
 
 #### Evaluation {#sec:IV.3.3.1}
 
@@ -1322,7 +1322,7 @@ StencilTorch + G               0.31        0.50          0.58        0.46
 
 Table: [+lpips]{.full} benchmark comparing our work StencilTorch against previous from Zhang et al. [@zhang_2018], PaintsChainer [@paintschainer_2018], Ci et al. [@ci_2018] and our previous work PaintsTorch [@hati_2019]. Three configurations are used, no hints, hints, and full hint where the simplified illustration is used as hints to evaluate the models in all conditions. The "+G" mention is our model StencilTorch with the additional guide network. {#tbl:core_st_lpips}
 
-**Subjective Evaluation:** As stated in the methodology chapter (see @sec:methodology) a subjective evaluation is required due to the nature of the task we are trying to solve. We thus perform a +mos using the population of study described earlier (see @sec:methodology). The results (see @tbl:core_st_mos) show that our model StencilTorch produces colored images with better perceptual qualities in most cases.
+**Subjective Evaluation:** As stated in the methodology section (see @sec:IV.1.2) a subjective evaluation is required due to the nature of the task we are trying to solve. We thus perform a +mos using the population of study described earlier (see @sec:IV.1.2). The results (see @tbl:core_st_mos) show that our model StencilTorch produces colored images with better perceptual qualities in most cases.
 
 --------------------------------------------------------------------------
 Model             MOS $\uparrow$    STD $\uparrow$    p-value $\downarrow$
@@ -1426,7 +1426,9 @@ We additionaly enhance the pipeline by adding a $l0$-smoothing [@xu_2011] pass b
 
 #### Model Architecture {#sec:IV.4.2.2}
 
-The StablePaint model architecture is built on top of the vanilla +ldm [@rombach_2021]. It consists of a [+vae]{.full} variant trained to compress images into latent codes in image space. In our case, the +vae is a simple +cnn with a mix of resnet blocks, attention blocks, and swish activations. The encoder compresses an input image of size (512 $\times$ 512), into latent codes mean and log variance of size (32 $\times$ 32) with $4$ latent dimensions. The decoders samples the latent code and decompresses it in a reverse fashion to recover the original input (see @fig:stablepaint_illustration_autoencoder).
+![The figure is a schematic of StablePaint's architecture. It consists in two [+vae]{.plural} with a shared decoder, and a U-Net noise model augmented with cross-attention blocks for conditionning. The first +vae is responsible for compressing an illustration into a set of latent codes. The decoder learns to map those latent codes back to the original illustration. By training the U-Net +ddm in latent space, the model learns to map an input $z$ resulting from a noise distribution, to a latent code resembling the training data. The +ddm is conditionned on a latent code representing the lineart and the color stroke hint map. This architecture is called a [+ldm]{.full}.](./figures/stablepaint_arch.png){#fig:stablepaint_arch}
+
+The StablePaint model architecture (see @fig:stablepaint_arch) is built on top of the vanilla +ldm [@rombach_2021]. It consists of a [+vae]{.full} variant trained to compress images into latent codes in image space. In our case, the +vae is a simple +cnn with a mix of resnet blocks, attention blocks, and swish activations. The encoder compresses an input image of size (512 $\times$ 512), into latent codes mean and log variance of size (32 $\times$ 32) with $4$ latent dimensions. The decoders samples the latent code and decompresses it in a reverse fashion to recover the original input (see @fig:stablepaint_illustration_autoencoder).
 
 ![The figure shows sample illustrations from our training set on the top row and their reconstruction using our illustration autoencoder. The illustration autoencoder is trained until saturation and is able to encode and decode the original signal with almost no perceptible difference.](./figures/stablepaint_illustration_autoencoder.png){#fig:stablepaint_illustration_autoencoder}
 
@@ -1481,7 +1483,15 @@ We did not conduct further investigations and iterations as a follow up work was
 
 ### Current Approach {#sec:IV.4.4}
 
-### Summary {#sec:IV.4.5}
+In their recently published work, Zhang et al. [@zhang_2023] introduced ControlNet, a simple method for adding control to text-to-image +ddm. Their approach differs from ours with StablePaint by the fact that they are not training the models from scratch.
+
+Their method consists in adding conditionning to a pretrained foundation +ldm called StableDiffusion [@rombach_2021] without altering the capabilities nor the weights of the initial model. They proceed by introducing external copies of the pretrained weights and reinjecting them in a residual fashion preciding each block by (1 $\times$ 1) convolutions initialized to zero (see @fig:stablepaint_ctrl). At the begining of their training process, their model is equivalent to the original +ldm.
+
+![The figure is a simplified schematic of the method presented by Zhang et al. [@zhang_2023] in their work ControlNet. The foundation weights are freeze and copied. The copy is surrounded by zero initialized (1 $\times$ 1) convolutions and added as residual to the output of the copied layer.](./figures/stablepaint_ctrl.png){#fig:stablepaint_ctrl width=40%}
+
+This method can be viewed a way to shift the weights of a pretrained model to generate the training distribution. The authors shows that their method require small qualitative amount of data to be trained and demonstrate their result on a variety of conditionning inputs such as linearts and color strokes. Results of their method are shown in figure @fig:stablepaint_ctrl_res.
+
+![The figure shows lineart colorization samples from ControlNet [@zhang_2023].](./figures/stablepaint_ctrl_res.png){#fig:stablepaint_ctrl_res}
 
 <!-- ===================== [END] PART CONTRIBUTIONS ===================== -->
 

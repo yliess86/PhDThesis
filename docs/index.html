@@ -509,7 +509,6 @@ DDM</a>
 <li><a href="#sec:IV.4.3" id="toc-sec:IV.4.3">Intermediate
 Results</a></li>
 <li><a href="#sec:IV.4.4" id="toc-sec:IV.4.4">Current Approach</a></li>
-<li><a href="#sec:IV.4.5" id="toc-sec:IV.4.5">Summary</a></li>
 </ul></li>
 </ul></li>
 <li><a href="#sec:V" id="toc-sec:V">Conclusion</a>
@@ -3361,11 +3360,11 @@ our custom test set and colorized using different methods and
 conditioned with their corresponding color hint method. The results of
 the study are discussed in later sections when presenting our methods
 PaintsTorch <span class="citation" data-cites="hati_2019">[<a
-href="#ref-hati_2019" role="doc-biblioref">30</a>]</span> (see
-Sec <strong>¿sec:contrib-1?</strong>), and StencilTorch <span
-class="citation" data-cites="hati_2023">[<a href="#ref-hati_2023"
-role="doc-biblioref">31</a>]</span> (see
-Sec <strong>¿sec:contrib-2?</strong>).</p>
+href="#ref-hati_2019" role="doc-biblioref">30</a>]</span> (see <a
+href="#sec:IV.2">Sec 5.2</a>), and StencilTorch <span class="citation"
+data-cites="hati_2023">[<a href="#ref-hati_2023"
+role="doc-biblioref">31</a>]</span> (see <a
+href="#sec:IV.3">Sec 5.3</a>).</p>
 <h3 id="sec:IV.1.5">Reproducibility</h3>
 <p>For reproducibility and transparency, the implementation frameworks
 and the devices used for measurement are discussed in this section. As a
@@ -3667,9 +3666,9 @@ PaintsTorch is trained for <span class="math inline">\(100\)</span>
 epochs on our custom dataset.</p>
 <h3 id="sec:IV.2.3">Results</h3>
 <p>In this section we present the objective and subjective evaluations
-(see Sec <strong>¿sec:core_pt_reval?</strong>), perform a qualitative
+(see <a href="#sec:IV.2.3.1">Sec 5.2.3.1</a>), perform a qualitative
 visual analysis of the strengh and limitations of our contribution (see
-Sec <strong>¿sec:core_pt_limits?</strong>).</p>
+<a href="#sec:IV.2.3.4">Sec 5.2.3.4</a>).</p>
 <h4 id="sec:IV.2.3.1">Evaluation</h4>
 <p>Our model PaintsTorch is evaluated using subjective metrics, and
 objective metrics against state-of-the-art methods <span
@@ -3836,11 +3835,11 @@ class="math inline">\(\downarrow\)</span></td>
 </table>
 </div>
 <p><strong>Subjective Evaluation:</strong> As stated in the methodology
-chapter (see Sec <strong>¿sec:methodology?</strong>) a subjective
+section (see Sec <strong>¿sec:IV.1.2.1?</strong>) a subjective
 evaluation is required due to the nature of the task we are trying to
 solve. We thus perform a MOS using the population of study described
-earlier (see Sec <strong>¿sec:methodology?</strong>). The results (see
-<a href="#tbl:core_pt_mos">Tbl 3</a>) show that our model PaintsTorch
+earlier (see Sec <strong>¿sec:IV.1.2.2?</strong>). The results (see <a
+href="#tbl:core_pt_mos">Tbl 3</a>) show that our model PaintsTorch
 produces colored images with better perceptual qualities.</p>
 <div id="tbl:core_pt_mos">
 <table>
@@ -4211,8 +4210,8 @@ colored illustration.</p>
 data-cites="hati_2019">[<a href="#ref-hati_2019"
 role="doc-biblioref">30</a>]</span>, StencilTorch is trained end-to-end
 following the Wasserstein Generative Adversarial Network with Gradient
-Penalty (WGAN-GP) objectives described in
-Sec <strong>¿sec:pt_losses?</strong> with minimal changes, the
+Penalty (WGAN-GP) objectives described in <a
+href="#sec:III.3.3">Sec 4.3.3</a> with minimal changes, the
 reconstruction loss is replaced by a guidance signal:</p>
 <p><span id="eq:core_st_objectives"><span class="math display">\[
 \begin{aligned}
@@ -4242,9 +4241,9 @@ for <span class="math inline">\(40\)</span> epochs using a batch size of
 <span class="math inline">\(24\)</span> hours straight.</p>
 <h3 id="sec:IV.3.3">Results</h3>
 <p>In this section we present the objective and subjective evaluations
-(see Sec <strong>¿sec:sec:core_st_eval?</strong>), perform a qualitative
+(see <a href="#sec:IV.3.3.1">Sec 5.3.3.1</a>), perform a qualitative
 visual analysis of the strengh and limitations of our contribution (see
-Sec <strong>¿sec:sec_core_st_limit?</strong>).</p>
+<a href="#sec:IV.3.3.5">Sec 5.3.3.5</a>).</p>
 <h4 id="sec:IV.3.3.1">Evaluation</h4>
 <p>Our model StencilTorch is evaluated using subjective metrics, and
 objective metrics against state-of-the-art methods <span
@@ -4458,11 +4457,11 @@ class="math inline">\(\downarrow\)</span></td>
 </table>
 </div>
 <p><strong>Subjective Evaluation:</strong> As stated in the methodology
-chapter (see Sec <strong>¿sec:methodology?</strong>) a subjective
+section (see <a href="#sec:IV.1.2">Sec 5.1.1.1</a>) a subjective
 evaluation is required due to the nature of the task we are trying to
 solve. We thus perform a MOS using the population of study described
-earlier (see Sec <strong>¿sec:methodology?</strong>). The results (see
-<a href="#tbl:core_st_mos">Tbl 6</a>) show that our model StencilTorch
+earlier (see <a href="#sec:IV.1.2">Sec 5.1.1.1</a>). The results (see <a
+href="#tbl:core_st_mos">Tbl 6</a>) show that our model StencilTorch
 produces colored images with better perceptual qualities in most
 cases.</p>
 <div id="tbl:core_st_mos">
@@ -4753,8 +4752,24 @@ factors. This step helps reducing the impact of lighting in the strokes
 color selection to best reflect the final use where the users tends to
 pick neutral colors, that are not impacted by light, mid tones.</p>
 <h4 id="sec:IV.4.2.2">Model Architecture</h4>
-<p>The StablePaint model architecture is built on top of the vanilla LDM
-<span class="citation" data-cites="rombach_2021">[<a
+<figure id="fig:stablepaint_arch">
+<img src="./figures/stablepaint_arch.png"
+alt="The figure is a schematic of StablePaint’s architecture. It consists in two VAEs with a shared decoder, and a U-Net noise model augmented with cross-attention blocks for conditionning. The first VAE is responsible for compressing an illustration into a set of latent codes. The decoder learns to map those latent codes back to the original illustration. By training the U-Net DDM in latent space, the model learns to map an input z resulting from a noise distribution, to a latent code resembling the training data. The DDM is conditionned on a latent code representing the lineart and the color stroke hint map. This architecture is called a Latent Diffusion Model (LDM)." />
+<figcaption>Figure 69: The figure is a schematic of StablePaint’s
+architecture. It consists in two VAEs with a shared decoder, and a U-Net
+noise model augmented with cross-attention blocks for conditionning. The
+first VAE is responsible for compressing an illustration into a set of
+latent codes. The decoder learns to map those latent codes back to the
+original illustration. By training the U-Net DDM in latent space, the
+model learns to map an input <span class="math inline">\(z\)</span>
+resulting from a noise distribution, to a latent code resembling the
+training data. The DDM is conditionned on a latent code representing the
+lineart and the color stroke hint map. This architecture is called a
+Latent Diffusion Model (LDM).</figcaption>
+</figure>
+<p>The StablePaint model architecture (see <a
+href="#fig:stablepaint_arch">Fig 69</a>) is built on top of the vanilla
+LDM <span class="citation" data-cites="rombach_2021">[<a
 href="#ref-rombach_2021" role="doc-biblioref">67</a>]</span>. It
 consists of a Variational Autoencoder (VAE) variant trained to compress
 images into latent codes in image space. In our case, the VAE is a
@@ -4765,11 +4780,11 @@ log variance of size (32 <span class="math inline">\(\times\)</span> 32)
 with <span class="math inline">\(4\)</span> latent dimensions. The
 decoders samples the latent code and decompresses it in a reverse
 fashion to recover the original input (see <a
-href="#fig:stablepaint_illustration_autoencoder">Fig 69</a>).</p>
+href="#fig:stablepaint_illustration_autoencoder">Fig 70</a>).</p>
 <figure id="fig:stablepaint_illustration_autoencoder">
 <img src="./figures/stablepaint_illustration_autoencoder.png"
 alt="The figure shows sample illustrations from our training set on the top row and their reconstruction using our illustration autoencoder. The illustration autoencoder is trained until saturation and is able to encode and decode the original signal with almost no perceptible difference." />
-<figcaption>Figure 69: The figure shows sample illustrations from our
+<figcaption>Figure 70: The figure shows sample illustrations from our
 training set on the top row and their reconstruction using our
 illustration autoencoder. The illustration autoencoder is trained until
 saturation and is able to encode and decode the original signal with
@@ -4782,11 +4797,11 @@ combination of lineart and color hint maps. The objective is to make the
 process of mapping color stroke conditionned linearts to latent codes
 that will be mapped to latent codes resulting in colored illustrations
 when decoded (see <a
-href="#fig:stablepaint_lineart_autoencoder">Fig 70</a>).</p>
+href="#fig:stablepaint_lineart_autoencoder">Fig 71</a>).</p>
 <figure id="fig:stablepaint_lineart_autoencoder">
 <img src="./figures/stablepaint_lineart_autoencoder.png"
 alt="The figure shows sample illustrations from our training set on the top row and their reconstruction using our context autoencoder. The decoder is shared with our illustration autoencoder and is pretrained. The context encoder is trained until saturation and tries to project the given lineart and corresponding hints to a latent code that matches the illustration one when encoded with the illustration encoder." />
-<figcaption>Figure 70: The figure shows sample illustrations from our
+<figcaption>Figure 71: The figure shows sample illustrations from our
 training set on the top row and their reconstruction using our context
 autoencoder. The decoder is shared with our illustration autoencoder and
 is pretrained. The context encoder is trained until saturation and tries
@@ -4861,7 +4876,7 @@ rates which are smaller by a factor of ten.</p>
 <figure id="fig:stablepaint_latent_noise_samples">
 <img src="./figures/stablepaint_latent_noise_samples.png"
 alt="The figure shows samples from our model StablePaint. The samples are generated starting from corrupted colored images from our training set. The corruption level is at 75% for the first two rows, 50% for the second row, 25% for the third row and 12.5% for the last one (top to bottom). The noise model can recover the altered signal to a certain extent by being conditioned on a lineart and color hints." />
-<figcaption>Figure 71: The figure shows samples from our model
+<figcaption>Figure 72: The figure shows samples from our model
 StablePaint. The samples are generated starting from corrupted colored
 images from our training set. The corruption level is at 75% for the
 first two rows, 50% for the second row, 25% for the third row and 12.5%
@@ -4872,7 +4887,7 @@ color hints.</figcaption>
 <figure id="fig:stablepaint_demo_corruption">
 <img src="./figures/stablepaint_demo_corruption.png" style="width:75.0%"
 alt="The figure illustrate an example of input and output pair and the generation of colored illustrations using our model StablePaint. The noise model of Stable Paint is conditioning on the inputs and the initial noise is initialized from corrupted versions of latent representations of the inputs obtained using our pretrained context autoencoder. Various levels of corruption are applied to serve as the initial noise used by our diffusion process. The top row shows the result without any corruption, then 25%, 50%, 75%, and 100% corruption. Different runs with different noise corruption seeds are shown in the 4 columns. The input lineart and hints are shown at the very top.”" />
-<figcaption>Figure 72: The figure illustrate an example of input and
+<figcaption>Figure 73: The figure illustrate an example of input and
 output pair and the generation of colored illustrations using our model
 StablePaint. The noise model of Stable Paint is conditioning on the
 inputs and the initial noise is initialized from corrupted versions of
@@ -4888,8 +4903,8 @@ very top.”</figcaption>
 colored illustrations outside of the training data. While the model is
 able to capture some of the colors provided by the conditionning, it
 cannot generate plausible content when the noise factor is high. Samples
-are shown in <a href="#fig:stablepaint_latent_noise_samples">Fig 71</a>
-and <a href="#fig:stablepaint_demo_corruption">Fig 72</a>.</p>
+are shown in <a href="#fig:stablepaint_latent_noise_samples">Fig 72</a>
+and <a href="#fig:stablepaint_demo_corruption">Fig 73</a>.</p>
 <p>We did not conduct further investigations and iterations as a follow
 up work was introduced by Zhang et al. <span class="citation"
 data-cites="zhang_2023">[<a href="#ref-zhang_2023"
@@ -4897,7 +4912,48 @@ role="doc-biblioref">88</a>]</span> and was immediatly adopted by the
 community. Their approach, simple and elegant, is described in the next
 section (see <a href="#sec:IV.4.4">Sec 5.4.4</a>).</p>
 <h3 id="sec:IV.4.4">Current Approach</h3>
-<h3 id="sec:IV.4.5">Summary</h3>
+<p>In their recently published work, Zhang et al. <span class="citation"
+data-cites="zhang_2023">[<a href="#ref-zhang_2023"
+role="doc-biblioref">88</a>]</span> introduced ControlNet, a simple
+method for adding control to text-to-image DDM. Their approach differs
+from ours with StablePaint by the fact that they are not training the
+models from scratch.</p>
+<p>Their method consists in adding conditionning to a pretrained
+foundation LDM called StableDiffusion <span class="citation"
+data-cites="rombach_2021">[<a href="#ref-rombach_2021"
+role="doc-biblioref">67</a>]</span> without altering the capabilities
+nor the weights of the initial model. They proceed by introducing
+external copies of the pretrained weights and reinjecting them in a
+residual fashion preciding each block by (1 <span
+class="math inline">\(\times\)</span> 1) convolutions initialized to
+zero (see <a href="#fig:stablepaint_ctrl">Fig 74</a>). At the begining
+of their training process, their model is equivalent to the original
+LDM.</p>
+<figure id="fig:stablepaint_ctrl">
+<img src="./figures/stablepaint_ctrl.png" style="width:40.0%"
+alt="The figure is a simplified schematic of the method presented by Zhang et al. [88] in their work ControlNet. The foundation weights are freeze and copied. The copy is surrounded by zero initialized (1 \times 1) convolutions and added as residual to the output of the copied layer." />
+<figcaption>Figure 74: The figure is a simplified schematic of the
+method presented by Zhang et al. <span class="citation"
+data-cites="zhang_2023">[<a href="#ref-zhang_2023"
+role="doc-biblioref">88</a>]</span> in their work ControlNet. The
+foundation weights are freeze and copied. The copy is surrounded by zero
+initialized (1 <span class="math inline">\(\times\)</span> 1)
+convolutions and added as residual to the output of the copied
+layer.</figcaption>
+</figure>
+<p>This method can be viewed a way to shift the weights of a pretrained
+model to generate the training distribution. The authors shows that
+their method require small qualitative amount of data to be trained and
+demonstrate their result on a variety of conditionning inputs such as
+linearts and color strokes. Results of their method are shown in figure
+<a href="#fig:stablepaint_ctrl_res">Fig 75</a>.</p>
+<figure id="fig:stablepaint_ctrl_res">
+<img src="./figures/stablepaint_ctrl_res.png"
+alt="The figure shows lineart colorization samples from ControlNet [88]." />
+<figcaption>Figure 75: The figure shows lineart colorization samples
+from ControlNet <span class="citation" data-cites="zhang_2023">[<a
+href="#ref-zhang_2023" role="doc-biblioref">88</a>]</span>.</figcaption>
+</figure>
 <!-- ===================== [END] PART CONTRIBUTIONS ===================== -->
 <!-- ===================== [START] PART CONCLUSION ===================== -->
 <h1 id="sec:V">Conclusion</h1>
@@ -4918,7 +4974,7 @@ text, images, audio, and videos from natural language prompts.</p>
 <figure id="fig:ref_artstation_cancel_ai">
 <img src="./figures/ref_artstation_cancel_ai.png"
 alt="Screenshot of the website Artstation used by artists to professionally expose their work. A quick exploration shows the appearance of anti AI pictures expressing the concerns of artists from AI companies exploiting their artwork for training their models for profit." />
-<figcaption>Figure 73: Screenshot of the website Artstation used by
+<figcaption>Figure 76: Screenshot of the website Artstation used by
 artists to professionally expose their work. A quick exploration shows
 the appearance of anti AI pictures expressing the concerns of artists
 from AI companies exploiting their artwork for training their models for
@@ -4931,7 +4987,7 @@ challenges questioning ethics and its impact on our society. Its use is
 seen as controversial by most of the artist communities. While some may
 see generative AI as a tool that enables increase creativity potential
 and productivity others consider it as a Damocles sword, a threat for
-their job (see <a href="#fig:ref_artstation_cancel_ai">Fig 73</a>).</p>
+their job (see <a href="#fig:ref_artstation_cancel_ai">Fig 76</a>).</p>
 <p>This chapter discusses the benefits of generative AI models, their
 ethical concerns and their impact on our society but also their
 limitations and the need for regulations and guidelines.</p>
@@ -4946,7 +5002,7 @@ design.</p>
 <figure id="fig:ref_midjourney">
 <img src="./figures/ref_midjourney.png"
 alt="Sample from Midjourney’s generative AI using the prompt “the year 1203, the crowned Byzantine emperor watches as Venetian ships sail into the harbor of Constantinople, view over his shoulder, dramatic, photorealistic, details –ar 2:1”." />
-<figcaption>Figure 74: Sample from Midjourney’s generative AI using the
+<figcaption>Figure 77: Sample from Midjourney’s generative AI using the
 prompt “the year 1203, the crowned Byzantine emperor watches as Venetian
 ships sail into the harbor of Constantinople, view over his shoulder,
 dramatic, photorealistic, details –ar 2:1”.</figcaption>
@@ -4955,8 +5011,8 @@ dramatic, photorealistic, details –ar 2:1”.</figcaption>
 their democratization. They enable individuals with no background in
 creative arts, to express their creativity and generate artistic pieces
 with natural interactions without requiring specific technical knowledge
-(see Figs <a href="#fig:ref_midjourney">74</a>, <a
-href="#fig:ref_hp">75</a>). It lowers down the barrier for newcomers and
+(see Figs <a href="#fig:ref_midjourney">77</a>, <a
+href="#fig:ref_hp">78</a>). It lowers down the barrier for newcomers and
 lowers the cost of production. This aspect is especially important for
 independent and small studios that do not have the means of big
 production companies.</p>
@@ -4986,7 +5042,7 @@ animators.</li>
 <figure id="fig:ref_hp">
 <img src="./figures/ref_hp.png"
 alt="Portrait generated using various image generative AI models with a simplified description of the character Harry Potter from J.K. Rowling: “young boy portrait, lighting bolt scar on the forehead, thin face, black hair, green eyes, round black glasses held, black robe cape, magic castle in the background, trending in art station, 4k”. The models are having trouble with details such as the scar." />
-<figcaption>Figure 75: Portrait generated using various image generative
+<figcaption>Figure 78: Portrait generated using various image generative
 AI models with a simplified description of the character Harry Potter
 from J.K. Rowling: “young boy portrait, lighting bolt scar on the
 forehead, thin face, black hair, green eyes, round black glasses held,
@@ -5012,11 +5068,11 @@ role="doc-biblioref">9</a>]</span> in their work on extracting training
 data from diffusion models. Users can also replicate the style of
 artists without their consent nor credit. This is extremely problematic
 as it constitutes an art identity steal (see <a
-href="#fig:ref_steal">Fig 76</a>).</p>
+href="#fig:ref_steal">Fig 79</a>).</p>
 <figure id="fig:ref_steal">
 <img src="./figures/ref_steal.jpg"
 alt="Artwork by Hollie Mengert (left) vs. images generated with Stable Diffusion DreamBooth in her style (right). Credit: Andy BAIO from waxy.org." />
-<figcaption>Figure 76: Artwork by Hollie Mengert (left) vs. images
+<figcaption>Figure 79: Artwork by Hollie Mengert (left) vs. images
 generated with Stable Diffusion DreamBooth in her style (right). Credit:
 Andy BAIO from waxy.org.</figcaption>
 </figure>
@@ -5046,11 +5102,11 @@ on huge image datasets affected by bias, misrepresentation, and sensible
 content. For example, some models still struggle at generating hands,
 feet, or coherent images. The produced output may require multiple
 trials, and modifications, and often cannot be used in their raw
-versions (see <a href="#fig:ref_feet_hands">Fig 77</a>).</p>
+versions (see <a href="#fig:ref_feet_hands">Fig 80</a>).</p>
 <figure id="fig:ref_feet_hands">
 <img src="./figures/ref_feet_hands.png"
 alt="Feet and hands generated by StableDiffusion [67]." />
-<figcaption>Figure 77: Feet and hands generated by StableDiffusion <span
+<figcaption>Figure 80: Feet and hands generated by StableDiffusion <span
 class="citation" data-cites="rombach_2021">[<a href="#ref-rombach_2021"
 role="doc-biblioref">67</a>]</span>.</figcaption>
 </figure>
