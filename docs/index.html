@@ -534,9 +534,9 @@ id="toc-sec:conclusion">Conclusion</a></li>
 <li><a href="#acronyms" id="toc-acronyms">Acronyms</a></li>
 </ul>
 </nav>
-<h2 class="unnumbered" id="abstract">Abstract</h2>
+<h1 class="unnumbered" id="abstract">Abstract</h1>
 
-<h2 class="unnumbered" id="aknowledgements">Aknowledgements</h2>
+<h1 class="unnumbered" id="aknowledgements">Aknowledgements</h1>
 <!-- ===================== [START] PART INTRODUCTION ===================== -->
 <h1 id="sec:I">Introduction</h1>
 <p>Humans can perceive and understand the world. We can accomplish a
@@ -570,7 +570,7 @@ and natural language. ANNs, once mocked by the AI community <span
 class="citation" data-cites="lecun_2019">[<a href="#ref-lecun_2019"
 role="doc-biblioref">45</a>]</span>, are now trainable using Gradient
 Descent (GD) <span class="citation" data-cites="rumelhart_1986">[<a
-href="#ref-rumelhart_1986" role="doc-biblioref">70</a>]</span> thanks to
+href="#ref-rumelhart_1986" role="doc-biblioref">71</a>]</span> thanks to
 the massive availability of data and the processing power of modern
 hardware accelerators such as Graphical Processing Units (GPU), Tensor
 Processing Units (TPU), and Neural Processing Units (NPU).</p>
@@ -586,7 +586,7 @@ data-cites="ho_2020">[<a href="#ref-ho_2020"
 role="doc-biblioref">36</a>]</span>, and Large Language Models (LLM)
 <span class="citation" data-cites="vaswani_2017 brown_2020">[<a
 href="#ref-brown_2020" role="doc-biblioref">8</a>, <a
-href="#ref-vaswani_2017" role="doc-biblioref">82</a>]</span> are used to
+href="#ref-vaswani_2017" role="doc-biblioref">83</a>]</span> are used to
 generate creative artifacts such as text, audio, images, and videos of
 unprecedented quality and complexity.</p>
 <p>This dissertation aims at exploring how one could train and use
@@ -635,9 +635,9 @@ colorization, particularly in comparison to its grayscale counterpart
 data-cites="furusawa_2O17 hensman_2017 zhang_richard_2017">[<a
 href="#ref-furusawa_2O17" role="doc-biblioref">24</a>, <a
 href="#ref-hensman_2017" role="doc-biblioref">33</a>, <a
-href="#ref-zhang_richard_2017" role="doc-biblioref">92</a>]</span>.
+href="#ref-zhang_richard_2017" role="doc-biblioref">93</a>]</span>.
 Without the added semantic information provided by textures and shadows,
-inferring materials and 3D shapes trhough lighting from black and white
+inferring materials and 3D shapes through lighting from black and white
 linearts only is difficult.</p>
 <h2 id="sec:I.2">Problem Statement</h2>
 <p>One major challenge of automatic lineart colorization is the
@@ -649,7 +649,7 @@ reasons, online scrapping and synthetic lineart extraction is the method
 of choice for many of the contributions in the field <span
 class="citation" data-cites="ci_2018 zhang_richard_2017">[<a
 href="#ref-ci_2018" role="doc-biblioref">14</a>, <a
-href="#ref-zhang_richard_2017" role="doc-biblioref">92</a>]</span>.</p>
+href="#ref-zhang_richard_2017" role="doc-biblioref">93</a>]</span>.</p>
 <p>Previous works in automatic lineart colorization are based on the GAN
 <span class="citation" data-cites="goodfellow_2014">[<a
 href="#ref-goodfellow_2014" role="doc-biblioref">27</a>]</span>
@@ -661,18 +661,18 @@ href="#ref-ci_2018" role="doc-biblioref">14</a>, <a
 href="#ref-frans_2017" role="doc-biblioref">22</a>, <a
 href="#ref-liu_2017" role="doc-biblioref">49</a>, <a
 href="#ref-paintschainer_2018" role="doc-biblioref">59</a>, <a
-href="#ref-sangkloy_2016" role="doc-biblioref">72</a>]</span>, style
+href="#ref-sangkloy_2016" role="doc-biblioref">73</a>]</span>, style
 transfer <span class="citation" data-cites="zhang_ji_2017">[<a
-href="#ref-zhang_ji_2017" role="doc-biblioref">89</a>]</span>, tagging
+href="#ref-zhang_ji_2017" role="doc-biblioref">90</a>]</span>, tagging
 <span class="citation" data-cites="kim_2019">[<a href="#ref-kim_2019"
 role="doc-biblioref">42</a>]</span>, and more recently natural language
 <span class="citation" data-cites="ho_2020">[<a href="#ref-ho_2020"
 role="doc-biblioref">36</a>]</span>.</p>
 <p>Related work compensate for the lack of semantic descriptors provided
 by the black and white lineart by introducing the use of an external
-featuree extractor, one of the most common being Illustration2Vec <span
+feature extractor, one of the most common being Illustration2Vec <span
 class="citation" data-cites="saito_2015">[<a href="#ref-saito_2015"
-role="doc-biblioref">71</a>]</span>. The generative model output process
+role="doc-biblioref">72</a>]</span>. The generative model output process
 is conditionned on a latent semantic vector capturing the nature of the
 lineart content.</p>
 <h2 id="sec:I.3">Contributions</h2>
@@ -689,16 +689,13 @@ into the generated model artifact while preserving or improving its
 quality. We also look at how the creative process can be transformed
 into a dynamic iterative workflow where the user collaborates with the
 machine to refine and carry out variations of his artwork.</p>
-<p>Here is a brief enumeration of this thesis’s contributions:</p>
+<p>This thesis’s contributions are:</p>
 <ul>
-<li>A recipe for generating clean datasets for the task of automatic
+<li>A process for generating clean datasets for the task of automatic
 lineart colorization <span class="citation"
 data-cites="hati_2019 hati_2023">[<a href="#ref-hati_2019"
 role="doc-biblioref">30</a>, <a href="#ref-hati_2023"
 role="doc-biblioref">31</a>]</span></li>
-<li>Three following +DL approches to the task of automatic lineart
-colorization improving upon previous work:
-<ul>
 <li>PaintsTorch <span class="citation" data-cites="hati_2019">[<a
 href="#ref-hati_2019" role="doc-biblioref">30</a>]</span>: a double GAN
 generator that improves generation quality compared to previous work
@@ -712,23 +709,20 @@ second.</li>
 <li>StablePaint: an ongoing exploration of DDM, bringing more variety
 into the generated outputs while natively conserving the iterative
 workflow introduced by StencilTorch at the cost of inference speed.</li>
-</ul></li>
-<li>An advised reflection on current generative AI ethical and societal
-concerns.</li>
 </ul>
 <h2 id="sec:I.4">Concerns</h2>
 <p>Recent advances in generative AI for text, image, audio, and video
 synthesis are raising important ethical and societal concerns,
 especially because of theri availability and ease of use. Models such as
 Stable Diffusion <span class="citation" data-cites="rombach_2021">[<a
-href="#ref-rombach_2021" role="doc-biblioref">67</a>]</span> and more
+href="#ref-rombach_2021" role="doc-biblioref">68</a>]</span> and more
 recently Chat-GPT <span class="citation" data-cites="openai_2023">[<a
 href="#ref-openai_2023" role="doc-biblioref">11</a>]</span> are
 disturbing our common beliefs and relation with copyright, creativity,
 fake information and so on.</p>
 <p>One of the main issues with generative AI is the potential for model
 fabulation. Generative models can create entirely new, synthetic data
-that is indistinguishable from real data. This can lead to the
+that is almost indistinguishable from real data. This can lead to the
 dissemination of false information and the manipulation of public
 opinion. Additionally, there are ambiguities surrounding the ownership
 and copyright of the generated content, as it is unclear who holds the
@@ -740,7 +734,7 @@ discrimination. These models are trained on large amounts of data, and
 if the data is not diverse or representative enough, the model may
 perpetuate or even amplify existing biases. The Microsoft Tay Twitter
 bot <span class="citation" data-cites="wolf_2017">[<a
-href="#ref-wolf_2017" role="doc-biblioref">84</a>]</span> scandal is an
+href="#ref-wolf_2017" role="doc-biblioref">85</a>]</span> scandal is an
 outcome of such a phenomenon. This initially innocent chatbot has been
 easily turned into a racist bot perpetuating hate speech. The task was
 made easier because of the inherently biased dataset it was trained
@@ -760,10 +754,11 @@ lineat colorization, providing motivation for this work, the probleme
 statement, the contributions of this thesis, and the concerns it may
 raise.</li>
 <li><a href="#sec:II">Chapter 2</a> provides a theoritocal background on
-+ML and +ANNN which are the foundations of the methods proposed in this
-dissertation.</li>
+Machine Learning (ML) and Artificial Neural Network (ANN) which are the
+foundations of the methods proposed in this dissertation.</li>
 <li><a href="#sec:III">Chapter 3</a> reviews the related work on
-automatic lineart colorization, both classical, and +NN approches.</li>
+automatic lineart colorization, both classical, and Neural Network (NN)
+approches.</li>
 <li><a href="#sec:IV">Chapter 4</a> presents the contributions of this
 thesis, including the development of three new methods for automatic
 lineart colorization: <a href="#sec:IV.2">PaintsTorch</a> <span
@@ -795,7 +790,7 @@ data-cites="goodfellow_2016">[<a href="#ref-goodfellow_2016"
 role="doc-biblioref">26</a>]</span> or in “Dive into Deep Learning” by
 Aston Zhang et al. <span class="citation"
 data-cites="aston_zhang_2021">[<a href="#ref-aston_zhang_2021"
-role="doc-biblioref">87</a>]</span>.</p>
+role="doc-biblioref">88</a>]</span>.</p>
 <h2 id="sec:II.1">Machine Learning</h2>
 <p>Machine Learning (ML) is a branch of AI that studies how computers
 can learn how to solve a task without being explicitly programmed to do
@@ -857,11 +852,12 @@ f^* = arg \; \underset{f \in \mathcal{F}}{min} \; E_{(x, y) \sim D}
 L(\hat{y}, y)
 \qquad{(1)}\]</span></span></p>
 <p>The function <span class="math inline">\(f^*\)</span> must minimize
-the expected loss <span class="math inline">\(L\)</span> over the entire
-data distribution <span class="math inline">\(D\)</span>. Once such a
-function is learned one can use it to perform inference and map any
-element from the input space <span class="math inline">\(X\)</span> to
-the output space <span class="math inline">\(Y\)</span>.</p>
+the expected loss <span class="math inline">\(E_{(x, y) \sim D}
+L\)</span> over the entire data distribution <span
+class="math inline">\(D\)</span>. Once such a function is learned one
+can use it to perform inference and map any element from the input space
+<span class="math inline">\(X\)</span> to the output space <span
+class="math inline">\(Y\)</span>.</p>
 <p>However, this minimization problem is intractable as it is impossible
 to represent the entire distribution <span
 class="math inline">\(D\)</span>. Fortunately, as every pair <span
@@ -976,7 +972,8 @@ classification discordance.</p>
 where the computer has to find a set of parameters, weights <span
 class="math inline">\(\theta\)</span>, for a given function class <span
 class="math inline">\(\mathcal{F}\)</span> by optimizing an objective
-function <span class="math inline">\(\theta^* = arg \; min_\theta
+function <span class="math inline">\(mathcal{C}\)</span> with <span
+class="math inline">\(\theta^* = arg \; min_\theta \;
 \mathcal{C(\theta)}\)</span> made out of two components, a
 data-dependant loss <span class="math inline">\(L\)</span> and a
 data-independant regularization <span
@@ -1027,8 +1024,8 @@ find the minimum of the square function <span class="math inline">\(y =
 x^2\)</span>.</p>
 <figure id="fig:toysgd">
 <img src="./figures/core_nn_sgd.svg"
-alt="Toy example where different learning rates \epsilon are used to find the minimum of the square function y = x^2 using the Gradient Descent (GD) algorithm starting from x = -1. Some learning rate setup result in situations where the optimization does not converge to the solution. A learning rate \epsilon = 2 diverges toward infinity, \epsilon = 1 is stuck and bounces between two positions -1 and 1. However, a small learning rate \epsilon = 0.1 &lt; 1 converges towards the minimum y = 0. This example illustrates the impact of the hyperparameter \epsilon on GD." />
-<figcaption>Figure 5: Toy example where different learning rates <span
+alt="Different learning rates \epsilon are used to find the minimum of the square function y = x^2 using the Gradient Descent (GD) algorithm starting from x = -1. Some learning rate setup result in situations where the optimization does not converge to the solution. A learning rate \epsilon = 2 diverges toward infinity, \epsilon = 1 is stuck and bounces between two positions -1 and 1. However, a small learning rate \epsilon = 0.1 &lt; 1 converges towards the minimum y = 0. This example illustrates the impact of the hyperparameter \epsilon on GD." />
+<figcaption>Figure 5: Different learning rates <span
 class="math inline">\(\epsilon\)</span> are used to find the minimum of
 the square function <span class="math inline">\(y = x^2\)</span> using
 the Gradient Descent (GD) algorithm starting from <span
@@ -1060,15 +1057,15 @@ href="#ref-loshchilov_2017" role="doc-biblioref">50</a>]</span>. A toy
 example is shown <a href="#fig:sgd_moments">Fig 6</a>.</p>
 <figure id="fig:sgd_moments">
 <img src="./figures/core_nn_sgd_moments.svg"
-alt="This toy example illustrates the impact of the optimizer choice during objective minimization with first order methods. SGD, Momentum, Adagrad, RMSProp and Adam are tasked to find the minimum of a 1-dimensional mixture of Gaussians given the same starting point x = 1 and the same learning rate \epsilon = 0.5. In this particular setup, Moments and Adagrad find the solution, RMSProp explodes, and SGD and Adam are stuck into a local minimum." />
-<figcaption>Figure 6: This toy example illustrates the impact of the
-optimizer choice during objective minimization with first order methods.
-SGD, Momentum, Adagrad, RMSProp and Adam are tasked to find the minimum
-of a 1-dimensional mixture of Gaussians given the same starting point
-<span class="math inline">\(x = 1\)</span> and the same learning rate
-<span class="math inline">\(\epsilon = 0.5\)</span>. In this particular
-setup, Moments and Adagrad find the solution, RMSProp explodes, and SGD
-and Adam are stuck into a local minimum.</figcaption>
+alt="Illustration of the impact of the optimizer choice during objective minimization with first order methods. SGD, Momentum, Adagrad, RMSProp and Adam are tasked to find the minimum of a 1-dimensional mixture of Gaussians given the same starting point x = 1 and the same learning rate \epsilon = 0.5. In this particular setup, Moments and Adagrad find the solution, RMSProp explodes, and SGD and Adam are stuck into a local minimum." />
+<figcaption>Figure 6: Illustration of the impact of the optimizer choice
+during objective minimization with first order methods. SGD, Momentum,
+Adagrad, RMSProp and Adam are tasked to find the minimum of a
+1-dimensional mixture of Gaussians given the same starting point <span
+class="math inline">\(x = 1\)</span> and the same learning rate <span
+class="math inline">\(\epsilon = 0.5\)</span>. In this particular setup,
+Moments and Adagrad find the solution, RMSProp explodes, and SGD and
+Adam are stuck into a local minimum.</figcaption>
 </figure>
 <p>The Momentum update <span class="citation" data-cites="qian_1999">[<a
 href="#ref-qian_1999" role="doc-biblioref">65</a>]</span> introduces the
@@ -1106,12 +1103,12 @@ parameters with low gradients take larger ones. This has the advantage
 to allow for bigger learning rates and faster convergence at the cost of
 triple the amount of parameters to store during training.</p>
 <p><strong>Cross-Validation and HyperParameter Search:</strong> As
-illustrated by the toy examples (see Figs <a href="#fig:toysgd">5</a>,
-<a href="#fig:sgd_moments">6</a>), the training of NNs using SGD is
-highly dependent on the initial setting of hyperparameters. One could
-ask if there is a rule for choosing such parameters. Unfortunately, this
-is not the case. The field is highly empirical and driven by exploration
-using the scientific method.</p>
+illustrated by the previous examples (see Figs <a
+href="#fig:toysgd">5</a>, <a href="#fig:sgd_moments">6</a>), the
+training of NNs using SGD is highly dependent on the initial setting of
+hyperparameters. One could ask if there is a rule for choosing such
+parameters. Unfortunately, this is not the case. The field is highly
+empirical and driven by exploration using the scientific method.</p>
 <p>One common approach is to set up metrics to evaluate the performance
 of the model during the optimization process. It is a good practice to
 divide the dataset into validation folds that are different from the
@@ -1127,13 +1124,13 @@ literature however contains many examples of initial parameters and
 architectures that can be used to bootstrap this search.</p>
 <h3 id="sec:II.1.3">The Backpropagation Algorithm</h3>
 <p>In the previous sub-section (see <a
-href="#sec:II.1.2">Sec 2.1.2</a>), we saw how to learn parametrized
-functions <span class="math inline">\(f_\theta\)</span> given a training
-dataset. By evaluating the gradients of the objective function with
-respect to the model’s parameters, it is possible to obtain a good
-enough mapping <span class="math inline">\(f_\theta: X \rightarrow
-Y\)</span>. In this sub-section, we discuss backpropagation, the
-recursive algorithm used to efficiently compute those gradients
+href="#sec:II.1.2">Sec 2.1.2</a>), we presented how to learn
+parametrized functions <span class="math inline">\(f_\theta\)</span>
+given a training dataset. By evaluating the gradients of the objective
+function with respect to the model’s parameters, it is possible to
+obtain a good enough mapping <span class="math inline">\(f_\theta: X
+\rightarrow Y\)</span>. In this sub-section, we discuss backpropagation,
+the recursive algorithm used to efficiently compute those gradients
 exploiting the chain rule <span class="math inline">\(\frac{\partial
 z}{\partial x} = \frac{\partial z}{\partial y} \cdot \frac{\partial
 y}{\partial x}\)</span> with <span class="math inline">\(z\)</span>
@@ -1231,7 +1228,7 @@ execution time and memory are at stake.</p>
 described the general setup for ML, where one has to fit a model from a
 given function family <span class="math inline">\(f \in
 \mathcal{F}\)</span> on a given dataset <span class="math inline">\((X,
-Y) \in D\)</span> optimized using +sdg and backpropagation. This section
+Y) \in D\)</span> optimized using SGD and backpropagation. This section
 introduces a particular class of parameterized function <span
 class="math inline">\(f_\theta\)</span> called Neural Networks (NN). The
 section starts with the most simple NN architecture, the Perceptron, and
@@ -1249,7 +1246,7 @@ function is a threshold function.</figcaption>
 </figure>
 <p>The Perceptron, introduced by Frank Rosenblatt in 1958 <span
 class="citation" data-cites="rosenblatt_1958">[<a
-href="#ref-rosenblatt_1958" role="doc-biblioref">69</a>]</span>, is the
+href="#ref-rosenblatt_1958" role="doc-biblioref">70</a>]</span>, is the
 building block of Neural Networks (NN). It was presented as a simplified
 model of the human neuron, containing three parts: dendrites handling
 incoming signals from other neurons, a soma with a nucleus responsible
@@ -1345,7 +1342,7 @@ images.</figcaption>
 <p><strong>MNIST Classifier:</strong> A classic toy example showing the
 capabilities of MLPs is the handwritten digit classification challenge
 on the MNIST dataset <span class="citation" data-cites="mnist">[<a
-href="#ref-mnist" role="doc-biblioref">81</a>]</span>. MNIST contains
+href="#ref-mnist" role="doc-biblioref">82</a>]</span>. MNIST contains
 <span class="math inline">\(60,000\)</span> training and <span
 class="math inline">\(10,000\)</span> test examples. It has been written
 by high school students and gather <span class="math inline">\(28 \times
@@ -1396,7 +1393,7 @@ dashed lines. This convolution is applied in valid mode (no padding)
 resulting in a lower resolution output tensor.</figcaption>
 </figure>
 <p><strong>Convolution:</strong> The core component of a ConvNet is the
-convolution operation. A +CNN operates by convolving (rolling) a set of
+convolution operation. A CNN operates by convolving (rolling) a set of
 parametrized filters on the input. If we reconsider our <span
 class="math inline">\(W_1 \times H_1 \times D_1 = 256 \times 256 \times
 3\)</span>, convolving a single filter of size <span
@@ -1486,12 +1483,12 @@ This process is called finetuning and is less expensive and
 time-consuming than full training. One method for finetuning consists in
 removing the classification head of a pre-trained model such as VGG16
 <span class="citation" data-cites="simonyan_2014">[<a
-href="#ref-simonyan_2014" role="doc-biblioref">75</a>]</span> and
+href="#ref-simonyan_2014" role="doc-biblioref">76</a>]</span> and
 replacing it with a new one adapted to the number of classes required
 for the task. The pretrained weights are then frozen (not updated during
 training), and the new weights are trained following a standard
 supervised-learning procedure.</p>
-<p><strong>MNIST Classifier:</strong> Let us reconsider the MNIST toy
+<p><strong>MNIST Classifier:</strong> Let us reconsider the MNIST
 classification example and replace the MLP with a CNN. The model is
 divided in two sections, the feature extractor made out of two
 convolutional and max-pooling layers with <span class="math inline">\(5
@@ -1532,7 +1529,7 @@ the field of Natural Language Processing (NLP) <span class="citation"
 data-cites="bahdanau_2014 luong_2015 vaswani_2017">[<a
 href="#ref-bahdanau_2014" role="doc-biblioref">5</a>, <a
 href="#ref-luong_2015" role="doc-biblioref">52</a>, <a
-href="#ref-vaswani_2017" role="doc-biblioref">82</a>]</span>, and later
+href="#ref-vaswani_2017" role="doc-biblioref">83</a>]</span>, and later
 transposed to field of Computer Vision (CV) <span class="citation"
 data-cites="dosovitskiy_2020 caron_2021">[<a href="#ref-caron_2021"
 role="doc-biblioref">10</a>, <a href="#ref-dosovitskiy_2020"
@@ -1541,7 +1538,7 @@ role="doc-biblioref">18</a>]</span>.</p>
 mechanism only as this thesis is about image generation, and more
 specifically a particular type of attention that made the success of the
 modern Transformer <span class="citation" data-cites="vaswani_2017">[<a
-href="#ref-vaswani_2017" role="doc-biblioref">82</a>]</span>
+href="#ref-vaswani_2017" role="doc-biblioref">83</a>]</span>
 architecture called Self-Attention.</p>
 <p><strong>Self-Attention:</strong> Computing self-attention requires
 the creation of three vectors for each element of the sequence in latent
@@ -1586,7 +1583,7 @@ can explore the “reasoning” of the NN by looking at the attention scores
 and observing how the sequence elements attend to each other.</p>
 <p><strong>Multihead Self-Attention:</strong> In their paper <span
 class="citation" data-cites="vaswani_2017">[<a href="#ref-vaswani_2017"
-role="doc-biblioref">82</a>]</span>, the authors further refine this
+role="doc-biblioref">83</a>]</span>, the authors further refine this
 notion of self-attention. Let us consider one self-attention module and
 call it an attention head. They propose to stack multiple attention
 heads and demonstrate improved performances. This notion enables models
@@ -1610,7 +1607,7 @@ Contrary to CNNs exploiting the spatially local correlation of
 information, self-attention does not encode the order of the vectors. To
 alleviate this problem, Vaswani et al. <span class="citation"
 data-cites="vaswani_2017">[<a href="#ref-vaswani_2017"
-role="doc-biblioref">82</a>]</span> propose to add (concatenate) a
+role="doc-biblioref">83</a>]</span> propose to add (concatenate) a
 vector to each embedding input. This vector is designed to follow a
 specific pattern learned by the model that will help encode the position
 of information along its flow in the network. This is called a
@@ -1656,7 +1653,7 @@ consumed as tokens by a Transformer thus called a Vision Transformer
 </figure>
 <p><strong>Vision Transformers:</strong> The success of the Transformer
 architecture <span class="citation" data-cites="vaswani_2017">[<a
-href="#ref-vaswani_2017" role="doc-biblioref">82</a>]</span> in the NLP
+href="#ref-vaswani_2017" role="doc-biblioref">83</a>]</span> in the NLP
 community has pushed the CV community to explore how one can use this
 kind of NNs for vision tasks. It turns out that by expressing images as
 sequences of patches, <span class="math inline">\(n \times n\)</span>
@@ -1751,10 +1748,10 @@ early work requiring the use of external tools to close them <span
 class="citation" data-cites="gangnet_1994 sasaki_2017 liu_2019">[<a
 href="#ref-gangnet_1994" role="doc-biblioref">25</a>, <a
 href="#ref-liu_2019" role="doc-biblioref">48</a>, <a
-href="#ref-sasaki_2017" role="doc-biblioref">73</a>]</span> some being
+href="#ref-sasaki_2017" role="doc-biblioref">74</a>]</span> some being
 ML driven <span class="citation" data-cites="sasaki_2017 liu_2019">[<a
 href="#ref-liu_2019" role="doc-biblioref">48</a>, <a
-href="#ref-sasaki_2017" role="doc-biblioref">73</a>]</span>. While such
+href="#ref-sasaki_2017" role="doc-biblioref">74</a>]</span>. While such
 approaches do not provide lighting nor texture information to the
 generated colored illustration, they can be used to initialize others
 similar to the work of Frans et al. <span class="citation"
@@ -1765,13 +1762,13 @@ handy for the animation industry where every frame of the show has to be
 colored consistently.</p>
 <p><strong><span class="citation" data-cites="gangnet_1994">[<a
 href="#ref-gangnet_1994" role="doc-biblioref">25</a>]</span> Gagnet et
-al.:</strong> Gagnet et al. presents a gap-closing method for cel
+al.:</strong> Gagnet et al. presents a gap-closing method for cell
 coloring in computer-assisted cartoon animation. It is based on
 connected component analysis inside square stamps that are located near
 potential gaps. This method is used to automatically close the regions
 defined by freehand strokes.</p>
 <p><strong><span class="citation" data-cites="sasaki_2017">[<a
-href="#ref-sasaki_2017" role="doc-biblioref">73</a>]</span> Sasaki et
+href="#ref-sasaki_2017" role="doc-biblioref">74</a>]</span> Sasaki et
 al.:</strong> In their paper, Sasaki et al. propose a novel data-driven
 approach for automatically detecting and completing gaps in line
 drawings without the need for user input. The proposed method is based
@@ -1834,23 +1831,23 @@ segmentation.</p>
 <p>The literature also explored building assistive completion tools
 <span class="citation" data-cites="sykora_2009 beck_2018">[<a
 href="#ref-beck_2018" role="doc-biblioref">21</a>, <a
-href="#ref-sykora_2009" role="doc-biblioref">78</a>]</span> for helping
+href="#ref-sykora_2009" role="doc-biblioref">79</a>]</span> for helping
 in filling flat color areas, closing gaps in sketches, and more. While
 they propose to enhance the natural workflow of digital painting, they
 only focus on flat colorization and do not provide the mean of
 specifying lighting and textures.</p>
 <figure id="fig:core_rel_lazybrush">
 <img src="./figures/core_rel_lazybrush.png"
-alt="Flat colorization from Sykora et al. [78]. The color intents are loosely defined by the end-user using color strokes. The algorithm can generate quality colorization even with imprecise stroke positioning." />
+alt="Flat colorization from Sykora et al. [79]. The color intents are loosely defined by the end-user using color strokes. The algorithm can generate quality colorization even with imprecise stroke positioning." />
 <figcaption>Figure 24: Flat colorization from Sykora et al. <span
 class="citation" data-cites="sykora_2009">[<a href="#ref-sykora_2009"
-role="doc-biblioref">78</a>]</span>. The color intents are loosely
+role="doc-biblioref">79</a>]</span>. The color intents are loosely
 defined by the end-user using color strokes. The algorithm can generate
 quality colorization even with imprecise stroke
 positioning.</figcaption>
 </figure>
 <p><strong><span class="citation" data-cites="sykora_2009">[<a
-href="#ref-sykora_2009" role="doc-biblioref">78</a>]</span> Sykora et
+href="#ref-sykora_2009" role="doc-biblioref">79</a>]</span> Sykora et
 al.:</strong> Sykora et al. introduced LazyBrush, a novel interactive
 painting tool that is both simple and flexible. It is designed to
 address the needs of professional ink-and-paint illustrators and offers
@@ -1879,16 +1876,16 @@ data-cites="iizuka_2016 liu_2017 frans_2017 yoo_2019 su_2020">[<a
 href="#ref-frans_2017" role="doc-biblioref">22</a>, <a
 href="#ref-iizuka_2016" role="doc-biblioref">38</a>, <a
 href="#ref-liu_2017" role="doc-biblioref">49</a>, <a href="#ref-su_2020"
-role="doc-biblioref">77</a>, <a href="#ref-yoo_2019"
-role="doc-biblioref">86</a>]</span> does not propose any user
+role="doc-biblioref">78</a>, <a href="#ref-yoo_2019"
+role="doc-biblioref">87</a>]</span> does not propose any user
 conditioning input. They instead provide an automatic method for the
 task resulting in common sense coloring learned from their respective
 training datasets. While initial work and improvements focused on
 grayscale image colorization <span class="citation"
 data-cites="iizuka_2016 su_2020 yoo_2019">[<a href="#ref-iizuka_2016"
 role="doc-biblioref">38</a>, <a href="#ref-su_2020"
-role="doc-biblioref">77</a>, <a href="#ref-yoo_2019"
-role="doc-biblioref">86</a>]</span> others are extending this work to
+role="doc-biblioref">78</a>, <a href="#ref-yoo_2019"
+role="doc-biblioref">87</a>]</span> others are extending this work to
 lineart or sketch colorization <span class="citation"
 data-cites="liu_2017 frans_2017">[<a href="#ref-frans_2017"
 role="doc-biblioref">22</a>, <a href="#ref-liu_2017"
@@ -1951,7 +1948,7 @@ Finally, the research demonstrates natural-looking results when
 colorizing outlines from scratch, as well as from a messy, user-defined
 color scheme.</p>
 <p><strong><span class="citation" data-cites="yoo_2019">[<a
-href="#ref-yoo_2019" role="doc-biblioref">86</a>]</span> Yoo et
+href="#ref-yoo_2019" role="doc-biblioref">87</a>]</span> Yoo et
 al.:</strong> In their work, Yoo et al. present a novel memory-augmented
 colorization model called MemoPainter that is capable of producing
 high-quality colorization with limited training data. It can capture
@@ -1961,7 +1958,7 @@ memory networks without the need for class labels. Experiments show that
 the model is superior in both few-shot and one-shot colorization
 tasks.</p>
 <p><strong><span class="citation" data-cites="su_2020">[<a
-href="#ref-su_2020" role="doc-biblioref">77</a>]</span> Su et
+href="#ref-su_2020" role="doc-biblioref">78</a>]</span> Su et
 al.:</strong> Su et al. present a method for instance-aware image
 colorization that leverages an object detector to obtain cropped object
 images and a colorization network to extract object-level features. The
@@ -1975,21 +1972,21 @@ lineart colorization is the use of examples <span class="citation"
 data-cites="hensman_2017 furusawa_2017 zhang_ji_2017 shi_2020">[<a
 href="#ref-furusawa_2017" role="doc-biblioref">23</a>, <a
 href="#ref-hensman_2017" role="doc-biblioref">33</a>, <a
-href="#ref-shi_2020" role="doc-biblioref">74</a>, <a
-href="#ref-zhang_ji_2017" role="doc-biblioref">89</a>]</span>. Examples
+href="#ref-shi_2020" role="doc-biblioref">75</a>, <a
+href="#ref-zhang_ji_2017" role="doc-biblioref">90</a>]</span>. Examples
 can be used to generate small datasets from which a network can be
 trained to replicate and learn the colors from <span class="citation"
 data-cites="hensman_2017 furusawa_2017">[<a href="#ref-furusawa_2017"
 role="doc-biblioref">23</a>, <a href="#ref-hensman_2017"
 role="doc-biblioref">33</a>]</span> but also as stylistic targets <span
 class="citation" data-cites="zhang_ji_2017 shi_2020">[<a
-href="#ref-shi_2020" role="doc-biblioref">74</a>, <a
-href="#ref-zhang_ji_2017" role="doc-biblioref">89</a>]</span>. The style
+href="#ref-shi_2020" role="doc-biblioref">75</a>, <a
+href="#ref-zhang_ji_2017" role="doc-biblioref">90</a>]</span>. The style
 and content of the example image can be extracted using a pretrained NN
 and the style transferred to the target lineart. The method has been
 extended to allow the colorization of consistently animated frames <span
 class="citation" data-cites="shi_2020">[<a href="#ref-shi_2020"
-role="doc-biblioref">74</a>]</span>.</p>
+role="doc-biblioref">75</a>]</span>.</p>
 <p><strong><span class="citation" data-cites="hensman_2017">[<a
 href="#ref-hensman_2017" role="doc-biblioref">33</a>]</span> Hensman et
 al.:</strong> In their contribution, Hensman et al. propose an approach
@@ -2014,15 +2011,15 @@ address the colorization of an entire manga title, making it possible to
 colorize the entire manga using desired colors for each panel.</p>
 <figure id="fig:core_rel_styletransfer">
 <img src="./figures/core_rel_styletransfer.png"
-alt="Style transfer-based colorization from Zhang et al. [89]. The three examples contain the input lineart top left, the style target bottom left, and the resulting output on the right." />
+alt="Style transfer-based colorization from Zhang et al. [90]. The three examples contain the input lineart top left, the style target bottom left, and the resulting output on the right." />
 <figcaption>Figure 27: Style transfer-based colorization from Zhang et
 al. <span class="citation" data-cites="zhang_ji_2017">[<a
-href="#ref-zhang_ji_2017" role="doc-biblioref">89</a>]</span>. The three
+href="#ref-zhang_ji_2017" role="doc-biblioref">90</a>]</span>. The three
 examples contain the input lineart top left, the style target bottom
 left, and the resulting output on the right.</figcaption>
 </figure>
 <p><strong><span class="citation" data-cites="zhang_ji_2017">[<a
-href="#ref-zhang_ji_2017" role="doc-biblioref">89</a>]</span> Zhang et
+href="#ref-zhang_ji_2017" role="doc-biblioref">90</a>]</span> Zhang et
 al.:</strong> Zhang et al. use neural style transfer to automatically
 synthesize credible paintings from content and style images. However,
 when attempting to apply a painting’s style to an anime sketch, these
@@ -2031,7 +2028,7 @@ method which combines a residual U-net and an auxiliary classifier GAN
 to effectively apply the style to the sketch while maintaining quality
 and colorization. The process is both automatic and fast.</p>
 <p><strong><span class="citation" data-cites="shi_2020">[<a
-href="#ref-shi_2020" role="doc-biblioref">74</a>]</span> Shi et
+href="#ref-shi_2020" role="doc-biblioref">75</a>]</span> Shi et
 al.:</strong> In their contribution, Shi et al. propose a deep
 architecture for automatically coloring line art videos according to the
 colors of reference images. The architecture consists of a color
@@ -2046,7 +2043,9 @@ show that this method achieves the best performance on line art video
 coloring compared to other state-of-the-art methods.</p>
 <h3 id="sec:III.2.3">Tags</h3>
 <p>Another method, closer to the use of natural language description, is
-the use of tags (labels) [kim_2019]. Tags can be obtained from online
+the use of tags (labels) <span class="citation"
+data-cites="kim_2019">[<a href="#ref-kim_2019"
+role="doc-biblioref">42</a>]</span>. Tags can be obtained from online
 illustration galleries and used for training of both classifiers and
 generative architectures. Their final use is however limited to the set
 of tags made available during training.</p>
@@ -2080,14 +2079,14 @@ latent code sequences and used as a conditional signal to train
 conditional generative models for the task of automatic colorization
 <span class="citation" data-cites="zou_2019 chen_2018">[<a
 href="#ref-chen_2018" role="doc-biblioref">12</a>, <a
-href="#ref-zou_2019" role="doc-biblioref">94</a>]</span>. While language
+href="#ref-zou_2019" role="doc-biblioref">95</a>]</span>. While language
 can serve as a useful descriptor and add priors to the NN, it is hard to
 produce a colored illustration representing the full extent of the user
 intent. For example, positioning is hard. This issue can, however, be
 solved by combination with other conditioning means such as
 user-provided color strokes <span class="citation"
 data-cites="zou_2019">[<a href="#ref-zou_2019"
-role="doc-biblioref">94</a>]</span>.</p>
+role="doc-biblioref">95</a>]</span>.</p>
 <p><strong><span class="citation" data-cites="chen_2018">[<a
 href="#ref-chen_2018" role="doc-biblioref">12</a>]</span> Chen et
 al.:</strong> Chen et al. investigate the Language-Based Image Editing
@@ -2103,15 +2102,15 @@ ReferIt dataset for image segmentation, and the Oxford-102 Flowers
 dataset for colorization.</p>
 <figure id="fig:core_rel_prompt">
 <img src="./figures/core_rel_prompt.png"
-alt="Natural language prompts colorization from Zou et al. [94]. Their model can capture the user intent from natural language prompts and apply it to the given lineart." />
+alt="Natural language prompts colorization from Zou et al. [95]. Their model can capture the user intent from natural language prompts and apply it to the given lineart." />
 <figcaption>Figure 29: Natural language prompts colorization from Zou et
 al. <span class="citation" data-cites="zou_2019">[<a
-href="#ref-zou_2019" role="doc-biblioref">94</a>]</span>. Their model
+href="#ref-zou_2019" role="doc-biblioref">95</a>]</span>. Their model
 can capture the user intent from natural language prompts and apply it
 to the given lineart.</figcaption>
 </figure>
 <p><strong><span class="citation" data-cites="zou_2019">[<a
-href="#ref-zou_2019" role="doc-biblioref">94</a>]</span> Zou et
+href="#ref-zou_2019" role="doc-biblioref">95</a>]</span> Zou et
 al.:</strong> In their work, Zou et al. present a language-based system
 for interactive colorization of scene sketches. The system is built upon
 NNs trained on a large dataset of scene sketches and cartoon-style color
@@ -2131,8 +2130,8 @@ href="#ref-ci_2018" role="doc-biblioref">14</a>, <a
 href="#ref-kautz_2007" role="doc-biblioref">51</a>, <a
 href="#ref-paintschainer_2018" role="doc-biblioref">59</a>, <a
 href="#ref-petalicapaint_2023" role="doc-biblioref">63</a>, <a
-href="#ref-zhang_2018" role="doc-biblioref">91</a>, <a
-href="#ref-zhang_richard_2017" role="doc-biblioref">92</a>]</span>. They
+href="#ref-zhang_2018" role="doc-biblioref">92</a>, <a
+href="#ref-zhang_richard_2017" role="doc-biblioref">93</a>]</span>. They
 are probably one of the most natural means of expressing the artist or
 end user intent for colorization because of its resemblance to the
 natural coloring workflow. Whether it is digital or manual painting, we
@@ -2143,17 +2142,17 @@ introduced in the DL approaches for user-guided grayscale colorization
 <span class="citation"
 data-cites="kautz_2007 sangkloy_2016 zhang_richard_2017">[<a
 href="#ref-kautz_2007" role="doc-biblioref">51</a>, <a
-href="#ref-sangkloy_2016" role="doc-biblioref">72</a>, <a
-href="#ref-zhang_richard_2017" role="doc-biblioref">92</a>]</span> and
+href="#ref-sangkloy_2016" role="doc-biblioref">73</a>, <a
+href="#ref-zhang_richard_2017" role="doc-biblioref">93</a>]</span> and
 then translated to lineart colorization <span class="citation"
 data-cites="zhang_2018 petalicapaint_2023 paintschainer_2018 ci_2018">[<a
 href="#ref-ci_2018" role="doc-biblioref">14</a>, <a
 href="#ref-paintschainer_2018" role="doc-biblioref">59</a>, <a
 href="#ref-petalicapaint_2023" role="doc-biblioref">63</a>, <a
-href="#ref-zhang_2018" role="doc-biblioref">91</a>]</span> taking
+href="#ref-zhang_2018" role="doc-biblioref">92</a>]</span> taking
 inspiration from early work <span class="citation"
 data-cites="sykora_2009">[<a href="#ref-sykora_2009"
-role="doc-biblioref">78</a>]</span>.</p>
+role="doc-biblioref">79</a>]</span>.</p>
 <p><strong><span class="citation" data-cites="kautz_2007">[<a
 href="#ref-kautz_2007" role="doc-biblioref">51</a>]</span> Kautz et
 al.:</strong> In their contribution, Kautz et al. present an interactive
@@ -2167,7 +2166,7 @@ designed to allow users to label, color and modify the results. The
 system is demonstrated to produce vivid colorization effects with only a
 modest amount of user input.</p>
 <p><strong><span class="citation" data-cites="sangkloy_2016">[<a
-href="#ref-sangkloy_2016" role="doc-biblioref">72</a>]</span> Sangkloy
+href="#ref-sangkloy_2016" role="doc-biblioref">73</a>]</span> Sangkloy
 et al.:</strong> In their work, Sangkloy et al. propose a deep
 adversarial image synthesis architecture that is conditioned on sketched
 boundaries and sparse color strokes to generate realistic cars,
@@ -2178,17 +2177,17 @@ grayscale images. This architecture is more realistic, diverse, and
 controllable than other recent works on sketch to image synthesis.</p>
 <figure id="fig:core_rel_strokes_grayscale">
 <img src="./figures/core_rel_strokes_grayscale.png"
-alt="User-guided grayscale image colorization using colored strokes as the conditioning signal used to vehiculate the user intent from Zhang et al. [92]. This conditioning in addition to the deep learned priors enables qualitative and real-time colorization." />
+alt="User-guided grayscale image colorization using colored strokes as the conditioning signal used to vehiculate the user intent from Zhang et al. [93]. This conditioning in addition to the deep learned priors enables qualitative and real-time colorization." />
 <figcaption>Figure 30: User-guided grayscale image colorization using
 colored strokes as the conditioning signal used to vehiculate the user
 intent from Zhang et al. <span class="citation"
 data-cites="zhang_richard_2017">[<a href="#ref-zhang_richard_2017"
-role="doc-biblioref">92</a>]</span>. This conditioning in addition to
+role="doc-biblioref">93</a>]</span>. This conditioning in addition to
 the deep learned priors enables qualitative and real-time
 colorization.</figcaption>
 </figure>
 <p><strong><span class="citation" data-cites="zhang_richard_2017">[<a
-href="#ref-zhang_richard_2017" role="doc-biblioref">92</a>]</span> Zhang
+href="#ref-zhang_richard_2017" role="doc-biblioref">93</a>]</span> Zhang
 et al.:</strong> Zhang et al. propose a DL based approach to user-guided
 image colorization. The system employs a CNN to map a grayscale image
 and sparse user “hints” to produce realistic colorization. The network
@@ -2199,7 +2198,7 @@ selection. Furthermore, the framework can incorporate other user hints
 to the desired colorization, showing an application to color histogram
 transfer.</p>
 <p><strong><span class="citation" data-cites="zhang_2018">[<a
-href="#ref-zhang_2018" role="doc-biblioref">91</a>]</span> Zhang et
+href="#ref-zhang_2018" role="doc-biblioref">92</a>]</span> Zhang et
 al.:</strong> In their paper, Zhang et al. propose a semi-automatic
 learning-based framework to colorize sketches with proper color,
 texture, and gradient. It divides the task into two stages: (1) a
@@ -2252,12 +2251,12 @@ litterature for image generation with a strong focus on those used by
 the related work of the previous section (section <a
 href="#sec:III.2">Sec 3.2</a>) and how to condition them on user
 inputs.</p>
-<p>The architectures discussed are the Autoencoder (AE) (see
-Sec <strong>¿sec:ae?</strong>), the Variational Autoencoder (VAE) (see
-Sec <strong>¿sec:vae?</strong>), the Generative Adversarial Network
-(GAN) (see Sec <strong>¿sec:gan?</strong>), the Denoising Diffusion
-Model (DDM) (see Sec <strong>¿sec:ddm?</strong>), and Large Language
-Models (LLM) (see Sec <strong>¿sec:llm?</strong>).</p>
+<p>The architectures discussed are the Autoencoder (AE) (see <a
+href="#sec:III.3.1">Sec 3.3.1</a>), the Variational Autoencoder (VAE)
+(see <a href="#sec:III.3.2">Sec 3.3.2</a>), the Generative Adversarial
+Network (GAN) (see <a href="#sec:III.3.3">Sec 3.3.3</a>), and the
+Denoising Diffusion Model (DDM) (see <a
+href="#sec:III.3.4">Sec 3.3.4</a>).</p>
 <p>This section does not only discuss the technical details of those
 architectures but also compares them on three criteria, generation
 inference speed, generation variance, and generation quality and
@@ -2287,10 +2286,9 @@ are organized mindfully in the latent space, semantically for
 example.</p>
 <figure id="fig:gai_autoencoder">
 <img src="./figures/core_gai_autoencoder.svg"
-alt="+ae architecture. The encoder compresses the input into a latent code that is reconstructed using the decoder. architecture." />
-<figcaption>Figure 32: <span class="full">+ae architecture. The encoder
-compresses the input into a latent code that is reconstructed using the
-decoder.</span> architecture.</figcaption>
+alt="AE architecture. The encoder compresses the input into a latent code that is reconstructed using the decoder." />
+<figcaption>Figure 32: AE architecture. The encoder compresses the input
+into a latent code that is reconstructed using the decoder.</figcaption>
 </figure>
 <p><strong>Properties:</strong> Compared to a traditional compression
 method, AEs are tied to their training data. They are trained to learn
@@ -2493,9 +2491,9 @@ code <span class="math inline">\(z\)</span> is then sampled from the
 Gaussian distribution <span class="math inline">\(z \sim
 \mathcal{N}(\mu, \sigma)\)</span> and finally decoded to reconstruct the
 original input <span class="math inline">\(x\)</span>.</p>
-<p>There is however a catch. The sampling process is stochastic and thus
-not differentiable. And we know that a NN needs to be differentiable to
-be optimized using SGD. To solve this problem, Kingma et al. <span
+<p>However, the sampling process is stochastic and thus not
+differentiable. And we know that a NN needs to be differentiable to be
+optimized using SGD. To solve this problem, Kingma et al. <span
 class="citation" data-cites="kingma_2013">[<a href="#ref-kingma_2013"
 role="doc-biblioref">44</a>]</span> propose to use what they call a
 reparametrization trick. It consists in sampling a surrogate standard
@@ -2515,7 +2513,7 @@ flow. The VAE can thus be trained to learn a structured latent space
 that can be used to interpolate latent codes and decode them into
 samples similar to the training distribution.</p>
 <p><strong>MNIST Digit Image Generation:</strong> Let us reconsider our
-toy example with training a VAE on the MNIST handwritten digit dataset.
+example with training a VAE on the MNIST handwritten digit dataset.
 There is almost nothing change in comparison to the AE.</p>
 <p>The model is trained to minimize the objective functions. Satisfying
 both the reconstruction loss and the KL-Divergence regularization is
@@ -2676,8 +2674,8 @@ E_{\hat{x}} \; (||\nabla_{\hat{x}}D(\hat{x})||_2 - 1)^2\)</span>.</p>
 class="math inline">\(z\)</span>, using it to generate a fake image
 <span class="math inline">\(G(z)\)</span> and computing the three
 average critic’s loss terms <span class="math inline">\(ReLU(1 +
-C(G(z)))\)</span>, $ReLU(1 - C(x)), and <span
-class="math inline">\(\lambda \nabla_{gp}\)</span> with <span
+C(G(z)))\)</span>, <span class="math inline">\(ReLU(1 - C(x))\)</span>,
+and <span class="math inline">\(\lambda \nabla_{gp}\)</span> with <span
 class="math inline">\(\lambda = 10\)</span> to minimize. The losses are
 then backward and the resulting gradients are used to update the
 critic’s weights using the Adam policy.</p>
@@ -2685,8 +2683,8 @@ critic’s weights using the Adam policy.</p>
 training steps and critic training steps until convergence. It is common
 to train the critic for more cycles, especially at the beginning of
 training where the training signal for the generator is not constructive
-enough. In this toy example, we optimize the critic five times more than
-the generator.</p>
+enough. In this example, we optimize the critic five times more than the
+generator.</p>
 <p>The training history monitoring the generator’s and critic’s loss
 terms are shown in <a href="#fig:gai_gan_history">Fig 40</a>. GAN are in
 practice hard to train and monitoring each term independently allows us
@@ -2753,7 +2751,7 @@ class="math inline">\(x_T\)</span> converge towards an isotropic
 Gaussian distribution. One feature of the forward diffusion process is
 that <span class="math inline">\(x\)</span> can be computed in a closed
 form making use of the reparametrization trick introduced previously
-(see Sec <strong>¿sec:vae?</strong>). Defining <span
+(see <a href="#sec:III.3.2">Sec 3.3.2</a>). Defining <span
 class="math inline">\(\alpha_t = 1 - \beta_t\)</span> and <span
 class="math inline">\(\bar{\alpha_t} = \prod_{i=1}^{t}
 \alpha_i\)</span>,</p>
@@ -2936,7 +2934,7 @@ we implement a simple CNN. The network conditioning on the timestep
 simplicity. It is however required for a faithful implementation using a
 more common U-net architecture <span class="citation"
 data-cites="ronneberger_2015">[<a href="#ref-ronneberger_2015"
-role="doc-biblioref">68</a>]</span>.</p>
+role="doc-biblioref">69</a>]</span>.</p>
 <p>The training procedure is straightforward and consists of sampling
 <span class="math inline">\(t\)</span> and <span
 class="math inline">\(\epsilon\)</span> values, and computing the
@@ -3045,10 +3043,12 @@ data-cites="devlin_2018 brown_2020 openai_2023">[<a
 href="#ref-brown_2020" role="doc-biblioref">8</a>, <a
 href="#ref-openai_2023" role="doc-biblioref">11</a>, <a
 href="#ref-devlin_2018" role="doc-biblioref">17</a>]</span> and
-multimodal embedding alignment [clip], GANs and DDMs <span
+multimodal embedding alignment <span class="citation"
+data-cites="radford_2021">[<a href="#ref-radford_2021"
+role="doc-biblioref">66</a>]</span>, GANs and DDMs <span
 class="citation" data-cites="ramesh_2022 rombach_2021">[<a
-href="#ref-ramesh_2022" role="doc-biblioref">66</a>, <a
-href="#ref-rombach_2021" role="doc-biblioref">67</a>]</span> are trained
+href="#ref-ramesh_2022" role="doc-biblioref">67</a>, <a
+href="#ref-rombach_2021" role="doc-biblioref">68</a>]</span> are trained
 to follow natural language instructions called prompts. The community is
 currently still learning how to engineer those prompts to enable
 fine-grained control of the generated outputs.</p>
@@ -3085,9 +3085,9 @@ data-cites="hati_2019 hati_2023">[<a href="#ref-hati_2019"
 role="doc-biblioref">30</a>, <a href="#ref-hati_2023"
 role="doc-biblioref">31</a>]</span>. The linearts and color hint maps
 are generated from original illustrations scrapped online and manually
-filtered for their perceptieve quality and consistancy. The same
-pipeline is used with minor modification throuhought the three
-approaches proposed in sections <a href="#sec:IV.2">Sec 4.2</a>, <a
+filtered for their perceptive quality and consistancy. The same pipeline
+is used with minor modification throuhought the three approaches
+proposed in sections <a href="#sec:IV.2">Sec 4.2</a>, <a
 href="#sec:IV.3">Sec 4.3</a>, and <a href="#sec:IV.4">Sec 4.4</a>.</p>
 <p>Section <a href="#sec:IV.2">Sec 4.2</a> introduces PaintsTorch <span
 class="citation" data-cites="hati_2019">[<a href="#ref-hati_2019"
@@ -3115,18 +3115,16 @@ eliminates the need for an external feature extractor. The challenge
 resides in the model conditionning. This section ends with a
 presentation of a more recent work ControlNet from Zhang et al. <span
 class="citation" data-cites="zhang_2023">[<a href="#ref-zhang_2023"
-role="doc-biblioref">88</a>]</span> which successfully solved this
+role="doc-biblioref">89</a>]</span> which successfully solved this
 exploration.</p>
 <h2 id="sec:IV.1">Method and Implementation</h2>
 <p>In this section, we discuss the methodology used throughout this
-thesis dissertation <span class="citation" data-cites="sec">[<a
-href="#ref-sec"
-role="doc-biblioref"><strong>sec?</strong></a>]</span>;IV.1.1. The
-dataset curation is described in <a href="#sec:IV.1.2">Sec 4.1.1.1</a>,
-the objective evaluation process in <a
-href="#sec:IV.1.4.1">Sec 4.1.2.1</a>, the subjective evaluation in <a
-href="#sec:IV.1.4.2">Sec 4.1.2.2</a>, the implementation details and the
-reproducibility in <a href="#sec:IV.1.5">Sec 4.1.3</a>.</p>
+thesis dissertation <a href="#sec:IV.1.1">Sec 4.1.1</a>. The dataset
+curation is described in <a href="#sec:IV.1.2">Sec 4.1.1.1</a>, the
+objective evaluation process in <a href="#sec:IV.1.4.1">Sec 4.1.2.1</a>,
+the subjective evaluation in <a href="#sec:IV.1.4.2">Sec 4.1.2.2</a>,
+the implementation details and the reproducibility in <a
+href="#sec:IV.1.5">Sec 4.1.3</a>.</p>
 <h3 id="sec:IV.1.1">Synthetic Dataset Pipeline</h3>
 <p>The challenge of anime lineart colorization faces a lack of available
 datasets with perceptive qualitative content. To acquire corresponding
@@ -3137,7 +3135,7 @@ data-cites="ci_2018 zhang_richard_2017 petalicapaint_2023 paintschainer_2018">[<
 href="#ref-ci_2018" role="doc-biblioref">14</a>, <a
 href="#ref-paintschainer_2018" role="doc-biblioref">59</a>, <a
 href="#ref-petalicapaint_2023" role="doc-biblioref">63</a>, <a
-href="#ref-zhang_richard_2017" role="doc-biblioref">92</a>]</span>.</p>
+href="#ref-zhang_richard_2017" role="doc-biblioref">93</a>]</span>.</p>
 <figure id="fig:meta_danboruu_samples">
 <img src="./figures/meta_danboruu_samples.png"
 alt="Random sample illustrations extracted from the Danbooru dataset [2]. The dataset is mixing styles, quality, and image nature such as comic pages, photos, illustrations, and more." />
@@ -3150,7 +3148,7 @@ photos, illustrations, and more.</figcaption>
 <p>Currently, there are few public datasets available for the community
 <span class="citation" data-cites="danbooru_2020 danboo_region_2020">[<a
 href="#ref-danbooru_2020" role="doc-biblioref">2</a>, <a
-href="#ref-danboo_region_2020" role="doc-biblioref">90</a>]</span>, the
+href="#ref-danboo_region_2020" role="doc-biblioref">91</a>]</span>, the
 content of which is not uniform in terms of perceptual quality, image
 nature (e.g. comics pages, photos), and contains illustrations from
 different artists with varied skill levels and styles (see <a
@@ -3168,7 +3166,7 @@ dataset quality for the generation process.</p>
 <p>It is essential to note that any dataset <span class="citation"
 data-cites="danbooru_2020 danboo_region_2020">[<a
 href="#ref-danbooru_2020" role="doc-biblioref">2</a>, <a
-href="#ref-danboo_region_2020" role="doc-biblioref">90</a>]</span> used
+href="#ref-danboo_region_2020" role="doc-biblioref">91</a>]</span> used
 for the challenge of anime-like line art colorization is biased. The
 drawings are mainly of female characters with visible skin, a reflection
 of the anime subculture and communities from which they are drawn. This
@@ -3181,7 +3179,7 @@ data-cites="ci_2018">[<a href="#ref-ci_2018"
 role="doc-biblioref">14</a>]</span> proposed to use extended Difference
 of Gaussians (xDoG) <span class="citation"
 data-cites="winnermoller_2012">[<a href="#ref-winnermoller_2012"
-role="doc-biblioref">83</a>]</span>, an extended edge detector derived
+role="doc-biblioref">84</a>]</span>, an extended edge detector derived
 from Difference of Gaussians (DoG) that is less susceptible to noise and
 can produce qualitative synthetic linearts from colored images, or
 photographs (see <a href="#fig:met_xdog">Fig 49</a>).</p>
@@ -3218,7 +3216,7 @@ center cropped only at test time.</p>
 GAN literature reports the use of both objective and subjective metrics.
 The objective metrics offer a non-refutable measure of perceptual
 quality and are often based on pre-trained image NNs. They however are
-hard to interpret. A small variation in those metrics cool hide a big
+hard to interpret. A small variation in those metrics could hide a big
 change in quality. The subjective metrics are used to overcome those
 issues and require performing a user-study. This section discusses the
 metrics used in this thesis.</p>
@@ -3230,14 +3228,14 @@ href="#ref-heusel_2017" role="doc-biblioref">34</a>]</span> (see <a
 href="#fig:met_fid">Fig 50</a>). This metric is based on the feature
 learned by an ImageNet pre-trained NN such as InceptionNet <span
 class="citation" data-cites="szegedy_2015">[<a href="#ref-szegedy_2015"
-role="doc-biblioref">79</a>]</span>. We measure the similarity of a
+role="doc-biblioref">80</a>]</span>. We measure the similarity of a
 given pair of fake and real images by comparing them in feature
 space.</p>
 <p>Instead of assessing images by their individual pixels (like what the
 <span class="math inline">\(L_2\)</span> norm does), the FID compares
 the average and variation of the deepest layer in Inception v3 <span
 class="citation" data-cites="szegedy_2016">[<a href="#ref-szegedy_2016"
-role="doc-biblioref">80</a>]</span>. These layers are closer to output
+role="doc-biblioref">81</a>]</span>. These layers are closer to output
 neurons focusing on object representation. Consequently, they imitate
 the way humans judge similarities between images. The +FID between two
 distributions <span class="math inline">\(r\)</span>, <span
@@ -3334,7 +3332,7 @@ used Automatic Differentiation (AD) framework with out-of-the-box
 support for DL accelerators. When required to export the trained models
 for building web demos, the models are exported for TensorFlowJS <span
 class="citation" data-cites="smilkov_2019">[<a href="#ref-smilkov_2019"
-role="doc-biblioref">76</a>]</span> using the ONNX intermediate and
+role="doc-biblioref">77</a>]</span> using the ONNX intermediate and
 universal converter <span class="citation" data-cites="bai_2019">[<a
 href="#ref-bai_2019" role="doc-biblioref">6</a>]</span>.</p>
 <h4 id="sec:IV.1.5.2">Measurements</h4>
@@ -3373,7 +3371,7 @@ data-cites="zhang_2018 petalicapaint_2023 paintschainer_2018 ci_2018">[<a
 href="#ref-ci_2018" role="doc-biblioref">14</a>, <a
 href="#ref-paintschainer_2018" role="doc-biblioref">59</a>, <a
 href="#ref-petalicapaint_2023" role="doc-biblioref">63</a>, <a
-href="#ref-zhang_2018" role="doc-biblioref">91</a>]</span>, they still
+href="#ref-zhang_2018" role="doc-biblioref">92</a>]</span>, they still
 suffer from visual artifacts, color bleeding, and struggle with hint
 positioning.</p>
 <p>In this work, PaintsTorch <span class="citation"
@@ -3410,7 +3408,7 @@ custom dataset.</p>
 <p><strong>Synthetic Linearts:</strong> The linearts are generated by
 applying the extended Difference of Gaussians (xDoG) <span
 class="citation" data-cites="winnermoller_2012">[<a
-href="#ref-winnermoller_2012" role="doc-biblioref">83</a>]</span> edge
+href="#ref-winnermoller_2012" role="doc-biblioref">84</a>]</span> edge
 detector algorithm to grayscaled versions of the given illustrations
 with the following parametrization: <span class="math inline">\(\gamma =
 0.95\)</span>, <span class="math inline">\(\phi = 1e^9\)</span>, <span
@@ -3437,7 +3435,7 @@ randomly sampled pixels as hints is enough to enable natural
 interactions with colored strokes during inference. Their initial
 assumptions are based on work from Zhang et al. <span class="citation"
 data-cites="zhang_richard_2017">[<a href="#ref-zhang_richard_2017"
-role="doc-biblioref">92</a>]</span>. They however dealt with grayscale
+role="doc-biblioref">93</a>]</span>. They however dealt with grayscale
 image colorization which is fundamentally different from lineart
 colorization because of the shadow and texture information already
 present in the input image. For this reason, we explore the use of
@@ -3485,7 +3483,7 @@ href="#ref-ci_2018" role="doc-biblioref">14</a>]</span>. The generators
 are identical <span class="math inline">\(G_1\)</span> and <span
 class="math inline">\(G_2\)</span> are deep U-net <span class="citation"
 data-cites="ronneberger_2015">[<a href="#ref-ronneberger_2015"
-role="doc-biblioref">68</a>]</span> models with ResNeXt <span
+role="doc-biblioref">69</a>]</span> models with ResNeXt <span
 class="citation" data-cites="he_2016">[<a href="#ref-he_2016"
 role="doc-biblioref">32</a>]</span> blocks and dilated depth-wise
 separable convolutions <span class="citation"
@@ -3510,7 +3508,7 @@ class="math inline">\(F_1\)</span> is used to bring back the missing
 semantic information of the black and white lineart. <span
 class="math inline">\(F_1\)</span> is the Illustration2Vec network <span
 class="citation" data-cites="saito_2015">[<a href="#ref-saito_2015"
-role="doc-biblioref">71</a>]</span> without the classification head. The
+role="doc-biblioref">72</a>]</span> without the classification head. The
 model was trained to tag anime illustrations in a supervised fashion.
 Both the generators and critic networks are conditioned on the
 Illustration2Vec features.</p>
@@ -3520,7 +3518,7 @@ synthetic linearts from fake colored illustrations produced by the first
 generator <span class="math inline">\(G_1\)</span>. This approach is
 inspired by previous work on cross-domain training such as Zhu and al.
 <span class="citation" data-cites="zhu_2017">[<a href="#ref-zhu_2017"
-role="doc-biblioref">93</a>]</span> and their work on CycleGAN. The
+role="doc-biblioref">94</a>]</span> and their work on CycleGAN. The
 second generator is learning an inverse mapping which aims to bring an
 additional signal for training the first generator <span
 class="math inline">\(G_1\)</span>.</p>
@@ -3558,7 +3556,7 @@ ImageNet <span class="citation" data-cites="deng_2009">[<a
 href="#ref-deng_2009" role="doc-biblioref">16</a>]</span> pretrained
 VGG16 network <span class="math inline">\(F_2\)</span> <span
 class="citation" data-cites="simonyan_2014">[<a
-href="#ref-simonyan_2014" role="doc-biblioref">75</a>]</span> using its
+href="#ref-simonyan_2014" role="doc-biblioref">76</a>]</span> using its
 fourth activation layer:</p>
 <p><span id="eq:pt_generator_loss_cont"><span
 class="math display">\[L_{cont} = \frac{1}{chw} ||F_2(\hat{y}) -
@@ -3624,13 +3622,13 @@ objective metrics against state-of-the-art methods <span
 class="citation" data-cites="zhang_2018 paintschainer_2018 ci_2018">[<a
 href="#ref-ci_2018" role="doc-biblioref">14</a>, <a
 href="#ref-paintschainer_2018" role="doc-biblioref">59</a>, <a
-href="#ref-zhang_2018" role="doc-biblioref">91</a>]</span> on our <span
-class="math inline">\(3,545\)</span> curated test set centerd cropped to
-<span class="math inline">\(512 \times 512\)</span> images.</p>
+href="#ref-zhang_2018" role="doc-biblioref">92</a>]</span> on our <span
+class="math inline">\(3,545\)</span> curated test set centered cropped
+to <span class="math inline">\(512 \times 512\)</span> images.</p>
 <p><strong>Baseline:</strong> We evaluate PaintsTorch against previous
 work: PaintsChainer Zhang et al. <span class="citation"
 data-cites="zhang_2018">[<a href="#ref-zhang_2018"
-role="doc-biblioref">91</a>]</span>, PaintsChainer <span
+role="doc-biblioref">92</a>]</span>, PaintsChainer <span
 class="citation" data-cites="paintschainer_2018">[<a
 href="#ref-paintschainer_2018" role="doc-biblioref">59</a>]</span>, and
 Ci et al. <span class="citation" data-cites="ci_2018">[<a
@@ -3655,7 +3653,7 @@ conditioning.</p>
 <caption>Table 1: Fréchet Inception Distance (FID) benchmark comparing
 our work PaintsTorch against previous from Zhang et al. <span
 class="citation" data-cites="zhang_2018">[<a href="#ref-zhang_2018"
-role="doc-biblioref">91</a>]</span>, PaintsChainer <span
+role="doc-biblioref">92</a>]</span>, PaintsChainer <span
 class="citation" data-cites="paintschainer_2018">[<a
 href="#ref-paintschainer_2018" role="doc-biblioref">59</a>]</span>, and
 Ci et al. <span class="citation" data-cites="ci_2018">[<a
@@ -3718,7 +3716,7 @@ and the features of an ImageNet <span class="citation"
 data-cites="deng_2009">[<a href="#ref-deng_2009"
 role="doc-biblioref">16</a>]</span> pretrained network such as VGG <span
 class="citation" data-cites="simonyan_2014">[<a
-href="#ref-simonyan_2014" role="doc-biblioref">75</a>]</span>. The
+href="#ref-simonyan_2014" role="doc-biblioref">76</a>]</span>. The
 results shown in <a href="#tbl:core_pt_lpips">Tbl 2</a> shows that our
 model is able to compete with previous work and produces relatively
 better results with no hints.</p>
@@ -3727,7 +3725,7 @@ better results with no hints.</p>
 <caption>Table 2: Learned Perceptual Image Patch Similarity (LPIPS)
 benchmark comparing our work PaintsTorch against previous from Zhang et
 al. <span class="citation" data-cites="zhang_2018">[<a
-href="#ref-zhang_2018" role="doc-biblioref">91</a>]</span>,
+href="#ref-zhang_2018" role="doc-biblioref">92</a>]</span>,
 PaintsChainer <span class="citation" data-cites="paintschainer_2018">[<a
 href="#ref-paintschainer_2018" role="doc-biblioref">59</a>]</span>, and
 Ci et al. <span class="citation" data-cites="ci_2018">[<a
@@ -3784,18 +3782,18 @@ class="math inline">\(\downarrow\)</span></td>
 </table>
 </div>
 <p><strong>Subjective Evaluation:</strong> As stated in the methodology
-section (see Sec <strong>¿sec:IV.1.2.1?</strong>) a subjective
+section (see <a href="#sec:IV.1.4.1">Sec 4.1.2.1</a>) a subjective
 evaluation is required due to the nature of the task we are trying to
 solve. We thus perform a MOS using the population of study described
-earlier (see Sec <strong>¿sec:IV.1.2.2?</strong>). The results (see <a
-href="#tbl:core_pt_mos">Tbl 3</a>) show that our model PaintsTorch
+earlier (see <a href="#sec:IV.1.4.2">Sec 4.1.2.2</a>). The results (see
+<a href="#tbl:core_pt_mos">Tbl 3</a>) show that our model PaintsTorch
 produces colored images with better perceptual qualities.</p>
 <div id="tbl:core_pt_mos">
 <table>
 <caption>Table 3: Mean Opinion Score (MOS) benchmark comparing our work
 PaintsTorch against previous from Zhang et al. <span class="citation"
 data-cites="zhang_2018">[<a href="#ref-zhang_2018"
-role="doc-biblioref">91</a>]</span>, PaintsChainer <span
+role="doc-biblioref">92</a>]</span>, PaintsChainer <span
 class="citation" data-cites="paintschainer_2018">[<a
 href="#ref-paintschainer_2018" role="doc-biblioref">59</a>]</span>, and
 Ci et al. <span class="citation" data-cites="ci_2018">[<a
@@ -3852,16 +3850,16 @@ class="math inline">\(e^{-09}\)</span></strong></td>
 </tbody>
 </table>
 </div>
-<h4 id="sec:IV.2.3.2">Visual Qualities</h4>
+<h4 id="sec:IV.2.3.2">Qualitative Results</h4>
 <figure id="fig:core_pt_comparison">
 <img src="./figures/core_pt_comparison.png"
-alt="Comparison of PaintsChainer [59] on top and our contribution PaintsTorch bottom. The comparison shows that our method is more robust to variable colored strokes leading to less bleeding, and an overall better look in the generatoed output." />
+alt="Comparison of PaintsChainer [59] on top and our contribution PaintsTorch bottom. The comparison shows that our method is more robust to variable colored strokes leading to less bleeding, and an overall better look in the generated output." />
 <figcaption>Figure 55: Comparison of PaintsChainer <span
 class="citation" data-cites="paintschainer_2018">[<a
 href="#ref-paintschainer_2018" role="doc-biblioref">59</a>]</span> on
 top and our contribution PaintsTorch bottom. The comparison shows that
 our method is more robust to variable colored strokes leading to less
-bleeding, and an overall better look in the generatoed
+bleeding, and an overall better look in the generated
 output.</figcaption>
 </figure>
 <p>The differences in our approach PaintsTorch results in visible
@@ -3905,21 +3903,22 @@ PyTorch framework is then exported to TensorFlowJS using the
 intermediate and universal ONNX format. This allows us to serve the web
 application as a standalone static web page and make use of the GPU from
 a web browser to allow for real-time interaction with our model
-PaintsTorch. The application propose to interact with the model by first
-providing a lineart using the file tool bar available on the right side,
-populate the hint map using a brush and tool options made available on
-the left side tool bar as well as seeing the resulting generated colored
-illustration in realtime and save it using the file icons.</p>
+PaintsTorch. The application proposes to interact with the model by
+first providing a lineart using the file tool bar available on the right
+side, populate the hint map using a brush and tool options made
+available on the left side tool bar as well as seeing the resulting
+generated colored illustration in realtime and save it using the file
+icons.</p>
 <p>Our model PaintsTorch integrates naturally into the modern digital
 illustration production workflow as it uses similar tools and can be
 futher inhanced using the user favorite pipeline. An example of such
 workflow is shown in <a href="#fig:core_pt_workflow">Fig 59</a>.</p>
 <figure id="fig:core_pt_app">
 <img src="./figures/core_pt_app.jpeg"
-alt="The figure is a screenshot of our web application. The model, PaintsTorch, is exported using the ONNX framework for TesnorflowJS and deployed in the browser as a standalone static page. The web app is built to follow the digital drawing tools and aesthetic enabling the use of different tools on the left-side bar such as a brush with various sizes, a color picker and color wheel, a drawing canvas and a result canvas. The generated output can be saved using the file menu on the right-side bar." />
+alt="The figure is a screenshot of our web application. The model, PaintsTorch, is exported using the ONNX framework for TensorflowJS and deployed in the browser as a standalone static page. The web app is built to follow the digital drawing tools and aesthetic enabling the use of different tools on the left-side bar such as a brush with various sizes, a color picker and color wheel, a drawing canvas and a result canvas. The generated output can be saved using the file menu on the right-side bar." />
 <figcaption>Figure 58: The figure is a screenshot of our web
 application. The model, PaintsTorch, is exported using the ONNX
-framework for TesnorflowJS and deployed in the browser as a standalone
+framework for TensorflowJS and deployed in the browser as a standalone
 static page. The web app is built to follow the digital drawing tools
 and aesthetic enabling the use of different tools on the left-side bar
 such as a brush with various sizes, a color picker and color wheel, a
@@ -3939,7 +3938,7 @@ image.</figcaption>
 <h4 id="sec:IV.2.3.4">Limitations</h4>
 <p>While PaintsTorch allow the creation of qualitative colored
 illustration with minimal work, our approache presents limitations. Our
-model is still subject to the generation of visual artificats that needs
+model is still subject to the generation of visual artifacts that needs
 to be cleaned by the end-user for proper use. They tend to appear more
 when the hint map is dense and contains highly saturated colors as shown
 in <a href="#fig:core_pt_artifacts">Fig 60</a>. The model is also
@@ -3959,13 +3958,13 @@ dense colored strokes.</figcaption>
 Previous work introduced the use of the GAN architecture and shows that
 DL methods yield better results than previous methods. In this work,
 PaintsTorch <span class="citation" data-cites="hati_2019">[<a
-href="#ref-hati_2019" role="doc-biblioref">30</a>]</span>, we porpose
+href="#ref-hati_2019" role="doc-biblioref">30</a>]</span>, we propose
 three changes to the setup proposed by Ci et al. <span class="citation"
 data-cites="ci_2018">[<a href="#ref-ci_2018"
 role="doc-biblioref">14</a>]</span> and demonstrate their impact through
-an objective and subjective evaluation. We first introduce the use of
+an objective and subjective evaluations. We first introduce the use of
 simulated strokes as a replacement for the usual random pixel activation
-scheme porposed by previous work. This change positively impact the
+scheme proposed by previous work. This change positively impact the
 interaction with the model by making it robust to messy input strokes
 and improve the overall quality of the produced illustrations. Our
 second contribution is the use of a custom high resolution dataset
@@ -3978,56 +3977,57 @@ from the generated illustration from the first generation to enforce a
 cycle consistency signal.</p>
 <p>PaintsTorch is able to generate high quality colored illustrations
 given a lineart and a coarse hint map made of user-defined color
-strokes. However, our model is still subject to visual artificats,
+strokes. However, our model is still subject to visual artifacts,
 especially when provided with highly saturated and dense colored
-strokes. Is also struggles at representing the user intent when hinting
+strokes. It also struggles at representing the user intent when hinting
 for small details in the lineart.</p>
 <h2 id="sec:IV.3">StencitTorch: Human-Machine Colaboration</h2>
 <figure id="fig:core_st_teaser">
 <img src="./figures/core_st_teaser.png"
-alt="The figure is a screenshot of our model StencilTorch [31] deployed in a digital drawing web applicaton on top, and a photo of a user interacting with the application bottom. The left canavs is used to provide a mask, the middle canavas the colored strokes hint map, and the right canvas displayes the result illustration generated by the model." />
+alt="The figure is a screenshot of our model StencilTorch [31] deployed in a digital drawing web application on top, and a photo of a user interacting with the application bottom. The left canvas is used to provide a mask, the middle canvas the colored strokes hint map, and the right canvas displayes the result illustration generated by the model." />
 <figcaption>Figure 61: The figure is a screenshot of our model
 StencilTorch <span class="citation" data-cites="hati_2023">[<a
 href="#ref-hati_2023" role="doc-biblioref">31</a>]</span> deployed in a
-digital drawing web applicaton on top, and a photo of a user interacting
-with the application bottom. The left canavs is used to provide a mask,
-the middle canavas the colored strokes hint map, and the right canvas
-displayes the result illustration generated by the model.</figcaption>
+digital drawing web application on top, and a photo of a user
+interacting with the application bottom. The left canvas is used to
+provide a mask, the middle canvas the colored strokes hint map, and the
+right canvas displayes the result illustration generated by the
+model.</figcaption>
 </figure>
 <h3 id="sec:IV.3.1">Introduction</h3>
 <p>This section discusses our work on StencilTorch <span
 class="citation" data-cites="hati_2023">[<a href="#ref-hati_2023"
 role="doc-biblioref">31</a>]</span>, an iterative and user-guided
 framework for anime lineart colorization (see <a
-href="#fig:core_st_teaser">Fig 61</a>). Previous work <span
+href="#fig:core_st_teaser">Fig 61</a>). Previous works <span
 class="citation"
 data-cites="zhang_2018 paintschainer_2018 petalicapaint_2023 ci_2018 hati_2019">[<a
 href="#ref-ci_2018" role="doc-biblioref">14</a>, <a
 href="#ref-hati_2019" role="doc-biblioref">30</a>, <a
 href="#ref-paintschainer_2018" role="doc-biblioref">59</a>, <a
 href="#ref-petalicapaint_2023" role="doc-biblioref">63</a>, <a
-href="#ref-zhang_2018" role="doc-biblioref">91</a>]</span> introduced
-the use of cWGAN-GP and have demonstrated unprecendant lineart
+href="#ref-zhang_2018" role="doc-biblioref">92</a>]</span> introduced
+the use of cWGAN-GP and have demonstrated unprecedant lineart
 colorization capabilities guided by user strokes and conditionned on a
 local feature extractor called Illustration2Vec <span class="citation"
 data-cites="saito_2015">[<a href="#ref-saito_2015"
-role="doc-biblioref">71</a>]</span> to compensate for the lack of
+role="doc-biblioref">72</a>]</span> to compensate for the lack of
 semantic information provided by a black and white lineart with no
 lighting nor texture.</p>
 <p>Previous methods consist of a one-step process where the user is
 involved one time only, at the beginning of the process when asked to
-provide a hint map populated with colored bursh strokes. This type of
-pipeline is limited and is not ideal in the context of creation where th
-artist needs to iterate and explore its design space. In this work, we
-propose to give the power back to the user by formulating the task of
+provide a hint map populated with colored brush strokes. This type of
+pipeline is limited and is not ideal in the context of creation where
+the artist needs to iterate and explore its design space. In this work,
+we propose to give the power back to the user by formulating the task of
 automatic lineart colorization as a human-in-the-loop process where the
 end-user collaborates with the machine to produce the final colored
 illustration.</p>
 <figure id="fig:core_st_workflow">
 <img src="./figures/core_st_workflow.png"
-alt="The schematic illustrate StencilTorch workflows enabled by the in-painting forimation of the automatic linear colorization task. The artist is able to explores a potential colorization for its lineart on the left, and explore an alternative colorization on the right after introducing additional shading and lighting manually." />
+alt="The schematic illustrate StencilTorch workflows enabled by the in-painting formulation of the automatic linear colorization task. The artist is able to explores a potential colorization for its lineart on the left, and explore an alternative colorization on the right after introducing additional shading and lighting manually." />
 <figcaption>Figure 62: The schematic illustrate StencilTorch workflows
-enabled by the in-painting forimation of the automatic linear
+enabled by the in-painting formulation of the automatic linear
 colorization task. The artist is able to explores a potential
 colorization for its lineart on the left, and explore an alternative
 colorization on the right after introducing additional shading and
@@ -4050,10 +4050,10 @@ href="#fig:core_st_workflow">Fig 62</a>.</p>
 <p>In this work, StencilTorch <span class="citation"
 data-cites="hati_2023">[<a href="#ref-hati_2023"
 role="doc-biblioref">31</a>]</span>, our contributions are the
-following:</p>
+followings:</p>
 <ul>
 <li>We present a new synthetic pipeline for generating colored strokes
-from prepeprocessed illustrations from which the texture, and lighting
+from preprocessed illustrations from which the texture, and lighting
 information are removed. This processed uses semantic color segmentation
 and aims at producing better hints for training.</li>
 <li>StencilTorch, a cWGAN-GP trained to produce illustrations from a
@@ -4061,8 +4061,8 @@ given lineart, a local semantic feature vector, a colored hint map, and
 a mask enabling emergent collaborative workflows. We additionally guide
 the training with a guide network to help recovering flat colorization
 in the early layers of the network.</li>
-<li>We evaluate our method against previous work using both objective
-and subjective evaluation metrics.</li>
+<li>We evaluate our method against previous work using objective and
+subjective evaluations.</li>
 <li>An interactive web application allowing users to naturally interact
 with our model by providing a linear, drawing scribble colored lines and
 a mask.</li>
@@ -4084,19 +4084,19 @@ PaintsTorch <span class="citation" data-cites="hati_2019">[<a
 href="#ref-hati_2019" role="doc-biblioref">30</a>]</span> we demonstrate
 the importance of the quality of the dataset and its impact on the
 overall perceptual quality of the images produced by the generative
-models. We thus resused our custom curated filtered dataset and employed
+models. We thus reused our custom curated filtered dataset and employed
 a similar data transformation pipeline with additional improvements
 explained in <a href="#fig:core_st_pipeline">Fig 63</a>.</p>
 <figure id="fig:core_st_pipeline">
 <img src="./figures/core_st_pipeline.png"
-alt="StencilTorch synthetic input generation process diagram. The illustration sampled form our custom dataset is first transformeed into a synthetic lineart using the xDoG method. The same illustration is simplified to partially remove texture and shadow information using a semantic color segmentation network, color quantization, and k-means to further reduce th number of colors present in the image. The selection mask and the color strokes are then generated from this simplified segmented illustration. Finally, a composite input is aggregated for inpainting where the black region of the mask contains the original illustration, and the white region, the synthetic lineart to be colorized." />
+alt="StencilTorch synthetic input generation process diagram. The illustration sampled from our custom dataset is first transformed into a synthetic lineart using the xDoG method. The same illustration is simplified to partially remove texture and shadow information using a semantic color segmentation network, color quantization, and k-means to further reduce the number of colors present in the image. The selection mask and the color strokes are then generated from this simplified segmented illustration. Finally, a composite input is aggregated for inpainting where the black region of the mask contains the original illustration, and the white region, the synthetic lineart to be colorized." />
 <figcaption>Figure 63: StencilTorch synthetic input generation process
-diagram. The illustration sampled form our custom dataset is first
-transformeed into a synthetic lineart using the xDoG method. The same
+diagram. The illustration sampled from our custom dataset is first
+transformed into a synthetic lineart using the xDoG method. The same
 illustration is simplified to partially remove texture and shadow
 information using a semantic color segmentation network, color
 quantization, and <span class="math inline">\(k\)</span>-means to
-further reduce th number of colors present in the image. The selection
+further reduce the number of colors present in the image. The selection
 mask and the color strokes are then generated from this simplified
 segmented illustration. Finally, a composite input is aggregated for
 inpainting where the black region of the mask contains the original
@@ -4106,7 +4106,7 @@ colorized.</figcaption>
 <p>Randomly sampling color strokes from the input illustration means
 that the similated random strokes capture the variation of color present
 in the image containing shadow, lighting, texture and more. However,
-based on our previous observations from interactons with our previous
+based on our previous observations from interactions with our previous
 work PaintsTorch <span class="citation" data-cites="hati_2019">[<a
 href="#ref-hati_2019" role="doc-biblioref">30</a>]</span>, the end-user
 tend to specify mid-tone colors whithout thinking about lighting as they
@@ -4119,7 +4119,7 @@ data-cites="he_2016">[<a href="#ref-he_2016"
 role="doc-biblioref">32</a>]</span> mode to regress displacement maps
 from colored illustrations on the DabooRegion dataset <span
 class="citation" data-cites="danboo_region_2020">[<a
-href="#ref-danboo_region_2020" role="doc-biblioref">90</a>]</span>. The
+href="#ref-danboo_region_2020" role="doc-biblioref">91</a>]</span>. The
 displacement map is robust to noise and allows us to extract unique
 color sections. We further assign each region to its median color,
 further reduce the number of colors using color quantization and further
@@ -4141,13 +4141,13 @@ schematic.</figcaption>
 role="doc-biblioref">30</a>]</span> at the exception that the cycle
 consistency lineart generator is removed and replaced by a guide network
 (see <a href="#fig:core_st_architecture">Fig 64</a>). As we reformulate
-the task of automatic colorization as in-painting, we found the this
+the task of automatic colorization as in-painting, we found that this
 second generator is not required and does not bring additional value to
 StencilTorch.</p>
 <p>We however introduce a secondary network which is a copy of the
 WGAN-GP decoder section of the generator inspired by previous work from
 Zhang et al. <span class="citation" data-cites="zhang_ji_2017">[<a
-href="#ref-zhang_ji_2017" role="doc-biblioref">89</a>]</span>. This
+href="#ref-zhang_ji_2017" role="doc-biblioref">90</a>]</span>. This
 secondary network is activated during training only and is trained to
 reconstruct the simplified illustration using the latent code provided
 by the encoder section of the generator. By introducing this network to
@@ -4201,13 +4201,13 @@ data-cites="zhang_2018 paintschainer_2018 ci_2018 hati_2019">[<a
 href="#ref-ci_2018" role="doc-biblioref">14</a>, <a
 href="#ref-hati_2019" role="doc-biblioref">30</a>, <a
 href="#ref-paintschainer_2018" role="doc-biblioref">59</a>, <a
-href="#ref-zhang_2018" role="doc-biblioref">91</a>]</span> on our <span
+href="#ref-zhang_2018" role="doc-biblioref">92</a>]</span> on our <span
 class="math inline">\(3,545\)</span> curated test set centerd cropped to
 <span class="math inline">\(512 \times 512\)</span> images.</p>
 <p><strong>Baseline:</strong> We evaluate StencilTorch against previous
 work: PaintsChainer Zhang et al. <span class="citation"
 data-cites="zhang_2018">[<a href="#ref-zhang_2018"
-role="doc-biblioref">91</a>]</span>, PaintsChainer <span
+role="doc-biblioref">92</a>]</span>, PaintsChainer <span
 class="citation" data-cites="paintschainer_2018">[<a
 href="#ref-paintschainer_2018" role="doc-biblioref">59</a>]</span>, Ci
 et al. <span class="citation" data-cites="ci_2018">[<a
@@ -4221,14 +4221,14 @@ Inception Distance (FID) of our generated illustration against the
 targets. The FID measures the intra-class dropping, diversity, and
 quality. A small value means that the two distributions compared are
 similar. The results of the FID evaluation are shown in <a
-href="#tbl:core_st_fid">Tbl 4</a>. Our model StencilTorch outperform
+href="#tbl:core_st_fid">Tbl 4</a>. Our model StencilTorch outperforms
 previous work with various amount of hint conditioning.</p>
 <div id="tbl:core_st_fid">
 <table style="width:100%;">
 <caption>Table 4: Fréchet Inception Distance (FID) benchmark comparing
 our work StencilTorch against previous from Zhang et al. <span
 class="citation" data-cites="zhang_2018">[<a href="#ref-zhang_2018"
-role="doc-biblioref">91</a>]</span>, PaintsChainer <span
+role="doc-biblioref">92</a>]</span>, PaintsChainer <span
 class="citation" data-cites="paintschainer_2018">[<a
 href="#ref-paintschainer_2018" role="doc-biblioref">59</a>]</span>, Ci
 et al. <span class="citation" data-cites="ci_2018">[<a
@@ -4311,11 +4311,11 @@ class="math inline">\(\downarrow\)</span></td>
 </div>
 <p>We additionally evaluate our work on a second feature-based metric,
 LPIPS measuring the similarity of two images in feature space using
-different winodw sizes and the features of an ImageNet <span
+different window sizes and the features of an ImageNet <span
 class="citation" data-cites="deng_2009">[<a href="#ref-deng_2009"
 role="doc-biblioref">16</a>]</span> pretrained network such as VGG <span
 class="citation" data-cites="simonyan_2014">[<a
-href="#ref-simonyan_2014" role="doc-biblioref">75</a>]</span>. The
+href="#ref-simonyan_2014" role="doc-biblioref">76</a>]</span>. The
 results shown in <a href="#tbl:core_st_lpips">Tbl 5</a> shows that our
 model is able to compete with previous work and produces relatively
 better results with no hints.</p>
@@ -4324,7 +4324,7 @@ better results with no hints.</p>
 <caption>Table 5: Learned Perceptual Image Patch Similarity (LPIPS)
 benchmark comparing our work StencilTorch against previous from Zhang et
 al. <span class="citation" data-cites="zhang_2018">[<a
-href="#ref-zhang_2018" role="doc-biblioref">91</a>]</span>,
+href="#ref-zhang_2018" role="doc-biblioref">92</a>]</span>,
 PaintsChainer <span class="citation" data-cites="paintschainer_2018">[<a
 href="#ref-paintschainer_2018" role="doc-biblioref">59</a>]</span>, Ci
 et al. <span class="citation" data-cites="ci_2018">[<a
@@ -4418,7 +4418,7 @@ cases.</p>
 <caption>Table 6: Mean Opinion Score (MOS) benchmark comparing our work
 StencilTorch against previous from Zhang et al. <span class="citation"
 data-cites="zhang_2018">[<a href="#ref-zhang_2018"
-role="doc-biblioref">91</a>]</span>, PaintsChainer <span
+role="doc-biblioref">92</a>]</span>, PaintsChainer <span
 class="citation" data-cites="paintschainer_2018">[<a
 href="#ref-paintschainer_2018" role="doc-biblioref">59</a>]</span>, Ci
 et al. <span class="citation" data-cites="ci_2018">[<a
@@ -4483,7 +4483,7 @@ class="math inline">\(e^{-09}\)</span></strong></td>
 </tbody>
 </table>
 </div>
-<h4 id="sec:IV.3.3.2">Visual Qualities</h4>
+<h4 id="sec:IV.3.3.2">Qualitative Results</h4>
 <figure id="fig:core_st_samples">
 <img src="./figures/core_st_samples.png"
 alt="Samples mosaic of input and output pairs generated using one pass with StencilTorch. In every cell of the mosaic, the lineart, the mask, and the hint map are shown in the bottom, and the generated colored illustration on top." />
@@ -4603,7 +4603,7 @@ Diffusion Model (DDM) for user-guided and iterative lineart
 colorization. The results shown in this section are unfinished and will
 remain as such. A recent work from Zhang et al. <span class="citation"
 data-cites="zhang_2023">[<a href="#ref-zhang_2023"
-role="doc-biblioref">88</a>]</span> called ControlNet solved the purpose
+role="doc-biblioref">89</a>]</span> called ControlNet solved the purpose
 of this exploration and is now use by the community as the defacto
 standard to solve the task of semi-automatic lineart colorization. We
 however explain the intent of our approach in order to build an
@@ -4620,11 +4620,11 @@ worflows, the DDM architecture family offers a potential for improving
 both objectives with a single end-to-end solution.</p>
 <p>GANs <span class="citation" data-cites="goodfellow_2014">[<a
 href="#ref-goodfellow_2014" role="doc-biblioref">27</a>]</span> has been
-the standard for image generation since it 2014. While this type of
+the standard for image generation since 2014. While this type of
 architecture is able to produce qualitative images that resemble the
 training distribution in real time settings and produces smooth
 interpolable latent spaces, they are hard to train, they require tons of
-data, they are hard to stabalize and are prone to mode collapse because
+data, they are hard to stabilize and are prone to mode collapse because
 of their dual networks and objectives.</p>
 <p>This is not the case for DDMs <span class="citation"
 data-cites="ho_2020">[<a href="#ref-ho_2020"
@@ -4645,7 +4645,7 @@ called a Latent Diffusion Model (LDM). The LDM is easier to train being
 smaller. The litterature shows successful attemps at conditionning DDM
 and LDM models with text <span class="citation"
 data-cites="rombach_2021">[<a href="#ref-rombach_2021"
-role="doc-biblioref">67</a>]</span>. It is however harder to condition a
+role="doc-biblioref">68</a>]</span>. It is however harder to condition a
 LDM with images such as linearts, and colored strokes. StablePaint is an
 attempt at solving this issue.</p>
 <p>In this work StablePaint, our contributions are: - An improvement of
@@ -4657,7 +4657,8 @@ href="#ref-hati_2023" role="doc-biblioref">31</a>]</span>. - An
 exploration on how to condition a LDM for automatic colorization while
 leveraging the inherent benefits of the architecture used. - An
 explenation of ControlNet, the community adopted solution from Zhang et
-al. [zhang_2023].</p>
+al. <span class="citation" data-cites="zhang_2023">[<a
+href="#ref-zhang_2023" role="doc-biblioref">89</a>]</span>.</p>
 <h3 id="sec:IV.4.2">Method</h3>
 <p>This section discusses our dataset generation pipeline (<a
 href="#sec:IV.4.2.1">Sec 4.4.2.1</a>) our approach to the conditioning
@@ -4676,7 +4677,7 @@ role="doc-biblioref">31</a>]</span>, we employ a synthetic generation
 pipeline following our own guidelines.</p>
 <p>The lineart are synthetically generated using xDoG <span
 class="citation" data-cites="winnermoller_2012">[<a
-href="#ref-winnermoller_2012" role="doc-biblioref">83</a>]</span>. The
+href="#ref-winnermoller_2012" role="doc-biblioref">84</a>]</span>. The
 color hints are generated using the StencilTorch <span class="citation"
 data-cites="hati_2023">[<a href="#ref-hati_2023"
 role="doc-biblioref">31</a>]</span> pipeline consisting in building
@@ -4693,7 +4694,7 @@ class="math inline">\(l0\)</span>-smoothing</figcaption>
 <p>We additionaly enhance the pipeline by adding a <span
 class="math inline">\(l0\)</span>-smoothing <span class="citation"
 data-cites="xu_2011">[<a href="#ref-xu_2011"
-role="doc-biblioref">85</a>]</span> pass before the generation of the
+role="doc-biblioref">86</a>]</span> pass before the generation of the
 colored regions from which the synthetic strokes are generated. A sample
 of the resulting smoothing effect is shown <a
 href="#fig:stablepaint_l0_smoothing">Fig 68</a> with different smoothing
@@ -4719,7 +4720,7 @@ Latent Diffusion Model (LDM).</figcaption>
 <p>The StablePaint model architecture (see <a
 href="#fig:stablepaint_arch">Fig 69</a>) is built on top of the vanilla
 LDM <span class="citation" data-cites="rombach_2021">[<a
-href="#ref-rombach_2021" role="doc-biblioref">67</a>]</span>. It
+href="#ref-rombach_2021" role="doc-biblioref">68</a>]</span>. It
 consists of a Variational Autoencoder (VAE) variant trained to compress
 images into latent codes in image space. In our case, the VAE is a
 simple CNN with a mix of resnet blocks, attention blocks, and swish
@@ -4739,7 +4740,7 @@ illustration autoencoder. The illustration autoencoder is trained until
 saturation and is able to encode and decode the original signal with
 almost no perceptible difference.</figcaption>
 </figure>
-<p>We choosed to train a second VAE sharing the decoder with the first
+<p>We chosed to train a second VAE sharing the decoder with the first
 one. We thus train only the encoder of the second model to recover
 latent codes that are similar to the colored images starting from a
 combination of lineart and color hint maps. The objective is to make the
@@ -4767,7 +4768,7 @@ and color hints. The model used for the DDM is a UNet architecture made
 out of residual bloack, spatial transformer blocks with attention and
 cross-attention. It is an adaptation of the text conditionning proposed
 by Rombach et al. <span class="citation" data-cites="rombach_2021">[<a
-href="#ref-rombach_2021" role="doc-biblioref">67</a>]</span> adapted to
+href="#ref-rombach_2021" role="doc-biblioref">68</a>]</span> adapted to
 image conditionning.</p>
 <p>During inference, a noisy latent code is constructed by input a
 lineart and a corresponding color hint map into our second VAE encoder.
@@ -4857,20 +4858,20 @@ and <a href="#fig:stablepaint_demo_corruption">Fig 73</a>.</p>
 <p>We did not conduct further investigations and iterations as a follow
 up work was introduced by Zhang et al. <span class="citation"
 data-cites="zhang_2023">[<a href="#ref-zhang_2023"
-role="doc-biblioref">88</a>]</span> and was immediatly adopted by the
+role="doc-biblioref">89</a>]</span> and was immediatly adopted by the
 community. Their approach, simple and elegant, is described in the next
 section (see <a href="#sec:IV.4.4">Sec 4.4.4</a>).</p>
 <h3 id="sec:IV.4.4">Current Approach</h3>
 <p>In their recently published work, Zhang et al. <span class="citation"
 data-cites="zhang_2023">[<a href="#ref-zhang_2023"
-role="doc-biblioref">88</a>]</span> introduced ControlNet, a simple
+role="doc-biblioref">89</a>]</span> introduced ControlNet, a simple
 method for adding control to text-to-image DDM. Their approach differs
 from ours with StablePaint by the fact that they are not training the
 models from scratch.</p>
 <p>Their method consists in adding conditionning to a pretrained
 foundation LDM called StableDiffusion <span class="citation"
 data-cites="rombach_2021">[<a href="#ref-rombach_2021"
-role="doc-biblioref">67</a>]</span> without altering the capabilities
+role="doc-biblioref">68</a>]</span> without altering the capabilities
 nor the weights of the initial model. They proceed by introducing
 external copies of the pretrained weights and reinjecting them in a
 residual fashion preciding each block by (1 <span
@@ -4879,30 +4880,23 @@ zero (see <a href="#fig:stablepaint_ctrl">Fig 74</a>). At the begining
 of their training process, their model is equivalent to the original
 LDM.</p>
 <figure id="fig:stablepaint_ctrl">
-<img src="./figures/stablepaint_ctrl.png" style="width:40.0%"
-alt="The figure is a simplified schematic of the method presented by Zhang et al. [88] in their work ControlNet. The foundation weights are freeze and copied. The copy is surrounded by zero initialized (1 \times 1) convolutions and added as residual to the output of the copied layer." />
+<img src="./figures/stablepaint_ctrl.png"
+alt="The figure is a simplified schematic of the method presented by Zhang et al. [89] in their work ControlNet. The foundation weights are freeze and copied. The copy is surrounded by zero initialized (1 \times 1) convolutions and added as residual to the output of the copied layer. Sampled lineart colorizations are shown on the left." />
 <figcaption>Figure 74: The figure is a simplified schematic of the
 method presented by Zhang et al. <span class="citation"
 data-cites="zhang_2023">[<a href="#ref-zhang_2023"
-role="doc-biblioref">88</a>]</span> in their work ControlNet. The
+role="doc-biblioref">89</a>]</span> in their work ControlNet. The
 foundation weights are freeze and copied. The copy is surrounded by zero
 initialized (1 <span class="math inline">\(\times\)</span> 1)
-convolutions and added as residual to the output of the copied
-layer.</figcaption>
+convolutions and added as residual to the output of the copied layer.
+Sampled lineart colorizations are shown on the left.</figcaption>
 </figure>
 <p>This method can be viewed a way to shift the weights of a pretrained
 model to generate the training distribution. The authors shows that
 their method require small qualitative amount of data to be trained and
 demonstrate their result on a variety of conditionning inputs such as
 linearts and color strokes. Results of their method are shown in figure
-<a href="#fig:stablepaint_ctrl_res">Fig 75</a>.</p>
-<figure id="fig:stablepaint_ctrl_res">
-<img src="./figures/stablepaint_ctrl_res.png"
-alt="The figure shows lineart colorization samples from ControlNet [88]." />
-<figcaption>Figure 75: The figure shows lineart colorization samples
-from ControlNet <span class="citation" data-cites="zhang_2023">[<a
-href="#ref-zhang_2023" role="doc-biblioref">88</a>]</span>.</figcaption>
-</figure>
+<a href="#fig:stablepaint_ctrl">Fig 74</a>.</p>
 <!-- ===================== [END] PART CONTRIBUTIONS ===================== -->
 <!-- ===================== [START] PART CONCLUSION ===================== -->
 <h1 id="sec:V">Conclusion</h1>
@@ -4916,14 +4910,14 @@ generative models such as Chat-GPT, DALL-E <span class="citation"
 data-cites="openai_2023">[<a href="#ref-openai_2023"
 role="doc-biblioref">11</a>]</span>, and open source initiatives such as
 StableDiffusion <span class="citation" data-cites="rombach_2021">[<a
-href="#ref-rombach_2021" role="doc-biblioref">67</a>]</span>, the
+href="#ref-rombach_2021" role="doc-biblioref">68</a>]</span>, the
 art-making process is more accessible than ever. By giving the user
 means of control over the model conditioning, everybody can now generate
 text, images, audio, and videos from natural language prompts.</p>
 <figure id="fig:ref_artstation_cancel_ai">
 <img src="./figures/ref_artstation_cancel_ai.png"
 alt="Screenshot of the website Artstation used by artists to professionally expose their work. A quick exploration shows the appearance of anti AI pictures expressing the concerns of artists from AI companies exploiting their artwork for training their models for profit." />
-<figcaption>Figure 76: Screenshot of the website Artstation used by
+<figcaption>Figure 75: Screenshot of the website Artstation used by
 artists to professionally expose their work. A quick exploration shows
 the appearance of anti AI pictures expressing the concerns of artists
 from AI companies exploiting their artwork for training their models for
@@ -4936,7 +4930,7 @@ challenges questioning ethics and its impact on our society. Its use is
 seen as controversial by most of the artist communities. While some may
 see generative AI as a tool that enables increase creativity potential
 and productivity others consider it as a Damocles sword, a threat for
-their job (see <a href="#fig:ref_artstation_cancel_ai">Fig 76</a>).</p>
+their job (see <a href="#fig:ref_artstation_cancel_ai">Fig 75</a>).</p>
 <p>This chapter discusses the benefits of generative AI models, their
 ethical concerns and their impact on our society but also their
 limitations and the need for regulations and guidelines.</p>
@@ -4951,7 +4945,7 @@ design.</p>
 <figure id="fig:ref_midjourney">
 <img src="./figures/ref_midjourney.png"
 alt="Sample from Midjourney’s generative AI using the prompt “the year 1203, the crowned Byzantine emperor watches as Venetian ships sail into the harbor of Constantinople, view over his shoulder, dramatic, photorealistic, details –ar 2:1”." />
-<figcaption>Figure 77: Sample from Midjourney’s generative AI using the
+<figcaption>Figure 76: Sample from Midjourney’s generative AI using the
 prompt “the year 1203, the crowned Byzantine emperor watches as Venetian
 ships sail into the harbor of Constantinople, view over his shoulder,
 dramatic, photorealistic, details –ar 2:1”.</figcaption>
@@ -4960,8 +4954,8 @@ dramatic, photorealistic, details –ar 2:1”.</figcaption>
 their democratization. They enable individuals with no background in
 creative arts, to express their creativity and generate artistic pieces
 with natural interactions without requiring specific technical knowledge
-(see Figs <a href="#fig:ref_midjourney">77</a>, <a
-href="#fig:ref_hp">78</a>). It lowers down the barrier for newcomers and
+(see Figs <a href="#fig:ref_midjourney">76</a>, <a
+href="#fig:ref_hp">77</a>). It lowers down the barrier for newcomers and
 lowers the cost of production. This aspect is especially important for
 independent and small studios that do not have the means of big
 production companies.</p>
@@ -4991,7 +4985,7 @@ animators.</li>
 <figure id="fig:ref_hp">
 <img src="./figures/ref_hp.png"
 alt="Portrait generated using various image generative AI models with a simplified description of the character Harry Potter from J.K. Rowling: “young boy portrait, lighting bolt scar on the forehead, thin face, black hair, green eyes, round black glasses held, black robe cape, magic castle in the background, trending in art station, 4k”. The models are having trouble with details such as the scar." />
-<figcaption>Figure 78: Portrait generated using various image generative
+<figcaption>Figure 77: Portrait generated using various image generative
 AI models with a simplified description of the character Harry Potter
 from J.K. Rowling: “young boy portrait, lighting bolt scar on the
 forehead, thin face, black hair, green eyes, round black glasses held,
@@ -5017,11 +5011,11 @@ role="doc-biblioref">9</a>]</span> in their work on extracting training
 data from diffusion models. Users can also replicate the style of
 artists without their consent nor credit. This is extremely problematic
 as it constitutes an art identity steal (see <a
-href="#fig:ref_steal">Fig 79</a>).</p>
+href="#fig:ref_steal">Fig 78</a>).</p>
 <figure id="fig:ref_steal">
 <img src="./figures/ref_steal.jpg"
 alt="Artwork by Hollie Mengert (left) vs. images generated with Stable Diffusion DreamBooth in her style (right). Credit: Andy BAIO from waxy.org." />
-<figcaption>Figure 79: Artwork by Hollie Mengert (left) vs. images
+<figcaption>Figure 78: Artwork by Hollie Mengert (left) vs. images
 generated with Stable Diffusion DreamBooth in her style (right). Credit:
 Andy BAIO from waxy.org.</figcaption>
 </figure>
@@ -5051,13 +5045,13 @@ on huge image datasets affected by bias, misrepresentation, and sensible
 content. For example, some models still struggle at generating hands,
 feet, or coherent images. The produced output may require multiple
 trials, and modifications, and often cannot be used in their raw
-versions (see <a href="#fig:ref_feet_hands">Fig 80</a>).</p>
+versions (see <a href="#fig:ref_feet_hands">Fig 79</a>).</p>
 <figure id="fig:ref_feet_hands">
 <img src="./figures/ref_feet_hands.png"
-alt="Feet and hands generated by StableDiffusion [67]." />
-<figcaption>Figure 80: Feet and hands generated by StableDiffusion <span
+alt="Feet and hands generated by StableDiffusion [68]." />
+<figcaption>Figure 79: Feet and hands generated by StableDiffusion <span
 class="citation" data-cites="rombach_2021">[<a href="#ref-rombach_2021"
-role="doc-biblioref">67</a>]</span>.</figcaption>
+role="doc-biblioref">68</a>]</span>.</figcaption>
 </figure>
 <p>One other limitation is that such models are hard and expensive to
 train. Only huge corporations with access to modern hardware can produce
@@ -5065,7 +5059,7 @@ high-quality general-purpose models, called foundation models. This may
 however change as the domain is improving constantly and thanks to
 open-source initiatives such as those of Stability AI <span
 class="citation" data-cites="rombach_2021">[<a href="#ref-rombach_2021"
-role="doc-biblioref">67</a>]</span>.</p>
+role="doc-biblioref">68</a>]</span>.</p>
 <h3 id="regulations-and-guidelines">Regulations and Guidelines</h3>
 <p>Because of the current generative AI ethical concerns, societal
 impact, and limitations, its usage needs to be regulated or at least
@@ -5558,21 +5552,29 @@ descent learning algorithms. <em>Neural Networks</em>. 12, 1 (1999),
 145–151. DOI:https://doi.org/<a
 href="https://doi.org/10.1016/S0893-6080(98)00116-6">10.1016/S0893-6080(98)00116-6</a>.</div>
 </div>
-<div id="ref-ramesh_2022" class="csl-entry" role="listitem">
+<div id="ref-radford_2021" class="csl-entry" role="listitem">
 <div class="csl-left-margin">[66] </div><div
+class="csl-right-inline">Radford, A., Kim, J.W., Hallacy, C., Ramesh,
+A., Goh, G., Agarwal, S., Sastry, G., Askell, A., Mishkin, P., Clark,
+J., et al. 2021. Learning transferable visual models from natural
+language supervision. <em>International conference on machine
+learning</em> (2021), 8748–8763.</div>
+</div>
+<div id="ref-ramesh_2022" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[67] </div><div
 class="csl-right-inline">Ramesh, A., Dhariwal, P., Nichol, A., Chu, C.
 and Chen, M. 2022. Hierarchical text-conditional image generation with
 clip latents. <em>arXiv preprint arXiv:2204.06125</em>. (2022).</div>
 </div>
 <div id="ref-rombach_2021" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[67] </div><div
+<div class="csl-left-margin">[68] </div><div
 class="csl-right-inline">Rombach, R., Blattmann, A., Lorenz, D., Esser,
 P. and Ommer, B. 2021. <a
 href="https://arxiv.org/abs/2112.10752">High-resolution image synthesis
 with latent diffusion models</a>.</div>
 </div>
 <div id="ref-ronneberger_2015" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[68] </div><div
+<div class="csl-left-margin">[69] </div><div
 class="csl-right-inline">Ronneberger, O., Fischer, P. and Brox, T. 2015.
 U-net: Convolutional networks for biomedical image segmentation.
 <em>Medical image computing and computer-assisted intervention–MICCAI
@@ -5580,7 +5582,7 @@ U-net: Convolutional networks for biomedical image segmentation.
 proceedings, part III 18</em> (2015), 234–241.</div>
 </div>
 <div id="ref-rosenblatt_1958" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[69] </div><div
+<div class="csl-left-margin">[70] </div><div
 class="csl-right-inline">Rosenblatt, F. 1958. The perceptron: A
 probabilistic model for information storage and organization in the
 brain. <em>Psychological Review</em>. 65, 6 (1958), 386–408.
@@ -5588,21 +5590,21 @@ DOI:https://doi.org/<a
 href="https://doi.org/10.1037/h0042519">10.1037/h0042519</a>.</div>
 </div>
 <div id="ref-rumelhart_1986" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[70] </div><div
+<div class="csl-left-margin">[71] </div><div
 class="csl-right-inline">Rumelhart, D.E., Hinton, G.E. and Williams,
 R.J. 1986. Learning representations by back-propagating errors.
 <em>Nature</em>. 323, 6088 (Oct. 1986), 533–536. DOI:https://doi.org/<a
 href="https://doi.org/10.1038/323533a0">10.1038/323533a0</a>.</div>
 </div>
 <div id="ref-saito_2015" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[71] </div><div
+<div class="csl-left-margin">[72] </div><div
 class="csl-right-inline">Saito, M. and Matsui, Y. 2015. <a
 href="https://doi.org/10.1145/2820903.2820907">Illustration2Vec: A
 semantic vector representation of illustrations</a>. <em>SIGGRAPH asia
 2015 technical briefs</em> (New York, NY, USA, 2015), 5:1–5:4.</div>
 </div>
 <div id="ref-sangkloy_2016" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[72] </div><div
+<div class="csl-left-margin">[73] </div><div
 class="csl-right-inline">Sangkloy, P., Lu, J., Fang, C., Yu, F. and
 Hays, J. 2017. <a
 href="https://doi.org/10.1109/CVPR.2017.723">Scribbler: Controlling deep
@@ -5611,7 +5613,7 @@ conference on computer vision and pattern recognition, <span>CVPR</span>
 2017, honolulu, HI, USA, july 21-26, 2017</em> (2017), 6836–6845.</div>
 </div>
 <div id="ref-sasaki_2017" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[73] </div><div
+<div class="csl-left-margin">[74] </div><div
 class="csl-right-inline">Sasaki, K., Iizuka, S., Simo-Serra, E. and
 Ishikawa, H. 2017. <a href="https://doi.org/10.1109/CVPR.2017.611">Joint
 gap detection and inpainting of line drawings</a>. <em>2017 IEEE
@@ -5619,20 +5621,20 @@ conference on computer vision and pattern recognition (CVPR)</em>
 (2017), 5768–5776.</div>
 </div>
 <div id="ref-shi_2020" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[74] </div><div
+<div class="csl-left-margin">[75] </div><div
 class="csl-right-inline">Shi, M., Zhang, J.-Q., Chen, S.-Y., Gao, L.,
 Lai, Y.-K. and Zhang, F.-L. 2020. Deep line art video colorization with
 a few references. <em>arXiv preprint arXiv:2003.10685</em>.
 (2020).</div>
 </div>
 <div id="ref-simonyan_2014" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[75] </div><div
+<div class="csl-left-margin">[76] </div><div
 class="csl-right-inline">Simonyan, K. and Zisserman, A. 2014. Very deep
 convolutional networks for large-scale image recognition. <em>arXiv
 preprint arXiv:1409.1556</em>. (2014).</div>
 </div>
 <div id="ref-smilkov_2019" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[76] </div><div
+<div class="csl-left-margin">[77] </div><div
 class="csl-right-inline">Smilkov, D., Thorat, N., Assogba, Y.,
 Nicholson, C., Kreeger, N., Yu, P., Cai, S., Nielsen, E., Soegel, D.,
 Bileschi, S., et al. 2019. Tensorflow. Js: Machine learning for the web
@@ -5640,21 +5642,21 @@ and beyond. <em>Proceedings of Machine Learning and Systems</em>. 1,
 (2019), 309–321.</div>
 </div>
 <div id="ref-su_2020" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[77] </div><div
+<div class="csl-left-margin">[78] </div><div
 class="csl-right-inline">Su, J.-W., Chu, H.-K. and Huang, J.-B. 2020.
 Instance-aware image colorization. <em>Proceedings of the IEEE/CVF
 conference on computer vision and pattern recognition</em> (2020),
 7968–7977.</div>
 </div>
 <div id="ref-sykora_2009" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[78] </div><div
+<div class="csl-left-margin">[79] </div><div
 class="csl-right-inline">Sykora, D., Dingliana, J. and Collins, S. 2009.
 LazyBrush: Flexible painting tool for hand-drawn cartoons. <em>Computer
 Graphics Forum</em>. 28, 2 (2009), 599–608. DOI:https://doi.org/<a
 href="https://doi.org/10.1111/j.1467-8659.2009.01400.x">https://doi.org/10.1111/j.1467-8659.2009.01400.x</a>.</div>
 </div>
 <div id="ref-szegedy_2015" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[79] </div><div
+<div class="csl-left-margin">[80] </div><div
 class="csl-right-inline">Szegedy, C., Liu, W., Jia, Y., Sermanet, P.,
 Reed, S., Anguelov, D., Erhan, D., Vanhoucke, V. and Rabinovich, A.
 2015. Going deeper with convolutions. <em>Proceedings of the IEEE
@@ -5662,27 +5664,27 @@ conference on computer vision and pattern recognition</em> (2015),
 1–9.</div>
 </div>
 <div id="ref-szegedy_2016" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[80] </div><div
+<div class="csl-left-margin">[81] </div><div
 class="csl-right-inline">Szegedy, C., Vanhoucke, V., Ioffe, S., Shlens,
 J. and Wojna, Z. 2016. Rethinking the inception architecture for
 computer vision. <em>Proceedings of the IEEE conference on computer
 vision and pattern recognition</em> (2016), 2818–2826.</div>
 </div>
 <div id="ref-mnist" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[81] </div><div
+<div class="csl-left-margin">[82] </div><div
 class="csl-right-inline">The MNIST database: <a
 href="http://yann.lecun.com/exdb/mnist/"><em>http://yann.lecun.com/exdb/mnist/</em></a>.
 Accessed: 2023-02-07.</div>
 </div>
 <div id="ref-vaswani_2017" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[82] </div><div
+<div class="csl-left-margin">[83] </div><div
 class="csl-right-inline">Vaswani, A., Shazeer, N., Parmar, N.,
 Uszkoreit, J., Jones, L., Gomez, A.N., Kaiser, Ł. and Polosukhin, I.
 2017. Attention is all you need. <em>Advances in neural information
 processing systems</em>. 30, (2017).</div>
 </div>
 <div id="ref-winnermoller_2012" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[83] </div><div
+<div class="csl-left-margin">[84] </div><div
 class="csl-right-inline">Winnemöller, H., Kyprianidis, J.E. and Olsen,
 S.C. 2012. XDoG: An eXtended difference-of-gaussians compendium
 including advanced image stylization. <em>Computers &amp; Graphics</em>.
@@ -5690,7 +5692,7 @@ including advanced image stylization. <em>Computers &amp; Graphics</em>.
 href="https://doi.org/10.1016/j.cag.2012.03.004">https://doi.org/10.1016/j.cag.2012.03.004</a>.</div>
 </div>
 <div id="ref-wolf_2017" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[84] </div><div
+<div class="csl-left-margin">[85] </div><div
 class="csl-right-inline">Wolf, M.J., Miller, K. and Grodzinsky, F.S.
 2017. Why we should have seen that coming: Comments on microsoft’s tay
 "experiment," and wider implications. <em>SIGCAS Comput. Soc.</em> 47, 3
@@ -5698,14 +5700,14 @@ class="csl-right-inline">Wolf, M.J., Miller, K. and Grodzinsky, F.S.
 href="https://doi.org/10.1145/3144592.3144598">10.1145/3144592.3144598</a>.</div>
 </div>
 <div id="ref-xu_2011" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[85] </div><div
+<div class="csl-left-margin">[86] </div><div
 class="csl-right-inline">Xu, L., Lu, C., Xu, Y. and Jia, J. 2011. Image
 smoothing via L0 gradient minimization. <em>ACM Trans. Graph.</em> 30, 6
 (Dec. 2011), 1–12. DOI:https://doi.org/<a
 href="https://doi.org/10.1145/2070781.2024208">10.1145/2070781.2024208</a>.</div>
 </div>
 <div id="ref-yoo_2019" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[86] </div><div
+<div class="csl-left-margin">[87] </div><div
 class="csl-right-inline">Yoo, S., Bahng, H., Chung, S., Lee, J., Chang,
 J. and Choo, J. 2019. Coloring with limited data: Few-shot colorization
 via memory augmented networks. <em>Proceedings of the IEEE/CVF
@@ -5713,19 +5715,19 @@ conference on computer vision and pattern recognition (CVPR)</em>
 (2019).</div>
 </div>
 <div id="ref-aston_zhang_2021" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[87] </div><div
+<div class="csl-left-margin">[88] </div><div
 class="csl-right-inline">Zhang, A., Lipton, Z.C., Li, M. and Smola, A.J.
 2021. Dive into deep learning. <em>arXiv preprint arXiv:2106.11342</em>.
 (2021).</div>
 </div>
 <div id="ref-zhang_2023" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[88] </div><div
+<div class="csl-left-margin">[89] </div><div
 class="csl-right-inline">Zhang, L. and Agrawala, M. 2023. Adding
 conditional control to text-to-image diffusion models. <em>arXiv
 preprint arXiv:2302.05543</em>. (2023).</div>
 </div>
 <div id="ref-zhang_ji_2017" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[89] </div><div
+<div class="csl-left-margin">[90] </div><div
 class="csl-right-inline">Zhang, L., Ji, Y., Lin, X. and Liu, C. 2017. <a
 href="https://doi.org/10.1109/ACPR.2017.61">Style transfer for anime
 sketches with enhanced residual u-net and auxiliary classifier GAN</a>.
@@ -5733,20 +5735,20 @@ sketches with enhanced residual u-net and auxiliary classifier GAN</a>.
 (2017), 506–511.</div>
 </div>
 <div id="ref-danboo_region_2020" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[90] </div><div
+<div class="csl-left-margin">[91] </div><div
 class="csl-right-inline">Zhang, L., JI, Y. and Liu, C. 2020.
 DanbooRegion: An illustration region dataset. <em>European conference on
 computer vision (ECCV)</em> (2020).</div>
 </div>
 <div id="ref-zhang_2018" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[91] </div><div
+<div class="csl-left-margin">[92] </div><div
 class="csl-right-inline">Zhang, L., Li, C., Wong, T.-T., Ji, Y. and Liu,
 C. 2018. Two-stage sketch colorization. <em>ACM Trans. Graph.</em> 37, 6
 (Dec. 2018). DOI:https://doi.org/<a
 href="https://doi.org/10.1145/3272127.3275090">10.1145/3272127.3275090</a>.</div>
 </div>
 <div id="ref-zhang_richard_2017" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[92] </div><div
+<div class="csl-left-margin">[93] </div><div
 class="csl-right-inline">Zhang, R., Zhu, J.-Y., Isola, P., Geng, X.,
 Lin, A.S., Yu, T. and Efros, A.A. 2017. Real-time user-guided image
 colorization with learned deep priors. <em>ACM Trans. Graph.</em> 36, 4
@@ -5754,14 +5756,14 @@ colorization with learned deep priors. <em>ACM Trans. Graph.</em> 36, 4
 href="https://doi.org/10.1145/3072959.3073703">10.1145/3072959.3073703</a>.</div>
 </div>
 <div id="ref-zhu_2017" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[93] </div><div
+<div class="csl-left-margin">[94] </div><div
 class="csl-right-inline">Zhu, J.-Y., Park, T., Isola, P. and Efros, A.A.
 2017. Unpaired image-to-image translation using cycle-consistent
 adversarial networks. <em>Proceedings of the IEEE international
 conference on computer vision</em> (2017), 2223–2232.</div>
 </div>
 <div id="ref-zou_2019" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[94] </div><div
+<div class="csl-left-margin">[95] </div><div
 class="csl-right-inline">Zou, C., Mo, H., Gao, C., Du, R. and Fu, H.
 2019. Language-based colorization of scene sketches. <em>ACM Trans.
 Graph.</em> 38, 6 (Nov. 2019). DOI:https://doi.org/<a
@@ -5821,7 +5823,5 @@ Adversarial Network with Gradient Penalty</li>
 <li><strong>xDoG</strong>: extended Difference of Gaussians</li>
 </ul>
 </div>
-<!-- ::: {#acronyms}
-::: -->
 </body>
 </html>

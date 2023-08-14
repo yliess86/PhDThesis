@@ -212,7 +212,7 @@ This dissertation aims at exploring how one could train and use generative [+nn]
 
 Lineart colorization is an essential aspect of the work of artists, illustrators, and animators. The task of manually coloring lineart can be time-consuming, repetitive, and exhausting, particularly in the animation industry, where every frame of an animated product must be colored and shaded. This process is typically done using image editing softwares such as Photoshop [@photoshop], Clip Studio PAINT [@clipstudiopaint], and PaintMan [@paintman]. Automating the colorization process can greatly improve the workflow of these creative professionals and has the potential to lower the barrier for newcomers and amateurs. Such a system was previously integrated into Clip Studio PAINT [@clipstudiopaint] and then removed for ethical and right ownership concerns, demonstrating the growing significance of automatic colorization in the field.
 
-The most common digital illustration process can be broken down into four distinct stages: sketching, inking, coloring, and post-processing (see @fig:steps). As demonstrated by the work of Kandinsky [@kandinsky_1977], the colorization process can greatly impact the overall meaning of a piece of art through the introduction of various color schemes, shading, and textures. These elements of the coloring process present significant challenges for the +cv task of automatic lineart colorization, particularly in comparison to its grayscale counterpart [@furusawa_2O17; @hensman_2017; @zhang_richard_2017]. Without the added semantic information provided by textures and shadows, inferring materials and 3D shapes trhough lighting from black and white linearts only is difficult.
+The most common digital illustration process can be broken down into four distinct stages: sketching, inking, coloring, and post-processing (see @fig:steps). As demonstrated by the work of Kandinsky [@kandinsky_1977], the colorization process can greatly impact the overall meaning of a piece of art through the introduction of various color schemes, shading, and textures. These elements of the coloring process present significant challenges for the +cv task of automatic lineart colorization, particularly in comparison to its grayscale counterpart [@furusawa_2O17; @hensman_2017; @zhang_richard_2017]. Without the added semantic information provided by textures and shadows, inferring materials and 3D shapes through lighting from black and white linearts only is difficult.
 
 ## Problem Statement {#sec:I.2}
 
@@ -220,7 +220,7 @@ One major challenge of automatic lineart colorization is the availability of qua
 
 Previous works in automatic lineart colorization are based on the +gan [@goodfellow_2014] architecture and can generate unperfect but high-quality illustrations in a realtime settings. User control and guidance can be achieved by the use of: color hints [@frans_2017; @liu_2017; @sangkloy_2016; @paintschainer_2018; @ci_2018], style transfer [@zhang_ji_2017], tagging [@kim_2019], and more recently natural language [@ho_2020].
 
-Related work compensate for the lack of semantic descriptors provided by the black and white lineart by introducing the use of an external featuree extractor, one of the most common being Illustration2Vec [@saito_2015]. The generative model output process is conditionned on a latent semantic vector capturing the nature of the lineart content.
+Related work compensate for the lack of semantic descriptors provided by the black and white lineart by introducing the use of an external feature extractor, one of the most common being Illustration2Vec [@saito_2015]. The generative model output process is conditionned on a latent semantic vector capturing the nature of the lineart content.
 
 ## Contributions {#sec:I.3}
 
@@ -228,20 +228,18 @@ This thesis contributions focuses on the use of color hints in the form of user 
 
 In this dissertation we explore the importance of a clean, qualitative and consistent dataset. We investigate how to better capture the user intent via natural artistic controls and how to reflect them into the generated model artifact while preserving or improving its quality. We also look at how the creative process can be transformed into a dynamic iterative workflow where the user collaborates with the machine to refine and carry out variations of his artwork.
 
-Here is a brief enumeration of this thesis's contributions:
+This thesis's contributions are:
 
-- A recipe for generating clean datasets for the task of automatic lineart colorization [@hati_2019; @hati_2023]
-- Three following +DL approches to the task of automatic lineart colorization improving upon previous work:
-    - PaintsTorch [@hati_2019]: a double GAN generator that improves generation quality compared to previous work while allowing realtime interaction with the end user.
-    - StencilTorch [@hati_2023]: an upgrade of PaintsTorch, shifting the colorization problem to in-painting with masks allowing for human-machine collaboration to emerge as a natural workflow where the input of a first pass becomes a potential input for a second.
-    - StablePaint: an ongoing exploration of +ddm, bringing more variety into the generated outputs while natively conserving the iterative workflow introduced by StencilTorch at the cost of inference speed.
-- An advised reflection on current generative +ai ethical and societal concerns.
+- A process for generating clean datasets for the task of automatic lineart colorization [@hati_2019; @hati_2023]
+- PaintsTorch [@hati_2019]: a double GAN generator that improves generation quality compared to previous work while allowing realtime interaction with the end user.
+- StencilTorch [@hati_2023]: an upgrade of PaintsTorch, shifting the colorization problem to in-painting with masks allowing for human-machine collaboration to emerge as a natural workflow where the input of a first pass becomes a potential input for a second.
+- StablePaint: an ongoing exploration of +ddm, bringing more variety into the generated outputs while natively conserving the iterative workflow introduced by StencilTorch at the cost of inference speed.
 
 ## Concerns {#sec:I.4}
 
 Recent advances in generative +ai for text, image, audio, and video synthesis are raising important ethical and societal concerns, especially because of theri availability and ease of use. Models such as Stable Diffusion [@rombach_2021] and more recently Chat-GPT [@openai_2023] are disturbing our common beliefs and relation with copyright, creativity, fake information and so on.
 
-One of the main issues with generative AI is the potential for model fabulation. Generative models can create entirely new, synthetic data that is indistinguishable from real data. This can lead to the dissemination of false information and the manipulation of public opinion. Additionally, there are ambiguities surrounding the ownership and copyright of the generated content, as it is unclear who holds the rights to the generated images and videos. Training data is often obtained via online scrapping and thus copyright ownership is not propagated. This is especially true for commercial applications.
+One of the main issues with generative AI is the potential for model fabulation. Generative models can create entirely new, synthetic data that is almost indistinguishable from real data. This can lead to the dissemination of false information and the manipulation of public opinion. Additionally, there are ambiguities surrounding the ownership and copyright of the generated content, as it is unclear who holds the rights to the generated images and videos. Training data is often obtained via online scrapping and thus copyright ownership is not propagated. This is especially true for commercial applications.
 
 Another important concern is the potential for biases and discrimination. These models are trained on large amounts of data, and if the data is not diverse or representative enough, the model may perpetuate or even amplify existing biases. The Microsoft Tay Twitter bot [@wolf_2017] scandal is an outcome of such a phenomenon. This initially innocent chatbot has been easily turned into a racist bot perpetuating hate speech. The task was made easier because of the inherently biased dataset it was trained on.
 
@@ -252,8 +250,8 @@ In this work, we are committed to addressing and raising awareness for these con
 This thesis is organized as follows:
 
 - [Chapter 1](#sec:I) introduces the topic of automatic lineat colorization, providing motivation for this work, the probleme statement, the contributions of this thesis, and the concerns it may raise.
-- [Chapter 2](#sec:II) provides a theoritocal background on +ML and +ANNN which are the foundations of the methods proposed in this dissertation.
-- [Chapter 3](#sec:III) reviews the related work on automatic lineart colorization, both classical, and +NN approches.
+- [Chapter 2](#sec:II) provides a theoritocal background on [+ml]{.full} and [+ann]{.full} which are the foundations of the methods proposed in this dissertation.
+- [Chapter 3](#sec:III) reviews the related work on automatic lineart colorization, both classical, and [+nn]{.full} approches.
 - [Chapter 4](#sec:IV) presents the contributions of this thesis, including the development of three new methods for automatic lineart colorization: [PaintsTorch](#sec:IV.2) [@hati_2019], [StencilTorch](#sec:IV.3) [@hati_2023], and an ongoing work, [StablePaint](#sec:IV.4).
 - [Chapter 5](#sec:V) concludes the thesis and discusses the remaining challenges, future work and concerns of the this work on automatic lineart colorization.
 
@@ -287,7 +285,7 @@ $$
 f^* = arg \; \underset{f \in \mathcal{F}}{min} \; E_{(x, y) \sim D} L(\hat{y}, y)
 $$ {#eq:f_star_objective}
 
-The function $f^*$ must minimize the expected loss $L$ over the entire data distribution $D$. Once such a function is learned one can use it to perform inference and map any element from the input space $X$ to the output space $Y$.
+The function $f^*$ must minimize the expected loss $E_{(x, y) \sim D} L$ over the entire data distribution $D$. Once such a function is learned one can use it to perform inference and map any element from the input space $X$ to the output space $Y$.
 
 However, this minimization problem is intractable as it is impossible to represent the entire distribution $D$. Fortunately, as every pair $(x_i, y_i)$ is independently sampled and identically distributed, the objective can be approximated by sampling and minimizing the loss over the training dataset (see @eq:f_star_objective_approx):
 
@@ -329,7 +327,7 @@ $$ {#eq:cross_entropy}
 
 ### An Optimization Problem {#sec:II.1.2}
 
-In +ml, supervised problems can be reduced to an optimization problem where the computer has to find a set of parameters, weights $\theta$, for a given function class $\mathcal{F}$ by optimizing an objective function $\theta^* = arg \; min_\theta \mathcal{C(\theta)}$ made out of two components, a data-dependant loss $L$ and a data-independant regularization $R$.
+In +ml, supervised problems can be reduced to an optimization problem where the computer has to find a set of parameters, weights $\theta$, for a given function class $\mathcal{F}$ by optimizing an objective function $mathcal{C}$ with $\theta^* = arg \; min_\theta \; \mathcal{C(\theta)}$ made out of two components, a data-dependant loss $L$ and a data-independant regularization $R$.
 
 **Random Search:** One way to find such a function $f_\theta$ that satisfies this objective is to estimate the objective function for a set of random parameter initializations and take the one that minimizes $C$ the most. This $\theta$ setting can then be refined by applying random perturbations to the parameters and repeating the operation.
 
@@ -341,11 +339,11 @@ This vector of first order derivatives indicates the direction from which we nee
 
 One critical aspect of the +sgd algorithm is the hyperparameter $\epsilon$, the learning rate. It controls the size of the step we take towards the negative gradients. If it is too high or too low, the optimization may not converge towards an acceptable local minimum. A toy example is provided in @fig:toysgd where different learning rates are used to find the minimum of the square function $y = x^2$.
 
-![Toy example where different learning rates $\epsilon$ are used to find the minimum of the square function $y = x^2$ using the [+gd]{.full} algorithm starting from $x = -1$. Some learning rate setup result in situations where the optimization does not converge to the solution. A learning rate $\epsilon = 2$ diverges toward infinity, $\epsilon = 1$ is stuck and bounces between two positions $-1$ and $1$. However, a small learning rate $\epsilon = 0.1 < 1$ converges towards the minimum $y = 0$. This example illustrates the impact of the hyperparameter $\epsilon$ on +gd.](./figures/core_nn_sgd.svg){#fig:toysgd}
+![Different learning rates $\epsilon$ are used to find the minimum of the square function $y = x^2$ using the [+gd]{.full} algorithm starting from $x = -1$. Some learning rate setup result in situations where the optimization does not converge to the solution. A learning rate $\epsilon = 2$ diverges toward infinity, $\epsilon = 1$ is stuck and bounces between two positions $-1$ and $1$. However, a small learning rate $\epsilon = 0.1 < 1$ converges towards the minimum $y = 0$. This example illustrates the impact of the hyperparameter $\epsilon$ on +gd.](./figures/core_nn_sgd.svg){#fig:toysgd}
 
 **First Order Derivation with Momentum:** The +dl literature contains abundant work on first order optimizer variants aiming for faster convergence such as +sgd with Momentum [@qian_1999],  Adagrad [@duchi_2011], RMSProp [@hinton_lecture6a], Adam [@kingma_2014], and its correction AdamW [@loshchilov_2017]. A toy example is shown @fig:sgd_moments.
 
-![This toy example illustrates the impact of the optimizer choice during objective minimization with first order methods. +sgd, Momentum, Adagrad, RMSProp and Adam are tasked to find the minimum of a 1-dimensional mixture of Gaussians given the same starting point $x = 1$ and the same learning rate $\epsilon = 0.5$. In this particular setup, Moments and Adagrad find the solution, RMSProp explodes, and +sgd and Adam are stuck into a local minimum.](./figures/core_nn_sgd_moments.svg){#fig:sgd_moments}
+![Illustration of the impact of the optimizer choice during objective minimization with first order methods. +sgd, Momentum, Adagrad, RMSProp and Adam are tasked to find the minimum of a 1-dimensional mixture of Gaussians given the same starting point $x = 1$ and the same learning rate $\epsilon = 0.5$. In this particular setup, Moments and Adagrad find the solution, RMSProp explodes, and +sgd and Adam are stuck into a local minimum.](./figures/core_nn_sgd_moments.svg){#fig:sgd_moments}
 
 The Momentum update [@qian_1999] introduces the use of a momentum inspired by physics' first principles to favor small and consistent gradient directions. In this particular case, the momentum is represented by a variable $v$ updated to store an exponential decaying sum of the previous gradients $v := \alpha v + \nabla_\theta C(\theta)$. The weights are then updated using negative $v$ as the gradient direction instead of $\nabla_\theta C(\theta)$.
 
@@ -353,7 +351,7 @@ Other optimizers also make use of the second moment of the gradients. Adagrad [@
 
 Finally Adam [@kingma_2014], and its correction AdamW [@loshchilov_2017], are applying both Momentum and RMSProp estimating the first and second moment to make parameters with large gradients take small steps and parameters with low gradients take larger ones. This has the advantage to allow for bigger learning rates and faster convergence at the cost of triple the amount of parameters to store during training.
 
-**Cross-Validation and HyperParameter Search:** As illustrated by the toy examples (see [@fig:toysgd; @fig:sgd_moments]), the training of [+nn]{.plural} using +sgd is highly dependent on the initial setting of hyperparameters. One could ask if there is a rule for choosing such parameters. Unfortunately, this is not the case. The field is highly empirical and driven by exploration using the scientific method.
+**Cross-Validation and HyperParameter Search:** As illustrated by the previous examples (see [@fig:toysgd; @fig:sgd_moments]), the training of [+nn]{.plural} using +sgd is highly dependent on the initial setting of hyperparameters. One could ask if there is a rule for choosing such parameters. Unfortunately, this is not the case. The field is highly empirical and driven by exploration using the scientific method.
 
 One common approach is to set up metrics to evaluate the performance of the model during the optimization process. It is a good practice to divide the dataset into validation folds that are different from the training data to evaluate the generalization capabilities of the model. This practice is referred to as $k$-fold cross-validation and is most of the time in +dl, because of the large datasets, reduced to a single fold, called the validation set.
 
@@ -361,7 +359,7 @@ By defining such a process, [+nn]{.plural} can be compared in a controlled manne
 
 ### The Backpropagation Algorithm {#sec:II.1.3}
 
-In the previous sub-section (see @sec:II.1.2), we saw how to learn parametrized functions $f_\theta$ given a training dataset. By evaluating the gradients of the objective function with respect to the model's parameters, it is possible to obtain a good enough mapping $f_\theta: X \rightarrow Y$. In this sub-section, we discuss backpropagation, the recursive algorithm used to efficiently compute those gradients exploiting the chain rule $\frac{\partial z}{\partial x} = \frac{\partial z}{\partial y} \cdot \frac{\partial y}{\partial x}$ with $z$ dependant on $y$ and $y$ on $x$.
+In the previous sub-section (see @sec:II.1.2), we presented how to learn parametrized functions $f_\theta$ given a training dataset. By evaluating the gradients of the objective function with respect to the model's parameters, it is possible to obtain a good enough mapping $f_\theta: X \rightarrow Y$. In this sub-section, we discuss backpropagation, the recursive algorithm used to efficiently compute those gradients exploiting the chain rule $\frac{\partial z}{\partial x} = \frac{\partial z}{\partial y} \cdot \frac{\partial y}{\partial x}$ with $z$ dependant on $y$ and $y$ on $x$.
 
 **Automatic Differentiation:** In mathematics, +ad describes the set of techniques used to evaluate the derivative of a function and exploits the fact that any complex computation can be transformed into a sequence of elementary operations and functions with known symbolic derivatives. By applying the chain rule recursively to this sequence of operations, one can automatically compute the derivatives with precision at the cost of storage. We distinguish two modes of operation for +ad: forward mode differentiation, and reverse mode differentiation.
 
@@ -383,7 +381,7 @@ Both modes come with advantages and inconveniences. Eager mode is useful for ite
 
 ## Artificial Neural Networks {#sec:II.2}
 
-In the previous section (Section @sec:II.1), we described the general setup for +ml, where one has to fit a model from a given function family $f \in \mathcal{F}$ on a given dataset $(X, Y) \in D$ optimized using +sdg and backpropagation. This section introduces a particular class of parameterized function $f_\theta$ called [+nn]{.full .plural}. The section starts with the most simple +nn architecture, the Perceptron, and ends with a more recent and complex architecture, the Transformer.
+In the previous section (Section @sec:II.1), we described the general setup for +ml, where one has to fit a model from a given function family $f \in \mathcal{F}$ on a given dataset $(X, Y) \in D$ optimized using +sgd and backpropagation. This section introduces a particular class of parameterized function $f_\theta$ called [+nn]{.full .plural}. The section starts with the most simple +nn architecture, the Perceptron, and ends with a more recent and complex architecture, the Transformer.
 
 ### The Perceptron Model {#sec:II.2.1}
 
@@ -421,7 +419,7 @@ While [+mlp]{.plural} can be viewed as universal function approximators, they sc
 
 ![Illustration of a $3 \times 3 \times 3$ filter convolution (middle) applied to a $8 \times 8 \times 3$ input tensor (left). The result is a $6 \times 6 \times 1$ activation map (right). The receptive field is drawn in dashed lines. This convolution is applied in valid mode (no padding) resulting in a lower resolution output tensor.](./figures/core_nn_convolution.svg){#fig:convolution width=40%}
 
-**Convolution:** The core component of a ConvNet is the convolution operation. A +CNN operates by convolving (rolling) a set of parametrized filters on the input. If we reconsider our $W_1 \times H_1 \times D_1 = 256 \times 256 \times 3$, convolving a single filter of size $F_W \times F_H \times D_1 = 3 \times 3 \times 3$ would require sliding the filter across the entire input image tensor and computing the dot product of the overlapping tensor chunk and the filter. This operation results in what is called an activation map, or feature map. The filter can be convolved in different configurations. The stride $S$ defines the hop size when rolling the filter over the input, and the padding $P$ defines the additional border added to the input tensor in order to parkour the input border ($252$ unique positions for the filter in the $256$ image, $256$ positions with a padding of $1$ on each side of the input).
+**Convolution:** The core component of a ConvNet is the convolution operation. A +cnn operates by convolving (rolling) a set of parametrized filters on the input. If we reconsider our $W_1 \times H_1 \times D_1 = 256 \times 256 \times 3$, convolving a single filter of size $F_W \times F_H \times D_1 = 3 \times 3 \times 3$ would require sliding the filter across the entire input image tensor and computing the dot product of the overlapping tensor chunk and the filter. This operation results in what is called an activation map, or feature map. The filter can be convolved in different configurations. The stride $S$ defines the hop size when rolling the filter over the input, and the padding $P$ defines the additional border added to the input tensor in order to parkour the input border ($252$ unique positions for the filter in the $256$ image, $256$ positions with a padding of $1$ on each side of the input).
 
 A +cnn convolves multiple parametrized filters $K$ in a single convolution operation. Given a convolution setting, the operation requires $F_H \times F_W \times D_1 \times D_2$ parameters and outputs a feature map tensor of size $W_2 = (W_1 - F_W + 2P_W) / S + 1$, $H_2 = (H_1 - F_H + 2P_H) / S + 1$, and $D_2 = K$ (see @fig:convolution). The different filters are responsible for looking for the activation of different patterns in the input. The Convolution layer introduces the notion of weight sharing enabled by the sliding filter (neurons) and reduces computation by a large margin in comparison to a standard +mlp layer.
 
@@ -439,7 +437,7 @@ A +cnn convolves multiple parametrized filters $K$ in a single convolution opera
 
 Foundation models can be further refined through smaller training on smaller and specialized datasets containing few good-quality examples. This process is called finetuning and is less expensive and time-consuming than full training. One method for finetuning consists in removing the classification head of a pre-trained model such as VGG16 [@simonyan_2014] and replacing it with a new one adapted to the number of classes required for the task. The pretrained weights are then frozen (not updated during training), and the new weights are trained following a standard supervised-learning procedure.
 
-**MNIST Classifier:** Let us reconsider the +mnist toy classification example and replace the +mlp with a +cnn. The model is divided in two sections, the feature extractor made out of two convolutional and max-pooling layers with $5 \times 5$ filters, the middle layer responsible for flattening the feature maps down to a $1$-dimensional vector fed to the classifier head, a $3$-layer +mlp similar to the first one. The training procedure is left unchanged, the number of parameters is approximately similar, a little less for the +cnn, and the number of epochs is the same. The input is however not flattened as the +cnn consumes a full image tensor.
+**MNIST Classifier:** Let us reconsider the +mnist classification example and replace the +mlp with a +cnn. The model is divided in two sections, the feature extractor made out of two convolutional and max-pooling layers with $5 \times 5$ filters, the middle layer responsible for flattening the feature maps down to a $1$-dimensional vector fed to the classifier head, a $3$-layer +mlp similar to the first one. The training procedure is left unchanged, the number of parameters is approximately similar, a little less for the +cnn, and the number of epochs is the same. The input is however not flattened as the +cnn consumes a full image tensor.
 
 The +cnn is able to achieve $99$% accuracy on the test set at the begining of the training (epoch $5$). It is a more robust, specialized, and thus more efficient at handling images. The training history can be observed in @fig:mnist_convnet_history. 
 
@@ -519,7 +517,7 @@ The last section (see @sec:III.3), provides a detailed explaination of the type 
 
 Delaunay-triangulation is used by Wilkie et al. [@wilkie_2020] and Parakkat et al. [@parakkat_2022] to enable controlled flat colorization of sketches that can contain unclosed regions making it robust to variations in the input sketches contrary to early work requiring the use of external tools to close them [@gangnet_1994; @sasaki_2017; @liu_2019] some being +ml driven [@sasaki_2017; @liu_2019]. While such approaches do not provide lighting nor texture information to the generated colored illustration, they can be used to initialize others similar to the work of Frans et al. [@frans_2017] although they use a +dl approach. They can also be used to build color-filling helper tools which are handy for the animation industry where every frame of the show has to be colored consistently.
 
-**[@gangnet_1994] Gagnet et al.:** Gagnet et al. presents a gap-closing method for cel coloring in computer-assisted cartoon animation. It is based on connected component analysis inside square stamps that are located near potential gaps. This method is used to automatically close the regions defined by freehand strokes.
+**[@gangnet_1994] Gagnet et al.:** Gagnet et al. presents a gap-closing method for cell coloring in computer-assisted cartoon animation. It is based on connected component analysis inside square stamps that are located near potential gaps. This method is used to automatically close the regions defined by freehand strokes.
 
 **[@sasaki_2017] Sasaki et al.:** In their paper, Sasaki et al. propose a novel data-driven approach for automatically detecting and completing gaps in line drawings without the need for user input. The proposed method is based on a +cnn which can learn the necessary heuristics for realistic line completion from a dataset of line drawings. The results of the proposed method are evaluated qualitatively and quantitatively and are shown to significantly outperform the state-of-the-art.
 
@@ -577,7 +575,7 @@ Another category of network conditioning for the task of automatic lineart color
 
 ### Tags {#sec:III.2.3}
 
-Another method, closer to the use of natural language description, is the use of tags (labels) [kim_2019]. Tags can be obtained from online illustration galleries and used for training of both classifiers and generative architectures. Their final use is however limited to the set of tags made available during training.
+Another method, closer to the use of natural language description, is the use of tags (labels) [@kim_2019]. Tags can be obtained from online illustration galleries and used for training of both classifiers and generative architectures. Their final use is however limited to the set of tags made available during training.
 
 ![Tag-based colorization sampled from Kim et al. [@kim_2019]. The examples illustrate the ability to control the generated illustration output given a lineart and tags describing the end-user intent.](./figures/core_rel_tags.png){#fig:core_rel_tags}
 
@@ -617,7 +615,7 @@ Finally, generative models trained for automatic colorization can be conditioned
 
 This section discusses the various architectures introduced in the +dl litterature for image generation with a strong focus on those used by the related work of the previous section (section @sec:III.2) and how to condition them on user inputs. 
 
-The architectures discussed are the [+ae]{.full} (see @sec:ae), the [+vae]{.full} (see @sec:vae), the [+gan]{.full} (see @sec:gan), the [+ddm]{.full} (see @sec:ddm), and [+llm]{.full .plural} (see @sec:llm).
+The architectures discussed are the [+ae]{.full} (see @sec:III.3.1), the [+vae]{.full} (see @sec:III.3.2), the [+gan]{.full} (see @sec:III.3.3), and the [+ddm]{.full} (see @sec:III.3.4).
 
 This section does not only discuss the technical details of those architectures but also compares them on three criteria, generation inference speed, generation variance, and generation quality and complexity.
 
@@ -629,7 +627,7 @@ Similarly to the theoretical background chapter (chapter @sec:II), the [+mnist]{
 
 An +ae is built using two network parts, an encoder $E$, +nn that reduces the input dimension, a decoder $D$ that recovers the input $x$ from the reduced tensor $z$, and a reconstruction objective. This architecture can be viewed as a dimensionality reduction technique but can be used as a generative model. By feeding the decoder $D$ with arbitrary latent codes $z$, one can generate unseen data points $\hat{x}$ similar to the training distribution by interpolation. Additional training objectives can be used to disentangle the latent representation so that the data points are organized mindfully in the latent space, semantically for example.
 
-![[+ae architecture. The encoder compresses the input into a latent code that is reconstructed using the decoder.]{.full} architecture.](./figures/core_gai_autoencoder.svg){#fig:gai_autoencoder}
+![+ae architecture. The encoder compresses the input into a latent code that is reconstructed using the decoder.](./figures/core_gai_autoencoder.svg){#fig:gai_autoencoder}
 
 **Properties:** Compared to a traditional compression method, [+ae]{.plural} are tied to their training data. They are trained to learn data-specific features useful for in-domain compression not for out-of-domain. An +ae trained on +mnist cannot be used for compressing photos of faces. Such architecture cannot be considered a lossless compression algorithm. The reconstruction is most of the time degraded. One strong advantage of using an +ae is that they do not require complex data preparation. They are part of the unsupervised training family, where labeled data is not needed for training, and in this case, self-supervised learning where the target output is built synthetically from the input.
 
@@ -696,7 +694,7 @@ This rewrite of the objective equations demonstrates a natural tradeoff between 
 
 **Reparametrization Trick:** The +vae architecture is trained to find the parameters of the functions $f$, $g$, and $h$ by minimizing the +vi objective (see @eq:vae_objective). The encoder is charged to output two vectors, one for representing $g(x)$ the mean, in the case of a Gaussian distribution $\mu$, and the other representing the variance of the distribution $h(x)$, $\rho = log(\sigma^2)$. The latent code $z$ is then sampled from the Gaussian distribution $z \sim \mathcal{N}(\mu, \sigma)$ and finally decoded to reconstruct the original input $x$.
 
-There is however a catch. The sampling process is stochastic and thus not differentiable. And we know that a +nn needs to be differentiable to be optimized using +sgd. To solve this problem, Kingma et al. [@kingma_2013] propose to use what they call a reparametrization trick. It consists in sampling a surrogate standard Gaussian distribution $\epsilon \sim \mathcal{N}(0, I)$ and scaling it by the output of the learned encoder $\mu$ and $\sigma^2$. This the process becomes:
+However, the sampling process is stochastic and thus not differentiable. And we know that a +nn needs to be differentiable to be optimized using +sgd. To solve this problem, Kingma et al. [@kingma_2013] propose to use what they call a reparametrization trick. It consists in sampling a surrogate standard Gaussian distribution $\epsilon \sim \mathcal{N}(0, I)$ and scaling it by the output of the learned encoder $\mu$ and $\sigma^2$. This the process becomes:
 
 $$
 \begin{aligned}
@@ -707,7 +705,7 @@ $$ {#eq:vae_reparametrization}
 
 Performing the latent sampling using the reparametrization trick (see @eq:vae_reparametrization) conserves the gradient flow. The +vae can thus be trained to learn a structured latent space that can be used to interpolate latent codes and decode them into samples similar to the training distribution.
 
-**MNIST Digit Image Generation:** Let us reconsider our toy example with training a +vae on the +mnist handwritten digit dataset. There is almost nothing change in comparison to the +ae.
+**MNIST Digit Image Generation:** Let us reconsider our example with training a +vae on the +mnist handwritten digit dataset. There is almost nothing change in comparison to the +ae.
 
 The model is trained to minimize the objective functions. Satisfying both the reconstruction loss and the +kld regularization is harder than the task of the vanilla +ae. Intuitively this has to result in a structured latent space at the cost of a small reconstruction quality degradation. The training history and reconstruction capabilities are shown in @fig:gai_vae_history.
 
@@ -764,9 +762,9 @@ One generator training step consists in sampling a latent code $z$, using it to 
 
 For stability purposes and to satisfy the $1$-Lipschitz constraint of the critic network we implement gradient penalty. It consists of sampling interpolations between fake and real samples $t = \alpha x_{real} + (1 - \alpha) x_{fake}$ with $\alpha \sim \mathcal{U}(0, 1)$, scoring them using the critic network $C$. We then compute the gradients with respect to the critic's parameters and optimize them to be close to $1$, $\; E_{\hat{x}} \; (||\nabla_{\hat{x}}D(\hat{x})||_2 - 1)^2$.
 
-One critic training step consists in sampling a latent code $z$, using it to generate a fake image $G(z)$ and computing the three average critic's loss terms $ReLU(1 + C(G(z)))$, $ReLU(1 - C(x)), and $\lambda \nabla_{gp}$ with $\lambda = 10$ to minimize. The losses are then backward and the resulting gradients are used to update the critic's weights using the Adam policy.
+One critic training step consists in sampling a latent code $z$, using it to generate a fake image $G(z)$ and computing the three average critic's loss terms $ReLU(1 + C(G(z)))$, $ReLU(1 - C(x))$, and $\lambda \nabla_{gp}$ with $\lambda = 10$ to minimize. The losses are then backward and the resulting gradients are used to update the critic's weights using the Adam policy.
 
-The overall training loop consists in alternating between generator training steps and critic training steps until convergence. It is common to train the critic for more cycles, especially at the beginning of training where the training signal for the generator is not constructive enough. In this toy example, we optimize the critic five times more than the generator.
+The overall training loop consists in alternating between generator training steps and critic training steps until convergence. It is common to train the critic for more cycles, especially at the beginning of training where the training signal for the generator is not constructive enough. In this example, we optimize the critic five times more than the generator.
 
 The training history monitoring the generator's and critic's loss terms are shown in @fig:gai_gan_history. +gan are in practice hard to train and monitoring each term independently allows us to diagnose mode collapse and vanishing gradients when the gradient distributions are checked.
 
@@ -791,7 +789,7 @@ q(x_{1:T} | x_0) = \prod_{t = 1}^{T} q(x_t | x_{t - 1})
 \end{aligned}
 $$ {#eq:ddm_froward}
 
-By adding noise to the input data in small enough steps, when $T \rightarrow +\infty$, $x_T$ converge towards an isotropic Gaussian distribution. One feature of the forward diffusion process is that $x$ can be computed in a closed form making use of the reparametrization trick introduced previously (see @sec:vae). Defining $\alpha_t = 1 - \beta_t$ and $\bar{\alpha_t} = \prod_{i=1}^{t} \alpha_i$,
+By adding noise to the input data in small enough steps, when $T \rightarrow +\infty$, $x_T$ converge towards an isotropic Gaussian distribution. One feature of the forward diffusion process is that $x$ can be computed in a closed form making use of the reparametrization trick introduced previously (see @sec:III.3.2). Defining $\alpha_t = 1 - \beta_t$ and $\bar{\alpha_t} = \prod_{i=1}^{t} \alpha_i$,
 
 $$
 \begin{aligned}
@@ -913,7 +911,7 @@ The Deep Learning community has come up with a variety of +nn architectures spec
 
 Alternative semantic conditioning can be used such as feature vectors describing aspects of the data distribution, multiclass segmentation masks to control the positioning and aspect of the generated output, tags and more.
 
-**Natural Language Prompts:** Recently, natural language has become one of the defacto approaches for conditioning generative networks. Combine with the advances in language modeling with [+llm]{.full .plural} [@devlin_2018; @brown_2020; @openai_2023] and multimodal embedding alignment [clip], [+gan]{.plural} and [+ddm]{.plural} [@ramesh_2022; @rombach_2021] are trained to follow natural language instructions called prompts. The community is currently still learning how to engineer those prompts to enable fine-grained control of the generated outputs.
+**Natural Language Prompts:** Recently, natural language has become one of the defacto approaches for conditioning generative networks. Combine with the advances in language modeling with [+llm]{.full .plural} [@devlin_2018; @brown_2020; @openai_2023] and multimodal embedding alignment [@radford_2021], [+gan]{.plural} and [+ddm]{.plural} [@ramesh_2022; @rombach_2021] are trained to follow natural language instructions called prompts. The community is currently still learning how to engineer those prompts to enable fine-grained control of the generated outputs.
 
 ## Summary {#sec:III.4}
 
@@ -927,7 +925,7 @@ In this thesis, we explore how one can improve the current quality of the genera
 
 This chapter discusses the main contributions of this thesis dissertation in relation to the related work presented in the previous chapter (see @sec:III).
 
-Section @sec:IV.1 presents a recipe for generating clean datasets for the task of automatic colorization based on a synthetic pipeline [@hati_2019; @hati_2023]. The linearts and color hint maps are generated from original illustrations scrapped online and manually filtered for their perceptieve quality and consistancy. The same pipeline is used with minor modification throuhought the three approaches proposed in sections @sec:IV.2, @sec:IV.3, and @sec:IV.4.
+Section @sec:IV.1 presents a recipe for generating clean datasets for the task of automatic colorization based on a synthetic pipeline [@hati_2019; @hati_2023]. The linearts and color hint maps are generated from original illustrations scrapped online and manually filtered for their perceptive quality and consistancy. The same pipeline is used with minor modification throuhought the three approaches proposed in sections @sec:IV.2, @sec:IV.3, and @sec:IV.4.
 
 Section @sec:IV.2 introduces PaintsTorch [@hati_2019]; a double +gan generator that improves generation quality compared to previous work while allowing realtime interaction with the end user. It demonstrates the impact and the necessity of cleaner and specialized datasets, but also introduces a double generator to enforce consistency in the lineart and help the network untangle its internal representation. The resulting colorizations are more consistent, robust, and visually pleasing in comparison to previous methods.
 
@@ -937,7 +935,7 @@ Section @sec:IV.4 discusses an unfished follow up work to PaintsTorch and Stenci
 
 ## Method and Implementation {#sec:IV.1}
 
-In this section, we discuss the methodology used throughout this thesis dissertation @sec;IV.1.1. The dataset curation is described in @sec:IV.1.2, the objective evaluation process in @sec:IV.1.4.1, the subjective evaluation in @sec:IV.1.4.2, the implementation details and the reproducibility in @sec:IV.1.5.
+In this section, we discuss the methodology used throughout this thesis dissertation @sec:IV.1.1. The dataset curation is described in @sec:IV.1.2, the objective evaluation process in @sec:IV.1.4.1, the subjective evaluation in @sec:IV.1.4.2, the implementation details and the reproducibility in @sec:IV.1.5.
 
 ### Synthetic Dataset Pipeline {#sec:IV.1.1}
 
@@ -967,7 +965,7 @@ The images scrapped online for curating our dataset do belong to their original 
 
 The methods presented in this thesis dissertation are evaluated and trained on our custom dataset containing illustrations scrapped from the web and filtered manually, $21,930$ for training, and $3,545$ for test. The images are resized to $512$ on their smallest side and randomly cropped to $512 \times 512$ during training, and center cropped only at test time.
 
-The measure of perceptual quality is an entire research domain. The +gan literature reports the use of both objective and subjective metrics. The objective metrics offer a non-refutable measure of perceptual quality and are often based on pre-trained image [+nn]{.plural}. They however are hard to interpret. A small variation in those metrics cool hide a big change in quality. The subjective metrics are used to overcome those issues and require performing a user-study. This section discusses the metrics used in this thesis. 
+The measure of perceptual quality is an entire research domain. The +gan literature reports the use of both objective and subjective metrics. The objective metrics offer a non-refutable measure of perceptual quality and are often based on pre-trained image [+nn]{.plural}. They however are hard to interpret. A small variation in those metrics could hide a big change in quality. The subjective metrics are used to overcome those issues and require performing a user-study. This section discusses the metrics used in this thesis. 
 
 #### Objective Evaluation {#sec:IV.1.4.1}
 
@@ -1105,7 +1103,7 @@ In this section we present the objective and subjective evaluations (see @sec:IV
 
 #### Evaluation {#sec:IV.2.3.1}
 
-Our model PaintsTorch is evaluated using subjective metrics, and objective metrics against state-of-the-art methods [@zhang_2018; @paintschainer_2018; @ci_2018] on our $3,545$ curated test set centerd cropped to $512 \times 512$ images.
+Our model PaintsTorch is evaluated using subjective metrics, and objective metrics against state-of-the-art methods [@zhang_2018; @paintschainer_2018; @ci_2018] on our $3,545$ curated test set centered cropped to $512 \times 512$ images.
 
 **Baseline:** We evaluate PaintsTorch against previous work: PaintsChainer Zhang et al. [@zhang_2018], PaintsChainer [@paintschainer_2018], and Ci et al. [@ci_2018] who has made their code available and thus helped in the reproduction of their work. 
 
@@ -1147,7 +1145,7 @@ PaintsTorch            **0.18**       0.59       0.39
 
 Table: [+lpips]{.full} benchmark comparing our work PaintsTorch against previous from Zhang et al. [@zhang_2018], PaintsChainer [@paintschainer_2018], and Ci et al. [@ci_2018]. Two configurations are used, no hints, and hints to evaluate the models in both conditions. {#tbl:core_pt_lpips}
 
-**Subjective Evaluation:** As stated in the methodology section (see @sec:IV.1.2.1) a subjective evaluation is required due to the nature of the task we are trying to solve. We thus perform a +mos using the population of study described earlier (see @sec:IV.1.2.2). The results (see @tbl:core_pt_mos) show that our model PaintsTorch produces colored images with better perceptual qualities.
+**Subjective Evaluation:** As stated in the methodology section (see @sec:IV.1.4.1) a subjective evaluation is required due to the nature of the task we are trying to solve. We thus perform a +mos using the population of study described earlier (see @sec:IV.1.4.2). The results (see @tbl:core_pt_mos) show that our model PaintsTorch produces colored images with better perceptual qualities.
 
 --------------------------------------------------------------------------
 Model             MOS $\uparrow$    STD $\uparrow$    p-value $\downarrow$
@@ -1163,9 +1161,9 @@ PaintsTorch            **3.05**           **0.42**       **9.15$e^{-09}$**
 
 Table: [+mos]{.full} benchmark comparing our work PaintsTorch against previous from Zhang et al. [@zhang_2018], PaintsChainer [@paintschainer_2018], and Ci et al. [@ci_2018]. The $t$-test $p$-values for the mean is provided for every comparison. {#tbl:core_pt_mos}
 
-#### Visual Qualities {#sec:IV.2.3.2}
+#### Qualitative Results {#sec:IV.2.3.2}
 
-![Comparison of PaintsChainer [@paintschainer_2018] on top and our contribution PaintsTorch bottom. The comparison shows that our method is more robust to variable colored strokes leading to less bleeding, and an overall better look in the generatoed output.](./figures/core_pt_comparison.png){#fig:core_pt_comparison}
+![Comparison of PaintsChainer [@paintschainer_2018] on top and our contribution PaintsTorch bottom. The comparison shows that our method is more robust to variable colored strokes leading to less bleeding, and an overall better look in the generated output.](./figures/core_pt_comparison.png){#fig:core_pt_comparison}
 
 The differences in our approach PaintsTorch results in visible improvements in comparison to previous work. Our work is more robust to messy inputs. The examples shown in @fig:core_pt_comparison shows the benefits of the introduction of the use of synthetic color scribbles during training in opposition to the previously used random pixel activations. Thanks to this change, PaintsTorch is less prone to color bleeding, is able to fill color better and produces clean gradients as shown in @fig:core_pt_bleeding.
 
@@ -1177,45 +1175,45 @@ Samples generated using our method are shown in @fig:core_pt_samples. PaintsTorc
 
 #### Application {#sec:IV.2.3.3}
 
-A custom web application has been built to explore the use of PaintsTorch as a tool inspired by modern digital drawing worflows. A screenshot of the application is shown @fig:core_pt_app. The model first trained using the PyTorch framework is then exported to TensorFlowJS using the intermediate and universal ONNX format. This allows us to serve the web application as a standalone static web page and make use of the +gpu from a web browser to allow for real-time interaction with our model PaintsTorch. The application propose to interact with the model by first providing a lineart using the file tool bar available on the right side, populate the hint map using a brush and tool options made available on the left side tool bar as well as seeing the resulting generated colored illustration in realtime and save it using the file icons.
+A custom web application has been built to explore the use of PaintsTorch as a tool inspired by modern digital drawing worflows. A screenshot of the application is shown @fig:core_pt_app. The model first trained using the PyTorch framework is then exported to TensorFlowJS using the intermediate and universal ONNX format. This allows us to serve the web application as a standalone static web page and make use of the +gpu from a web browser to allow for real-time interaction with our model PaintsTorch. The application proposes to interact with the model by first providing a lineart using the file tool bar available on the right side, populate the hint map using a brush and tool options made available on the left side tool bar as well as seeing the resulting generated colored illustration in realtime and save it using the file icons.
 
 Our model PaintsTorch integrates naturally into the modern digital illustration production workflow as it uses similar tools and can be futher inhanced using the user favorite pipeline. An example of such workflow is shown in @fig:core_pt_workflow.
 
-![The figure is a screenshot of our web application. The model, PaintsTorch, is exported using the ONNX framework for TesnorflowJS and deployed in the browser as a standalone static page. The web app is built to follow the digital drawing tools and aesthetic enabling the use of different tools on the left-side bar such as a brush with various sizes, a color picker and color wheel, a drawing canvas and a result canvas. The generated output can be saved using the file menu on the right-side bar. ](./figures/core_pt_app.jpeg){#fig:core_pt_app}
+![The figure is a screenshot of our web application. The model, PaintsTorch, is exported using the ONNX framework for TensorflowJS and deployed in the browser as a standalone static page. The web app is built to follow the digital drawing tools and aesthetic enabling the use of different tools on the left-side bar such as a brush with various sizes, a color picker and color wheel, a drawing canvas and a result canvas. The generated output can be saved using the file menu on the right-side bar. ](./figures/core_pt_app.jpeg){#fig:core_pt_app}
 
 ![Illustration of a natural workflow using PaintsTorch as a bootstrapping tool for producing high quality illustration. Starting left, the first image is the lineart, next the hint map, then the generated illustration, then corrections and adjustement added by the artist, and further refined in the final image.](./figures/core_pt_workflow.png){#fig:core_pt_workflow}
 
 #### Limitations {#sec:IV.2.3.4}
 
-While PaintsTorch allow the creation of qualitative colored illustration with minimal work, our approache presents limitations. Our model is still subject to the generation of visual artificats that needs to be cleaned by the end-user for proper use. They tend to appear more when the hint map is dense and contains highly saturated colors as shown in @fig:core_pt_artifacts. The model is also limited by the dataset used for training. A cleaner and more varied dataset would certainly result in even better outputs as our minimal quality filtering already shows in comparison to the used of unfiltered data from previous contributions.
+While PaintsTorch allow the creation of qualitative colored illustration with minimal work, our approache presents limitations. Our model is still subject to the generation of visual artifacts that needs to be cleaned by the end-user for proper use. They tend to appear more when the hint map is dense and contains highly saturated colors as shown in @fig:core_pt_artifacts. The model is also limited by the dataset used for training. A cleaner and more varied dataset would certainly result in even better outputs as our minimal quality filtering already shows in comparison to the used of unfiltered data from previous contributions.
 
 ![The illustration shows the appearance of artifacts when our model PaintsTorch is used with highly saturated and dense colored strokes.](./figures/core_pt_artifacts.png){#fig:core_pt_artifacts}
 
 ### Summary {#sec:IV.2.4}
 
-User-guided lineart colorization is a challenging task for +cv. Previous work introduced the use of the +gan architecture and shows that +dl methods yield better results than previous methods. In this work, PaintsTorch [@hati_2019], we porpose three changes to the setup proposed by Ci et al. [@ci_2018] and demonstrate their impact through an objective and subjective evaluation. We first introduce the use of simulated strokes as a replacement for the usual random pixel activation scheme porposed by previous work. This change positively impact the interaction with the model by making it robust to messy input strokes and improve the overall quality of the produced illustrations. Our second contribution is the use of a custom high resolution dataset filtered with a qualitative objective. In our paper PaintsTorch [@hati_2019], we demonstrate the impact of the data quality on the objective metrics. Our third contribution is the exploration of the use of a second generator producing synthetic lineart from the generated illustration from the first generation to enforce a cycle consistency signal.
+User-guided lineart colorization is a challenging task for +cv. Previous work introduced the use of the +gan architecture and shows that +dl methods yield better results than previous methods. In this work, PaintsTorch [@hati_2019], we propose three changes to the setup proposed by Ci et al. [@ci_2018] and demonstrate their impact through an objective and subjective evaluations. We first introduce the use of simulated strokes as a replacement for the usual random pixel activation scheme proposed by previous work. This change positively impact the interaction with the model by making it robust to messy input strokes and improve the overall quality of the produced illustrations. Our second contribution is the use of a custom high resolution dataset filtered with a qualitative objective. In our paper PaintsTorch [@hati_2019], we demonstrate the impact of the data quality on the objective metrics. Our third contribution is the exploration of the use of a second generator producing synthetic lineart from the generated illustration from the first generation to enforce a cycle consistency signal.
 
-PaintsTorch is able to generate high quality colored illustrations given a lineart and a coarse hint map made of user-defined color strokes. However, our model is still subject to visual artificats, especially when provided with highly saturated and dense colored strokes. Is also struggles at representing the user intent when hinting for small details in the lineart.
+PaintsTorch is able to generate high quality colored illustrations given a lineart and a coarse hint map made of user-defined color strokes. However, our model is still subject to visual artifacts, especially when provided with highly saturated and dense colored strokes. It also struggles at representing the user intent when hinting for small details in the lineart.
 
 ## StencitTorch: Human-Machine Colaboration {#sec:IV.3}
 
-![The figure is a screenshot of our model StencilTorch [@hati_2023] deployed in a digital drawing web applicaton on top, and a photo of a user interacting with the application bottom. The left canavs is used to provide a mask, the middle canavas the colored strokes hint map, and the right canvas displayes the result illustration generated by the model.](./figures/core_st_teaser.png){#fig:core_st_teaser}
+![The figure is a screenshot of our model StencilTorch [@hati_2023] deployed in a digital drawing web application on top, and a photo of a user interacting with the application bottom. The left canvas is used to provide a mask, the middle canvas the colored strokes hint map, and the right canvas displayes the result illustration generated by the model.](./figures/core_st_teaser.png){#fig:core_st_teaser}
 
 ### Introduction {#sec:IV.3.1}
 
-This section discusses our work on StencilTorch [@hati_2023], an iterative and user-guided framework for anime lineart colorization (see @fig:core_st_teaser). Previous work [@zhang_2018; @paintschainer_2018; @petalicapaint_2023; @ci_2018; @hati_2019] introduced the use of +cwgangp and have demonstrated unprecendant lineart colorization capabilities guided by user strokes and conditionned on a local feature extractor called Illustration2Vec [@saito_2015] to compensate for the lack of semantic information provided by a black and white lineart with no lighting nor texture.
+This section discusses our work on StencilTorch [@hati_2023], an iterative and user-guided framework for anime lineart colorization (see @fig:core_st_teaser). Previous works [@zhang_2018; @paintschainer_2018; @petalicapaint_2023; @ci_2018; @hati_2019] introduced the use of +cwgangp and have demonstrated unprecedant lineart colorization capabilities guided by user strokes and conditionned on a local feature extractor called Illustration2Vec [@saito_2015] to compensate for the lack of semantic information provided by a black and white lineart with no lighting nor texture.
 
-Previous methods consist of a one-step process where the user is involved one time only, at the beginning of the process when asked to provide a hint map populated with colored bursh strokes. This type of pipeline is limited and is not ideal in the context of creation where th artist needs to iterate and explore its design space. In this work, we propose to give the power back to the user by formulating the task of automatic lineart colorization as a human-in-the-loop process where the end-user collaborates with the machine to produce the final colored illustration.
+Previous methods consist of a one-step process where the user is involved one time only, at the beginning of the process when asked to provide a hint map populated with colored brush strokes. This type of pipeline is limited and is not ideal in the context of creation where the artist needs to iterate and explore its design space. In this work, we propose to give the power back to the user by formulating the task of automatic lineart colorization as a human-in-the-loop process where the end-user collaborates with the machine to produce the final colored illustration.
 
-![The schematic illustrate StencilTorch workflows enabled by the in-painting forimation of the automatic linear colorization task. The artist is able to explores a potential colorization for its lineart on the left, and explore an alternative colorization on the right after introducing additional shading and lighting manually.](./figures/core_st_workflow.png){#fig:core_st_workflow}
+![The schematic illustrate StencilTorch workflows enabled by the in-painting formulation of the automatic linear colorization task. The artist is able to explores a potential colorization for its lineart on the left, and explore an alternative colorization on the right after introducing additional shading and lighting manually.](./figures/core_st_workflow.png){#fig:core_st_workflow}
 
 Our framework, StencilTorch [@hati_2023], is motivated by human workflows and is a follow-up to our previous contribution PaintsTorch [@hati_2019]. We train a +cwgangp to generate colored illustrations for a given lineart by conditionning the model on local features, synthetic color hints produced by simulated strokes, and an additional mask describing the area of the image to color. We thus reformulate our task as an in-painting problem. This shift allows the emergence of iterative and collaborative workflows between the user and the machine where the output of a first step can become the input of a second. An example of interaction with the system is shown in @fig:core_st_workflow.
 
-In this work, StencilTorch [@hati_2023], our contributions are the following:
+In this work, StencilTorch [@hati_2023], our contributions are the followings:
 
-- We present a new synthetic pipeline for generating colored strokes from prepeprocessed illustrations from which the texture, and lighting information are removed. This processed uses semantic color segmentation and aims at producing better hints for training.
+- We present a new synthetic pipeline for generating colored strokes from preprocessed illustrations from which the texture, and lighting information are removed. This processed uses semantic color segmentation and aims at producing better hints for training.
 - StencilTorch, a +cwgangp trained to produce illustrations from a given lineart, a local semantic feature vector, a colored hint map, and a mask enabling emergent collaborative workflows. We additionally guide the training with a guide network to help recovering flat colorization in the early layers of the network. 
-- We evaluate our method against previous work using both objective and subjective evaluation metrics.
+- We evaluate our method against previous work using objective and subjective evaluations.
 - An interactive web application allowing users to naturally interact with our model by providing a linear, drawing scribble colored lines and a mask.
 
 ### Method {#sec:IV.3.2}
@@ -1224,11 +1222,11 @@ This section discusses the data generation pipeline used in StencilTorch [@hati_
 
 #### Synthetic Inputs {#sec:IV.3.2.1}
 
-One of the challenges for the task of automatic lineart colorization is the lack of qualitative public datasets. In our previous work on PaintsTorch [@hati_2019] we demonstrate the importance of the quality of the dataset and its impact on the overall perceptual quality of the images produced by the generative models. We thus resused our custom curated filtered dataset and employed a similar data transformation pipeline with additional improvements explained in @fig:core_st_pipeline.
+One of the challenges for the task of automatic lineart colorization is the lack of qualitative public datasets. In our previous work on PaintsTorch [@hati_2019] we demonstrate the importance of the quality of the dataset and its impact on the overall perceptual quality of the images produced by the generative models. We thus reused our custom curated filtered dataset and employed a similar data transformation pipeline with additional improvements explained in @fig:core_st_pipeline.
 
-![StencilTorch synthetic input generation process diagram. The illustration sampled form our custom dataset is first transformeed into a synthetic lineart using the +xdog method. The same illustration is simplified to partially remove texture and shadow information using a semantic color segmentation network, color quantization, and $k$-means to further reduce th number of colors present in the image. The selection mask and the color strokes are then generated from this simplified segmented illustration. Finally, a composite input is aggregated for inpainting where the black region of the mask contains the original illustration, and the white region, the synthetic lineart to be colorized.](./figures/core_st_pipeline.png){#fig:core_st_pipeline}
+![StencilTorch synthetic input generation process diagram. The illustration sampled from our custom dataset is first transformed into a synthetic lineart using the +xdog method. The same illustration is simplified to partially remove texture and shadow information using a semantic color segmentation network, color quantization, and $k$-means to further reduce the number of colors present in the image. The selection mask and the color strokes are then generated from this simplified segmented illustration. Finally, a composite input is aggregated for inpainting where the black region of the mask contains the original illustration, and the white region, the synthetic lineart to be colorized.](./figures/core_st_pipeline.png){#fig:core_st_pipeline}
 
-Randomly sampling color strokes from the input illustration means that the similated random strokes capture the variation of color present in the image containing shadow, lighting, texture and more. However, based on our previous observations from interactons with our previous work PaintsTorch [@hati_2019], the end-user tend to specify mid-tone colors whithout thinking about lighting as they expect the model to handle that aspect. In that regarde, we developped a new preprocessing pipeline for the illustration enabling the extraction and generation of color scribbles with limited shadow and texture information.
+Randomly sampling color strokes from the input illustration means that the similated random strokes capture the variation of color present in the image containing shadow, lighting, texture and more. However, based on our previous observations from interactions with our previous work PaintsTorch [@hati_2019], the end-user tend to specify mid-tone colors whithout thinking about lighting as they expect the model to handle that aspect. In that regarde, we developped a new preprocessing pipeline for the illustration enabling the extraction and generation of color scribbles with limited shadow and texture information.
 
 To this end, we trained a ResNet [@he_2016] mode to regress displacement maps from colored illustrations on the DabooRegion dataset [@danboo_region_2020]. The displacement map is robust to noise and allows us to extract unique color sections. We further assign each region to its median color, further reduce the number of colors using color quantization and further refine them down to $25$ colors using $k$-means clustering. This number has empirically be selected to avoid sacrificing too much details from the original illustration. The mask and color hints inputs are then generated from this simplified version of the input illustration.
 
@@ -1236,7 +1234,7 @@ To this end, we trained a ResNet [@he_2016] mode to regress displacement maps fr
 
 ![StencilTorch [+wgangp]{.full} architecture schematic.](./figures/core_st_architecture.svg){#fig:core_st_architecture}
 
-The model architecture of StencilTorch is similar to PaintsTorch [@hati_2019] at the exception that the cycle consistency lineart generator is removed and replaced by a guide network (see @fig:core_st_architecture). As we reformulate the task of automatic colorization as in-painting, we found the this second generator is not required and does not bring additional value to StencilTorch.
+The model architecture of StencilTorch is similar to PaintsTorch [@hati_2019] at the exception that the cycle consistency lineart generator is removed and replaced by a guide network (see @fig:core_st_architecture). As we reformulate the task of automatic colorization as in-painting, we found that this second generator is not required and does not bring additional value to StencilTorch.
 
 We however introduce a secondary network which is a copy of the +wgangp decoder section of the generator inspired by previous work from Zhang et al. [@zhang_ji_2017]. This secondary network is activated during training only and is trained to reconstruct the simplified illustration using the latent code provided by the encoder section of the generator. By introducing this network to StencilTorch we aim at helping the rest of the generator to produce disantangled inner representations and thus improved the final output colored illustration.
 
@@ -1273,7 +1271,7 @@ Our model StencilTorch is evaluated using subjective metrics, and objective metr
 
 **Baseline:** We evaluate StencilTorch against previous work: PaintsChainer Zhang et al. [@zhang_2018], PaintsChainer [@paintschainer_2018], Ci et al. [@ci_2018] who has made their code available and thus helped in the reproduction of their work, and our previous contribution PaintsTorch [@hati_2019]. 
 
-**Objective Evaluation:**  We evaulate the [+fid]{.full} of our generated illustration against the targets. The +fid measures the intra-class dropping, diversity, and quality. A small value means that the two distributions compared are similar. The results of the +fid evaluation are shown in @tbl:core_st_fid. Our model StencilTorch outperform previous work with various amount of hint conditioning.
+**Objective Evaluation:**  We evaulate the [+fid]{.full} of our generated illustration against the targets. The +fid measures the intra-class dropping, diversity, and quality. A small value means that the two distributions compared are similar. The results of the +fid evaluation are shown in @tbl:core_st_fid. Our model StencilTorch outperforms previous work with various amount of hint conditioning.
 
 ---------------------------------------------------------------------
 Model                  No Hints       Hints    Full Hints        Mean
@@ -1295,7 +1293,7 @@ StencilTorch + G          85.00   **91.60**     **93.80**       89.98
 
 Table: [+fid]{.full} benchmark comparing our work StencilTorch against previous from Zhang et al. [@zhang_2018], PaintsChainer [@paintschainer_2018], Ci et al. [@ci_2018] and our previous work PaintsTorch [@hati_2019]. Three configurations are used, no hints, hints, and full hint where the simplified illustration is used as hints to evaluate the models in all conditions. The "+G" mention is our model StencilTorch with the additional guide network. {#tbl:core_st_fid}
 
-We additionally evaluate our work on a second feature-based metric, +lpips measuring the similarity of two images in feature space using different winodw sizes and the features of an ImageNet [@deng_2009] pretrained network such as VGG [@simonyan_2014]. The results shown in @tbl:core_st_lpips shows that our model is able to compete with previous work and produces relatively better results with no hints.
+We additionally evaluate our work on a second feature-based metric, +lpips measuring the similarity of two images in feature space using different window sizes and the features of an ImageNet [@deng_2009] pretrained network such as VGG [@simonyan_2014]. The results shown in @tbl:core_st_lpips shows that our model is able to compete with previous work and produces relatively better results with no hints.
 
 -------------------------------------------------------------------------
 Model                      No Hints       Hints    Full Hints        Mean
@@ -1335,7 +1333,7 @@ StencilTorch           **3.71**           **0.28**
 
 Table: [+mos]{.full} benchmark comparing our work StencilTorch against previous from Zhang et al. [@zhang_2018], PaintsChainer [@paintschainer_2018], Ci et al. [@ci_2018] and our previous work PaintsTorch [@hati_2019]. The $t$-test $p$-values for the mean is provided for every comparison. {#tbl:core_st_mos}
 
-#### Visual Qualities {#sec:IV.3.3.2}
+#### Qualitative Results {#sec:IV.3.3.2}
 
 ![Samples mosaic of input and output pairs generated using one pass with StencilTorch. In every cell of the mosaic, the lineart, the mask, and the hint map are shown in the bottom, and the generated colored illustration on top.](./figures/core_st_samples.png){#fig:core_st_samples}
 
@@ -1392,7 +1390,7 @@ This section discusses our on going work on StablePaint, a [+ddm]{.full} for use
 
 While our previous contributions in automatic lineart colorization, PaintsTorch [@hati_2019], and StencilTorch [@hati_2023] focused on improving the quality of the generated colored illustration and capturing the user intent with first color strokes only, and then a combination of color strokes and masks enabling iterative human-machine worflows, the +ddm architecture family offers a potential for improving both objectives with a single end-to-end solution.
 
-[+gan]{.plural} [@goodfellow_2014] has been the standard for image generation since it 2014. While this type of architecture is able to produce qualitative images that resemble the training distribution in real time settings and produces smooth interpolable latent spaces, they are hard to train, they require tons of data, they are hard to stabalize and are prone to mode collapse because of their dual networks and objectives.
+[+gan]{.plural} [@goodfellow_2014] has been the standard for image generation since 2014. While this type of architecture is able to produce qualitative images that resemble the training distribution in real time settings and produces smooth interpolable latent spaces, they are hard to train, they require tons of data, they are hard to stabilize and are prone to mode collapse because of their dual networks and objectives.
 
 This is not the case for [+ddm]{.plural} [@ho_2020]. This type of autoregressive model currently outperforms [+gan]{.plural}. The results are more consistent with the training distribution, more varied, and the models are easier to train, more stable. As explained in section @sec:III.3, a +ddm is trained to successively denoise a noisy image. By playing with the intensity of the initial noise, or by masking certain part of the image, a trained +ddm can be used for both, complete generation, variation generation, in-painting, and out-painting.
 
@@ -1403,7 +1401,7 @@ Our exploration StablePaint uses a variant of the +ddm architecture called a +ld
 In this work StablePaint, our contributions are:
 - An improvement of the synthetic color stroke map generation inspired by our previous work on PaintsTorch [@hati_2019] and StencilTorch [@hati_2023].
 - An exploration on how to condition a +ldm for automatic colorization while leveraging the inherent benefits of the architecture used.
-- An explenation of ControlNet, the community adopted solution from Zhang et al. [zhang_2023].
+- An explenation of ControlNet, the community adopted solution from Zhang et al. [@zhang_2023].
 
 ### Method {#sec:IV.4.2}
 
@@ -1427,7 +1425,7 @@ The StablePaint model architecture (see @fig:stablepaint_arch) is built on top o
 
 ![The figure shows sample illustrations from our training set on the top row and their reconstruction using our illustration autoencoder. The illustration autoencoder is trained until saturation and is able to encode and decode the original signal with almost no perceptible difference.](./figures/stablepaint_illustration_autoencoder.png){#fig:stablepaint_illustration_autoencoder}
 
-We choosed to train a second +vae sharing the decoder with the first one. We thus train only the encoder of the second model to recover latent codes that are similar to the colored images starting from a combination of lineart and color hint maps. The objective is to make the process of mapping color stroke conditionned linearts to latent codes that will be mapped to latent codes resulting in colored illustrations when decoded (see @fig:stablepaint_lineart_autoencoder).
+We chosed to train a second +vae sharing the decoder with the first one. We thus train only the encoder of the second model to recover latent codes that are similar to the colored images starting from a combination of lineart and color hint maps. The objective is to make the process of mapping color stroke conditionned linearts to latent codes that will be mapped to latent codes resulting in colored illustrations when decoded (see @fig:stablepaint_lineart_autoencoder).
 
 ![The figure shows sample illustrations from our training set on the top row and their reconstruction using our context autoencoder. The decoder is shared with our illustration autoencoder and is pretrained. The context encoder is trained until saturation and tries to project the given lineart and corresponding hints to a latent code that matches the illustration one when encoded with the illustration encoder.](./figures/stablepaint_lineart_autoencoder.png){#fig:stablepaint_lineart_autoencoder}
 
@@ -1482,11 +1480,9 @@ In their recently published work, Zhang et al. [@zhang_2023] introduced ControlN
 
 Their method consists in adding conditionning to a pretrained foundation +ldm called StableDiffusion [@rombach_2021] without altering the capabilities nor the weights of the initial model. They proceed by introducing external copies of the pretrained weights and reinjecting them in a residual fashion preciding each block by (1 $\times$ 1) convolutions initialized to zero (see @fig:stablepaint_ctrl). At the begining of their training process, their model is equivalent to the original +ldm.
 
-![The figure is a simplified schematic of the method presented by Zhang et al. [@zhang_2023] in their work ControlNet. The foundation weights are freeze and copied. The copy is surrounded by zero initialized (1 $\times$ 1) convolutions and added as residual to the output of the copied layer.](./figures/stablepaint_ctrl.png){#fig:stablepaint_ctrl width=40%}
+![The figure is a simplified schematic of the method presented by Zhang et al. [@zhang_2023] in their work ControlNet. The foundation weights are freeze and copied. The copy is surrounded by zero initialized (1 $\times$ 1) convolutions and added as residual to the output of the copied layer. Sampled lineart colorizations are shown on the left.](./figures/stablepaint_ctrl.png){#fig:stablepaint_ctrl}
 
-This method can be viewed a way to shift the weights of a pretrained model to generate the training distribution. The authors shows that their method require small qualitative amount of data to be trained and demonstrate their result on a variety of conditionning inputs such as linearts and color strokes. Results of their method are shown in figure @fig:stablepaint_ctrl_res.
-
-![The figure shows lineart colorization samples from ControlNet [@zhang_2023].](./figures/stablepaint_ctrl_res.png){#fig:stablepaint_ctrl_res}
+This method can be viewed a way to shift the weights of a pretrained model to generate the training distribution. The authors shows that their method require small qualitative amount of data to be trained and demonstrate their result on a variety of conditionning inputs such as linearts and color strokes. Results of their method are shown in figure @fig:stablepaint_ctrl.
 
 <!-- ===================== [END] PART CONTRIBUTIONS ===================== -->
 
