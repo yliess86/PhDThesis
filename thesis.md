@@ -332,7 +332,7 @@ $$
 \mathcal{L} (\hat{y}, y) = \sum_{k=1}^{K} y_k \; log \; \hat{y}_k
 $$ {#eq:cross_entropy}
 
-### Optimization {#sec:II.1.2}
+### An Optimization Problem {#sec:II.1.2}
 
 In +ml, supervised problems can be reduced to an optimization problem where the computer has to find a set of parameters, weights $\theta$, for a given function class $\mathcal{F}$ by optimizing an objective function $\theta^* = arg \; min_\theta \mathcal{C(\theta)}$ made out of two components, a data-dependant loss $L$ and a data-independant regularization $R$.
 
@@ -364,7 +364,7 @@ One common approach is to set up metrics to evaluate the performance of the mode
 
 By defining such a process, [+nn]{.plural} can be compared in a controlled manner and the hyperparameter space can be searched. Hyperparameter search is so important that it is a subfield of its own. The broad +dl literature however contains many examples of initial parameters and architectures that can be used to bootstrap this search.
 
-### Backpropagation {#sec:II.1.3}
+### The Backpropagation Algorithm {#sec:II.1.3}
 
 In the previous sub-section (see @sec:II.1.2), we saw how to learn parametrized functions $f_\theta$ given a training dataset. By evaluating the gradients of the objective function with respect to the model's parameters, it is possible to obtain a good enough mapping $f_\theta: X \rightarrow Y$. In this sub-section, we discuss backpropagation, the recursive algorithm used to efficiently compute those gradients exploiting the chain rule $\frac{\partial z}{\partial x} = \frac{\partial z}{\partial y} \cdot \frac{\partial y}{\partial x}$ with $z$ dependant on $y$ and $y$ on $x$.
 
@@ -390,7 +390,7 @@ Both modes come with advantages and inconveniences. Eager mode is useful for ite
 
 In the previous section (Section @sec:II.1), we described the general setup for +ml, where one has to fit a model from a given function family $f \in \mathcal{F}$ on a given dataset $(X, Y) \in D$ optimized using +sdg and backpropagation. This section introduces a particular class of parameterized function $f_\theta$ called [+nn]{.full .plural}. The section starts with the most simple +nn architecture, the Perceptron, and ends with a more recent and complex architecture, the Transformer.
 
-### Perceptron {#sec:II.2.1}
+### The Perceptron Model {#sec:II.2.1}
 
 ![Diagram of a Perceptron with three inputs $\{x_1; x_2; x_3\}$. The perceptron computes an activated weighted sum of its inputs $y = \sigma(\sum_{i=1}^{3} w_i \cdot x_i)$ where $\sigma$, the activation function is a threshold function.](./figures/core_nn_perceptron.svg){#fig:perceptron width=40%}
 
@@ -450,7 +450,7 @@ The +cnn is able to achieve $99$% accuracy on the test set at the begining of th
 
 ![Training history of a [+cnn]{.full} made out of a sequence of two convolutions followed by max-pooling and a 3-layer [+mlp]{.full} classifier on the +mnist dataset. The average loss (cross-entropy) on the left, and the accuracy on the right are displayed for the training, validation, and test splits.](./figures/core_nn_mnist_convnet_history.svg){#fig:mnist_convnet_history}
 
-### Transformers {#sec:II.2.4}
+### The Transformer Architecture {#sec:II.2.4}
 
 When considering sequences such as text, audio, video, or a single image divided into a sequence of $n \times n$ blocks, [+mlp]{.plural} and [+cnn]{.plural} fail at capturing long-term relationships being subject to vanishing and exploding gradients. When taking a guess from a long sequence of information, we humans do not attribute as much weight to every bit of the sequence. We selectively gather and retain information that we feel serves our decision-making called a task-dependent context. This selective mechanism is called attention and has been the subject of implementation attempts, first in the field of [+nlp]{.full} [@bahdanau_2014; @luong_2015; @vaswani_2017], and later transposed to field of [+cv]{.full} [@dosovitskiy_2020; @caron_2021].
 
