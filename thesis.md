@@ -187,15 +187,10 @@ acronyms:
         long: Application Programming Interface
 ---
 
-\newpage{}
-## List of Abbreviations {-}
-::: {#acronyms}
-:::
-
-## Abstract {-}
+# Abstract {-}
 \newpage{}
 
-## Aknowledgements {-}
+# Aknowledgements {-}
 \newpage{}
 
 <!-- ===================== [START] PART INTRODUCTION ===================== -->
@@ -1568,7 +1563,10 @@ Regulations and guidelines are thus required to lead the field toward fair use i
 \newpage{}
 
 ## Conclusion {#sec:conclusion}
-\newpage{}
 <!-- ===================== [END] PART Conclusion ===================== -->
 
-## References {-}
+# References {-}
+::: {#refs}
+:::
+
+# Acronyms {-}

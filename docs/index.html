@@ -405,9 +405,6 @@ Automatic Lineart Colorization</p></h1>
 <nav id="TOC" role="doc-toc">
 <h2 id="toc-title">Contents</h2>
 <ul>
-<li><a href="#list-of-abbreviations" id="toc-list-of-abbreviations">List
-of Abbreviations</a></li>
-<li><a href="#acronym-list" id="toc-acronym-list">Acronyms</a></li>
 <li><a href="#abstract" id="toc-abstract">Abstract</a></li>
 <li><a href="#aknowledgements"
 id="toc-aknowledgements">Aknowledgements</a></li>
@@ -532,63 +529,11 @@ id="toc-regulations-and-guidelines">Regulations and Guidelines</a></li>
 </ul></li>
 <li><a href="#sec:conclusion"
 id="toc-sec:conclusion">Conclusion</a></li>
-<li><a href="#references" id="toc-references">References</a></li>
 </ul></li>
+<li><a href="#references" id="toc-references">References</a></li>
+<li><a href="#acronyms" id="toc-acronyms">Acronyms</a></li>
 </ul>
 </nav>
-<h2 class="unnumbered" id="list-of-abbreviations">List of
-Abbreviations</h2>
-<h1 id="acronym-list">Acronyms</h1>
-<ul>
-<li><strong>AD</strong>: Automatic Differentiation</li>
-<li><strong>AE</strong>: Autoencoder</li>
-<li><strong>AI</strong>: Artificial Intelligence</li>
-<li><strong>ANN</strong>: Artificial Neural Network</li>
-<li><strong>AST</strong>: Abstract Syntax Tree</li>
-<li><strong>CNN</strong>: Convolutional Neural Network</li>
-<li><strong>CV</strong>: Computer Vision</li>
-<li><strong>DAG</strong>: Directed Acyclic Graph</li>
-<li><strong>DDM</strong>: Denoising Diffusion Model</li>
-<li><strong>DDPM</strong>: Denoising Diffusion Probabilistic Model</li>
-<li><strong>DL</strong>: Deep Learning</li>
-<li><strong>DoG</strong>: Difference of Gaussians</li>
-<li><strong>FID</strong>: Fréchet Inception Distance</li>
-<li><strong>GAN</strong>: Generative Adversarial Network</li>
-<li><strong>GD</strong>: Gradient Descent</li>
-<li><strong>GPU</strong>: Graphical Processing Unit</li>
-<li><strong>KL-Divergence</strong>: Kullback-Leibler Divergence</li>
-<li><strong>LDM</strong>: Latent Diffusion Model</li>
-<li><strong>LLM</strong>: Large Language Model</li>
-<li><strong>LPIPS</strong>: Learned Perceptual Image Patch
-Similarity</li>
-<li><strong>ML</strong>: Machine Learning</li>
-<li><strong>MLP</strong>: Multi-Layer Perceptron</li>
-<li><strong>MNIST</strong>: Modified National Institute of Standards and
-Technology</li>
-<li><strong>MOS</strong>: Mean Opinion Score</li>
-<li><strong>MSE</strong>: Mean Squared Error</li>
-<li><strong>NLP</strong>: Natural Language Processing</li>
-<li><strong>NN</strong>: Neural Network</li>
-<li><strong>NPU</strong>: Neural Processing Unit</li>
-<li><strong>PSNR</strong>: Peak Signal-to-Noise Ratio</li>
-<li><strong>ReLU</strong>: Rectified Linear Unit</li>
-<li><strong>SGD</strong>: Stochastic Gradient Descent</li>
-<li><strong>TPU</strong>: Tensor Processing Unit</li>
-<li><strong>VAE</strong>: Variational Autoencoder</li>
-<li><strong>VI</strong>: Variational Inference</li>
-<li><strong>ViT</strong>: Vision Transformer</li>
-<li><strong>WGAN</strong>: Wasserstein Generative Adversarial
-Network</li>
-<li><strong>WGAN-GP</strong>: Wasserstein Generative Adversarial Network
-with Gradient Penalty</li>
-<li><strong>cGAN</strong>: Conditional Generative Adversarial
-Network</li>
-<li><strong>cWGAN</strong>: Conditional Wasserstein Generative
-Adversarial Network</li>
-<li><strong>cWGAN-GP</strong>: Conditional Wasserstein Generative
-Adversarial Network with Gradient Penalty</li>
-<li><strong>xDoG</strong>: extended Difference of Gaussians</li>
-</ul>
 <h2 class="unnumbered" id="abstract">Abstract</h2>
 
 <h2 class="unnumbered" id="aknowledgements">Aknowledgements</h2>
@@ -1059,7 +1004,7 @@ cost <span class="math inline">\(C\)</span> with respect to the model’s
 parameters <span class="math inline">\(\theta\)</span>. The value <span
 class="math inline">\(\nabla_\theta C\)</span> can be obtained using
 backpropagation (discussed in the next sub-section <a
-href="#sec:II.1.3">Sec 3.1.3</a>).</p>
+href="#sec:II.1.3">Sec 2.1.3</a>).</p>
 <p>This vector of first order derivatives indicates the direction from
 which we need to move the weights <span
 class="math inline">\(\theta\)</span> away. By taking small iterative
@@ -1182,7 +1127,7 @@ literature however contains many examples of initial parameters and
 architectures that can be used to bootstrap this search.</p>
 <h3 id="sec:II.1.3">The Backpropagation Algorithm</h3>
 <p>In the previous sub-section (see <a
-href="#sec:II.1.2">Sec 3.1.2</a>), we saw how to learn parametrized
+href="#sec:II.1.2">Sec 2.1.2</a>), we saw how to learn parametrized
 functions <span class="math inline">\(f_\theta\)</span> given a training
 dataset. By evaluating the gradients of the objective function with
 respect to the model’s parameters, it is possible to obtain a good
@@ -1236,7 +1181,7 @@ one.</figcaption>
 </figure>
 <p><strong>Computation Graph:</strong> A NN can be defined as a
 succession of linear transformations followed by non-linear activations
-(discussed in the next section <a href="#sec:II.2">Sec 3.2</a>). Those
+(discussed in the next section <a href="#sec:II.2">Sec 2.2</a>). Those
 elementary operations are differentiable and when thinking of the data
 flow can be viewed as a computation DAG to which backpropagation,
 reverse mode differentiation, can be applied.</p>
@@ -1282,7 +1227,7 @@ merged into a single fused operation, and execution can be optimized for
 parallelization. It is often the preferred way for deployment where the
 execution time and memory are at stake.</p>
 <h2 id="sec:II.2">Artificial Neural Networks</h2>
-<p>In the previous section (Section <a href="#sec:II.1">Sec 3.1</a>), we
+<p>In the previous section (Section <a href="#sec:II.1">Sec 2.1</a>), we
 described the general setup for ML, where one has to fit a model from a
 given function family <span class="math inline">\(f \in
 \mathcal{F}\)</span> on a given dataset <span class="math inline">\((X,
@@ -1783,12 +1728,12 @@ presented in the next chapters.</p>
 <p>In this chapter, we discuss related work for the task of automatic
 colorization. The related contributions can be divided into two
 categories: classical and Deep Learning (DL) approaches.</p>
-<p>The first section (see <a href="#sec:III.1">Sec 4.1</a>) presents
+<p>The first section (see <a href="#sec:III.1">Sec 3.1</a>) presents
 classical algorithmic contributions mostly based on countour filling and
-the second section (see <a href="#sec:III.2">Sec 4.2</a>) discusses DL
+the second section (see <a href="#sec:III.2">Sec 3.2</a>) discusses DL
 end-to-end methods providing inferred semantic information and
 unprecedented means of captuing the user’s intent.</p>
-<p>The last section (see <a href="#sec:III.3">Sec 4.3</a>), provides a
+<p>The last section (see <a href="#sec:III.3">Sec 3.3</a>), provides a
 detailed explaination of the type of DL models used for image generation
 to help refined the understanding of DL contributions to the field of
 automatic lineart colorization.</p>
@@ -2305,7 +2250,7 @@ methods.</p>
 <p>This section discusses the various architectures introduced in the DL
 litterature for image generation with a strong focus on those used by
 the related work of the previous section (section <a
-href="#sec:III.2">Sec 4.2</a>) and how to condition them on user
+href="#sec:III.2">Sec 3.2</a>) and how to condition them on user
 inputs.</p>
 <p>The architectures discussed are the Autoencoder (AE) (see
 Sec <strong>¿sec:ae?</strong>), the Variational Autoencoder (VAE) (see
@@ -2318,7 +2263,7 @@ architectures but also compares them on three criteria, generation
 inference speed, generation variance, and generation quality and
 complexity.</p>
 <p>Similarly to the theoretical background chapter (chapter <a
-href="#sec:II">Sec 3</a>), the Modified National Institute of Standards
+href="#sec:II">Sec 2</a>), the Modified National Institute of Standards
 and Technology (MNIST) dataset is used for illustrative purposes.</p>
 <h3 id="sec:III.3.1">Autoencoders</h3>
 <p>Autoencoders (AE) are part of a family of feedforward NNs for which
@@ -3132,8 +3077,8 @@ exploration.
 <h1 id="sec:IV">Contributions in Automatic Lineart Colorization</h1>
 <p>This chapter discusses the main contributions of this thesis
 dissertation in relation to the related work presented in the previous
-chapter (see <a href="#sec:III">Sec 4</a>).</p>
-<p>Section <a href="#sec:IV.1">Sec 5.1</a> presents a recipe for
+chapter (see <a href="#sec:III">Sec 3</a>).</p>
+<p>Section <a href="#sec:IV.1">Sec 4.1</a> presents a recipe for
 generating clean datasets for the task of automatic colorization based
 on a synthetic pipeline <span class="citation"
 data-cites="hati_2019 hati_2023">[<a href="#ref-hati_2019"
@@ -3142,9 +3087,9 @@ role="doc-biblioref">31</a>]</span>. The linearts and color hint maps
 are generated from original illustrations scrapped online and manually
 filtered for their perceptieve quality and consistancy. The same
 pipeline is used with minor modification throuhought the three
-approaches proposed in sections <a href="#sec:IV.2">Sec 5.2</a>, <a
-href="#sec:IV.3">Sec 5.3</a>, and <a href="#sec:IV.4">Sec 5.4</a>.</p>
-<p>Section <a href="#sec:IV.2">Sec 5.2</a> introduces PaintsTorch <span
+approaches proposed in sections <a href="#sec:IV.2">Sec 4.2</a>, <a
+href="#sec:IV.3">Sec 4.3</a>, and <a href="#sec:IV.4">Sec 4.4</a>.</p>
+<p>Section <a href="#sec:IV.2">Sec 4.2</a> introduces PaintsTorch <span
 class="citation" data-cites="hati_2019">[<a href="#ref-hati_2019"
 role="doc-biblioref">30</a>]</span>; a double GAN generator that
 improves generation quality compared to previous work while allowing
@@ -3154,13 +3099,13 @@ double generator to enforce consistency in the lineart and help the
 network untangle its internal representation. The resulting
 colorizations are more consistent, robust, and visually pleasing in
 comparison to previous methods.</p>
-<p>Section <a href="#sec:IV.3">Sec 5.3</a> presents StencilTorch <span
+<p>Section <a href="#sec:IV.3">Sec 4.3</a> presents StencilTorch <span
 class="citation" data-cites="hati_2023">[<a href="#ref-hati_2023"
 role="doc-biblioref">31</a>]</span>, an upgrade of PaintsTorch, shifting
 the colorization problem to in-painting with masks allowing for
 human-machine collaboration to emerge as a natural workflow where the
 input of a first pass becomes a potential input for a second.</p>
-<p>Section <a href="#sec:IV.4">Sec 5.4</a> discusses an unfished follow
+<p>Section <a href="#sec:IV.4">Sec 4.4</a> discusses an unfished follow
 up work to PaintsTorch and StencilTorch called StablePaint. StablePaint
 is an exploration of the use of DDMs for automatic lineart colorization.
 It sacrifises inference speed for flexibility and quality. Those type of
@@ -3177,11 +3122,11 @@ exploration.</p>
 thesis dissertation <span class="citation" data-cites="sec">[<a
 href="#ref-sec"
 role="doc-biblioref"><strong>sec?</strong></a>]</span>;IV.1.1. The
-dataset curation is described in <a href="#sec:IV.1.2">Sec 5.1.1.1</a>,
+dataset curation is described in <a href="#sec:IV.1.2">Sec 4.1.1.1</a>,
 the objective evaluation process in <a
-href="#sec:IV.1.4.1">Sec 5.1.2.1</a>, the subjective evaluation in <a
-href="#sec:IV.1.4.2">Sec 5.1.2.2</a>, the implementation details and the
-reproducibility in <a href="#sec:IV.1.5">Sec 5.1.3</a>.</p>
+href="#sec:IV.1.4.1">Sec 4.1.2.1</a>, the subjective evaluation in <a
+href="#sec:IV.1.4.2">Sec 4.1.2.2</a>, the implementation details and the
+reproducibility in <a href="#sec:IV.1.5">Sec 4.1.3</a>.</p>
 <h3 id="sec:IV.1.1">Synthetic Dataset Pipeline</h3>
 <p>The challenge of anime lineart colorization faces a lack of available
 datasets with perceptive qualitative content. To acquire corresponding
@@ -3365,17 +3310,17 @@ conditioned with their corresponding color hint method. The results of
 the study are discussed in later sections when presenting our methods
 PaintsTorch <span class="citation" data-cites="hati_2019">[<a
 href="#ref-hati_2019" role="doc-biblioref">30</a>]</span> (see <a
-href="#sec:IV.2">Sec 5.2</a>), and StencilTorch <span class="citation"
+href="#sec:IV.2">Sec 4.2</a>), and StencilTorch <span class="citation"
 data-cites="hati_2023">[<a href="#ref-hati_2023"
 role="doc-biblioref">31</a>]</span> (see <a
-href="#sec:IV.3">Sec 5.3</a>).</p>
+href="#sec:IV.3">Sec 4.3</a>).</p>
 <h3 id="sec:IV.1.5">Reproducibility</h3>
 <p>For reproducibility and transparency, the implementation frameworks
 and the devices used for measurement are discussed in this section. As a
 reminder, the weights of our models and our custom datasets are not
 shared for copyright policies for which the reasons are further
 discussed in a specific chapter at this end of this document (see <a
-href="#sec:ethical-and-societal-impact">Sec 6.1</a>).</p>
+href="#sec:ethical-and-societal-impact">Sec 5.1</a>).</p>
 <h4 id="sec:IV.1.5.1">Implementation</h4>
 <p>The code for this thesis’ projects are all available on GitHub at <a
 href="https://github.com/yliess86">https://github.com/yliess86</a>.
@@ -3438,7 +3383,7 @@ following:</p>
 <ul>
 <li>The introduction of a stricter dataset curation pipeline introduced
 in the previous chapter on methodology (see <a
-href="#sec:IV.1">Sec 5.1</a>)</li>
+href="#sec:IV.1">Sec 4.1</a>)</li>
 <li>A new synthetic stroke generation scheme that is closer to the one
 used during inference and provided by the end-user</li>
 <li>We explore the use of a second generator network to enforce that the
@@ -3452,11 +3397,11 @@ with our model.</li>
 <p>This section discusses the data generation pipeline used in
 PaintsTorch <span class="citation" data-cites="hati_2019">[<a
 href="#ref-hati_2019" role="doc-biblioref">30</a>]</span> (see <a
-href="#sec:IV.2.2.1">Sec 5.2.2.1</a>), the Conditional Wasserstein
+href="#sec:IV.2.2.1">Sec 4.2.2.1</a>), the Conditional Wasserstein
 Generative Adversarial Network (cWGAN) U-net-based model architecture
-(see <a href="#sec:IV.2.2.2">Sec 5.2.2.2</a>), the objective functions
-we aim to optimize (see <a href="#sec:IV.2.2.3">Sec 5.2.2.3</a>), and
-the training regime (see <a href="#sec:IV.2.2.4">Sec 5.2.2.4</a>).</p>
+(see <a href="#sec:IV.2.2.2">Sec 4.2.2.2</a>), the objective functions
+we aim to optimize (see <a href="#sec:IV.2.2.3">Sec 4.2.2.3</a>), and
+the training regime (see <a href="#sec:IV.2.2.4">Sec 4.2.2.4</a>).</p>
 <h4 id="sec:IV.2.2.1">Synthetic Inputs</h4>
 <p>Because of the rarity of lineart and color illustration pairs, we
 employ a synthetic data generation pipeline. Both the lineart and color
@@ -3670,9 +3615,9 @@ PaintsTorch is trained for <span class="math inline">\(100\)</span>
 epochs on our custom dataset.</p>
 <h3 id="sec:IV.2.3">Results</h3>
 <p>In this section we present the objective and subjective evaluations
-(see <a href="#sec:IV.2.3.1">Sec 5.2.3.1</a>), perform a qualitative
+(see <a href="#sec:IV.2.3.1">Sec 4.2.3.1</a>), perform a qualitative
 visual analysis of the strengh and limitations of our contribution (see
-<a href="#sec:IV.2.3.4">Sec 5.2.3.4</a>).</p>
+<a href="#sec:IV.2.3.4">Sec 4.2.3.4</a>).</p>
 <h4 id="sec:IV.2.3.1">Evaluation</h4>
 <p>Our model PaintsTorch is evaluated using subjective metrics, and
 objective metrics against state-of-the-art methods <span
@@ -4126,12 +4071,12 @@ a mask.</li>
 <p>This section discusses the data generation pipeline used in
 StencilTorch <span class="citation" data-cites="hati_2023">[<a
 href="#ref-hati_2023" role="doc-biblioref">31</a>]</span> (see <a
-href="#sec:IV.3.2.1">Sec 5.3.2.1</a>), the Conditional Wasserstein
+href="#sec:IV.3.2.1">Sec 4.3.2.1</a>), the Conditional Wasserstein
 Generative Adversarial Network with Gradient Penalty (cWGAN-GP) (see <a
-href="#sec:IV.3.2.2">Sec 5.3.2.2</a>) model architecture and its guide
+href="#sec:IV.3.2.2">Sec 4.3.2.2</a>) model architecture and its guide
 network, the objective functions we aim to optimize (see <a
-href="#sec:IV.3.2.3">Sec 5.3.2.3</a>), and the training regime (see <a
-href="#sec:IV.3.2.4">Sec 5.3.2.4</a>).</p>
+href="#sec:IV.3.2.3">Sec 4.3.2.3</a>), and the training regime (see <a
+href="#sec:IV.3.2.4">Sec 4.3.2.4</a>).</p>
 <h4 id="sec:IV.3.2.1">Synthetic Inputs</h4>
 <p>One of the challenges for the task of automatic lineart colorization
 is the lack of qualitative public datasets. In our previous work on
@@ -4215,7 +4160,7 @@ data-cites="hati_2019">[<a href="#ref-hati_2019"
 role="doc-biblioref">30</a>]</span>, StencilTorch is trained end-to-end
 following the Wasserstein Generative Adversarial Network with Gradient
 Penalty (WGAN-GP) objectives described in <a
-href="#sec:III.3.3">Sec 4.3.3</a> with minimal changes, the
+href="#sec:III.3.3">Sec 3.3.3</a> with minimal changes, the
 reconstruction loss is replaced by a guidance signal:</p>
 <p><span id="eq:core_st_objectives"><span class="math display">\[
 \begin{aligned}
@@ -4245,9 +4190,9 @@ for <span class="math inline">\(40\)</span> epochs using a batch size of
 <span class="math inline">\(24\)</span> hours straight.</p>
 <h3 id="sec:IV.3.3">Results</h3>
 <p>In this section we present the objective and subjective evaluations
-(see <a href="#sec:IV.3.3.1">Sec 5.3.3.1</a>), perform a qualitative
+(see <a href="#sec:IV.3.3.1">Sec 4.3.3.1</a>), perform a qualitative
 visual analysis of the strengh and limitations of our contribution (see
-<a href="#sec:IV.3.3.5">Sec 5.3.3.5</a>).</p>
+<a href="#sec:IV.3.3.5">Sec 4.3.3.5</a>).</p>
 <h4 id="sec:IV.3.3.1">Evaluation</h4>
 <p>Our model StencilTorch is evaluated using subjective metrics, and
 objective metrics against state-of-the-art methods <span
@@ -4461,10 +4406,10 @@ class="math inline">\(\downarrow\)</span></td>
 </table>
 </div>
 <p><strong>Subjective Evaluation:</strong> As stated in the methodology
-section (see <a href="#sec:IV.1.2">Sec 5.1.1.1</a>) a subjective
+section (see <a href="#sec:IV.1.2">Sec 4.1.1.1</a>) a subjective
 evaluation is required due to the nature of the task we are trying to
 solve. We thus perform a MOS using the population of study described
-earlier (see <a href="#sec:IV.1.2">Sec 5.1.1.1</a>). The results (see <a
+earlier (see <a href="#sec:IV.1.2">Sec 4.1.1.1</a>). The results (see <a
 href="#tbl:core_st_mos">Tbl 6</a>) show that our model StencilTorch
 produces colored images with better perceptual qualities in most
 cases.</p>
@@ -4686,7 +4631,7 @@ data-cites="ho_2020">[<a href="#ref-ho_2020"
 role="doc-biblioref">36</a>]</span>. This type of autoregressive model
 currently outperforms GANs. The results are more consistent with the
 training distribution, more varied, and the models are easier to train,
-more stable. As explained in section <a href="#sec:III.3">Sec 4.3</a>, a
+more stable. As explained in section <a href="#sec:III.3">Sec 3.3</a>, a
 DDM is trained to successively denoise a noisy image. By playing with
 the intensity of the initial noise, or by masking certain part of the
 image, a trained DDM can be used for both, complete generation,
@@ -4715,7 +4660,7 @@ explenation of ControlNet, the community adopted solution from Zhang et
 al. [zhang_2023].</p>
 <h3 id="sec:IV.4.2">Method</h3>
 <p>This section discusses our dataset generation pipeline (<a
-href="#sec:IV.4.2.1">Sec 5.4.2.1</a>) our approach to the conditioning
+href="#sec:IV.4.2.1">Sec 4.4.2.1</a>) our approach to the conditioning
 of a LDM for the task of automatic lineart colorization (sec:IV.4.2.2),
 the training objectives of our model (sec:IV.4.2.3), and its training
 regime (sec:IV.4.2.4).</p>
@@ -4914,7 +4859,7 @@ up work was introduced by Zhang et al. <span class="citation"
 data-cites="zhang_2023">[<a href="#ref-zhang_2023"
 role="doc-biblioref">88</a>]</span> and was immediatly adopted by the
 community. Their approach, simple and elegant, is described in the next
-section (see <a href="#sec:IV.4.4">Sec 5.4.4</a>).</p>
+section (see <a href="#sec:IV.4.4">Sec 4.4.4</a>).</p>
 <h3 id="sec:IV.4.4">Current Approach</h3>
 <p>In their recently published work, Zhang et al. <span class="citation"
 data-cites="zhang_2023">[<a href="#ref-zhang_2023"
@@ -5159,7 +5104,7 @@ Current models still require human intervention and creativity to
 produce professional content.</p>
 <h2 id="sec:conclusion">Conclusion</h2>
 <!-- ===================== [END] PART Conclusion ===================== -->
-<h2 class="unnumbered" id="references">References</h2>
+<h1 class="unnumbered" id="references">References</h1>
 <div id="refs" class="references csl-bib-body" role="list">
 <div id="ref-tensorflow" class="csl-entry" role="listitem">
 <div class="csl-left-margin">[1] </div><div
@@ -5823,5 +5768,60 @@ Graph.</em> 38, 6 (Nov. 2019). DOI:https://doi.org/<a
 href="https://doi.org/10.1145/3355089.3356561">10.1145/3355089.3356561</a>.</div>
 </div>
 </div>
+<div id="acronym-list">
+<h1 class="unnumbered" id="acronyms">Acronyms</h1>
+<ul>
+<li><strong>AD</strong>: Automatic Differentiation</li>
+<li><strong>AE</strong>: Autoencoder</li>
+<li><strong>AI</strong>: Artificial Intelligence</li>
+<li><strong>ANN</strong>: Artificial Neural Network</li>
+<li><strong>AST</strong>: Abstract Syntax Tree</li>
+<li><strong>CNN</strong>: Convolutional Neural Network</li>
+<li><strong>CV</strong>: Computer Vision</li>
+<li><strong>DAG</strong>: Directed Acyclic Graph</li>
+<li><strong>DDM</strong>: Denoising Diffusion Model</li>
+<li><strong>DDPM</strong>: Denoising Diffusion Probabilistic Model</li>
+<li><strong>DL</strong>: Deep Learning</li>
+<li><strong>DoG</strong>: Difference of Gaussians</li>
+<li><strong>FID</strong>: Fréchet Inception Distance</li>
+<li><strong>GAN</strong>: Generative Adversarial Network</li>
+<li><strong>GD</strong>: Gradient Descent</li>
+<li><strong>GPU</strong>: Graphical Processing Unit</li>
+<li><strong>KL-Divergence</strong>: Kullback-Leibler Divergence</li>
+<li><strong>LDM</strong>: Latent Diffusion Model</li>
+<li><strong>LLM</strong>: Large Language Model</li>
+<li><strong>LPIPS</strong>: Learned Perceptual Image Patch
+Similarity</li>
+<li><strong>ML</strong>: Machine Learning</li>
+<li><strong>MLP</strong>: Multi-Layer Perceptron</li>
+<li><strong>MNIST</strong>: Modified National Institute of Standards and
+Technology</li>
+<li><strong>MOS</strong>: Mean Opinion Score</li>
+<li><strong>MSE</strong>: Mean Squared Error</li>
+<li><strong>NLP</strong>: Natural Language Processing</li>
+<li><strong>NN</strong>: Neural Network</li>
+<li><strong>NPU</strong>: Neural Processing Unit</li>
+<li><strong>PSNR</strong>: Peak Signal-to-Noise Ratio</li>
+<li><strong>ReLU</strong>: Rectified Linear Unit</li>
+<li><strong>SGD</strong>: Stochastic Gradient Descent</li>
+<li><strong>TPU</strong>: Tensor Processing Unit</li>
+<li><strong>VAE</strong>: Variational Autoencoder</li>
+<li><strong>VI</strong>: Variational Inference</li>
+<li><strong>ViT</strong>: Vision Transformer</li>
+<li><strong>WGAN</strong>: Wasserstein Generative Adversarial
+Network</li>
+<li><strong>WGAN-GP</strong>: Wasserstein Generative Adversarial Network
+with Gradient Penalty</li>
+<li><strong>cGAN</strong>: Conditional Generative Adversarial
+Network</li>
+<li><strong>cWGAN</strong>: Conditional Wasserstein Generative
+Adversarial Network</li>
+<li><strong>cWGAN-GP</strong>: Conditional Wasserstein Generative
+Adversarial Network with Gradient Penalty</li>
+<li><strong>xDoG</strong>: extended Difference of Gaussians</li>
+</ul>
+</div>
+<!-- ::: {#acronyms}
+::: -->
 </body>
 </html>
