@@ -1,7 +1,7 @@
 <p align="center">
     <h1>PhD Thesis</h1>
-    <img alt="progress-pages" src="https://progress-bar.dev/110?title=110/100 Pages" />
-    <img alt="progress-words" src="https://progress-bar.dev/78?title=31264/40000 Words" />
+    <img alt="progress-pages" src="https://progress-bar.dev/104?title=104/100 Pages" />
+    <img alt="progress-words" src="https://progress-bar.dev/74?title=29926/40000 Words" />
 </p>
 
 This repository contains the source code and the compiled versions of my Ph.D. Thesis.

@@ -188,6 +188,13 @@ acronyms:
 ---
 
 # Abstract {-}
+
+Automatic lineart colorization is a challenging task for Computer Vision. Contrary to grayscale images, linearts lack semantic information such as shading and texture, making the task even more difficult.
+
+This thesis dissertation is built upon related works and explores the use of modern generative [+ai]{.full} architectures such as [+gan]{.full .plural} and [+ddm]{.full .plural} to both improve the quality of previous techniques, as well as better capturing the user colorization intent throughout three contributions: PaintsTorch, StencilTorch and StablePaint.
+
+As a result, an iterative and interactive framework based on colored strokes and masks provided by the end user is built to foster Human-Machine collaboration in favour of natural, and emerging workflows inspired by digital painting processes.
+
 \newpage{}
 
 # Aknowledgements {-}
@@ -496,9 +503,9 @@ As shown in @fig:core_nn_vit_mha, the attention heads learn an ensemble of diffe
 
 ## Summary {#sec:II.3}
 
-This chapter discussed fundamental concepts of +ml, including supervised learning, optimization, and backpropagation, and the building blocks of +dl, from perceptrons to transformers.
+This chapter discussed fundamental concepts of [+ml]{.full}, including supervised learning, optimization, and backpropagation, and the building blocks of [+dl]{.full} ranging from the perceptron to the transformer architectures. These concepts are essential to the understanding of the methods presented in the next chapters.
 
-These concepts are essential to the understanding of the methods presented in the next chapters.
++dl methods are currently leading the field of image generation including automatic colorization. Those general function approximators can be trained to match user inputs and intent with pixel space to generate images of unprecedant appeal and quality.   
 
 <!-- ===================== [END] PART BACKGROUND ===================== -->
 
@@ -1489,72 +1496,17 @@ This method can be viewed a way to shift the weights of a pretrained model to ge
 <!-- ===================== [START] PART CONCLUSION ===================== -->
 # Conclusion {#sec:V}
 
-## Ethical and Societal Impact {#sec:ethical-and-societal-impact}
+This thesis dissertation aimed to identify factors that could improve the quality of generated lineart colorizations, and how to better capture and interpret the user colorization intent in comparison to previous work on user-guided lineart colorization.
 
-The use of [+ai]{.full} is becoming pervasive in our environment and is impacting every domain. The creative industry is not an exception. Recent advances in applied [+dl]{.full} for art, resumed as generative +ai, are transforming the art sector. Thanks to generative models such as Chat-GPT, DALL-E [@openai_2023], and open source initiatives such as StableDiffusion [@rombach_2021], the art-making process is more accessible than ever. By giving the user means of control over the model conditioning, everybody can now generate text, images, audio, and videos from natural language prompts.
+Through our explorations with PaintsTorch [@hati_2019], StencilTorch [@hati_2023], and later StablePaint, we show that specialized architectures for image generation such as [+gan]{.full .plural} and more recently [+ddm]{.full .plural} can be leveraged to produce qualitative illustrations from black and white linearts.
 
-![Screenshot of the website Artstation used by artists to professionally expose their work. A quick exploration shows the appearance of anti +ai pictures expressing the concerns of artists from +ai companies exploiting their artwork for training their models for profit.](./figures/ref_artstation_cancel_ai.png){#fig:ref_artstation_cancel_ai}
+We proposed a refined process for generating datasets for the task of user-guided lineart colorization consisting in gathering illustrations and post-processing them to extract synthetic linearts and simulated unlit color strokes that matches the final user inputs.
 
-While such ability can present benefits in ways that are discussed throughout this chapter, it also comes at a cost. Generative +ai in the art domain presents limitations in its usage but also presents challenges questioning ethics and its impact on our society. Its use is seen as controversial by most of the artist communities. While some may see generative +ai as a tool that enables increase creativity potential and productivity others consider it as a Damocles sword, a threat for their job (see @fig:ref_artstation_cancel_ai).
+We demonstrated that the user intent capture and the lack of semantic information can be handled by conditionning the generative models with external or end-to-end feature vectors. This technique is both capable of capturing the color intent of the user but also its position in space.
 
-This chapter discusses the benefits of generative +ai models, their ethical concerns and their impact on our society but also their limitations and the need for regulations and guidelines.
+We later demonstrate the emerging human-machine collaboration workflow enabled by iterative interactions with our frameworks. In StencilTorch, this phenomenon results from the in-painting reformulation of the colorization problem through the use of masks. In StablePaint and more specifically when using [+ddm]{.plural}, this comes for free as a result of a regionned controlled denoising process.
 
-### Benefits
-
-Generative +ai brings a lot of benefits to the art industry. It can be used to automate redundant tasks such as in-between frame colorization in the digital animation domain and increase the productivity of the artist by enabling faster exploration of variation art productions. The artist can for example bootstrap an idea using natural prompts such as text or image collages, and further refine it to explore a specific design.
-
-![Sample from Midjourney's generative +ai using the prompt "the year 1203, the crowned Byzantine emperor watches as Venetian ships sail into the harbor of Constantinople, view over his shoulder, dramatic, photorealistic, details --ar 2:1".](./figures/ref_midjourney.png){#fig:ref_midjourney}
-
-One of the most important benefits of generative +ai tools comes from their democratization. They enable individuals with no background in creative arts, to express their creativity and generate artistic pieces with natural interactions without requiring specific technical knowledge (see [@fig:ref_midjourney; @fig:ref_hp]). It lowers down the barrier for newcomers and lowers the cost of production. This aspect is especially important for independent and small studios that do not have the means of big production companies.
-
-Here is a sampled list of use cases for image generative +ai:
-
-- Art directors can generate images to better explain their vision to the production team using rough storyboards as a guideline for the generative model.
-- Indie game studios can generate character turn tables using descriptions from the character's background and appearance.
-- Art museums can revive the art of classic artists such as Picasso, Leonardo Da Vinci, or Van Gogh, and transfer their style to videos or photographs.
-- Artists can generate thousands of variations from their artwork to better match their vision and perform iterative exploration.
-- Individuals can use inpainting to remove or change part of their photos.
-- Card games can be generated on the fly using procedural artworks.
-- A UX designer can generate a set of website pages that correspond to their vision before spending time to produce the actual mockup and follow their standard workflow.
-- Indie movie studios could generate entire animated movies from video footage at a low cost without requiring the help of professional 2D animators.
-
-![Portrait generated using various image generative +ai models with a simplified description of the character Harry Potter from J.K. Rowling: "young boy portrait, lighting bolt scar on the forehead, thin face, black hair, green eyes, round black glasses held, black robe cape, magic castle in the background, trending in art station, 4k". The models are having trouble with details such as the scar.](./figures/ref_hp.png){#fig:ref_hp}
-
-### Ethical Concerns
-
-While such technologies can benefit the creative industry in many ways, ethical problems such as the notion of ownership and authenticity arise. As demonstrated throughout this thesis dissertation the most common regimes used to train generative models are based on huge quantities of scrapped data. Scrapping does not respect the ownership and copyrighting policies of the content downloaded. While this practice may be acceptable in the realm of education and research it is not the case for commercial use or impersonation. This is even more problematic as some training pictures can be leaked from inferred images which in some cases resemble the training data too much so that it can be affiliated as a fake copy of the original artwork. This has been demonstrated by Carlini et al. [@carlini_2023] in their work on extracting training data from diffusion models. Users can also replicate the style of artists without their consent nor credit. This is extremely problematic as it constitutes an art identity steal (see @fig:ref_steal). 
-
-![Artwork by Hollie Mengert (left) vs. images generated with Stable Diffusion DreamBooth in her style (right). Credit: Andy BAIO from waxy.org.](./figures/ref_steal.jpg){#fig:ref_steal}
-
-Because of their training process, most generative +ai models are subject to miss representation and bias if not part of their objective or without extensive data cleaning and exploration. Some populations or types of content may be miss represented by being undersampled during training. Generative +ai can also be used to produce harmful content. As with every new piece of technology, miss uses can happen and the population needs to be warned.
-
-### Societal Impact
-
-With the democratization of the art-making process enabled by image generative +ai, human artists' labor may be devaluated. Producing art can be made faster, easier, and without the need for technically trained artists at an unprecedented level of fidelity, quality, and quantity. This emerging process may threaten the incomes of professional artists that may struggle to keep up with such as rate.
-
-This could also lead to the homogenization of artistic styles making it hard for new artists to establish themselves. This is especially true in the case of the combination of such tools with social media. One could easily train a model to generate images that the majority of people like and pollute the network with such produced content.
-
-### Limitations
-
-While generative +ai can produce qualitative art, users have to keep in mind that the models they use are subject to limitations. They rely on huge image datasets affected by bias, misrepresentation, and sensible content. For example, some models still struggle at generating hands, feet, or coherent images. The produced output may require multiple trials, and modifications, and often cannot be used in their raw versions (see @fig:ref_feet_hands).
-
-![Feet and hands generated by StableDiffusion [@rombach_2021].](./figures/ref_feet_hands.png){#fig:ref_feet_hands}
-
-One other limitation is that such models are hard and expensive to train. Only huge corporations with access to modern hardware can produce high-quality general-purpose models, called foundation models. This may however change as the domain is improving constantly and thanks to open-source initiatives such as those of Stability AI [@rombach_2021].
-
-### Regulations and Guidelines
-
-Because of the current generative +ai ethical concerns, societal impact, and limitations, its usage needs to be regulated or at least follow some guidelines which are yet to be find. We can however speculate and propose some of them. Here is a small list of proposed guidelines or regulations for the fair use of generative +ai for producing art content:
-
-- The dataset used for training huge foundation generative models should be opt-in and not opt-out. The artists should have to decide if they want to enroll in such programs or not.
-- Artists could be given incomes and credited when the generated art resembles theirs. This could be done by reverse prompting or by the introduction of a similarity metric to automatically assign a generated image to the closest set of artists.
-- Every piece of art generated using +ai should be classified as so for transparency purposes. This would also help in classifying real art from "fake".
-
-### Summary
-
-The use of generative +ai in the creative industry is transforming the art sector and presenting benefits such as automating redundant tasks, increasing productivity, democratizing art production, and enabling individuals with no background in creative arts to express their creativity. However, it also presents ethical concerns such as ownership, copyright, and authenticity issues. The training process of generative AI models, which is often based on scrapped data, can violate ownership and copyright policies and lead to art identity theft.
-
-Regulations and guidelines are thus required to lead the field toward fair use in collaboration with the artist community. Too much regulation may hinder the rate of improvement of the field. The Balance is yet to be found. Similarly to when digital art was introduced and faced the criticism of classical analog mediums, artists need to learn how to harness such tools to their advantage and avoid being put on the side. Current models still require human intervention and creativity to produce professional content.
+Recent work mostly driven by the generative +ai community have shown that iterative workflows and +ddm are currently the best approaches to image generation also extending to lineart colorization. The challenge now resides in making those techniques run faster and with less memory in comparison to [+gan]{.plural} that are capable of real-time interactions, but also in improving alignement with the user intent, whether it is by conditioning the network on text, images, or other means.
 
 \newpage{}
 
