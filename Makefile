@@ -4,18 +4,15 @@ OPTIONS      = -s
 OPTIONS     += -F pandoc-acro
 OPTIONS     += -F pandoc-crossref
 OPTIONS     += --citeproc
-OPTIONS     += --toc
 OPTIONS     += --top-level-division chapter
 
 PANDOC       = pandoc
 PANDOC_PDF   = ${PANDOC} ${OPTIONS} ${FILENAME}.md -o docs/${FILENAME}.pdf
 PANDOC_HTML  = ${PANDOC} ${OPTIONS} --mathjax ${FILENAME}.md -o docs/index.html
 
-GS           = gs
-GS_PDF       = ${GS} -dNOPAUSE -dQUIET -dBATCH -dPDFSETTINGS=/ebook -sdocs/${FILENAME}.pdf docs/${FILENAME}.pdf
-
-BOOKLET      = pdfbook2
-BOOKLET_PDF  = ${BOOKLET} docs/${FILENAME}.pdf
+GS_COMPRESS  = gs -dNOPAUSE -dQUIET -dBATCH -dPDFSETTINGS=/ebook -sdocs/${FILENAME}.pdf docs/${FILENAME}.pdf
+PDFTK_COVER  = pdftk docs/cover.pdf docs/${FILENAME}.pdf output docs/formatted_${FILENAME}.pdf && mv docs/formatted_${FILENAME}.pdf docs/${FILENAME}.pdf
+BOOKLET_PDF  = pdfbook2 docs/${FILENAME}.pdf
 
 PAGE_TOTAL   = 100
 PAGE_COUNT  := $(shell exiftool -T -PageCount -s3 -ext pdf docs/${FILENAME}.pdf | tr -d ' ')
@@ -50,7 +47,8 @@ html:
 
 pdf:
 	${PANDOC_PDF}
-	${GS_PDF}
+	${GS_COMPRESS}
+	${PDFTK_COVER}
 
 booklet:
 	${BOOKLET_PDF}

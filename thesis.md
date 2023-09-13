@@ -29,7 +29,7 @@ title: |
 author: Yliess Hati
 date: \today
 rights: © 2023 by Yliess Hati is licensed under CC BY 4.0
-keywords: [keyword]
+keywords: [Artificial Intelligence, Deep Learning, Generative Models, Automatic Colorization, Human-Machine Collaboration]
 
 acronyms:
     cs:
@@ -187,7 +187,18 @@ acronyms:
         long: Application Programming Interface
 ---
 
-# Abstract {-}
+# Aknowledgements {.unnumbered .unlisted}
+
+<!-- ===================== [START] ABSTRACT ===================== -->
+# Résumé (fr) {.unnumbered .unlisted}
+
+La colorisation automatique de dessins encrés est une tâche complexe pour la vision par ordinateur. Contrairement aux images en niveaux de gris, les encrages manquent d'informations sémantiques telles que les ombrages et les textures, rendant la tâche encore plus difficile.
+
+Cette thèse repose sur des travaux connexes et explore l'utilisation de architectures génératives modernes telles que les GAN (Réseaux Génératifs Antagonistes) et les MDD (Modèles de Diffusion par Débruitage) pour à la fois améliorer la qualité des techniques précédentes et mieux capturer l'intention de colorisation de l'utilisateur à travers trois contributions : PaintsTorch, StencilTorch et StablePaint.
+
+Ces travaux amènent à la définition et l'implémentation d'un procédé itératif et interactif basé sur des coups de pinceau colorés et des masques fournis par l'utilisateur final pour favoriser la collaboration entre l'Homme et la Machine en faveur de processus de travail naturels et émergents inspirés de la peinture digitale.
+
+# Abstract {.unnumbered .unlisted}
 
 Automatic lineart colorization is a challenging task for Computer Vision. Contrary to grayscale images, linearts lack semantic information such as shading and texture, making the task even more difficult.
 
@@ -195,10 +206,79 @@ This thesis dissertation is built upon related works and explores the use of mod
 
 As a result, an iterative and interactive framework based on colored strokes and masks provided by the end user is built to foster Human-Machine collaboration in favour of natural, and emerging workflows inspired by digital painting processes.
 
-\newpage{}
+<!-- ===================== [END] ABSTRACT ===================== -->
 
-# Aknowledgements {-}
-\newpage{}
+<!-- ===================== [START] NAVIGATION ===================== -->
+\tableofcontents
+\listoffigures
+\listoftables
+<!-- ===================== [END] NAVIGATION ===================== -->
+
+<!-- ===================== [START] PART INTRODUCTION FR ===================== -->
+# Introduction (fr) {.unnumbered .unlisted}
+
+Les humains peuvent percevoir et comprendre le monde. Nous pouvons accomplir une vaste gamme de tâches complexes grâce à la combinaison de la reconnaissance visuelle, de la compréhension des scènes et de la communication. La capacité à extraire rapidement et avec précision des informations à partir d'une seule image témoigne de la complexité et de la sophistication du cerveau humain, et est souvent considérée comme acquise. Un objectif du domaine de l'intelligence artificielle est de doter les machines de telles capacités humaines, dont l'une est la créativité, c'est-à-dire la capacité de produire quelque chose d'original et de précieux [@mumford_2012].
+
+La créativité computationnelle est un domaine multidisciplinaire qui englobe l'intelligence artificielle +ai, la psychologie cognitive, la philosophie, et l'art, et qui cherche à comprendre, simuler, reproduire, ou améliorer la créativité humaine. Une définition de la créativité [@newell_1959] est la capacité à produire quelque chose de nouveau et d'utile, qui nécessite de rejeter des croyances communes, résulte d'une motivation intense et de la persistance, ou découle de la clarification d'un problème. Les approches descendantes de cette définition utilisent un mélange de formulations explicites de recettes et de hasard, telles que la génération procédurale. À l'inverse, les approches ascendantes utilisent des réseaux de neurones artificiels pour apprendre des motifs et des heuristiques à partir de grands ensembles de données afin de permettre une génération non linéaire.
+
+Nous assistons actuellement au début d'une nouvelle ère où la frontière entre les machines et les humains commence à s'estomper. Les récents progrès dans le domaine de l'intelligence artificielle, plus précisément dans l'apprentissage profond, confèrent aux ordinateurs la capacité de percevoir et de comprendre notre monde, mais aussi d'interagir avec notre environnement en utilisant des interactions naturelles telles que la parole et le langage naturel. Les réseaux de neurones artificiels, autrefois moqués par la communauté de l'intelligence artificielle [@lecun_2019], peuvent désormais être entraînés grâce à la descente de gradient [@rumelhart_1986], grâce à la disponibilité massive de données et à la puissance de traitement des accélérateurs matériels modernes tels que les unités de traitement graphique, les unités de traitement tensoriel, et les unités de traitement neuronal.
+
+Les réseaux de neurones, ces approximateurs de fonctions générales entraînables, ont donné naissance au domaine des réseaux de neurones génératifs. Des architectures de l'apprentissage profond spécialisées telles que les variational autoencoders [@kingma_2013], les réseaux génératifs antagonistes [@goodfellow_2014], les modèles de diffusion par débruitage [@ho_2020], et les modèles de langage à grande échelle [@vaswani_2017; @brown_2020] sont utilisées pour générer des artefacts créatifs tels que du texte, de l'audio, des images, et des vidéos d'une qualité et d'une complexité inédites.
+
+Cette thèse vise à explorer comment on pourrait former et utiliser des réseaux de neurones génératifs pour créer des outils alimentés par l'intelligence artificielle capables d'améliorer l'expression créative humaine. La tâche de colorisation automatique d'encrages est choisie pour illustrer ce processus tout au long de la thèse.
+
+## Motivations {.unnumbered .unlisted}
+
+![Illustration d'un flux de travail d'illustration standard : esquisse, encrage, colorisation et post-traitement (de gauche à droite). Crédits : Illustration de Taira Akitsu](./figures/motivations_steps.svg)
+
+La colorisation d'encrages est un aspect essentiel du travail des artistes, des illustrateurs et des animateurs. La tâche de colorisation manuellement des encrages peut être chronophage, répétitive et épuisante, en particulier dans l'industrie de l'animation, où chaque image d'un produit animé doit être colorée et ombrée. Ce processus est généralement réalisé à l'aide de logiciels de retouche d'images tels que Photoshop [@photoshop], Clip Studio PAINT [@clipstudiopaint], et PaintMan [@paintman]. L'automatisation du processus de colorisation peut grandement améliorer le flux de travail de ces professionnels créatifs et a le potentiel de réduire la barrière à l'entrée pour les débutants et les amateurs. Un tel système avait été précédemment intégré à Clip Studio PAINT [@clipstudiopaint], puis retiré pour des préoccupations éthiques et de droits de propriété, démontrant l'importance croissante de la colorisation automatique dans le domaine.
+
+Le processus d'illustration numérique le plus courant peut être décomposé en quatre étapes distinctes : l'esquisse, l'encrage, la colorisation et le post-traitement (voir @fig:steps). Comme le montre le travail de Kandinsky [@kandinsky_1977], le processus de colorisation peut avoir un impact significatif sur le sens global d'une œuvre d'art grâce à l'introduction de divers schémas de couleurs, d'ombrages et de textures. Ces éléments du processus de colorisation représentent des défis importants pour la tâche de colorisation automatique des encrages en vision par ordinateur, en particulier par rapport à son équivalent en niveaux de gris [@furusawa_2O17; @hensman_2017; @zhang_richard_2017]. Sans les informations sémantiques supplémentaires fournies par les textures et les ombres, inférer les matériaux et les formes 3D à partir des encrages en noir et blanc est difficile.
+
+## Problématique {.unnumbered .unlisted}
+
+Un défi majeur de la colorisation automatique d'encrages est la disponibilité de jeux de données publics de qualité. Les illustrations ne sont pas toujours accompagnées de leurs encrages correspondants. Les rares ensembles de données disponibles pour cette tâche manquent de cohérence en ce qui concerne la qualité des illustrations, car ils rassemblent des images de différents types, médias et styles. Pour ces raisons, le web scraping et l'extraction synthétique d'encrages sont les méthodes de choix pour de nombreuses contributions dans ce domaine [@ci_2018; @zhang_richard_2017].
+
+Les travaux précédents en colorisation automatique d'encrages sont basés sur l'architecture des réseaux génératifs antagonistes [@goodfellow_2014] et peuvent générer des illustrations de haute qualité en temps réel, bien qu'imparfaites. Le contrôle et l'orientation de l'utilisateur peuvent être réalisés grâce à l'utilisation de : des indices de couleur [@frans_2017; @liu_2017; @sangkloy_2016; @paintschainer_2018; @ci_2018], le transfert de style [@zhang_ji_2017], l'étiquetage [@kim_2019], et plus récemment, le langage naturel [@ho_2020].
+
+Les travaux connexes pallient le manque de descripteurs sémantiques fournis par les encrages en noir et blanc en introduisant l'utilisation d'un extracteur de caractéristiques externe, l'un des plus courants étant Illustration2Vec [@saito_2015]. Le processus de sortie du modèle génératif est conditionné par un vecteur sémantique latent capturant la nature du contenu de l'encrage.
+
+## Contributions {.unnumbered .unlisted}
+
+Les contributions de cette thèse se concentrent sur l'utilisation d'indices de couleur sous la forme de coups de pinceau de l'utilisateur, car cela s'inscrit dans le flux de travail naturel des artistes numériques et n'implique pas l'apprentissage et la maîtrise de nouvelles compétences. Alors que les travaux précédents offrent une amélioration de la qualité par rapport aux techniques classiques en vision par ordinateur, ils restent soumis à des données d'entraînement bruyantes, à des artefacts, à un manque de variété et à un manque de fidélité à l'intention de l'utilisateur.
+
+Dans cette thèse, nous explorons l'importance d'un ensemble de données propre, qualitatif et cohérent. Nous étudions comment mieux capturer l'intention de l'utilisateur grâce à des contrôles artistiques naturels et comment la refléter dans l'artefact généré par le modèle tout en préservant ou en améliorant sa qualité. Nous examinons également comment le processus créatif peut être transformé en un flux de travail itératif dynamique où l'utilisateur collabore avec la machine pour affiner et réaliser des variations de son œuvre.
+
+Les contributions de cette thèse sont les suivantes :
+
+- Un processus de génération de jeux de données propres pour la tâche de colorisation automatique d'encrages [@hati_2019; @hati_2023].
+- PaintsTorch [@hati_2019] : un générateur à double réseau génératif antagoniste qui améliore la qualité de la génération par rapport aux travaux précédents tout en permettant une interaction en temps réel avec l'utilisateur final.
+- StencilTorch [@hati_2023] : une mise à jour de PaintsTorch, transformant le problème de colorisation en un problème d'incrustation avec des masques, ce qui permet une collaboration entre l'humain et la machine pour émerger en tant que flux de travail naturel où l'entrée d'une première passe devient une entrée potentielle pour une deuxième passe.
+- StablePaint : une exploration continue des modèles de diffusion par débruitage, apportant davantage de variété dans les sorties générées tout en conservant naturellement le flux de travail itératif introduit par StencilTorch au détriment de la vitesse d'inférence.
+
+## Préoccupations {.unnumbered .unlisted}
+
+Les récents progrès en matière d'intelligence artificielle générative pour la synthèse de textes, d'images, d'audio et de vidéos soulèvent d'importantes préoccupations éthiques et sociétales, en particulier en raison de leur disponibilité et de leur facilité d'utilisation. Des modèles tels que Stable Diffusion [+rombach_2021] et plus récemment Chat-GPT [@openai_2023] remettent en question nos croyances communes et notre relation avec le droit d'auteur, la créativité, les informations trompeuses, et ainsi de suite.
+
+L'un des principaux problèmes de l'intelligence artificielle générative est le potentiel de fabulation des modèles. Les modèles génératifs peuvent créer des données entièrement nouvelles et synthétiques qui sont presque indiscernables des données réelles. Cela peut conduire à la diffusion d'informations fausses et à la manipulation de l'opinion publique. De plus, il existe des ambiguïtés concernant la propriété et les droits d'auteur du contenu généré, car il n'est pas clair qui détient les droits sur les images et les vidéos générées. Les données d'entraînement sont souvent obtenues par le biais du web scraping, et donc la propriété des droits d'auteur n'est pas transmise. Cela est particulièrement vrai pour les applications commerciales.
+
+Une autre préoccupation importante est le potentiel de biais et de discrimination. Ces modèles sont formés sur de grandes quantités de données, et si les données ne sont pas suffisamment diverses ou représentatives, le modèle peut perpétuer ou même amplifier les biais existants. Le scandale du bot Twitter Microsoft Tay [@wolf_2017] est le résultat d'un tel phénomène. Ce chatbot initialement innocent a été facilement transformé en un bot raciste perpétuant des discours de haine. La tâche a été facilitée en raison du jeu de données intrinsèquement biaisé sur lequel il a été formé.
+
+Dans ce travail, nous nous engageons à aborder et à sensibiliser à ces préoccupations. Les illustrations utilisées pour former nos modèles et pour nos expériences ne sont utilisées que à des fins éducatives et de recherche. Nous fournissons uniquement des recettes pour la reproductibilité et ne distribuons ni l'ensemble de données ni les poids résultant de la formation du modèle, seulement le code. Nous espérons que cela garantira que notre travail soit utilisé de manière éthique et responsable tout en limitant son potentiel de mauvais usage.
+
+## Plan {.unnumbered .unlisted}
+
+Cette thèse est organisée comme suit :
+
+- [Chapitre 1](#sec:I) introduit le sujet de la colorisation automatique d'encrages, en fournissant la motivation de ce travail, la problématique, les contributions de cette thèse, et les préoccupations qu'elle peut soulever.
+- [Chapitre 2](#sec:II) présente un contexte théorique sur l'apprentissage automatique et les réseaux de neurones artificiels, qui sont les fondements des méthodes proposées dans cette thèse.
+- [Chapitre 3](#sec:III) passe en revue les travaux connexes sur la colorisation automatique d'encrages, à la fois les approches classiques et les approches basées sur les réseaux de neurones.
+- [Chapitre 4](#sec:IV) présente les contributions de cette thèse, notamment le développement de trois nouvelles méthodes de colorisation automatique d'encrages : [PaintsTorch](#sec:IV.2) [@hati_2019], [StencilTorch](#sec:IV.3) [@hati_2023], et un travail en cours, [StablePaint](#sec:IV.4).
+- [Chapitre 5](#sec:V) conclut la thèse et aborde les défis restants, les travaux futurs et les préoccupations liées à ce travail sur la colorisation automatique d'encrages.
+
+Le code source des expériences et des contributions est publiquement disponible sur GitHub à l'adresse [https://github.com/yliess86](https://github.com/yliess86).
+
+<!-- ===================== [END] PART INTRODUCTION FR ===================== -->
 
 <!-- ===================== [START] PART INTRODUCTION ===================== -->
 # Introduction {#sec:I}
@@ -264,7 +344,6 @@ This thesis is organized as follows:
 
 The code base for the experiments and contributions is publicly available on GitHub at [https://github.com/yliess86](https://github.com/yliess86).
 
-\newpage{}
 <!-- ===================== [END] PART INTRODUCTION ===================== -->
 
 <!-- ===================== [START] PART BACKGROUND ===================== -->
@@ -1494,6 +1573,23 @@ This method can be viewed a way to shift the weights of a pretrained model to ge
 <!-- ===================== [END] PART CONTRIBUTIONS ===================== -->
 
 <!-- ===================== [START] PART CONCLUSION ===================== -->
+# Conclusion (fr) {.unnumbered .unlisted}
+
+Cette thèse visait à identifier les facteurs susceptibles d'améliorer la qualité des colorisations d'encrages générées, ainsi qu'à mieux saisir et interpréter l'intention de colorisation de l'utilisateur par rapport aux travaux antérieurs sur la colorisation d'encrages guidée par l'utilisateur.
+
+À travers nos explorations avec PaintsTorch [@hati_2019], StencilTorch [@hati_2023], et plus tard StablePaint, nous avons montré que des architectures spécialisées pour la génération d'images telles que les réseaux génératifs antagonistes et plus récemment les modèles de diffusion par débruitage peuvent être exploitées pour produire des illustrations qualitatives à partir d'encrages en noir et blanc.
+
+Nous avons proposé un processus affiné pour la génération de jeux de données pour la tâche de colorisation d'encrages guidée par l'utilisateur, consistant à rassembler des illustrations et à les post-traiter pour extraire des encrages synthétiques et des coups de pinceau de couleur non éclairés simulés qui correspondent aux entrées finales de l'utilisateur.
+
+Nous avons démontré que la capture de l'intention de l'utilisateur et le manque d'informations sémantiques peuvent être gérés en conditionnant les modèles génératifs avec des vecteurs de caractéristiques externes ou de bout en bout. Cette technique est capable de capturer à la fois l'intention de couleur de l'utilisateur et sa position dans l'espace.
+
+Nous avons ensuite mis en évidence le workflow émergent de collaboration entre l'humain et la machine rendu possible par des interactions itératives avec nos cadres. Dans StencilTorch, ce phénomène résulte de la reformulation du problème de colorisation par incrustation à l'aide de masques. Dans StablePaint, et plus spécifiquement lors de l'utilisation de modèles de diffusion par débruitage, cela se produit naturellement en raison d'un processus de débruitage contrôlé par régions.
+
+Des travaux récents principalement dirigés par la communauté de l'intelligence artificielle générative ont montré que les flux de travail itératifs et les modèles de diffusion par débruitage sont actuellement les meilleures approches pour la génération d'images, s'étendant également à la colorisation d'encrages. Le défi réside désormais dans la mise en place de ces techniques pour qu'elles fonctionnent plus rapidement et avec moins de mémoire par rapport aux réseaux génératifs antagonistes capables d'interactions en temps réel, mais aussi dans l'amélioration de l'alignement avec l'intention de l'utilisateur, que ce soit en conditionnant le réseau sur du texte, des images, ou d'autres moyens.
+
+<!-- ===================== [END] PART Conclusion ===================== -->
+
+<!-- ===================== [START] PART CONCLUSION ===================== -->
 # Conclusion {#sec:V}
 
 This thesis dissertation aimed to identify factors that could improve the quality of generated lineart colorizations, and how to better capture and interpret the user colorization intent in comparison to previous work on user-guided lineart colorization.
@@ -1508,9 +1604,6 @@ We later demonstrate the emerging human-machine collaboration workflow enabled b
 
 Recent work mostly driven by the generative +ai community have shown that iterative workflows and +ddm are currently the best approaches to image generation also extending to lineart colorization. The challenge now resides in making those techniques run faster and with less memory in comparison to [+gan]{.plural} that are capable of real-time interactions, but also in improving alignement with the user intent, whether it is by conditioning the network on text, images, or other means.
 
-\newpage{}
-
-## Conclusion {#sec:conclusion}
 <!-- ===================== [END] PART Conclusion ===================== -->
 
 # References {-}
