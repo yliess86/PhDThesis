@@ -5,7 +5,9 @@
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <meta name="author" content="Yliess Hati" />
-  <meta name="keywords" content="keyword" />
+  <meta name="keywords" content="Artificial Intelligence, Deep
+Learning, Generative Models, Automatic Colorization, Human-Machine
+Collaboration" />
   <title>AI-Assisted Creative Expression: a Case for Automatic Lineart Colorization</title>
   <style>
     html {
@@ -402,126 +404,27 @@
 Automatic Lineart Colorization</p></h1>
 <p class="author">Yliess Hati</p>
 </header>
-<nav id="TOC" role="doc-toc">
-<h2 id="toc-title">Contents</h2>
-<ul>
-<li><a href="#abstract" id="toc-abstract">Abstract</a></li>
-<li><a href="#aknowledgements"
-id="toc-aknowledgements">Aknowledgements</a></li>
-<li><a href="#sec:I" id="toc-sec:I">Introduction</a>
-<ul>
-<li><a href="#sec:I.1" id="toc-sec:I.1">Motivations</a></li>
-<li><a href="#sec:I.2" id="toc-sec:I.2">Problem Statement</a></li>
-<li><a href="#sec:I.3" id="toc-sec:I.3">Contributions</a></li>
-<li><a href="#sec:I.4" id="toc-sec:I.4">Concerns</a></li>
-<li><a href="#sec:I.5" id="toc-sec:I.5">Outline</a></li>
-</ul></li>
-<li><a href="#sec:II" id="toc-sec:II">Theoretical Background</a>
-<ul>
-<li><a href="#sec:II.1" id="toc-sec:II.1">Machine Learning</a>
-<ul>
-<li><a href="#sec:II.1.1" id="toc-sec:II.1.1">Supervised
-Learning</a></li>
-<li><a href="#sec:II.1.2" id="toc-sec:II.1.2">An Optimization
-Problem</a></li>
-<li><a href="#sec:II.1.3" id="toc-sec:II.1.3">The Backpropagation
-Algorithm</a></li>
-</ul></li>
-<li><a href="#sec:II.2" id="toc-sec:II.2">Artificial Neural Networks</a>
-<ul>
-<li><a href="#sec:II.2.1" id="toc-sec:II.2.1">The Perceptron
-Model</a></li>
-<li><a href="#sec:II.2.2" id="toc-sec:II.2.2">Multi-Layer
-Perceptron</a></li>
-<li><a href="#sec:II.2.3" id="toc-sec:II.2.3">Convolutional Neural
-Network</a></li>
-<li><a href="#sec:II.2.4" id="toc-sec:II.2.4">The Transformer
-Architecture</a></li>
-</ul></li>
-<li><a href="#sec:II.3" id="toc-sec:II.3">Summary</a></li>
-</ul></li>
-<li><a href="#sec:III" id="toc-sec:III">Related Work</a>
-<ul>
-<li><a href="#sec:III.1" id="toc-sec:III.1">Classical Approaches to
-Automatic Lineart Colorization</a>
-<ul>
-<li><a href="#sec:III.1.1"
-id="toc-sec:III.1.1">Delaunay-Triangulation</a></li>
-<li><a href="#sec:III.1.2" id="toc-sec:III.1.2">Assistive
-Completion</a></li>
-</ul></li>
-<li><a href="#sec:III.2" id="toc-sec:III.2">Neural Network Approaches to
-Automatic Lineart Colorization</a>
-<ul>
-<li><a href="#sec:III.2.1" id="toc-sec:III.2.1">Automatic
-Colorization</a></li>
-<li><a href="#sec:III.2.2" id="toc-sec:III.2.2">Example-Based</a></li>
-<li><a href="#sec:III.2.3" id="toc-sec:III.2.3">Tags</a></li>
-<li><a href="#sec:III.2.4" id="toc-sec:III.2.4">Natural Language
-Prompt</a></li>
-<li><a href="#sec:III.2.5" id="toc-sec:III.2.5">Color Hints</a></li>
-</ul></li>
-<li><a href="#sec:III.3" id="toc-sec:III.3">Generative Neural Networks
-for Image Generation</a>
-<ul>
-<li><a href="#sec:III.3.1" id="toc-sec:III.3.1">Autoencoders</a></li>
-<li><a href="#sec:III.3.2" id="toc-sec:III.3.2">Variational
-Autoencoders</a></li>
-<li><a href="#sec:III.3.3" id="toc-sec:III.3.3">Generative Adversarial
-Networks</a></li>
-<li><a href="#sec:III.3.4" id="toc-sec:III.3.4">Denoising Diffusion
-Models</a></li>
-<li><a href="#sec:III.3.5" id="toc-sec:III.3.5">Conditional
-Generation</a></li>
-</ul></li>
-<li><a href="#sec:III.4" id="toc-sec:III.4">Summary</a></li>
-</ul></li>
-<li><a href="#sec:IV" id="toc-sec:IV">Contributions in Automatic Lineart
-Colorization</a>
-<ul>
-<li><a href="#sec:IV.1" id="toc-sec:IV.1">Method and Implementation</a>
-<ul>
-<li><a href="#sec:IV.1.1" id="toc-sec:IV.1.1">Synthetic Dataset
-Pipeline</a></li>
-<li><a href="#sec:IV.1.4" id="toc-sec:IV.1.4">Evaluation
-Metrics</a></li>
-<li><a href="#sec:IV.1.5" id="toc-sec:IV.1.5">Reproducibility</a></li>
-</ul></li>
-<li><a href="#sec:IV.2" id="toc-sec:IV.2">PaintsTorch: User-Guidance</a>
-<ul>
-<li><a href="#sec:IV.2.1" id="toc-sec:IV.2.1">Introduction</a></li>
-<li><a href="#sec:IV.2.2" id="toc-sec:IV.2.2">Method</a></li>
-<li><a href="#sec:IV.2.3" id="toc-sec:IV.2.3">Results</a></li>
-<li><a href="#sec:IV.2.4" id="toc-sec:IV.2.4">Summary</a></li>
-</ul></li>
-<li><a href="#sec:IV.3" id="toc-sec:IV.3">StencitTorch: Human-Machine
-Colaboration</a>
-<ul>
-<li><a href="#sec:IV.3.1" id="toc-sec:IV.3.1">Introduction</a></li>
-<li><a href="#sec:IV.3.2" id="toc-sec:IV.3.2">Method</a></li>
-<li><a href="#sec:IV.3.3" id="toc-sec:IV.3.3">Results</a></li>
-<li><a href="#sec:IV.3.4" id="toc-sec:IV.3.4">Summary</a></li>
-</ul></li>
-<li><a href="#sec:IV.4" id="toc-sec:IV.4">StablePaint: Conditional
-DDM</a>
-<ul>
-<li><a href="#sec:IV.4.1" id="toc-sec:IV.4.1">Introduction</a></li>
-<li><a href="#sec:IV.4.2" id="toc-sec:IV.4.2">Method</a></li>
-<li><a href="#sec:IV.4.3" id="toc-sec:IV.4.3">Intermediate
-Results</a></li>
-<li><a href="#sec:IV.4.4" id="toc-sec:IV.4.4">Current Approach</a></li>
-</ul></li>
-</ul></li>
-<li><a href="#sec:V" id="toc-sec:V">Conclusion</a>
-<ul>
-<li><a href="#sec:conclusion"
-id="toc-sec:conclusion">Conclusion</a></li>
-</ul></li>
-<li><a href="#references" id="toc-references">References</a></li>
-<li><a href="#acronyms" id="toc-acronyms">Acronyms</a></li>
-</ul>
-</nav>
-<h1 class="unnumbered" id="abstract">Abstract</h1>
+<h1 class="unnumbered unlisted"
+id="aknowledgements">Aknowledgements</h1>
+<!-- ===================== [START] ABSTRACT ===================== -->
+<h1 class="unnumbered unlisted" id="résumé-fr">Résumé (fr)</h1>
+<p>La colorisation automatique de dessins encrés est une tâche complexe
+pour la vision par ordinateur. Contrairement aux images en niveaux de
+gris, les encrages manquent d’informations sémantiques telles que les
+ombrages et les textures, rendant la tâche encore plus difficile.</p>
+<p>Cette thèse repose sur des travaux connexes et explore l’utilisation
+de architectures génératives modernes telles que les GAN (Réseaux
+Génératifs Antagonistes) et les MDD (Modèles de Diffusion par
+Débruitage) pour à la fois améliorer la qualité des techniques
+précédentes et mieux capturer l’intention de colorisation de
+l’utilisateur à travers trois contributions : PaintsTorch, StencilTorch
+et StablePaint.</p>
+<p>Ces travaux amènent à la définition et l’implémentation d’un procédé
+itératif et interactif basé sur des coups de pinceau colorés et des
+masques fournis par l’utilisateur final pour favoriser la collaboration
+entre l’Homme et la Machine en faveur de processus de travail naturels
+et émergents inspirés de la peinture digitale.</p>
+<h1 class="unnumbered unlisted" id="abstract">Abstract</h1>
 <p>Automatic lineart colorization is a challenging task for Computer
 Vision. Contrary to grayscale images, linearts lack semantic information
 such as shading and texture, making the task even more difficult.</p>
@@ -535,7 +438,284 @@ contributions: PaintsTorch, StencilTorch and StablePaint.</p>
 strokes and masks provided by the end user is built to foster
 Human-Machine collaboration in favour of natural, and emerging workflows
 inspired by digital painting processes.</p>
-<h1 class="unnumbered" id="aknowledgements">Aknowledgements</h1>
+<!-- ===================== [END] ABSTRACT ===================== -->
+<!-- ===================== [START] NAVIGATION ===================== -->
+<!-- ===================== [END] NAVIGATION ===================== -->
+<!-- ===================== [START] PART INTRODUCTION FR ===================== -->
+<h1 class="unnumbered unlisted" id="introduction-fr">Introduction
+(fr)</h1>
+<p>Les humains peuvent percevoir et comprendre le monde. Nous pouvons
+accomplir une vaste gamme de tâches complexes grâce à la combinaison de
+la reconnaissance visuelle, de la compréhension des scènes et de la
+communication. La capacité à extraire rapidement et avec précision des
+informations à partir d’une seule image témoigne de la complexité et de
+la sophistication du cerveau humain, et est souvent considérée comme
+acquise. Un objectif du domaine de l’intelligence artificielle est de
+doter les machines de telles capacités humaines, dont l’une est la
+créativité, c’est-à-dire la capacité de produire quelque chose
+d’original et de précieux <span class="citation"
+data-cites="mumford_2012">[<a href="#ref-mumford_2012"
+role="doc-biblioref">54</a>]</span>.</p>
+<p>La créativité computationnelle est un domaine multidisciplinaire qui
+englobe l’intelligence artificielle AI, la psychologie cognitive, la
+philosophie, et l’art, et qui cherche à comprendre, simuler, reproduire,
+ou améliorer la créativité humaine. Une définition de la créativité
+<span class="citation" data-cites="newell_1959">[<a
+href="#ref-newell_1959" role="doc-biblioref">55</a>]</span> est la
+capacité à produire quelque chose de nouveau et d’utile, qui nécessite
+de rejeter des croyances communes, résulte d’une motivation intense et
+de la persistance, ou découle de la clarification d’un problème. Les
+approches descendantes de cette définition utilisent un mélange de
+formulations explicites de recettes et de hasard, telles que la
+génération procédurale. À l’inverse, les approches ascendantes utilisent
+des réseaux de neurones artificiels pour apprendre des motifs et des
+heuristiques à partir de grands ensembles de données afin de permettre
+une génération non linéaire.</p>
+<p>Nous assistons actuellement au début d’une nouvelle ère où la
+frontière entre les machines et les humains commence à s’estomper. Les
+récents progrès dans le domaine de l’intelligence artificielle, plus
+précisément dans l’apprentissage profond, confèrent aux ordinateurs la
+capacité de percevoir et de comprendre notre monde, mais aussi
+d’interagir avec notre environnement en utilisant des interactions
+naturelles telles que la parole et le langage naturel. Les réseaux de
+neurones artificiels, autrefois moqués par la communauté de
+l’intelligence artificielle <span class="citation"
+data-cites="lecun_2019">[<a href="#ref-lecun_2019"
+role="doc-biblioref">44</a>]</span>, peuvent désormais être entraînés
+grâce à la descente de gradient <span class="citation"
+data-cites="rumelhart_1986">[<a href="#ref-rumelhart_1986"
+role="doc-biblioref">70</a>]</span>, grâce à la disponibilité massive de
+données et à la puissance de traitement des accélérateurs matériels
+modernes tels que les unités de traitement graphique, les unités de
+traitement tensoriel, et les unités de traitement neuronal.</p>
+<p>Les réseaux de neurones, ces approximateurs de fonctions générales
+entraînables, ont donné naissance au domaine des réseaux de neurones
+génératifs. Des architectures de l’apprentissage profond spécialisées
+telles que les variational autoencoders <span class="citation"
+data-cites="kingma_2013">[<a href="#ref-kingma_2013"
+role="doc-biblioref">43</a>]</span>, les réseaux génératifs antagonistes
+<span class="citation" data-cites="goodfellow_2014">[<a
+href="#ref-goodfellow_2014" role="doc-biblioref">26</a>]</span>, les
+modèles de diffusion par débruitage <span class="citation"
+data-cites="ho_2020">[<a href="#ref-ho_2020"
+role="doc-biblioref">35</a>]</span>, et les modèles de langage à grande
+échelle <span class="citation" data-cites="vaswani_2017 brown_2020">[<a
+href="#ref-brown_2020" role="doc-biblioref">8</a>, <a
+href="#ref-vaswani_2017" role="doc-biblioref">82</a>]</span> sont
+utilisées pour générer des artefacts créatifs tels que du texte, de
+l’audio, des images, et des vidéos d’une qualité et d’une complexité
+inédites.</p>
+<p>Cette thèse vise à explorer comment on pourrait former et utiliser
+des réseaux de neurones génératifs pour créer des outils alimentés par
+l’intelligence artificielle capables d’améliorer l’expression créative
+humaine. La tâche de colorisation automatique d’encrages est choisie
+pour illustrer ce processus tout au long de la thèse.</p>
+<h2 class="unnumbered unlisted" id="motivations">Motivations</h2>
+<figure>
+<img src="./figures/motivations_steps.svg"
+alt="Illustration d’un flux de travail d’illustration standard : esquisse, encrage, colorisation et post-traitement (de gauche à droite). Crédits : Illustration de Taira Akitsu" />
+<figcaption aria-hidden="true">Illustration d’un flux de travail
+d’illustration standard : esquisse, encrage, colorisation et
+post-traitement (de gauche à droite). Crédits : Illustration de Taira
+Akitsu</figcaption>
+</figure>
+<p>La colorisation d’encrages est un aspect essentiel du travail des
+artistes, des illustrateurs et des animateurs. La tâche de colorisation
+manuellement des encrages peut être chronophage, répétitive et
+épuisante, en particulier dans l’industrie de l’animation, où chaque
+image d’un produit animé doit être colorée et ombrée. Ce processus est
+généralement réalisé à l’aide de logiciels de retouche d’images tels que
+Photoshop <span class="citation" data-cites="photoshop">[<a
+href="#ref-photoshop" role="doc-biblioref">63</a>]</span>, Clip Studio
+PAINT <span class="citation" data-cites="clipstudiopaint">[<a
+href="#ref-clipstudiopaint" role="doc-biblioref">14</a>]</span>, et
+PaintMan <span class="citation" data-cites="paintman">[<a
+href="#ref-paintman" role="doc-biblioref">57</a>]</span>.
+L’automatisation du processus de colorisation peut grandement améliorer
+le flux de travail de ces professionnels créatifs et a le potentiel de
+réduire la barrière à l’entrée pour les débutants et les amateurs. Un
+tel système avait été précédemment intégré à Clip Studio PAINT <span
+class="citation" data-cites="clipstudiopaint">[<a
+href="#ref-clipstudiopaint" role="doc-biblioref">14</a>]</span>, puis
+retiré pour des préoccupations éthiques et de droits de propriété,
+démontrant l’importance croissante de la colorisation automatique dans
+le domaine.</p>
+<p>Le processus d’illustration numérique le plus courant peut être
+décomposé en quatre étapes distinctes : l’esquisse, l’encrage, la
+colorisation et le post-traitement (voir <a
+href="#fig:steps">Fig 1</a>). Comme le montre le travail de Kandinsky
+<span class="citation" data-cites="kandinsky_1977">[<a
+href="#ref-kandinsky_1977" role="doc-biblioref">39</a>]</span>, le
+processus de colorisation peut avoir un impact significatif sur le sens
+global d’une œuvre d’art grâce à l’introduction de divers schémas de
+couleurs, d’ombrages et de textures. Ces éléments du processus de
+colorisation représentent des défis importants pour la tâche de
+colorisation automatique des encrages en vision par ordinateur, en
+particulier par rapport à son équivalent en niveaux de gris <span
+class="citation"
+data-cites="furusawa_2O17 hensman_2017 zhang_richard_2017">[<a
+href="#ref-furusawa_2O17" role="doc-biblioref">23</a>, <a
+href="#ref-hensman_2017" role="doc-biblioref">32</a>, <a
+href="#ref-zhang_richard_2017" role="doc-biblioref">92</a>]</span>. Sans
+les informations sémantiques supplémentaires fournies par les textures
+et les ombres, inférer les matériaux et les formes 3D à partir des
+encrages en noir et blanc est difficile.</p>
+<h2 class="unnumbered unlisted" id="problématique">Problématique</h2>
+<p>Un défi majeur de la colorisation automatique d’encrages est la
+disponibilité de jeux de données publics de qualité. Les illustrations
+ne sont pas toujours accompagnées de leurs encrages correspondants. Les
+rares ensembles de données disponibles pour cette tâche manquent de
+cohérence en ce qui concerne la qualité des illustrations, car ils
+rassemblent des images de différents types, médias et styles. Pour ces
+raisons, le web scraping et l’extraction synthétique d’encrages sont les
+méthodes de choix pour de nombreuses contributions dans ce domaine <span
+class="citation" data-cites="ci_2018 zhang_richard_2017">[<a
+href="#ref-ci_2018" role="doc-biblioref">13</a>, <a
+href="#ref-zhang_richard_2017" role="doc-biblioref">92</a>]</span>.</p>
+<p>Les travaux précédents en colorisation automatique d’encrages sont
+basés sur l’architecture des réseaux génératifs antagonistes <span
+class="citation" data-cites="goodfellow_2014">[<a
+href="#ref-goodfellow_2014" role="doc-biblioref">26</a>]</span> et
+peuvent générer des illustrations de haute qualité en temps réel, bien
+qu’imparfaites. Le contrôle et l’orientation de l’utilisateur peuvent
+être réalisés grâce à l’utilisation de : des indices de couleur <span
+class="citation"
+data-cites="frans_2017 liu_2017 sangkloy_2016 paintschainer_2018 ci_2018">[<a
+href="#ref-ci_2018" role="doc-biblioref">13</a>, <a
+href="#ref-frans_2017" role="doc-biblioref">21</a>, <a
+href="#ref-liu_2017" role="doc-biblioref">48</a>, <a
+href="#ref-paintschainer_2018" role="doc-biblioref">58</a>, <a
+href="#ref-sangkloy_2016" role="doc-biblioref">72</a>]</span>, le
+transfert de style <span class="citation" data-cites="zhang_ji_2017">[<a
+href="#ref-zhang_ji_2017" role="doc-biblioref">89</a>]</span>,
+l’étiquetage <span class="citation" data-cites="kim_2019">[<a
+href="#ref-kim_2019" role="doc-biblioref">41</a>]</span>, et plus
+récemment, le langage naturel <span class="citation"
+data-cites="ho_2020">[<a href="#ref-ho_2020"
+role="doc-biblioref">35</a>]</span>.</p>
+<p>Les travaux connexes pallient le manque de descripteurs sémantiques
+fournis par les encrages en noir et blanc en introduisant l’utilisation
+d’un extracteur de caractéristiques externe, l’un des plus courants
+étant Illustration2Vec <span class="citation"
+data-cites="saito_2015">[<a href="#ref-saito_2015"
+role="doc-biblioref">71</a>]</span>. Le processus de sortie du modèle
+génératif est conditionné par un vecteur sémantique latent capturant la
+nature du contenu de l’encrage.</p>
+<h2 class="unnumbered unlisted" id="contributions">Contributions</h2>
+<p>Les contributions de cette thèse se concentrent sur l’utilisation
+d’indices de couleur sous la forme de coups de pinceau de l’utilisateur,
+car cela s’inscrit dans le flux de travail naturel des artistes
+numériques et n’implique pas l’apprentissage et la maîtrise de nouvelles
+compétences. Alors que les travaux précédents offrent une amélioration
+de la qualité par rapport aux techniques classiques en vision par
+ordinateur, ils restent soumis à des données d’entraînement bruyantes, à
+des artefacts, à un manque de variété et à un manque de fidélité à
+l’intention de l’utilisateur.</p>
+<p>Dans cette thèse, nous explorons l’importance d’un ensemble de
+données propre, qualitatif et cohérent. Nous étudions comment mieux
+capturer l’intention de l’utilisateur grâce à des contrôles artistiques
+naturels et comment la refléter dans l’artefact généré par le modèle
+tout en préservant ou en améliorant sa qualité. Nous examinons également
+comment le processus créatif peut être transformé en un flux de travail
+itératif dynamique où l’utilisateur collabore avec la machine pour
+affiner et réaliser des variations de son œuvre.</p>
+<p>Les contributions de cette thèse sont les suivantes :</p>
+<ul>
+<li>Un processus de génération de jeux de données propres pour la tâche
+de colorisation automatique d’encrages <span class="citation"
+data-cites="hati_2019 hati_2023">[<a href="#ref-hati_2019"
+role="doc-biblioref">29</a>, <a href="#ref-hati_2023"
+role="doc-biblioref">30</a>]</span>.</li>
+<li>PaintsTorch <span class="citation" data-cites="hati_2019">[<a
+href="#ref-hati_2019" role="doc-biblioref">29</a>]</span> : un
+générateur à double réseau génératif antagoniste qui améliore la qualité
+de la génération par rapport aux travaux précédents tout en permettant
+une interaction en temps réel avec l’utilisateur final.</li>
+<li>StencilTorch <span class="citation" data-cites="hati_2023">[<a
+href="#ref-hati_2023" role="doc-biblioref">30</a>]</span> : une mise à
+jour de PaintsTorch, transformant le problème de colorisation en un
+problème d’incrustation avec des masques, ce qui permet une
+collaboration entre l’humain et la machine pour émerger en tant que flux
+de travail naturel où l’entrée d’une première passe devient une entrée
+potentielle pour une deuxième passe.</li>
+<li>StablePaint : une exploration continue des modèles de diffusion par
+débruitage, apportant davantage de variété dans les sorties générées
+tout en conservant naturellement le flux de travail itératif introduit
+par StencilTorch au détriment de la vitesse d’inférence.</li>
+</ul>
+<h2 class="unnumbered unlisted" id="préoccupations">Préoccupations</h2>
+<p>Les récents progrès en matière d’intelligence artificielle générative
+pour la synthèse de textes, d’images, d’audio et de vidéos soulèvent
+d’importantes préoccupations éthiques et sociétales, en particulier en
+raison de leur disponibilité et de leur facilité d’utilisation. Des
+modèles tels que Stable Diffusion [+rombach_2021] et plus récemment
+Chat-GPT <span class="citation" data-cites="openai_2023">[<a
+href="#ref-openai_2023" role="doc-biblioref">10</a>]</span> remettent en
+question nos croyances communes et notre relation avec le droit
+d’auteur, la créativité, les informations trompeuses, et ainsi de
+suite.</p>
+<p>L’un des principaux problèmes de l’intelligence artificielle
+générative est le potentiel de fabulation des modèles. Les modèles
+génératifs peuvent créer des données entièrement nouvelles et
+synthétiques qui sont presque indiscernables des données réelles. Cela
+peut conduire à la diffusion d’informations fausses et à la manipulation
+de l’opinion publique. De plus, il existe des ambiguïtés concernant la
+propriété et les droits d’auteur du contenu généré, car il n’est pas
+clair qui détient les droits sur les images et les vidéos générées. Les
+données d’entraînement sont souvent obtenues par le biais du web
+scraping, et donc la propriété des droits d’auteur n’est pas transmise.
+Cela est particulièrement vrai pour les applications commerciales.</p>
+<p>Une autre préoccupation importante est le potentiel de biais et de
+discrimination. Ces modèles sont formés sur de grandes quantités de
+données, et si les données ne sont pas suffisamment diverses ou
+représentatives, le modèle peut perpétuer ou même amplifier les biais
+existants. Le scandale du bot Twitter Microsoft Tay <span
+class="citation" data-cites="wolf_2017">[<a href="#ref-wolf_2017"
+role="doc-biblioref">84</a>]</span> est le résultat d’un tel phénomène.
+Ce chatbot initialement innocent a été facilement transformé en un bot
+raciste perpétuant des discours de haine. La tâche a été facilitée en
+raison du jeu de données intrinsèquement biaisé sur lequel il a été
+formé.</p>
+<p>Dans ce travail, nous nous engageons à aborder et à sensibiliser à
+ces préoccupations. Les illustrations utilisées pour former nos modèles
+et pour nos expériences ne sont utilisées que à des fins éducatives et
+de recherche. Nous fournissons uniquement des recettes pour la
+reproductibilité et ne distribuons ni l’ensemble de données ni les poids
+résultant de la formation du modèle, seulement le code. Nous espérons
+que cela garantira que notre travail soit utilisé de manière éthique et
+responsable tout en limitant son potentiel de mauvais usage.</p>
+<h2 class="unnumbered unlisted" id="plan">Plan</h2>
+<p>Cette thèse est organisée comme suit :</p>
+<ul>
+<li><a href="#sec:I">Chapitre 1</a> introduit le sujet de la
+colorisation automatique d’encrages, en fournissant la motivation de ce
+travail, la problématique, les contributions de cette thèse, et les
+préoccupations qu’elle peut soulever.</li>
+<li><a href="#sec:II">Chapitre 2</a> présente un contexte théorique sur
+l’apprentissage automatique et les réseaux de neurones artificiels, qui
+sont les fondements des méthodes proposées dans cette thèse.</li>
+<li><a href="#sec:III">Chapitre 3</a> passe en revue les travaux
+connexes sur la colorisation automatique d’encrages, à la fois les
+approches classiques et les approches basées sur les réseaux de
+neurones.</li>
+<li><a href="#sec:IV">Chapitre 4</a> présente les contributions de cette
+thèse, notamment le développement de trois nouvelles méthodes de
+colorisation automatique d’encrages : <a
+href="#sec:IV.2">PaintsTorch</a> <span class="citation"
+data-cites="hati_2019">[<a href="#ref-hati_2019"
+role="doc-biblioref">29</a>]</span>, <a
+href="#sec:IV.3">StencilTorch</a> <span class="citation"
+data-cites="hati_2023">[<a href="#ref-hati_2023"
+role="doc-biblioref">30</a>]</span>, et un travail en cours, <a
+href="#sec:IV.4">StablePaint</a>.</li>
+<li><a href="#sec:V">Chapitre 5</a> conclut la thèse et aborde les défis
+restants, les travaux futurs et les préoccupations liées à ce travail
+sur la colorisation automatique d’encrages.</li>
+</ul>
+<p>Le code source des expériences et des contributions est publiquement
+disponible sur GitHub à l’adresse <a
+href="https://github.com/yliess86">https://github.com/yliess86</a>.</p>
+<!-- ===================== [END] PART INTRODUCTION FR ===================== -->
 <!-- ===================== [START] PART INTRODUCTION ===================== -->
 <h1 id="sec:I">Introduction</h1>
 <p>Humans can perceive and understand the world. We can accomplish a
@@ -4901,6 +5081,55 @@ linearts and color strokes. Results of their method are shown in figure
 <a href="#fig:stablepaint_ctrl">Fig 74</a>.</p>
 <!-- ===================== [END] PART CONTRIBUTIONS ===================== -->
 <!-- ===================== [START] PART CONCLUSION ===================== -->
+<h1 class="unnumbered unlisted" id="conclusion-fr">Conclusion (fr)</h1>
+<p>Cette thèse visait à identifier les facteurs susceptibles d’améliorer
+la qualité des colorisations d’encrages générées, ainsi qu’à mieux
+saisir et interpréter l’intention de colorisation de l’utilisateur par
+rapport aux travaux antérieurs sur la colorisation d’encrages guidée par
+l’utilisateur.</p>
+<p>À travers nos explorations avec PaintsTorch <span class="citation"
+data-cites="hati_2019">[<a href="#ref-hati_2019"
+role="doc-biblioref">29</a>]</span>, StencilTorch <span class="citation"
+data-cites="hati_2023">[<a href="#ref-hati_2023"
+role="doc-biblioref">30</a>]</span>, et plus tard StablePaint, nous
+avons montré que des architectures spécialisées pour la génération
+d’images telles que les réseaux génératifs antagonistes et plus
+récemment les modèles de diffusion par débruitage peuvent être
+exploitées pour produire des illustrations qualitatives à partir
+d’encrages en noir et blanc.</p>
+<p>Nous avons proposé un processus affiné pour la génération de jeux de
+données pour la tâche de colorisation d’encrages guidée par
+l’utilisateur, consistant à rassembler des illustrations et à les
+post-traiter pour extraire des encrages synthétiques et des coups de
+pinceau de couleur non éclairés simulés qui correspondent aux entrées
+finales de l’utilisateur.</p>
+<p>Nous avons démontré que la capture de l’intention de l’utilisateur et
+le manque d’informations sémantiques peuvent être gérés en conditionnant
+les modèles génératifs avec des vecteurs de caractéristiques externes ou
+de bout en bout. Cette technique est capable de capturer à la fois
+l’intention de couleur de l’utilisateur et sa position dans
+l’espace.</p>
+<p>Nous avons ensuite mis en évidence le workflow émergent de
+collaboration entre l’humain et la machine rendu possible par des
+interactions itératives avec nos cadres. Dans StencilTorch, ce phénomène
+résulte de la reformulation du problème de colorisation par incrustation
+à l’aide de masques. Dans StablePaint, et plus spécifiquement lors de
+l’utilisation de modèles de diffusion par débruitage, cela se produit
+naturellement en raison d’un processus de débruitage contrôlé par
+régions.</p>
+<p>Des travaux récents principalement dirigés par la communauté de
+l’intelligence artificielle générative ont montré que les flux de
+travail itératifs et les modèles de diffusion par débruitage sont
+actuellement les meilleures approches pour la génération d’images,
+s’étendant également à la colorisation d’encrages. Le défi réside
+désormais dans la mise en place de ces techniques pour qu’elles
+fonctionnent plus rapidement et avec moins de mémoire par rapport aux
+réseaux génératifs antagonistes capables d’interactions en temps réel,
+mais aussi dans l’amélioration de l’alignement avec l’intention de
+l’utilisateur, que ce soit en conditionnant le réseau sur du texte, des
+images, ou d’autres moyens.</p>
+<!-- ===================== [END] PART Conclusion ===================== -->
+<!-- ===================== [START] PART CONCLUSION ===================== -->
 <h1 id="sec:V">Conclusion</h1>
 <p>This thesis dissertation aimed to identify factors that could improve
 the quality of generated lineart colorizations, and how to better
@@ -4937,7 +5166,6 @@ now resides in making those techniques run faster and with less memory
 in comparison to GANs that are capable of real-time interactions, but
 also in improving alignement with the user intent, whether it is by
 conditioning the network on text, images, or other means.</p>
-<h2 id="sec:conclusion">Conclusion</h2>
 <!-- ===================== [END] PART Conclusion ===================== -->
 <h1 class="unnumbered" id="references">References</h1>
 <div id="refs" class="references csl-bib-body" role="list">
